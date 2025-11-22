@@ -1,0 +1,15 @@
+Please provide a strategy to anticipate the price movement for the JSE-listed stock AXX, which is due to release its financial results soon.
+
+Key Context & Assumption:
+
+The company has not released a trading update.
+
+JSE rules state that a company must release a trading update if they anticipate earnings will change by more than 20% compared to the corresponding previous reporting period.
+
+Therefore, we can assume that the upcoming earnings are expected to be within a 20% range (either positive or negative) of the earnings from the last corresponding period.
+
+Required Actions:
+
+Review the financial results of the "corresponding previous period" for AXX.
+
+Based on that review, provide a potential price range for AXX stock.
