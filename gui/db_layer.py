@@ -53,7 +53,7 @@ class DBLayer:
                 sd.earnings_q1, sd.earnings_q2, sd.earnings_q3, sd.earnings_q4,
                 sd.update_q1, sd.update_q2, sd.update_q3, sd.update_q4,
                 
-                -- Strategy
+                --Strategy
                 sa.strategy,
 
                 -- Latest News (SENS)
@@ -279,3 +279,107 @@ class DBLayer:
         except Exception as e:
             print(f"Error inserting valuation for {valuation_data.get('ticker', 'unknown')}: {e}")
             return False
+    
+    async def upsert_raw_fundamentals(self, ticker: str, periods_data: list):
+        """
+        Insert or update raw_stock_valuations for multiple periods.
+        
+        Args:
+            ticker: Stock ticker
+            periods_data: List of dicts with keys:
+                - results_period_end: date
+                - results_period_label: str
+                - heps_12m_zarc: float or None
+                - dividend_12m_zarc: float or None
+                - cash_gen_ps_zarc: float or None
+                - nav_ps_zarc: float or None
+                - quick_ratio: float or None
+        
+        Returns True on success, False on failure
+        
+        Uses ON CONFLICT UPDATE to upsert each period.
+        """
+        if self.pool is None:
+            await self.init_pool()
+        
+        upsert_query = """
+            INSERT INTO raw_stock_valuations (
+                ticker, results_period_end, results_period_label,
+                heps_12m_zarc, dividend_12m_zarc, cash_gen_ps_zarc, nav_ps_zarc,
+                quick_ratio, source, created_at, updated_at
+            ) VALUES (
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW()
+            )
+            ON CONFLICT (ticker, results_period_end) 
+            DO UPDATE SET
+                results_period_label = EXCLUDED.results_period_label,
+                heps_12m_zarc = EXCLUDED.heps_12m_zarc,
+                dividend_12m_zarc = EXCLUDED.dividend_12m_zarc,
+                cash_gen_ps_zarc = EXCLUDED.cash_gen_ps_zarc,
+                nav_ps_zarc = EXCLUDED.nav_ps_zarc,
+                quick_ratio = EXCLUDED.quick_ratio,
+                source = EXCLUDED.source,
+                updated_at = NOW()
+        """
+        
+        try:
+            async with self.pool.acquire() as conn:
+                # Upsert each period
+                for period in periods_data:
+                    await conn.execute(
+                        upsert_query,
+                        ticker,
+                        period['results_period_end'],
+                        period['results_period_label'],
+                        period.get('heps_12m_zarc'),
+                        period.get('dividend_12m_zarc'),
+                        period.get('cash_gen_ps_zarc'),
+                        period.get('nav_ps_zarc'),
+                        period.get('quick_ratio'),
+                        'sharedata'
+                    )
+                
+                print(f"  [DB DEBUG] Successfully upserted {len(periods_data)} periods for {ticker}")
+                return True
+        except Exception as e:
+            print(f"Error upserting raw fundamentals for {ticker}: {e}")
+            import traceback
+            print(f"Traceback: {traceback.format_exc()}")
+            return False
+    
+    async def get_latest_raw_fundamentals(self, ticker: str):
+        """
+        Get the most recent period fundamentals for a ticker from raw_stock_valuations.
+        
+        Returns dict with:
+            - results_period_end
+            - results_period_label
+            - heps_12m_zarc
+            - dividend_12m_zarc
+            - cash_gen_ps_zarc
+            - nav_ps_zarc
+            - quick_ratio
+        
+        or None if no data exists
+        """
+        if self.pool is None:
+            await self.init_pool()
+        
+        query = """
+            SELECT 
+                results_period_end,
+                results_period_label,
+                heps_12m_zarc,
+                dividend_12m_zarc,
+                cash_gen_ps_zarc,
+                nav_ps_zarc,
+                quick_ratio
+            FROM raw_stock_valuations
+            WHERE ticker = $1
+            ORDER BY results_period_end DESC
+            LIMIT 1
+        """
+        
+        async with self.pool.acquire() as conn:
+            row = await conn.fetchrow(query, ticker)
+            return dict(row) if row else None

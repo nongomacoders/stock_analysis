@@ -147,7 +147,11 @@ class ValuationEngine:
     
     async def _scrape_fundamentals(self, ticker: str):
         """
-        Scrape fundamentals for a ticker from ShareData.
+        Get fundamentals for a ticker from raw_stock_valuations table.
+        
+        This method now pulls the latest period from the database instead
+        of scraping ShareData directly. The Raw Fundamentals Loader is 
+        responsible for keeping raw_stock_valuations up to date.
         
         Returns dict with:
         - heps_12m_zarc
@@ -159,42 +163,26 @@ class ValuationEngine:
         or None on failure
         """
         try:
-            # Import inside method to avoid issues if pw module isn't available
-            from pw import scrape_ticker_fundamentals
+            fundamentals = await self.db.get_latest_raw_fundamentals(ticker)
             
-            # Get HTML tables
-            tables = await scrape_ticker_fundamentals(ticker)
-            
-            if not tables:
+            if not fundamentals:
+                self.log(f"  ⚠ No raw fundamentals found for {ticker} in database")
+                self.log(f"  Run the Raw Fundamentals Loader first to scrape multi-year data")
                 return None
             
-            # DEBUG: Log which tables were found
-            self.log(f"  [DEBUG] Found tables: {list(tables.keys())}")
+            self.log(f"  ✓ Loaded fundamentals from period: {fundamentals.get('results_period_label')}")
+            self.log(f"  [DEBUG] Raw fundamentals: {fundamentals}")
             
-            # Parse SHARE STATISTICS table (fin_S)
-            fundamentals = {}
-            
-            if 'fin_S' in tables:
-                share_stats = self._parse_share_statistics(tables['fin_S'])
-                self.log(f"  [DEBUG] Parsed SHARE STATISTICS: {share_stats}")
-                fundamentals.update(share_stats)
-            else:
-                self.log(f"  [DEBUG] No fin_S table found")
-            
-            # Parse RATIOS table (fin_R)
-            if 'fin_R' in tables:
-                ratios = self._parse_ratios_table(tables['fin_R'])
-                self.log(f"  [DEBUG] Parsed RATIOS: {ratios}")
-                fundamentals.update(ratios)
-            else:
-                self.log(f"  [DEBUG] No fin_R table found")
-            
-            self.log(f"  [DEBUG] Final fundamentals dict: {fundamentals}")
-            
-            return fundamentals if fundamentals else None
-            
+            # Return only the metric fields (exclude period metadata)
+            return {
+                'heps_12m_zarc': fundamentals.get('heps_12m_zarc'),
+                'dividend_12m_zarc': fundamentals.get('dividend_12m_zarc'),
+                'cash_gen_ps_zarc': fundamentals.get('cash_gen_ps_zarc'),
+                'nav_ps_zarc': fundamentals.get('nav_ps_zarc'),
+                'quick_ratio': fundamentals.get('quick_ratio')
+            }
         except Exception as e:
-            self.log(f"Error scraping {ticker}: {e}")
+            self.log(f"  Error loading fundamentals for {ticker}: {e}")
             import traceback
             self.log(f"  [DEBUG] Traceback: {traceback.format_exc()}")
             return None
