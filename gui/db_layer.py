@@ -274,6 +274,7 @@ class DBLayer:
                     valuation_data.get('p_to_nav'),
                     valuation_data.get('peg_ratio')
                 )
+                print(f"  [DB DEBUG] Successfully committed valuation for {valuation_data['ticker']}")
                 return True
         except Exception as e:
             print(f"Error inserting valuation for {valuation_data.get('ticker', 'unknown')}: {e}")

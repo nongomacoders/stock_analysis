@@ -98,6 +98,8 @@ class ValuationEngine:
                 ratios = self._compute_ratios(price_zarc, fundamentals, heps_growth)
                 self.log(f"  [DEBUG] Computed ratios: {ratios}")
                 
+                self.log(f"  [DEBUG] Calculations completed for {ticker}. Ratios: {ratios}")
+                
                 # Build valuation row
                 valuation_data = {
                     'ticker': ticker,
@@ -107,7 +109,7 @@ class ValuationEngine:
                     **ratios
                 }
                 
-                self.log(f"  [DEBUG] Full valuation_data dict: {valuation_data}")
+                self.log(f"  [DEBUG] Ready to commit. Full valuation_data: {valuation_data}")
                 
                 # Insert into database
                 success = await self.db.insert_valuation(valuation_data)
@@ -219,10 +221,46 @@ class ValuationEngine:
         }
         
         rows = soup.find_all('tr')
+        if not rows:
+            return data
+
+        # --- HEADER DETECTION ---
+        # Find the header row to identify column indices
+        header_row = rows[0]
+        headers = [th.get_text(strip=True).replace('\n', ' ') for th in header_row.find_all(["th", "td"])]
         
-        for row in rows:
+        # Identify the 'Growth' column index (usually index 1)
+        growth_idx = -1
+        for i, h in enumerate(headers):
+            if "Avg." in h or "Growth" in h or "Observed" in h:
+                growth_idx = i
+                break
+        
+        # Heuristic: If no explicit name match, assume index 1 if it's a % column
+        # But for safety, let's rely on the fact that if there are > 2 columns, index 1 might be growth
+        if growth_idx == -1 and len(headers) > 2:
+            growth_idx = 1
+            
+        self.log(f"  [DEBUG] Share Stats Headers: {headers}, Growth Index: {growth_idx}")
+
+        # Determine the index of the "Latest Year" / "OF" column
+        # If growth is at 1, then data is at 2. If no growth, data is at 1.
+        # BUT, we need to be careful. 
+        # If growth_idx is 1, we want index 2.
+        # If growth_idx is -1, we want index 1.
+        
+        data_idx = 1
+        if growth_idx == 1:
+            data_idx = 2
+        elif growth_idx > 1:
+             # If growth is later, data might still be at 1
+             data_idx = 1
+             
+        self.log(f"  [DEBUG] Using Data Index: {data_idx}")
+        
+        for row in rows[1:]: # Skip header
             cols = row.find_all(['td', 'th'])
-            if len(cols) < 2:
+            if len(cols) <= data_idx:
                 continue
             
             # First column is the label
@@ -231,13 +269,10 @@ class ValuationEngine:
             # Check if this is a field we need
             for field_label, field_key in field_map.items():
                 if field_label.lower() in label.lower():
-                    # Extract value from the "OF" column (index 1 after removing growth column)
-                    # We need to find the column with actual data
-                    # Based on pw.py logic, after removing growth column, index 1 is "OF" (latest year)
-                    if len(cols) >= 2:
-                        value_text = cols[1].get_text(strip=True)
-                        value = self._parse_financial_value(value_text)
-                        data[field_key] = value
+                    value_text = cols[data_idx].get_text(strip=True)
+                    self.log(f"    [DEBUG] Found {field_label}: '{value_text}'")
+                    value = self._parse_financial_value(value_text)
+                    data[field_key] = value
                     break
         
         return data
@@ -253,19 +288,45 @@ class ValuationEngine:
         data = {}
         
         rows = soup.find_all('tr')
+        if not rows:
+            return data
+            
+        # --- HEADER DETECTION ---
+        # Same logic as above
+        header_row = rows[0]
+        headers = [th.get_text(strip=True).replace('\n', ' ') for th in header_row.find_all(["th", "td"])]
         
-        for row in rows:
+        growth_idx = -1
+        for i, h in enumerate(headers):
+            if "Avg." in h or "Growth" in h or "Observed" in h:
+                growth_idx = i
+                break
+        
+        if growth_idx == -1 and len(headers) > 2:
+            growth_idx = 1
+            
+        self.log(f"  [DEBUG] Ratios Headers: {headers}, Growth Index: {growth_idx}")
+
+        data_idx = 1
+        if growth_idx == 1:
+            data_idx = 2
+        elif growth_idx > 1:
+             data_idx = 1
+             
+        self.log(f"  [DEBUG] Using Data Index: {data_idx}")
+        
+        for row in rows[1:]:
             cols = row.find_all(['td', 'th'])
-            if len(cols) < 2:
+            if len(cols) <= data_idx:
                 continue
             
             label = cols[0].get_text(strip=True)
             
             if "Quick Ratio".lower() in label.lower():
-                if len(cols) >= 2:
-                    value_text = cols[1].get_text(strip=True)
-                    value = self._parse_financial_value(value_text)
-                    data['quick_ratio'] = value
+                value_text = cols[data_idx].get_text(strip=True)
+                self.log(f"    [DEBUG] Found Quick Ratio: '{value_text}'")
+                value = self._parse_financial_value(value_text)
+                data['quick_ratio'] = value
                 break
         
         return data
