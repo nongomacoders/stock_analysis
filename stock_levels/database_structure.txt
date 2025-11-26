@@ -1,0 +1,259 @@
+-- public.daily_stock_data definition
+
+-- Drop table
+
+-- DROP TABLE public.daily_stock_data;
+
+CREATE TABLE public.daily_stock_data (
+	ticker varchar(20) NOT NULL,
+	trade_date date NOT NULL,
+	open_price numeric(12, 2) NULL,
+	high_price numeric(12, 2) NULL,
+	low_price numeric(12, 2) NULL,
+	close_price numeric(12, 2) NULL,
+	volume int8 NULL,
+	CONSTRAINT daily_stock_data_pkey PRIMARY KEY (ticker, trade_date)
+);
+
+
+-- public.ignored_events definition
+
+-- Drop table
+
+-- DROP TABLE public.ignored_events;
+
+CREATE TABLE public.ignored_events (
+	ignored_event_id serial4 NOT NULL,
+	ticker varchar(20) NOT NULL,
+	event_type varchar(20) NOT NULL,
+	event_date date NOT NULL,
+	date_ignored timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	CONSTRAINT ignored_events_pkey PRIMARY KEY (ignored_event_id),
+	CONSTRAINT ignored_events_ticker_event_type_event_date_key UNIQUE (ticker, event_type, event_date)
+);
+
+
+-- public.portfolios definition
+
+-- Drop table
+
+-- DROP TABLE public.portfolios;
+
+CREATE TABLE public.portfolios (
+	id serial4 NOT NULL,
+	"name" varchar(100) NOT NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	CONSTRAINT portfolios_pkey PRIMARY KEY (id)
+);
+
+
+-- public.price_hit_log definition
+
+-- Drop table
+
+-- DROP TABLE public.price_hit_log;
+
+CREATE TABLE public.price_hit_log (
+	hit_id serial4 NOT NULL,
+	ticker varchar(10) NOT NULL,
+	price_level numeric NOT NULL,
+	hit_timestamp timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	CONSTRAINT price_hit_log_pkey PRIMARY KEY (hit_id)
+);
+CREATE UNIQUE INDEX idx_ticker_level_date ON public.price_hit_log USING btree (ticker, price_level, ((hit_timestamp)::date));
+
+
+-- public.price_update_log definition
+
+-- Drop table
+
+-- DROP TABLE public.price_update_log;
+
+CREATE TABLE public.price_update_log (
+	log_id serial4 NOT NULL,
+	update_timestamp timestamptz DEFAULT CURRENT_TIMESTAMP NULL,
+	records_saved int4 NULL,
+	CONSTRAINT price_update_log_pkey PRIMARY KEY (log_id)
+);
+
+
+-- public.stock_details definition
+
+-- Drop table
+
+-- DROP TABLE public.stock_details;
+
+CREATE TABLE public.stock_details (
+	ticker varchar(20) NOT NULL,
+	update_q1 date NULL,
+	update_q2 date NULL,
+	update_q3 date NULL,
+	update_q4 date NULL,
+	earnings_q1 date NULL,
+	earnings_q2 date NULL,
+	earnings_q3 date NULL,
+	earnings_q4 date NULL,
+	market_cap int8 NULL,
+	exchange_name varchar(50) NULL,
+	priority varchar(10) NULL,
+	full_name varchar(255) NULL,
+	CONSTRAINT financial_report_dates_pkey PRIMARY KEY (ticker)
+);
+
+
+-- public.stock_price_levels definition
+
+-- Drop table
+
+-- DROP TABLE public.stock_price_levels;
+
+CREATE TABLE public.stock_price_levels (
+	level_id serial4 NOT NULL,
+	ticker varchar(20) NOT NULL,
+	price_level numeric(12, 2) NULL,
+	level_type varchar(50) NULL,
+	notes text NULL,
+	date_added date DEFAULT CURRENT_DATE NULL,
+	is_ignored_on_scan bool DEFAULT false NULL,
+	CONSTRAINT stock_price_levels_pkey PRIMARY KEY (level_id),
+	CONSTRAINT uq_ticker_price UNIQUE (ticker, price_level)
+);
+CREATE INDEX stock_price_levels_ticker_idx ON public.stock_price_levels USING btree (ticker);
+
+
+-- public.watchlist definition
+
+-- Drop table
+
+-- DROP TABLE public.watchlist;
+
+CREATE TABLE public.watchlist (
+	watchlist_id serial4 NOT NULL,
+	ticker varchar(20) NOT NULL,
+	price_level numeric(12, 2) NULL,
+	entry_price numeric(12, 2) NULL,
+	stop_loss numeric(12, 2) NULL,
+	reward_risk_ratio numeric(10, 2) NULL,
+	date_added date DEFAULT CURRENT_DATE NULL,
+	notes text NULL,
+	status varchar(20) DEFAULT 'Pending'::character varying NULL,
+	CONSTRAINT watchlist_pkey PRIMARY KEY (watchlist_id)
+);
+CREATE INDEX watchlist_ticker_idx ON public.watchlist USING btree (ticker);
+
+
+-- public.action_log definition
+
+-- Drop table
+
+-- DROP TABLE public.action_log;
+
+CREATE TABLE public.action_log (
+	log_id serial4 NOT NULL,
+	ticker varchar(20) NOT NULL,
+	log_timestamp timestamptz DEFAULT CURRENT_TIMESTAMP NULL,
+	trigger_type varchar(50) NULL,
+	trigger_content text NULL,
+	ai_analysis text NULL,
+	is_read bool DEFAULT false NULL,
+	CONSTRAINT action_log_pkey PRIMARY KEY (log_id),
+	CONSTRAINT action_log_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker)
+);
+
+
+-- public.historical_earnings definition
+
+-- Drop table
+
+-- DROP TABLE public.historical_earnings;
+
+CREATE TABLE public.historical_earnings (
+	earnings_id serial4 NOT NULL,
+	ticker varchar(20) NOT NULL,
+	"period" varchar(20) NOT NULL,
+	heps numeric(10, 2) NOT NULL,
+	notes text NULL,
+	results_date date NOT NULL,
+	CONSTRAINT historical_earnings_pkey PRIMARY KEY (earnings_id),
+	CONSTRAINT historical_earnings_ticker_period_key UNIQUE (ticker, period),
+	CONSTRAINT historical_earnings_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
+);
+CREATE INDEX idx_historical_earnings_ticker ON public.historical_earnings USING btree (ticker);
+
+
+-- public.portfolio_holdings definition
+
+-- Drop table
+
+-- DROP TABLE public.portfolio_holdings;
+
+CREATE TABLE public.portfolio_holdings (
+	id serial4 NOT NULL,
+	portfolio_id int4 NULL,
+	ticker varchar(20) NOT NULL,
+	quantity numeric(15, 4) NOT NULL,
+	average_buy_price numeric(15, 2) NOT NULL,
+	last_updated timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	CONSTRAINT portfolio_holdings_pkey PRIMARY KEY (id),
+	CONSTRAINT portfolio_holdings_portfolio_id_ticker_key UNIQUE (portfolio_id, ticker),
+	CONSTRAINT portfolio_holdings_portfolio_id_fkey FOREIGN KEY (portfolio_id) REFERENCES public.portfolios(id) ON DELETE CASCADE
+);
+
+
+-- public.portfolio_transactions definition
+
+-- Drop table
+
+-- DROP TABLE public.portfolio_transactions;
+
+CREATE TABLE public.portfolio_transactions (
+	id serial4 NOT NULL,
+	portfolio_id int4 NULL,
+	ticker varchar(20) NOT NULL,
+	transaction_type varchar(10) NOT NULL,
+	quantity numeric(15, 4) NOT NULL,
+	price numeric(15, 2) NOT NULL,
+	transaction_date timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	fees numeric(15, 2) DEFAULT 0.0 NULL,
+	notes text NULL,
+	CONSTRAINT portfolio_transactions_pkey PRIMARY KEY (id),
+	CONSTRAINT portfolio_transactions_transaction_type_check CHECK (((transaction_type)::text = ANY ((ARRAY['BUY'::character varying, 'SELL'::character varying])::text[]))),
+	CONSTRAINT portfolio_transactions_portfolio_id_fkey FOREIGN KEY (portfolio_id) REFERENCES public.portfolios(id) ON DELETE CASCADE
+);
+
+
+-- public.sens definition
+
+-- Drop table
+
+-- DROP TABLE public.sens;
+
+CREATE TABLE public.sens (
+	sens_id serial4 NOT NULL,
+	ticker varchar(20) NOT NULL,
+	publication_datetime timestamptz NOT NULL,
+	"content" text NOT NULL,
+	CONSTRAINT sens_pkey PRIMARY KEY (sens_id),
+	CONSTRAINT sens_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
+);
+CREATE INDEX idx_sens_ticker_datetime ON public.sens USING btree (ticker, publication_datetime DESC);
+
+
+-- public.stock_analysis definition
+
+-- Drop table
+
+-- DROP TABLE public.stock_analysis;
+
+CREATE TABLE public.stock_analysis (
+	analysis_id serial4 NOT NULL,
+	ticker varchar(20) NOT NULL,
+	research text NULL,
+	strategy text NULL,
+	price_levels _numeric NULL,
+	deepresearch text NULL,
+	deepresearch_date date NULL,
+	CONSTRAINT stock_analysis_pkey PRIMARY KEY (analysis_id),
+	CONSTRAINT stock_analysis_ticker_key UNIQUE (ticker),
+	CONSTRAINT stock_analysis_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
+);

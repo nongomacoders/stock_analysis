@@ -2,108 +2,117 @@
 
 CREATE SCHEMA public AUTHORIZATION pg_database_owner;
 
--- DROP SEQUENCE action_log_log_id_seq;
+-- DROP SEQUENCE public.action_log_log_id_seq;
 
-CREATE SEQUENCE action_log_log_id_seq
+CREATE SEQUENCE public.action_log_log_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE historical_earnings_earnings_id_seq;
+-- DROP SEQUENCE public.historical_earnings_earnings_id_seq;
 
-CREATE SEQUENCE historical_earnings_earnings_id_seq
+CREATE SEQUENCE public.historical_earnings_earnings_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE ignored_events_ignored_event_id_seq;
+-- DROP SEQUENCE public.ignored_events_ignored_event_id_seq;
 
-CREATE SEQUENCE ignored_events_ignored_event_id_seq
+CREATE SEQUENCE public.ignored_events_ignored_event_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE portfolio_holdings_id_seq;
+-- DROP SEQUENCE public.portfolio_holdings_id_seq;
 
-CREATE SEQUENCE portfolio_holdings_id_seq
+CREATE SEQUENCE public.portfolio_holdings_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE portfolio_transactions_id_seq;
+-- DROP SEQUENCE public.portfolio_transactions_id_seq;
 
-CREATE SEQUENCE portfolio_transactions_id_seq
+CREATE SEQUENCE public.portfolio_transactions_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE portfolios_id_seq;
+-- DROP SEQUENCE public.portfolios_id_seq;
 
-CREATE SEQUENCE portfolios_id_seq
+CREATE SEQUENCE public.portfolios_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE price_hit_log_hit_id_seq;
+-- DROP SEQUENCE public.price_hit_log_hit_id_seq;
 
-CREATE SEQUENCE price_hit_log_hit_id_seq
+CREATE SEQUENCE public.price_hit_log_hit_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE price_update_log_log_id_seq;
+-- DROP SEQUENCE public.price_update_log_log_id_seq;
 
-CREATE SEQUENCE price_update_log_log_id_seq
+CREATE SEQUENCE public.price_update_log_log_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE sens_sens_id_seq;
+-- DROP SEQUENCE public.sens_sens_id_seq;
 
-CREATE SEQUENCE sens_sens_id_seq
+CREATE SEQUENCE public.sens_sens_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE stock_analysis_analysis_id_seq;
+-- DROP SEQUENCE public.stock_analysis_analysis_id_seq;
 
-CREATE SEQUENCE stock_analysis_analysis_id_seq
+CREATE SEQUENCE public.stock_analysis_analysis_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE stock_price_levels_level_id_seq;
+-- DROP SEQUENCE public.stock_price_levels_level_id_seq;
 
-CREATE SEQUENCE stock_price_levels_level_id_seq
+CREATE SEQUENCE public.stock_price_levels_level_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
 	START 1
 	CACHE 1
 	NO CYCLE;
--- DROP SEQUENCE watchlist_watchlist_id_seq;
+-- DROP SEQUENCE public.stock_valuations_id_seq;
 
-CREATE SEQUENCE watchlist_watchlist_id_seq
+CREATE SEQUENCE public.stock_valuations_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.watchlist_watchlist_id_seq;
+
+CREATE SEQUENCE public.watchlist_watchlist_id_seq
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 2147483647
@@ -113,9 +122,9 @@ CREATE SEQUENCE watchlist_watchlist_id_seq
 
 -- Drop table
 
--- DROP TABLE daily_stock_data;
+-- DROP TABLE public.daily_stock_data;
 
-CREATE TABLE daily_stock_data (
+CREATE TABLE public.daily_stock_data (
 	ticker varchar(20) NOT NULL,
 	trade_date date NOT NULL,
 	open_price numeric(12, 2) NULL,
@@ -131,9 +140,9 @@ CREATE TABLE daily_stock_data (
 
 -- Drop table
 
--- DROP TABLE ignored_events;
+-- DROP TABLE public.ignored_events;
 
-CREATE TABLE ignored_events (
+CREATE TABLE public.ignored_events (
 	ignored_event_id serial4 NOT NULL,
 	ticker varchar(20) NOT NULL,
 	event_type varchar(20) NOT NULL,
@@ -148,9 +157,9 @@ CREATE TABLE ignored_events (
 
 -- Drop table
 
--- DROP TABLE portfolios;
+-- DROP TABLE public.portfolios;
 
-CREATE TABLE portfolios (
+CREATE TABLE public.portfolios (
 	id serial4 NOT NULL,
 	"name" varchar(100) NOT NULL,
 	created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
@@ -162,9 +171,9 @@ CREATE TABLE portfolios (
 
 -- Drop table
 
--- DROP TABLE price_hit_log;
+-- DROP TABLE public.price_hit_log;
 
-CREATE TABLE price_hit_log (
+CREATE TABLE public.price_hit_log (
 	hit_id serial4 NOT NULL,
 	ticker varchar(10) NOT NULL,
 	price_level numeric NOT NULL,
@@ -178,9 +187,9 @@ CREATE UNIQUE INDEX idx_ticker_level_date ON public.price_hit_log USING btree (t
 
 -- Drop table
 
--- DROP TABLE price_update_log;
+-- DROP TABLE public.price_update_log;
 
-CREATE TABLE price_update_log (
+CREATE TABLE public.price_update_log (
 	log_id serial4 NOT NULL,
 	update_timestamp timestamptz DEFAULT CURRENT_TIMESTAMP NULL,
 	records_saved int4 NULL,
@@ -192,9 +201,9 @@ CREATE TABLE price_update_log (
 
 -- Drop table
 
--- DROP TABLE stock_details;
+-- DROP TABLE public.stock_details;
 
-CREATE TABLE stock_details (
+CREATE TABLE public.stock_details (
 	ticker varchar(20) NOT NULL,
 	update_q1 date NULL,
 	update_q2 date NULL,
@@ -216,9 +225,9 @@ CREATE TABLE stock_details (
 
 -- Drop table
 
--- DROP TABLE stock_price_levels;
+-- DROP TABLE public.stock_price_levels;
 
-CREATE TABLE stock_price_levels (
+CREATE TABLE public.stock_price_levels (
 	level_id serial4 NOT NULL,
 	ticker varchar(20) NOT NULL,
 	price_level numeric(12, 2) NULL,
@@ -232,13 +241,39 @@ CREATE TABLE stock_price_levels (
 CREATE INDEX stock_price_levels_ticker_idx ON public.stock_price_levels USING btree (ticker);
 
 
+-- public.stock_valuations definition
+
+-- Drop table
+
+-- DROP TABLE public.stock_valuations;
+
+CREATE TABLE public.stock_valuations (
+	id bigserial NOT NULL,
+	ticker varchar(20) NOT NULL,
+	valuation_date date NOT NULL,
+	price_zarc numeric(18, 4) NULL,
+	heps_12m_zarc numeric(18, 4) NULL,
+	dividend_12m_zarc numeric(18, 4) NULL,
+	cash_gen_ps_zarc numeric(18, 4) NULL,
+	nav_ps_zarc numeric(18, 4) NULL,
+	earnings_yield numeric(18, 6) NULL,
+	dividend_yield numeric(18, 6) NULL,
+	cash_flow_yield numeric(18, 6) NULL,
+	quick_ratio numeric(18, 6) NULL,
+	p_to_nav numeric(18, 6) NULL,
+	peg_ratio numeric(18, 6) NULL,
+	created_at timestamptz DEFAULT now() NULL,
+	CONSTRAINT stock_valuations_pkey PRIMARY KEY (id)
+);
+
+
 -- public.watchlist definition
 
 -- Drop table
 
--- DROP TABLE watchlist;
+-- DROP TABLE public.watchlist;
 
-CREATE TABLE watchlist (
+CREATE TABLE public.watchlist (
 	watchlist_id serial4 NOT NULL,
 	ticker varchar(20) NOT NULL,
 	price_level numeric(12, 2) NULL,
@@ -257,9 +292,9 @@ CREATE INDEX watchlist_ticker_idx ON public.watchlist USING btree (ticker);
 
 -- Drop table
 
--- DROP TABLE action_log;
+-- DROP TABLE public.action_log;
 
-CREATE TABLE action_log (
+CREATE TABLE public.action_log (
 	log_id serial4 NOT NULL,
 	ticker varchar(20) NOT NULL,
 	log_timestamp timestamptz DEFAULT CURRENT_TIMESTAMP NULL,
@@ -268,7 +303,7 @@ CREATE TABLE action_log (
 	ai_analysis text NULL,
 	is_read bool DEFAULT false NULL,
 	CONSTRAINT action_log_pkey PRIMARY KEY (log_id),
-	CONSTRAINT action_log_ticker_fkey FOREIGN KEY (ticker) REFERENCES stock_details(ticker)
+	CONSTRAINT action_log_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker)
 );
 
 
@@ -276,9 +311,9 @@ CREATE TABLE action_log (
 
 -- Drop table
 
--- DROP TABLE historical_earnings;
+-- DROP TABLE public.historical_earnings;
 
-CREATE TABLE historical_earnings (
+CREATE TABLE public.historical_earnings (
 	earnings_id serial4 NOT NULL,
 	ticker varchar(20) NOT NULL,
 	"period" varchar(20) NOT NULL,
@@ -287,7 +322,7 @@ CREATE TABLE historical_earnings (
 	results_date date NOT NULL,
 	CONSTRAINT historical_earnings_pkey PRIMARY KEY (earnings_id),
 	CONSTRAINT historical_earnings_ticker_period_key UNIQUE (ticker, period),
-	CONSTRAINT historical_earnings_ticker_fkey FOREIGN KEY (ticker) REFERENCES stock_details(ticker) ON DELETE CASCADE
+	CONSTRAINT historical_earnings_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
 );
 CREATE INDEX idx_historical_earnings_ticker ON public.historical_earnings USING btree (ticker);
 
@@ -296,9 +331,9 @@ CREATE INDEX idx_historical_earnings_ticker ON public.historical_earnings USING 
 
 -- Drop table
 
--- DROP TABLE portfolio_holdings;
+-- DROP TABLE public.portfolio_holdings;
 
-CREATE TABLE portfolio_holdings (
+CREATE TABLE public.portfolio_holdings (
 	id serial4 NOT NULL,
 	portfolio_id int4 NULL,
 	ticker varchar(20) NOT NULL,
@@ -307,7 +342,7 @@ CREATE TABLE portfolio_holdings (
 	last_updated timestamp DEFAULT CURRENT_TIMESTAMP NULL,
 	CONSTRAINT portfolio_holdings_pkey PRIMARY KEY (id),
 	CONSTRAINT portfolio_holdings_portfolio_id_ticker_key UNIQUE (portfolio_id, ticker),
-	CONSTRAINT portfolio_holdings_portfolio_id_fkey FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE
+	CONSTRAINT portfolio_holdings_portfolio_id_fkey FOREIGN KEY (portfolio_id) REFERENCES public.portfolios(id) ON DELETE CASCADE
 );
 
 
@@ -315,9 +350,9 @@ CREATE TABLE portfolio_holdings (
 
 -- Drop table
 
--- DROP TABLE portfolio_transactions;
+-- DROP TABLE public.portfolio_transactions;
 
-CREATE TABLE portfolio_transactions (
+CREATE TABLE public.portfolio_transactions (
 	id serial4 NOT NULL,
 	portfolio_id int4 NULL,
 	ticker varchar(20) NOT NULL,
@@ -329,7 +364,7 @@ CREATE TABLE portfolio_transactions (
 	notes text NULL,
 	CONSTRAINT portfolio_transactions_pkey PRIMARY KEY (id),
 	CONSTRAINT portfolio_transactions_transaction_type_check CHECK (((transaction_type)::text = ANY ((ARRAY['BUY'::character varying, 'SELL'::character varying])::text[]))),
-	CONSTRAINT portfolio_transactions_portfolio_id_fkey FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE
+	CONSTRAINT portfolio_transactions_portfolio_id_fkey FOREIGN KEY (portfolio_id) REFERENCES public.portfolios(id) ON DELETE CASCADE
 );
 
 
@@ -337,15 +372,15 @@ CREATE TABLE portfolio_transactions (
 
 -- Drop table
 
--- DROP TABLE sens;
+-- DROP TABLE public.sens;
 
-CREATE TABLE sens (
+CREATE TABLE public.sens (
 	sens_id serial4 NOT NULL,
 	ticker varchar(20) NOT NULL,
 	publication_datetime timestamptz NOT NULL,
 	"content" text NOT NULL,
 	CONSTRAINT sens_pkey PRIMARY KEY (sens_id),
-	CONSTRAINT sens_ticker_fkey FOREIGN KEY (ticker) REFERENCES stock_details(ticker) ON DELETE CASCADE
+	CONSTRAINT sens_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
 );
 CREATE INDEX idx_sens_ticker_datetime ON public.sens USING btree (ticker, publication_datetime DESC);
 
@@ -354,9 +389,9 @@ CREATE INDEX idx_sens_ticker_datetime ON public.sens USING btree (ticker, public
 
 -- Drop table
 
--- DROP TABLE stock_analysis;
+-- DROP TABLE public.stock_analysis;
 
-CREATE TABLE stock_analysis (
+CREATE TABLE public.stock_analysis (
 	analysis_id serial4 NOT NULL,
 	ticker varchar(20) NOT NULL,
 	research text NULL,
@@ -366,5 +401,5 @@ CREATE TABLE stock_analysis (
 	deepresearch_date date NULL,
 	CONSTRAINT stock_analysis_pkey PRIMARY KEY (analysis_id),
 	CONSTRAINT stock_analysis_ticker_key UNIQUE (ticker),
-	CONSTRAINT stock_analysis_ticker_fkey FOREIGN KEY (ticker) REFERENCES stock_details(ticker) ON DELETE CASCADE
+	CONSTRAINT stock_analysis_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
 );

@@ -3,19 +3,21 @@ from ttkbootstrap.constants import *
 from utils import calculate_days_to_event, get_proximity_status
 
 class WatchlistWidget(ttk.Frame):
-    def __init__(self, parent, db_layer, on_select_callback):
+    def __init__(self, parent, db_layer, on_select_callback, async_run):
         super().__init__(parent)
         self.db = db_layer
         self.on_select = on_select_callback
+        self.async_run = async_run
         self.create_widgets()
 
     def create_widgets(self):
-        # --- UPDATED COLUMNS: Added Strategy and News ---
-        cols = ("Ticker", "Name", "Status", "Event", "Strategy", "News")
+        # --- UPDATED COLUMNS: Added Price, Strategy and News ---
+        cols = ("Ticker", "Name", "Price", "Status", "Event", "Strategy", "News")
         self.tree = ttk.Treeview(self, columns=cols, show="headings", bootstyle="primary")
         
         self.tree.heading("Ticker", text="Ticker")
         self.tree.heading("Name", text="Name")
+        self.tree.heading("Price", text="Price")
         self.tree.heading("Status", text="Status")
         self.tree.heading("Event", text="Event")
         self.tree.heading("Strategy", text="Strategy")
@@ -24,7 +26,8 @@ class WatchlistWidget(ttk.Frame):
         # --- OPTIMIZED WIDTHS ---
         self.tree.column("Ticker", width=60, anchor=W, stretch=False)
         self.tree.column("Name", width=80, anchor=W, stretch=False)
-        self.tree.column("Status", width=100, anchor=W, stretch=False)
+        self.tree.column("Price", width=70, anchor=E, stretch=False)
+        self.tree.column("Status", width=113, anchor=W, stretch=False)
         self.tree.column("Event", width=50, anchor=CENTER, stretch=False)
         self.tree.column("Strategy", width=400, anchor=W, stretch=True)
         self.tree.column("News", width=400, anchor=W, stretch=True)
@@ -53,7 +56,8 @@ class WatchlistWidget(ttk.Frame):
         for item in self.tree.get_children():
             self.tree.delete(item)
 
-        data = self.db.fetch_watchlist_data()
+        # Use async_run to call the async database method
+        data = self.async_run(self.db.fetch_watchlist_data())
         
         for row in data:
             # 1. Calculate Event Days
@@ -83,14 +87,18 @@ class WatchlistWidget(ttk.Frame):
             if len(news_text) > 100:
                 news_text = news_text[:100] + "..."
 
-            # 5. Truncate Name (New Requirement)
-            # Slice to 10 chars max
+            # 5. Truncate Name
             full_name = row['full_name'] if row['full_name'] else ""
             short_name = full_name[:10]
+            
+            # 6. Format Price (no decimal places - price is already in cents)
+            price_val = row['close_price']
+            price_str = f"{int(price_val)}" if price_val is not None else "-"
 
             self.tree.insert("", "end", values=(
                 row['ticker'], 
-                short_name, 
+                short_name,
+                price_str,
                 prox_text,
                 days_str,
                 strategy_text,
