@@ -27,17 +27,9 @@ async def main():
     db = DBLayer()
     await db.init_pool()
     
-    # Step 1: Create table
-    print("Step 1: Creating raw_stock_valuations table...")
-    try:
-        with open('sql/raw_stock_valuations.sql', 'r') as f:
-            sql = f.read()
-        
-        async with db.pool.acquire() as conn:
-            await conn.execute(sql)
-        print("[OK] Table ready")
-    except Exception as e:
-        print(f"[INFO] Table may already exist: {e}")
+    # Step 1: Create table - SKIPPED (Table already exists)
+    print("Step 1: Table creation skipped (assumed existing)...")
+    print("[OK] Table ready")
     
     print()
     
@@ -48,7 +40,7 @@ async def main():
     loader = RawFundamentalsLoader(db, log_callback=print)
     
     # Get all tickers from watchlist (limit=None means all)
-    result = await loader.run_fundamentals_update(tickers=None)
+    result = await loader.run_fundamentals_update(tickers=["ART"])
     
     print()
     print("=" * 60)

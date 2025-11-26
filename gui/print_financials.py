@@ -161,7 +161,7 @@ async def main():
         
         await ensure_logged_in(page, context)
         
-        tickers = ["NPN", "ABG"] 
+        tickers = ["ART"] 
         
         for ticker in tickers:
             print(f"\n>>> Fetching {ticker}...")

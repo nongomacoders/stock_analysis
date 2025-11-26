@@ -69,25 +69,25 @@ class RawFundamentalsLoader:
                 periods_data = await self._scrape_multi_year_fundamentals(ticker)
                 
                 if not periods_data:
-                    self.log(f"  ❌ Failed to scrape data for {ticker}")
+                    self.log(f"  [ERROR] Failed to scrape data for {ticker}")
                     failed += 1
                     continue
                 
-                self.log(f"  ✓ Scraped {len(periods_data)} periods for {ticker}")
+                self.log(f"  [OK] Scraped {len(periods_data)} periods for {ticker}")
                 
                 # Upsert into database
                 success = await self._upsert_raw_fundamentals(ticker, periods_data)
                 
                 if success:
-                    self.log(f"  ✓ Upserted {len(periods_data)} periods into raw_stock_valuations")
+                    self.log(f"  [OK] Upserted {len(periods_data)} periods into raw_stock_valuations")
                     succeeded += 1
                     total_periods += len(periods_data)
                 else:
-                    self.log(f"  ❌ Failed to insert data for {ticker}")
+                    self.log(f"  [ERROR] Failed to insert data for {ticker}")
                     failed += 1
                     
             except Exception as e:
-                self.log(f"  ❌ Error processing {ticker}: {type(e).__name__}: {str(e)}")
+                self.log(f"  [ERROR] Error processing {ticker}: {type(e).__name__}: {str(e)}")
                 import traceback
                 self.log(f"  Traceback: {traceback.format_exc()}")
                 failed += 1
@@ -144,7 +144,7 @@ class RawFundamentalsLoader:
                 self.log(f"  Parsed {len(share_stats_periods)} periods from SHARE STATISTICS")
                 periods_data = share_stats_periods
             else:
-                self.log(f"  ⚠ No SHARE STATISTICS table found")
+                self.log(f"  [WARN] No SHARE STATISTICS table found")
                 return None
             
             # Then, parse RATIOS table and merge quick_ratio into periods_data
@@ -162,7 +162,7 @@ class RawFundamentalsLoader:
                         # No matching period in ratios table - set to NULL
                         period['quick_ratio'] = None
             else:
-                self.log(f"  ⚠ No RATIOS table found, quick_ratio will be NULL")
+                self.log(f"  [WARN] No RATIOS table found, quick_ratio will be NULL")
                 # Set all quick_ratio to None
                 for period in periods_data:
                     period['quick_ratio'] = None
@@ -238,13 +238,36 @@ class RawFundamentalsLoader:
         periods_info = []
         for idx in year_indices:
             if idx < len(headers):
-                period_label = headers[idx]
+                period_label = headers[idx].strip()
+
+                # Skip empty header cells
+                if not period_label:
+                    self.log(
+                        f"    [WARN] Empty period header at column {idx}, "
+                        "skipping this column."
+                    )
+                    continue
+
                 period_end = self._parse_period_label(period_label)
+
+                # If we can't parse the label into a date, skip it
+                if period_end is None:
+                    self.log(
+                        f"    [WARN] Could not parse valid period from header "
+                        f"'{period_label}' (col {idx}), skipping."
+                    )
+                    continue
+
                 periods_info.append({
                     'column_idx': idx,
                     'results_period_end': period_end,
                     'results_period_label': period_label
                 })
+
+        if not periods_info:
+            self.log("    [ERROR] No valid period headers found in SHARE STATISTICS.")
+            return []
+
         
         self.log(f"    [DEBUG] Periods info: {periods_info}")
         
@@ -289,7 +312,7 @@ class RawFundamentalsLoader:
                             periods_data[period_idx][field_key] = value
                             
                             if value is None:
-                                self.log(f"    ⚠ Missing/invalid '{field_label}' for period '{period_info['results_period_label']}': '{value_text}'")
+                                self.log(f"    [WARN] Missing/invalid '{field_label}' for period '{period_info['results_period_label']}': '{value_text}'")
                     break
         
         return periods_data
@@ -343,13 +366,33 @@ class RawFundamentalsLoader:
         periods_info = []
         for idx in year_indices:
             if idx < len(headers):
-                period_label = headers[idx]
+                period_label = headers[idx].strip()
+
+                if not period_label:
+                    self.log(
+                        f"    [WARN] Empty period header in RATIOS at column {idx}, "
+                        "skipping."
+                    )
+                    continue
+
                 period_end = self._parse_period_label(period_label)
+                if period_end is None:
+                    self.log(
+                        f"    [WARN] Could not parse valid period from RATIOS header "
+                        f"'{period_label}' (col {idx}), skipping."
+                    )
+                    continue
+
                 periods_info.append({
                     'column_idx': idx,
                     'results_period_end': period_end,
                     'results_period_label': period_label
                 })
+
+        if not periods_info:
+            self.log("    [ERROR] No valid period headers found in RATIOS.")
+            return []
+
         
         # Initialize data structures for each period
         periods_data = []
@@ -378,7 +421,7 @@ class RawFundamentalsLoader:
                         periods_data[period_idx]['quick_ratio'] = value
                         
                         if value is None:
-                            self.log(f"    ⚠ Missing/invalid 'Quick Ratio' for period '{period_info['results_period_label']}': '{value_text}'")
+                            self.log(f"    [WARN] Missing/invalid 'Quick Ratio' for period '{period_info['results_period_label']}': '{value_text}'")
                 break
         
         return periods_data
@@ -400,7 +443,7 @@ class RawFundamentalsLoader:
             match = re.match(r'([A-Za-z]+)\s+(\d{4})', header)
             
             if not match:
-                self.log(f"    ⚠ Could not parse period label: '{header}'")
+                self.log(f"    [WARN] Could not parse period label: '{header}'")
                 return None
             
             month_str = match.group(1)
@@ -416,7 +459,7 @@ class RawFundamentalsLoader:
             
             month_num = month_map.get(month_str.lower())
             if not month_num:
-                self.log(f"    ⚠ Unknown month in period label: '{month_str}'")
+                self.log(f"    [WARN] Unknown month in period label: '{month_str}'")
                 return None
             
             year = int(year_str)
@@ -428,7 +471,7 @@ class RawFundamentalsLoader:
             return date(year, month_num, last_day)
             
         except Exception as e:
-            self.log(f"    ⚠ Error parsing period label '{header}': {e}")
+            self.log(f"    [WARN] Error parsing period label '{header}': {e}")
             return None
     
     def _parse_financial_value(self, text: str):

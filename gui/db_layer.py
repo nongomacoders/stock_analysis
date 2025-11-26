@@ -306,9 +306,9 @@ class DBLayer:
             INSERT INTO raw_stock_valuations (
                 ticker, results_period_end, results_period_label,
                 heps_12m_zarc, dividend_12m_zarc, cash_gen_ps_zarc, nav_ps_zarc,
-                quick_ratio, source, created_at, updated_at
+                quick_ratio, source
             ) VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW()
+                $1, $2, $3, $4, $5, $6, $7, $8, $9
             )
             ON CONFLICT (ticker, results_period_end) 
             DO UPDATE SET
@@ -318,8 +318,7 @@ class DBLayer:
                 cash_gen_ps_zarc = EXCLUDED.cash_gen_ps_zarc,
                 nav_ps_zarc = EXCLUDED.nav_ps_zarc,
                 quick_ratio = EXCLUDED.quick_ratio,
-                source = EXCLUDED.source,
-                updated_at = NOW()
+                source = EXCLUDED.source
         """
         
         try:
