@@ -10,7 +10,7 @@ except ImportError:
     print("Error: env.py not found. Please create it with USERNAME and PASSWORD.")
     exit()
 
-AUTH_FILE = "auth.json"
+AUTH_FILE = os.path.join(os.path.dirname(__file__), "auth.json")
 BASE_URL = "https://www.sharedata.co.za/v2/Scripts"
 
 # Map IDs to readable names
@@ -142,7 +142,7 @@ async def ensure_logged_in(page, context):
     await page.goto(f"{BASE_URL}/Home.aspx", wait_until="domcontentloaded")
     
     # Check for concurrent login dialog first
-    await handle_concurrent_login_dialog(page)
+    #await handle_concurrent_login_dialog(page)
     
     if await page.is_visible("text='Login'", timeout=2000):
         await page.click("text='Login'")

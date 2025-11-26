@@ -198,10 +198,42 @@ class RawFundamentalsLoader:
         if not rows:
             return []
         
-        # --- HEADER DETECTION ---
-        header_row = rows[0]
-        headers = [th.get_text(strip=True).replace('\n', ' ') for th in header_row.find_all(['th', 'td'])]
-        
+        # --- ROBUST HEADER DETECTION ---
+        header_row = None
+        headers = None
+
+        for row in rows:
+            cells = row.find_all(['th', 'td'])
+            texts = [c.get_text(strip=True).replace('\n', ' ') for c in cells]
+
+            # Need at least a label + one period column
+            if len(texts) < 2:
+                continue
+
+            non_first = [t for t in texts[1:] if t]
+
+            # Skip rows where all non-label cells are empty (your ['', '', '', ''] case)
+            if not non_first:
+                continue
+
+            # Look for something that smells like a period: month or 4-digit year
+            has_year_or_month = any(
+                re.search(r"\b(19|20)\d{2}\b", t) or
+                re.search(r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b", t)
+                for t in non_first
+            )
+
+            if has_year_or_month:
+                header_row = row
+                headers = texts
+                break
+
+        # Fallback: if we didn’t find a “smart” header, use the first row
+        if header_row is None:
+            header_row = rows[0]
+            headers = [th.get_text(strip=True).replace('\n', ' ')
+                    for th in header_row.find_all(['th', 'td'])]
+
         self.log(f"    [DEBUG] Share Stats Headers: {headers}")
         
         # Identify column structure:
@@ -249,6 +281,7 @@ class RawFundamentalsLoader:
                     continue
 
                 period_end = self._parse_period_label(period_label)
+                release_date = self._parse_release_date(period_label)
 
                 # If we can't parse the label into a date, skip it
                 if period_end is None:
@@ -261,7 +294,8 @@ class RawFundamentalsLoader:
                 periods_info.append({
                     'column_idx': idx,
                     'results_period_end': period_end,
-                    'results_period_label': period_label
+                    'results_period_label': period_label,
+                    'results_release_date': release_date,
                 })
 
         if not periods_info:
@@ -277,6 +311,7 @@ class RawFundamentalsLoader:
             periods_data.append({
                 'results_period_end': period_info['results_period_end'],
                 'results_period_label': period_info['results_period_label'],
+                'results_release_date': period_info['results_release_date'],
                 'heps_12m_zarc': None,
                 'dividend_12m_zarc': None,
                 'cash_gen_ps_zarc': None,
@@ -337,11 +372,44 @@ class RawFundamentalsLoader:
         if not rows:
             return []
         
-        # --- HEADER DETECTION (same logic as share statistics) ---
-        header_row = rows[0]
-        headers = [th.get_text(strip=True).replace('\n', ' ') for th in header_row.find_all(['th', 'td'])]
-        
+        # --- ROBUST HEADER DETECTION ---
+        header_row = None
+        headers = None
+
+        for row in rows:
+            cells = row.find_all(['th', 'td'])
+            texts = [c.get_text(strip=True).replace('\n', ' ') for c in cells]
+
+            # Need at least a label + one period column
+            if len(texts) < 2:
+                continue
+
+            non_first = [t for t in texts[1:] if t]
+
+            # Skip rows where all non-label cells are empty (your ['', '', '', ''] case)
+            if not non_first:
+                continue
+
+            # Look for something that smells like a period: month or 4-digit year
+            has_year_or_month = any(
+                re.search(r"\b(19|20)\d{2}\b", t) or
+                re.search(r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b", t)
+                for t in non_first
+            )
+
+            if has_year_or_month:
+                header_row = row
+                headers = texts
+                break
+
+        # Fallback: if we didn’t find a “smart” header, use the first row
+        if header_row is None:
+            header_row = rows[0]
+            headers = [th.get_text(strip=True).replace('\n', ' ')
+                    for th in header_row.find_all(['th', 'td'])]
+
         self.log(f"    [DEBUG] Ratios Headers: {headers}")
+
         
         # Find growth column index
         growth_idx = -1
@@ -518,3 +586,31 @@ class RawFundamentalsLoader:
         except Exception as e:
             self.log(f"  Error upserting data for {ticker}: {e}")
             return False
+    
+    
+
+    def _parse_release_date(self, header: str):
+        """
+        Extract the announcement / release date from a label like:
+        'Mar 2025Final (12m)26 Jun 2025' -> date(2025, 6, 26)
+        """
+        m = re.search(r'(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})', header)
+        if not m:
+            self.log(f"    [WARN] Could not parse release date from: '{header}'")
+            return None
+
+        day = int(m.group(1))
+        month_str = m.group(2).lower()
+        year = int(m.group(3))
+
+        month_map = {
+            'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6,
+            'jul': 7, 'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12,
+        }
+        month = month_map.get(month_str)
+        if not month:
+            self.log(f"    [WARN] Unknown release month in label: '{header}'")
+            return None
+
+        return date(year, month, day)
+

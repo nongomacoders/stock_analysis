@@ -303,23 +303,26 @@ class DBLayer:
             await self.init_pool()
         
         upsert_query = """
-            INSERT INTO raw_stock_valuations (
-                ticker, results_period_end, results_period_label,
-                heps_12m_zarc, dividend_12m_zarc, cash_gen_ps_zarc, nav_ps_zarc,
-                quick_ratio, source
-            ) VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9
-            )
-            ON CONFLICT (ticker, results_period_end) 
-            DO UPDATE SET
-                results_period_label = EXCLUDED.results_period_label,
-                heps_12m_zarc = EXCLUDED.heps_12m_zarc,
-                dividend_12m_zarc = EXCLUDED.dividend_12m_zarc,
-                cash_gen_ps_zarc = EXCLUDED.cash_gen_ps_zarc,
-                nav_ps_zarc = EXCLUDED.nav_ps_zarc,
-                quick_ratio = EXCLUDED.quick_ratio,
-                source = EXCLUDED.source
-        """
+        INSERT INTO raw_stock_valuations (
+            ticker, results_period_end, results_period_label,
+            results_release_date,
+            heps_12m_zarc, dividend_12m_zarc, cash_gen_ps_zarc, nav_ps_zarc,
+            quick_ratio, source
+        ) VALUES (
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+        )
+        ON CONFLICT (ticker, results_period_end) 
+        DO UPDATE SET
+            results_period_label = EXCLUDED.results_period_label,
+            results_release_date = EXCLUDED.results_release_date,
+            heps_12m_zarc = EXCLUDED.heps_12m_zarc,
+            dividend_12m_zarc = EXCLUDED.dividend_12m_zarc,
+            cash_gen_ps_zarc = EXCLUDED.cash_gen_ps_zarc,
+            nav_ps_zarc = EXCLUDED.nav_ps_zarc,
+            quick_ratio = EXCLUDED.quick_ratio,
+            source = EXCLUDED.source
+    """
+
         
         try:
             async with self.pool.acquire() as conn:
@@ -330,6 +333,7 @@ class DBLayer:
                         ticker,
                         period['results_period_end'],
                         period['results_period_label'],
+                        period.get('results_release_date'),
                         period.get('heps_12m_zarc'),
                         period.get('dividend_12m_zarc'),
                         period.get('cash_gen_ps_zarc'),

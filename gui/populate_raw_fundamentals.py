@@ -40,7 +40,7 @@ async def main():
     loader = RawFundamentalsLoader(db, log_callback=print)
     
     # Get all tickers from watchlist (limit=None means all)
-    result = await loader.run_fundamentals_update(tickers=["ART"])
+    result = await loader.run_fundamentals_update(tickers=None)
     
     print()
     print("=" * 60)
