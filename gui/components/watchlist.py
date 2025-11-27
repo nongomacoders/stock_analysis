@@ -2,6 +2,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from utils import get_proximity_status
 from datetime import date
+from components.chart_window import ChartWindow
 
 class WatchlistWidget(ttk.Frame):
     def __init__(self, parent, db_layer, on_select_callback, async_run):
@@ -52,6 +53,7 @@ class WatchlistWidget(ttk.Frame):
         self.tree.tag_configure("pretrade", background="#E6E6FA", foreground="black")
 
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
+        self.tree.bind("<Double-Button-1>", self._on_double_click)
 
     def refresh(self):
         for item in self.tree.get_children():
@@ -69,9 +71,6 @@ class WatchlistWidget(ttk.Frame):
             if next_date:
                 days = (next_date - today).days
                 days_str = f"{days}d"
-                
-                # Optional: Handle overdue events visually?
-                # Currently just shows negative numbers (e.g. -5d) which implies overdue.
 
             # 2. Determine Row Background Tag
             row_tag = ""
@@ -118,6 +117,14 @@ class WatchlistWidget(ttk.Frame):
             item = self.tree.item(sel[0])
             ticker = item['values'][0]
             self.on_select(ticker)
+    
+    def _on_double_click(self, event):
+        """Open chart window when row is double-clicked"""
+        sel = self.tree.selection()
+        if sel:
+            item = self.tree.item(sel[0])
+            ticker = item['values'][0]
+            ChartWindow(self, ticker, self.db, self.async_run)
 
     def sort_column(self, col, reverse):
         """
@@ -127,7 +134,7 @@ class WatchlistWidget(ttk.Frame):
         
         if col == "Event":
             def event_key(item):
-                val = item[0] # The value string, e.g., "5d", "-", "120d", "-10d"
+                val = item[0]
                 if val == "-":
                     return 999999
                 try:

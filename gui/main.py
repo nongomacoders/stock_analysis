@@ -2,10 +2,8 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from db_layer import DBLayer
 from components.watchlist import WatchlistWidget
-from components.admin import AdminWindow
 import asyncio
 import threading
-# We will add Scorecard and SensFeed later to keep it simple for now
 
 class CommandCenter(ttk.Window):
     def __init__(self):
@@ -24,9 +22,6 @@ class CommandCenter(ttk.Window):
         asyncio.run_coroutine_threadsafe(self.db.init_pool(), self.loop).result()
         
         self.create_layout()
-        
-        # Admin window reference
-        self.admin_window = None
     
     def _run_event_loop(self):
         """Run the asyncio event loop in a separate thread"""
@@ -45,16 +40,6 @@ class CommandCenter(ttk.Window):
         
         # Left side - Scorecard placeholder
         ttk.Label(hud_frame, text="[Portfolio Scorecard Placeholder]").pack(side=LEFT, anchor=W, padx=10)
-        
-        # Right side - Admin button
-        admin_btn = ttk.Button(
-            hud_frame,
-            text="Admin",
-            bootstyle="info-outline",
-            command=self.open_admin,
-            width=10
-        )
-        admin_btn.pack(side=RIGHT, padx=10)
 
         # 2. Main Watchlist Grid (Takes up all remaining space)
         self.watchlist = WatchlistWidget(self, self.db, self.on_ticker_select, self.async_run)
@@ -62,19 +47,9 @@ class CommandCenter(ttk.Window):
 
         # Initial Load
         self.watchlist.refresh()
-    
-    def open_admin(self):
-        """Open the admin panel window"""
-        # Only allow one admin window at a time
-        if self.admin_window is None or not self.admin_window.winfo_exists():
-            self.admin_window = AdminWindow(self, self.db, self.loop)
-        else:
-            # If window already exists, bring it to focus
-            self.admin_window.focus()
 
     def on_ticker_select(self, ticker):
         """Callback when watchlist row is clicked"""
-        # Currently no action needed as Strategy Panel is removed
         print(f"Selected: {ticker}")
 
 if __name__ == "__main__":

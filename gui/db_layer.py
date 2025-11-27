@@ -307,3 +307,20 @@ class DBLayer:
         async with self.pool.acquire() as conn:
             row = await conn.fetchrow(query, ticker)
             return dict(row) if row else None
+    
+    async def get_historical_prices(self, ticker: str, days: int):
+        """Get historical OHLC prices for a ticker over the specified number of days."""
+        if self.pool is None:
+            await self.init_pool()
+        
+        query = """
+            SELECT trade_date, open_price, high_price, low_price, close_price
+            FROM daily_stock_data
+            WHERE ticker = $1
+              AND trade_date >= CURRENT_DATE - INTERVAL '1 day' * $2
+            ORDER BY trade_date ASC
+        """
+        
+        async with self.pool.acquire() as conn:
+            rows = await conn.fetch(query, ticker, days)
+            return [dict(row) for row in rows]
