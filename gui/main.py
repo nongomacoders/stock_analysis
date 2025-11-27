@@ -4,6 +4,9 @@ from db_layer import DBLayer
 from components.watchlist import WatchlistWidget
 import asyncio
 import threading
+import subprocess
+import sys
+import os
 
 class CommandCenter(ttk.Window):
     def __init__(self):
@@ -21,7 +24,26 @@ class CommandCenter(ttk.Window):
         # Initialize database pool
         asyncio.run_coroutine_threadsafe(self.db.init_pool(), self.loop).result()
         
+        # Start market_agent.py in background
+        self.start_market_agent()
+        
         self.create_layout()
+    
+    def start_market_agent(self):
+        """Start market_agent.py as a background daemon process"""
+        try:
+            market_agent_path = os.path.join(os.path.dirname(__file__), "market_agent.py")
+            
+            # Start the process in the background
+            self.market_agent_process = subprocess.Popen(
+                [sys.executable, market_agent_path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+            )
+            print(f"Market Agent started with PID: {self.market_agent_process.pid}")
+        except Exception as e:
+            print(f"Failed to start market_agent.py: {e}")
     
     def _run_event_loop(self):
         """Run the asyncio event loop in a separate thread"""
