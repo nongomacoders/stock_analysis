@@ -324,3 +324,22 @@ class DBLayer:
         async with self.pool.acquire() as conn:
             rows = await conn.fetch(query, ticker, days)
             return [dict(row) for row in rows]
+    
+    async def get_research_data(self, ticker: str):
+        """Get all research data for a ticker from stock_analysis table."""
+        if self.pool is None:
+            await self.init_pool()
+        
+        query = """
+            SELECT 
+                strategy,
+                research,
+                deepresearch,
+                deepresearch_date
+            FROM stock_analysis
+            WHERE ticker = $1
+        """
+        
+        async with self.pool.acquire() as conn:
+            row = await conn.fetchrow(query, ticker)
+            return dict(row) if row else None

@@ -3,6 +3,7 @@ from ttkbootstrap.constants import *
 from utils import get_proximity_status
 from datetime import date
 from components.chart_window import ChartWindow
+from components.research_window import ResearchWindow
 
 class WatchlistWidget(ttk.Frame):
     def __init__(self, parent, db_layer, on_select_callback, async_run):
@@ -119,12 +120,14 @@ class WatchlistWidget(ttk.Frame):
             self.on_select(ticker)
     
     def _on_double_click(self, event):
-        """Open chart window when row is double-clicked"""
+        """Open chart and research windows when row is double-clicked"""
         sel = self.tree.selection()
         if sel:
             item = self.tree.item(sel[0])
             ticker = item['values'][0]
+            # Open both windows
             ChartWindow(self, ticker, self.db, self.async_run)
+            ResearchWindow(self, ticker, self.db, self.async_run)
 
     def sort_column(self, col, reverse):
         """
