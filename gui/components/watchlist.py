@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-from utils import calculate_days_to_event, get_proximity_status
+from utils import get_proximity_status
+from datetime import date
 
 class WatchlistWidget(ttk.Frame):
     def __init__(self, parent, db_layer, on_select_callback, async_run):
@@ -11,15 +12,19 @@ class WatchlistWidget(ttk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
+        # --- STYLE CONFIGURATION ---
+        style = ttk.Style()
+        style.configure("Treeview.Heading", borderwidth=2, relief="groove", font=("Helvetica", 10, "bold"))
+
         # --- UPDATED COLUMNS: Added Price, Strategy and News ---
         cols = ("Ticker", "Name", "Price", "Status", "Event", "Strategy", "News")
-        self.tree = ttk.Treeview(self, columns=cols, show="headings", bootstyle="primary")
+        self.tree = ttk.Treeview(self, columns=cols, show="headings")
         
         self.tree.heading("Ticker", text="Ticker")
-        self.tree.heading("Name", text="Name")
+        self.tree.heading("Name", text="Name", command=lambda: self.sort_column("Name", False))
         self.tree.heading("Price", text="Price")
         self.tree.heading("Status", text="Status")
-        self.tree.heading("Event", text="Event")
+        self.tree.heading("Event", text="Event", command=lambda: self.sort_column("Event", False))
         self.tree.heading("Strategy", text="Strategy")
         self.tree.heading("News", text="News")
 
@@ -46,10 +51,6 @@ class WatchlistWidget(ttk.Frame):
         # Pre-Trade (Light Purple)
         self.tree.tag_configure("pretrade", background="#E6E6FA", foreground="black")
 
-        # Event Proximity Text Colors (Overrides default black if needed, or handled via values)
-        # For now, we keep text black for readability on light rows, 
-        # but we can bold the ticker if the event is close.
-
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
 
     def refresh(self):
@@ -58,13 +59,19 @@ class WatchlistWidget(ttk.Frame):
 
         # Use async_run to call the async database method
         data = self.async_run(self.db.fetch_watchlist_data())
+        today = date.today()
         
         for row in data:
-            # 1. Calculate Event Days
-            dates = [row['earnings_q1'], row['earnings_q2'], row['earnings_q3'], row['earnings_q4'],
-                     row['update_q1'], row['update_q2'], row['update_q3'], row['update_q4']]
-            days = calculate_days_to_event(dates)
-            days_str = f"{days}d" if days < 999 else "-"
+            # 1. Calculate Event Days using projected date from DB
+            next_date = row.get('next_event_date')
+            days_str = "-"
+            
+            if next_date:
+                days = (next_date - today).days
+                days_str = f"{days}d"
+                
+                # Optional: Handle overdue events visually?
+                # Currently just shows negative numbers (e.g. -5d) which implies overdue.
 
             # 2. Determine Row Background Tag
             row_tag = ""
@@ -111,3 +118,32 @@ class WatchlistWidget(ttk.Frame):
             item = self.tree.item(sel[0])
             ticker = item['values'][0]
             self.on_select(ticker)
+
+    def sort_column(self, col, reverse):
+        """
+        Sort treeview content by a specific column.
+        """
+        l = [(self.tree.set(k, col), k) for k in self.tree.get_children('')]
+        
+        if col == "Event":
+            def event_key(item):
+                val = item[0] # The value string, e.g., "5d", "-", "120d", "-10d"
+                if val == "-":
+                    return 999999
+                try:
+                    return int(val.replace("d", ""))
+                except ValueError:
+                    return 999999
+            l.sort(key=event_key, reverse=reverse)
+        elif col == "Name":
+             l.sort(key=lambda t: t[0].lower(), reverse=reverse)
+        else:
+            # Default string sort
+            l.sort(reverse=reverse)
+
+        # Rearrange items in sorted positions
+        for index, (val, k) in enumerate(l):
+            self.tree.move(k, '', index)
+
+        # Reverse sort next time
+        self.tree.heading(col, command=lambda: self.sort_column(col, not reverse))

@@ -40,6 +40,7 @@ class DBLayer:
     async def fetch_watchlist_data(self):
         """
         Joins watchlist, details, latest price, and portfolio status.
+        Uses raw_stock_valuations to project the next financial event based on the PENULTIMATE release + 1 year.
         Filters OUT 'Closed', 'Pending', and 'WL-Sleep'.
         """
         if self.pool is None:
@@ -50,10 +51,8 @@ class DBLayer:
                 w.ticker, sd.full_name, sd.priority, w.status,
                 w.entry_price, w.stop_loss, w.price_level as target,
                 p.close_price,
-                sd.earnings_q1, sd.earnings_q2, sd.earnings_q3, sd.earnings_q4,
-                sd.update_q1, sd.update_q2, sd.update_q3, sd.update_q4,
                 
-                --Strategy
+                -- Strategy
                 sa.strategy,
 
                 -- Latest News (SENS)
@@ -63,7 +62,15 @@ class DBLayer:
                  
                 -- Check if currently held in Portfolio
                 (SELECT count(*) FROM portfolio_holdings ph 
-                 WHERE ph.ticker = w.ticker) > 0 as is_holding
+                 WHERE ph.ticker = w.ticker) > 0 as is_holding,
+
+                -- Projected Next Event (Penultimate Release + 1 Year)
+                -- We select the 2nd most recent release date (OFFSET 1) and add 1 year
+                (SELECT (results_release_date + interval '1 year')::date 
+                 FROM raw_stock_valuations rsv 
+                 WHERE rsv.ticker = w.ticker 
+                 ORDER BY rsv.results_release_date DESC 
+                 LIMIT 1 OFFSET 1) as next_event_date
 
             FROM watchlist w
             JOIN stock_details sd ON w.ticker = sd.ticker
@@ -73,9 +80,7 @@ class DBLayer:
                 WHERE ticker = w.ticker ORDER BY trade_date DESC LIMIT 1
             ) p ON true
             
-            -- --- UPDATED FILTER ---
             WHERE w.status NOT IN ('Closed', 'Pending', 'WL-Sleep')
-            -- ----------------------
             
             ORDER BY 
                 CASE WHEN sd.priority = 'A' THEN 1 
@@ -113,19 +118,7 @@ class DBLayer:
             return [tuple(row.values()) for row in rows]
 
     async def select_tickers_for_valuation(self, limit=None):
-        """
-        Select tickers for valuation based on:
-        1. Prioritize tickers with missing valuations (NULL) FIRST
-        2. Then portfolio holdings
-        3. Then oldest valuation dates
-        4. Then priority (A>B>C)
-        5. Then alphabetically
-        
-        Args:
-            limit: Number of tickers to return, or None for all tickers
-        
-        Returns list of ticker strings
-        """
+        """Select tickers for valuation based on priority and missing data."""
         if self.pool is None:
             await self.init_pool()
             
@@ -134,9 +127,7 @@ class DBLayer:
                 SELECT 
                     w.ticker,
                     sd.priority,
-                    -- Check if in portfolio
                     EXISTS(SELECT 1 FROM portfolio_holdings ph WHERE ph.ticker = w.ticker) as in_portfolio,
-                    -- Get latest valuation date or NULL
                     (SELECT MAX(valuation_date) FROM stock_valuations sv WHERE sv.ticker = w.ticker) as last_valuation_date
                 FROM watchlist w
                 JOIN stock_details sd ON w.ticker = sd.ticker
@@ -144,21 +135,16 @@ class DBLayer:
             SELECT ticker
             FROM ticker_valuation_status
             ORDER BY 
-                -- First: missing valuations (NULL comes first with NULLS FIRST)
                 last_valuation_date ASC NULLS FIRST,
-                -- Second: portfolio holdings
                 in_portfolio DESC,
-                -- Third: priority A > B > C
                 CASE 
                     WHEN priority = 'A' THEN 1 
                     WHEN priority = 'B' THEN 2 
                     ELSE 3 
                 END,
-                -- Fourth: alphabetically
                 ticker
         """
         
-        # Add LIMIT clause only if limit is specified
         if limit is not None:
             query += " LIMIT $1"
             async with self.pool.acquire() as conn:
@@ -170,11 +156,7 @@ class DBLayer:
         return [row['ticker'] for row in rows]
 
     async def get_latest_price(self, ticker: str):
-        """
-        Get the latest price for a ticker from daily_stock_data.
-        
-        Returns dict with {'trade_date': date, 'close_price': Decimal} or None
-        """
+        """Get the latest price for a ticker."""
         if self.pool is None:
             await self.init_pool()
             
@@ -190,12 +172,7 @@ class DBLayer:
             return dict(row) if row else None
 
     async def get_heps_growth(self, ticker: str):
-        """
-        Compute HEPS growth rate from historical_earnings.
-        Takes two most recent periods and returns: (latest - previous) / previous
-        
-        Returns growth rate as decimal (0.15 for 15% growth) or None
-        """
+        """Compute HEPS growth rate from historical_earnings."""
         if self.pool is None:
             await self.init_pool()
             
@@ -222,24 +199,11 @@ class DBLayer:
             return growth
 
     async def insert_valuation(self, valuation_data: dict):
-        """
-        Insert a new valuation row into stock_valuations.
-        Deletes any existing rows for the ticker first to ensure only one latest row per ticker.
-        
-        Expected keys in valuation_data:
-        - ticker, valuation_date, price_zarc
-        - heps_12m_zarc, dividend_12m_zarc, cash_gen_ps_zarc, nav_ps_zarc
-        - earnings_yield, dividend_yield, cash_flow_yield
-        - quick_ratio, p_to_nav, peg_ratio
-        
-        Returns True on success, False on failure
-        """
+        """Insert a new valuation row into stock_valuations."""
         if self.pool is None:
             await self.init_pool()
             
-        delete_query = """
-            DELETE FROM stock_valuations WHERE ticker = $1
-        """
+        delete_query = "DELETE FROM stock_valuations WHERE ticker = $1"
         
         insert_query = """
             INSERT INTO stock_valuations (
@@ -254,10 +218,7 @@ class DBLayer:
         
         try:
             async with self.pool.acquire() as conn:
-                # Delete old rows for this ticker
                 await conn.execute(delete_query, valuation_data['ticker'])
-                
-                # Insert new row
                 await conn.execute(
                     insert_query,
                     valuation_data['ticker'],
@@ -281,24 +242,7 @@ class DBLayer:
             return False
     
     async def upsert_raw_fundamentals(self, ticker: str, periods_data: list):
-        """
-        Insert or update raw_stock_valuations for multiple periods.
-        
-        Args:
-            ticker: Stock ticker
-            periods_data: List of dicts with keys:
-                - results_period_end: date
-                - results_period_label: str
-                - heps_12m_zarc: float or None
-                - dividend_12m_zarc: float or None
-                - cash_gen_ps_zarc: float or None
-                - nav_ps_zarc: float or None
-                - quick_ratio: float or None
-        
-        Returns True on success, False on failure
-        
-        Uses ON CONFLICT UPDATE to upsert each period.
-        """
+        """Insert or update raw_stock_valuations for multiple periods."""
         if self.pool is None:
             await self.init_pool()
         
@@ -321,12 +265,10 @@ class DBLayer:
             nav_ps_zarc = EXCLUDED.nav_ps_zarc,
             quick_ratio = EXCLUDED.quick_ratio,
             source = EXCLUDED.source
-    """
-
+        """
         
         try:
             async with self.pool.acquire() as conn:
-                # Upsert each period
                 for period in periods_data:
                     await conn.execute(
                         upsert_query,
@@ -351,33 +293,12 @@ class DBLayer:
             return False
     
     async def get_latest_raw_fundamentals(self, ticker: str):
-        """
-        Get the most recent period fundamentals for a ticker from raw_stock_valuations.
-        
-        Returns dict with:
-            - results_period_end
-            - results_period_label
-            - heps_12m_zarc
-            - dividend_12m_zarc
-            - cash_gen_ps_zarc
-            - nav_ps_zarc
-            - quick_ratio
-        
-        or None if no data exists
-        """
+        """Get the most recent period fundamentals for a ticker."""
         if self.pool is None:
             await self.init_pool()
         
         query = """
-            SELECT 
-                results_period_end,
-                results_period_label,
-                heps_12m_zarc,
-                dividend_12m_zarc,
-                cash_gen_ps_zarc,
-                nav_ps_zarc,
-                quick_ratio
-            FROM raw_stock_valuations
+            SELECT * FROM raw_stock_valuations
             WHERE ticker = $1
             ORDER BY results_period_end DESC
             LIMIT 1
