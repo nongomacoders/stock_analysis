@@ -343,3 +343,19 @@ class DBLayer:
         async with self.pool.acquire() as conn:
             row = await conn.fetchrow(query, ticker)
             return dict(row) if row else None
+
+    async def get_sens_for_ticker(self, ticker: str, limit=50):
+        """Get SENS announcements for a ticker."""
+        if self.pool is None:
+            await self.init_pool()
+        
+        query = """
+            SELECT publication_datetime, content
+            FROM SENS
+            WHERE ticker = $1
+            ORDER BY publication_datetime DESC
+            LIMIT $2
+        """
+        async with self.pool.acquire() as conn:
+            rows = await conn.fetch(query, ticker, limit)
+            return [dict(row) for row in rows]

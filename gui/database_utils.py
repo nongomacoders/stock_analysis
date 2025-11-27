@@ -293,7 +293,7 @@ def insert_price_hit_log(db_config, ticker, level, hit_price):
                 query = """
                     INSERT INTO price_hit_log (ticker, price_level)
                     VALUES (%s, %s)
-                    ON CONFLICT (ticker, price_level, hit_timestamp::date) DO NOTHING
+                    ON CONFLICT (ticker, price_level, (hit_timestamp::date)) DO NOTHING
                 """
                 # Note: We only log the price_level and let the DB handle the timestamp/date
                 cursor.execute(query, (ticker, level))

@@ -35,11 +35,9 @@ class CommandCenter(ttk.Window):
             market_agent_path = os.path.join(os.path.dirname(__file__), "market_agent.py")
             
             # Start the process in the background
+            # Removed stdout/stderr pipes and creationflags to allow output to terminal
             self.market_agent_process = subprocess.Popen(
-                [sys.executable, market_agent_path],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+                [sys.executable, market_agent_path]
             )
             print(f"Market Agent started with PID: {self.market_agent_process.pid}")
         except Exception as e:

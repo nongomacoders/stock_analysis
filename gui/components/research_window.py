@@ -36,6 +36,9 @@ class ResearchWindow(ttk.Toplevel):
         self.notebook.add(self.deep_research_tab, text="Deep Research")
         self.notebook.add(self.master_strategy_tab, text="Strategy")
         self.notebook.add(self.master_research_tab, text="Research")
+        
+        self.sens_tab = self.create_sens_tab("SENS")
+        self.notebook.add(self.sens_tab, text="SENS")
     
     def create_text_tab(self, title):
         """Create a tab with a scrollable text widget"""
@@ -61,10 +64,75 @@ class ResearchWindow(ttk.Toplevel):
         frame.text_widget = text_widget
         
         return frame
+
+    def create_sens_tab(self, title):
+        """Create a tab with a PanedWindow: Treeview (left) and Text (right)"""
+        frame = ttk.Frame(self.notebook)
+        
+        # PanedWindow
+        paned = ttk.Panedwindow(frame, orient=HORIZONTAL)
+        paned.pack(fill=BOTH, expand=True, padx=5, pady=5)
+        
+        # Left Frame: Treeview
+        left_frame = ttk.Frame(paned)
+        paned.add(left_frame, weight=1)
+        
+        columns = ("date", "content")
+        tree = ttk.Treeview(left_frame, columns=columns, show="headings", bootstyle="primary")
+        tree.heading("date", text="Date")
+        tree.heading("content", text="Headline")
+        tree.column("date", width=150, stretch=False)
+        tree.column("content", stretch=True)
+        
+        scrollbar_tree = ttk.Scrollbar(left_frame, orient=VERTICAL, command=tree.yview)
+        tree.configure(yscrollcommand=scrollbar_tree.set)
+        
+        tree.pack(side=LEFT, fill=BOTH, expand=True)
+        scrollbar_tree.pack(side=RIGHT, fill=Y)
+        
+        # Right Frame: Text Detail
+        right_frame = ttk.Frame(paned)
+        paned.add(right_frame, weight=2)
+        
+        scrollbar_text = ttk.Scrollbar(right_frame)
+        scrollbar_text.pack(side=RIGHT, fill=Y)
+        
+        text_widget = ttk.Text(
+            right_frame,
+            wrap=WORD,
+            yscrollcommand=scrollbar_text.set,
+            font=("Consolas", 10)
+        )
+        text_widget.pack(side=LEFT, fill=BOTH, expand=True)
+        scrollbar_text.config(command=text_widget.yview)
+        
+        # Bind selection event
+        tree.bind("<<TreeviewSelect>>", self.on_sens_select)
+        
+        frame.tree = tree
+        frame.text_widget = text_widget
+        frame.sens_map = {} # To store full content
+        
+        return frame
+
+    def on_sens_select(self, event):
+        """Handle SENS item selection"""
+        selection = self.sens_tab.tree.selection()
+        if not selection:
+            return
+            
+        item_id = selection[0]
+        full_content = self.sens_tab.sens_map.get(item_id, "Content not found.")
+        
+        self.sens_tab.text_widget.config(state=NORMAL)
+        self.sens_tab.text_widget.delete('1.0', END)
+        self.sens_tab.text_widget.insert('1.0', full_content)
+        self.sens_tab.text_widget.config(state=DISABLED)
     
     def load_research(self):
         """Load research data from database"""
         data = self.async_run(self.db.get_research_data(self.ticker))
+        sens_data = self.async_run(self.db.get_sens_for_ticker(self.ticker))
         
         if data:
             # Deep Research
@@ -90,3 +158,21 @@ class ResearchWindow(ttk.Toplevel):
                 tab.text_widget.delete('1.0', END)
                 tab.text_widget.insert('1.0', 'No data available for this ticker.')
                 tab.text_widget.config(state=DISABLED)
+        
+        # Populate SENS tab
+        # Populate SENS tab
+        self.sens_tab.tree.delete(*self.sens_tab.tree.get_children())
+        self.sens_tab.sens_map.clear()
+        
+        if sens_data:
+            for item in sens_data:
+                date_str = item['publication_datetime'].strftime("%Y-%m-%d %H:%M")
+                content = item['content']
+                # Get first non-empty line
+                lines = [line.strip() for line in content.split('\n') if line.strip()]
+                first_line = lines[0] if lines else "No content"
+                
+                item_id = self.sens_tab.tree.insert("", END, values=(date_str, first_line))
+                self.sens_tab.sens_map[item_id] = content
+        else:
+             self.sens_tab.tree.insert("", END, values=("", "No SENS announcements found."))
