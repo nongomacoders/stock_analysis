@@ -91,6 +91,22 @@ class ChartWindow(ttk.Toplevel):
             # Drop rows with any null OHLC values
             df = df.dropna(subset=['Open', 'High', 'Low', 'Close'])
             
+            # Resample to weekly for 1Y and monthly for 5Y
+            if period_key == '5Y' and len(df) > 0:
+                df = df.resample('M').agg({
+                    'Open': 'first',
+                    'High': 'max',
+                    'Low': 'min',
+                    'Close': 'last'
+                }).dropna()
+            elif period_key == '1Y' and len(df) > 0:
+                df = df.resample('W').agg({
+                    'Open': 'first',
+                    'High': 'max',
+                    'Low': 'min',
+                    'Close': 'last'
+                }).dropna()
+            
             if len(df) > 0:
                 # Create figure
                 fig, ax = plt.subplots(figsize=(5, 3), dpi=100)
@@ -111,12 +127,18 @@ class ChartWindow(ttk.Toplevel):
                 ax.tick_params(axis='both', labelsize=8)
                 ax.grid(True, alpha=0.3)
                 
-                # Add price range info
+                # Add price range info and chart type
                 min_price = df['Low'].min()
                 max_price = df['High'].max()
                 price_range = max_price - min_price
+                if period_key == '5Y':
+                    chart_type = "Monthly"
+                elif period_key == '1Y':
+                    chart_type = "Weekly"
+                else:
+                    chart_type = "Daily"
                 ax.set_title(
-                    f"Range: R{min_price:.2f} - R{max_price:.2f} (R{price_range:.2f})",
+                    f"{chart_type} - Range: R{min_price:.2f} - R{max_price:.2f} (R{price_range:.2f})",
                     fontsize=10
                 )
                 
