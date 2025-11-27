@@ -52,7 +52,7 @@ class ResearchWindow(ttk.Toplevel):
             text_frame,
             wrap=WORD,
             yscrollcommand=scrollbar.set,
-            font=("Consolas", 10)
+            font=("Consolas", 14)
         )
         text_widget.pack(side=LEFT, fill=BOTH, expand=True)
         scrollbar.config(command=text_widget.yview)
