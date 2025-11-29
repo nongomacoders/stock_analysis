@@ -5,16 +5,16 @@ from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 
 # Add playwright directory to path to import env
-sys.path.append(os.path.join(os.path.dirname(__file__), 'playwright'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'playwright_scraper'))
 
 # Import credentials
 try:
     from env import USERNAME, PASSWORD
 except ImportError:
-    print("Error: env.py not found in playwright directory. Please check your setup.")
+    print("Error: env.py not found in playwright_scraper directory. Please check your setup.")
     sys.exit(1)
 
-AUTH_FILE = os.path.join(os.path.dirname(__file__), 'playwright', 'auth.json')
+AUTH_FILE = os.path.join(os.path.dirname(__file__), '..', 'playwright_scraper', 'auth.json')
 BASE_URL = "https://www.sharedata.co.za/v2/Scripts"
 
 # Map IDs to readable names

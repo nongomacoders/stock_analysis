@@ -2,12 +2,15 @@ import asyncio
 import os
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
 
-# Import credentials
-try:
-    from env import USERNAME, PASSWORD
-except ImportError:
-    print("Error: env.py not found. Please create it with USERNAME and PASSWORD.")
+# Load credentials from .env file
+load_dotenv()
+USERNAME = os.getenv("STOCK_USERNAME")
+PASSWORD = os.getenv("STOCK_PASSWORD")
+
+if not USERNAME or not PASSWORD:
+    print("Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file")
     exit()
 
 AUTH_FILE = os.path.join(os.path.dirname(__file__), "auth.json")

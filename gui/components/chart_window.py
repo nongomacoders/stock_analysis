@@ -93,7 +93,7 @@ class ChartWindow(ttk.Toplevel):
             
             # Resample to weekly for 1Y and monthly for 5Y
             if period_key == '5Y' and len(df) > 0:
-                df = df.resample('M').agg({
+                df = df.resample('ME').agg({
                     'Open': 'first',
                     'High': 'max',
                     'Low': 'min',

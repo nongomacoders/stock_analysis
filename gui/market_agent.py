@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 import psycopg2
 import psycopg2.extras
 import time
-from datetime import datetime, time as dt_time, date, timedelta  # <-- UPDATED
+from datetime import datetime, time as dt_time, date, timedelta
 from decimal import Decimal
 import pandas as pd
 import yfinance as yf
 import threading
+import asyncio
 import analysis_engine
-from database_utils import convert_yf_price_to_cents
-from database_utils import insert_price_hit_log, check_if_price_hit_logged_today
+from db_layer import DBLayer, convert_yf_price_to_cents  # <-- UPDATED IMPORT
 # --- Configuration ---
 try:
     # Assumes config.py is in the same directory
@@ -36,7 +36,7 @@ HEADERS = {
 }
 
 # --- Database Functions (SENS) ---
-
+# NOTE: These remain synchronous using psycopg2 as they are self-contained
 
 def fetch_tickers_from_db():
     """Fetches all tickers from the stock_details table and strips .JO."""
@@ -265,14 +265,7 @@ def run_sens_check():
 # --- UPDATED EOD Price Download Function ---
 
 
-# --- UPDATED EOD Price Download Function ---
-
-
-# In market_agent.py
-# --- REPLACE your old run_eod_price_download function with this ---
-
-
-def run_eod_price_download():
+async def run_eod_price_download(db: DBLayer):
     """
     Downloads EOD prices for ALL tickers in the database.
     This function is "smart" and will back-fill any missed days.
@@ -331,6 +324,8 @@ def run_eod_price_download():
         print(f"DEBUG (EOD): Downloading price data for {len(all_tickers)} tickers...")
 
         # 3. Call yfinance with our smart params
+        # Note: yf.download is synchronous. In a true async app we might run this in an executor.
+        # But for this agent, blocking briefly is okay.
         data = yf.download(all_tickers, auto_adjust=True, **download_params)
 
         if data.empty:
@@ -395,23 +390,7 @@ def run_eod_price_download():
             return
 
         print(f"DEBUG (EOD): Checking {len(stocks_to_check)} stocks for price hits...")
-        # --- NEW DEBUG START ---
-        print("--- TRIGGER LOGIC DEBUG START ---")
-        for row in stocks_to_check:
-            ticker, new_price, prev_price, levels = row
-            # Note: The query selects the MAX(trade_date) in LatestData
-            
-            # Find the trade date of the *new* price for the log
-            cursor.execute("SELECT trade_date FROM daily_stock_data WHERE ticker = %s ORDER BY trade_date DESC LIMIT 1", (ticker,))
-            new_price_date = cursor.fetchone()[0]
-
-            print(f"DEBUG (COMPARE): {ticker} | Date: {new_price_date} | New Price: {new_price} | Prev Price: {prev_price} | Levels: {levels}")
         
-        # We need to re-run the query cursor after the loop above
-        cursor.execute(trigger_query) 
-        stocks_to_check = cursor.fetchall()
-        print("--- TRIGGER LOGIC DEBUG END ---")
-        # --- NEW DEBUG END ---
         hit_count = 0
 
         for row in stocks_to_check:
@@ -434,7 +413,10 @@ def run_eod_price_download():
 
                 if crossed_up or crossed_down:
                     # --- NEW: Check if this exact hit has already been logged today ---
-                    if check_if_price_hit_logged_today(DB_CONFIG, ticker, level_decimal, today):
+                    # UPDATED: Use async db_layer call
+                    already_logged = await db.check_if_price_hit_logged_today(ticker, level_decimal, today)
+                    
+                    if already_logged:
                         print(f"     ==> WARNING: {ticker} hit {level}c already logged today. Skipping AI trigger.")
                         continue # Skip the AI trigger
                     # ------------------------------------------------------------------
@@ -443,7 +425,8 @@ def run_eod_price_download():
                         f"     ==> PRICE HIT: {ticker} crossed {level}c (New: {new_price}c, Prev: {prev_price}c)"
                     )
                     # --- NEW: Log the hit IMMEDIATELY to prevent re-trigger on subsequent runs ---
-                    insert_price_hit_log(DB_CONFIG, ticker, level_decimal, new_price) 
+                    # UPDATED: Use async db_layer call
+                    await db.insert_price_hit_log(ticker, level_decimal, new_price) 
                     # -----------------------------------------------------------------------------
                     # Call the AI brain in a separate thread
                     threading.Thread(
@@ -601,20 +584,21 @@ def process_and_save_new_data(worker_conn, data, all_tickers):
 # --- Scheduler Loop ---
 
 
-# --- Scheduler Loop ---
-
-
-def main():
+async def main():
     print("SENS & EOD Price Scraper Started.")
     print(f"Monitoring SENS between {RUN_START_TIME} and {RUN_END_TIME}, Mon-Fri.")
     print(f"Will run EOD price download once per day after {JSE_CLOSE_TIME}, Mon-Fri.")
     print(f"Check interval: {CHECK_INTERVAL_SECONDS // 60} minutes.")
 
+    # Initialize Async DB Layer
+    db = DBLayer()
+    await db.init_pool()
+
     # This flag ensures EOD download only runs ONCE per day
     eod_download_done_today = False
 
-    while True:
-        try:
+    try:
+        while True:
             now = datetime.now()
             is_weekday = 0 <= now.weekday() <= 4  # 0=Mon, 4=Fri
             is_sens_time = RUN_START_TIME <= now.time() <= RUN_END_TIME
@@ -626,8 +610,6 @@ def main():
             # is_after_market_close = True
             # --- END TEST LINES ---
 
-            # --- NEW LOGIC: Use separate 'if' statements, not 'elif' ---
-
             # 1. Check for Nightly Reset first
             if now.time() > MIDNIGHT_RESET_TIME and now.time() < RUN_START_TIME:
                 if eod_download_done_today:
@@ -636,35 +618,37 @@ def main():
 
             # 2. Check for SENS
             if is_weekday and is_sens_time:
+                # SENS check is synchronous, which is fine for now
                 run_sens_check()
                 # We do NOT sleep here anymore.
 
             # 3. Check for EOD Price Download
             if is_weekday and is_after_market_close and not eod_download_done_today:
                 print("Market is closed. Triggering EOD price download...")
-                run_eod_price_download()
+                await run_eod_price_download(db)
                 eod_download_done_today = True  # Mark as done
 
             # 4. Decide how long to sleep
             if is_weekday and is_sens_time:
                 # We are in the main SENS-checking window.
                 print(f"Sleeping for {CHECK_INTERVAL_SECONDS // 60} minutes...")
-                time.sleep(CHECK_INTERVAL_SECONDS)
+                await asyncio.sleep(CHECK_INTERVAL_SECONDS)
             else:
                 # We are off-hours (weekend, or after 17:30).
                 print(
                     f"Off-hours. Sleeping for {OFF_HOURS_SLEEP_SECONDS // 60} minutes..."
                 )
-                time.sleep(OFF_HOURS_SLEEP_SECONDS)
+                await asyncio.sleep(OFF_HOURS_SLEEP_SECONDS)
 
-        except KeyboardInterrupt:
-            print("\nUser requested exit. Shutting down.")
-            break
-        except Exception as e:
-            print(f"CRITICAL ERROR in main loop: {e}")
-            print("Restarting loop in 60 seconds...")
-            time.sleep(60)
+    except KeyboardInterrupt:
+        print("\nUser requested exit. Shutting down.")
+    except Exception as e:
+        print(f"CRITICAL ERROR in main loop: {e}")
+        print("Restarting loop in 60 seconds...")
+        await asyncio.sleep(60)
+    finally:
+        await db.close_pool()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

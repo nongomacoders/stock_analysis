@@ -5,7 +5,7 @@ import re
 from bs4 import BeautifulSoup
 
 # Add the playwright directory to the path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'playwright'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'playwright_scraper'))
 
 
 class RawFundamentalsLoader:
@@ -150,8 +150,6 @@ class RawFundamentalsLoader:
             import traceback
             self.log(f"  Traceback: {traceback.format_exc()}")
             return None
-    
-    # ... (Rest of the class methods: _parse_multi_year_share_statistics, etc., remain exactly the same)
     
     def _parse_multi_year_share_statistics(self, table_html: str):
         """

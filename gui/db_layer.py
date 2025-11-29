@@ -1,5 +1,22 @@
 import asyncpg
+import pandas as pd
+from datetime import date
 from config import DB_CONFIG
+
+# --- Helper Functions ---
+
+def convert_yf_price_to_cents(price_value):
+    """
+    Converts a yfinance price value to an integer representing cents.
+    Assumes JSE prices from yfinance are already in cents.
+    """
+    try:
+        if pd.isna(price_value) or price_value is None:
+            return None
+        # Simply convert to integer, enforcing the database rule (e.g., 20111.00 -> 20111)
+        return int(float(price_value))
+    except Exception:
+        return None
 
 class DBLayer:
     def __init__(self):
@@ -36,6 +53,47 @@ class DBLayer:
         if self.pool:
             await self.pool.close()
             self.pool = None
+
+    async def insert_price_hit_log(self, ticker, level, hit_price):
+        """Inserts a record into price_hit_log."""
+        if self.pool is None:
+            await self.init_pool()
+        
+        query = """
+            INSERT INTO price_hit_log (ticker, price_level)
+            VALUES ($1, $2)
+            ON CONFLICT (ticker, price_level, (hit_timestamp::date)) DO NOTHING
+        """
+        try:
+            async with self.pool.acquire() as conn:
+                # Note: We only log the price_level and let the DB handle the timestamp/date
+                await conn.execute(query, ticker, level)
+                return True
+        except Exception as e:
+            print(f"DB UTIL ERROR: Failed to insert price hit log: {e}")
+            return False
+
+    async def check_if_price_hit_logged_today(self, ticker, level, check_date):
+        """
+        Checks if a hit for the specific price level has already been logged
+        in price_hit_log for the given date.
+        """
+        if self.pool is None:
+            await self.init_pool()
+            
+        query = """
+            SELECT 1 FROM price_hit_log
+            WHERE ticker = $1
+            AND price_level = $2
+            AND hit_timestamp::date = $3
+        """
+        try:
+            async with self.pool.acquire() as conn:
+                val = await conn.fetchval(query, ticker, level, check_date)
+                return val is not None
+        except Exception as e:
+            print(f"DB UTIL ERROR: Failed to check price hit log: {e}")
+            return True # Default to True to prevent double-triggering on error
 
     async def fetch_watchlist_data(self):
         """
