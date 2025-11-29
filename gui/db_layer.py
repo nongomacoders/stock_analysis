@@ -1,7 +1,7 @@
 import asyncpg
 import pandas as pd
 from datetime import date
-from config import DB_CONFIG
+from core.config import DB_CONFIG
 
 # --- Helper Functions ---
 

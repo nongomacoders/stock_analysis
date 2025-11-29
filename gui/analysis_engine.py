@@ -5,7 +5,7 @@ import threading
 from dotenv import load_dotenv
 from datetime import datetime
 try:
-    from config import DB_CONFIG
+    from core.config import DB_CONFIG
 except ImportError:
     print("FATAL ERROR (AI_BRAIN): config.py not found.")
     exit()

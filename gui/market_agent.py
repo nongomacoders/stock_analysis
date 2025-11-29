@@ -14,7 +14,7 @@ from db_layer import DBLayer, convert_yf_price_to_cents  # <-- UPDATED IMPORT
 # --- Configuration ---
 try:
     # Assumes config.py is in the same directory
-    from config import DB_CONFIG
+    from core.config import DB_CONFIG
 except ImportError:
     print("FATAL ERROR: config.py not found.")
     print("Please create config.py with your DB_CONFIG dictionary.")
