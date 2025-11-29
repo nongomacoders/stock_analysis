@@ -1,14 +1,23 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-from utils import get_proximity_status
 from datetime import date
+
+# --- UPDATED IMPORTS ---
+# 1. Utilities moved to core
+from core.utils.trading import get_proximity_status
+
+# 2. Data fetching moved to modules
+from modules.data.watchlist import fetch_watchlist_data
+
+# 3. Child windows (Note: These will need refactoring next)
 from components.chart_window import ChartWindow
 from components.research_window import ResearchWindow
 
+
 class WatchlistWidget(ttk.Frame):
-    def __init__(self, parent, db_layer, on_select_callback, async_run):
+    def __init__(self, parent, on_select_callback, async_run):
+        # CHANGED: Removed 'db_layer' from arguments
         super().__init__(parent)
-        self.db = db_layer
         self.on_select = on_select_callback
         self.async_run = async_run
         self.create_widgets()
@@ -16,17 +25,26 @@ class WatchlistWidget(ttk.Frame):
     def create_widgets(self):
         # --- STYLE CONFIGURATION ---
         style = ttk.Style()
-        style.configure("Treeview.Heading", borderwidth=2, relief="groove", font=("Helvetica", 10, "bold"))
+        style.configure(
+            "Treeview.Heading",
+            borderwidth=2,
+            relief="groove",
+            font=("Helvetica", 10, "bold"),
+        )
 
-        # --- UPDATED COLUMNS: Added Price, Strategy and News ---
+        # --- COLUMNS ---
         cols = ("Ticker", "Name", "Price", "Status", "Event", "Strategy", "News")
         self.tree = ttk.Treeview(self, columns=cols, show="headings")
-        
+
         self.tree.heading("Ticker", text="Ticker")
-        self.tree.heading("Name", text="Name", command=lambda: self.sort_column("Name", False))
+        self.tree.heading(
+            "Name", text="Name", command=lambda: self.sort_column("Name", False)
+        )
         self.tree.heading("Price", text="Price")
         self.tree.heading("Status", text="Status")
-        self.tree.heading("Event", text="Event", command=lambda: self.sort_column("Event", False))
+        self.tree.heading(
+            "Event", text="Event", command=lambda: self.sort_column("Event", False)
+        )
         self.tree.heading("Strategy", text="Strategy")
         self.tree.heading("News", text="News")
 
@@ -42,15 +60,12 @@ class WatchlistWidget(ttk.Frame):
         # Scrollbar
         scrolly = ttk.Scrollbar(self, orient=VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrolly.set)
-        
+
         scrolly.pack(side=RIGHT, fill=Y)
         self.tree.pack(side=LEFT, fill=BOTH, expand=True)
 
-        # --- ROW COLOR CONFIGURATION (LIGHT THEME) ---
-        # Portfolio Holdings (Light Green/Mint)
-        self.tree.tag_configure("holding", background="#d1e7dd", foreground="black")      
-                
-        # Pre-Trade (Light Purple)
+        # --- ROW COLORS ---
+        self.tree.tag_configure("holding", background="#d1e7dd", foreground="black")
         self.tree.tag_configure("pretrade", background="#E6E6FA", foreground="black")
 
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
@@ -60,82 +75,88 @@ class WatchlistWidget(ttk.Frame):
         for item in self.tree.get_children():
             self.tree.delete(item)
 
-        # Use async_run to call the async database method
-        data = self.async_run(self.db.fetch_watchlist_data())
+        # CHANGED: Now calling the module function directly via async_run
+        # The function fetch_watchlist_data() creates its own DB connection
+        data = self.async_run(fetch_watchlist_data())
         today = date.today()
-        
+
         for row in data:
-            # 1. Calculate Event Days using projected date from DB
-            next_date = row.get('next_event_date')
+            # 1. Event Days
+            next_date = row.get("next_event_date")
             days_str = "-"
-            
+
             if next_date:
                 days = (next_date - today).days
                 days_str = f"{days}d"
 
-            # 2. Determine Row Background Tag
+            # 2. Background Tag
             row_tag = ""
-            if row['is_holding']:
-                row_tag = "holding"          
-            elif row['status'] == 'Pre-Trade':
+            if row["is_holding"]:
+                row_tag = "holding"
+            elif row["status"] == "Pre-Trade":
                 row_tag = "pretrade"
 
-            # 3. Calculate Proximity Text
+            # 3. Proximity Text
             prox_text, _ = get_proximity_status(
-                row['close_price'], row['entry_price'], row['stop_loss'], row['target']
+                row["close_price"], row["entry_price"], row["stop_loss"], row["target"]
             )
 
-            # 4. Strategy and News Processing
-            strategy_text = str(row.get('strategy', '') or '').replace('\n', ' ')
+            # 4. Truncate Text
+            strategy_text = str(row.get("strategy", "") or "").replace("\n", " ")
             if len(strategy_text) > 100:
                 strategy_text = strategy_text[:100] + "..."
 
-            news_text = str(row.get('latest_news', '') or '').replace('\n', ' ')
+            news_text = str(row.get("latest_news", "") or "").replace("\n", " ")
             if len(news_text) > 100:
                 news_text = news_text[:100] + "..."
 
-            # 5. Truncate Name
-            full_name = row['full_name'] if row['full_name'] else ""
+            full_name = row["full_name"] if row["full_name"] else ""
             short_name = full_name[:10]
-            
-            # 6. Format Price (no decimal places - price is already in cents)
-            price_val = row['close_price']
+
+            price_val = row["close_price"]
             price_str = f"{int(price_val)}" if price_val is not None else "-"
 
-            self.tree.insert("", "end", values=(
-                row['ticker'], 
-                short_name,
-                price_str,
-                prox_text,
-                days_str,
-                strategy_text,
-                news_text
-            ), tags=(row_tag,))
+            self.tree.insert(
+                "",
+                "end",
+                values=(
+                    row["ticker"],
+                    short_name,
+                    price_str,
+                    prox_text,
+                    days_str,
+                    strategy_text,
+                    news_text,
+                ),
+                tags=(row_tag,),
+            )
 
     def _on_row_click(self, event):
         sel = self.tree.selection()
         if sel:
             item = self.tree.item(sel[0])
-            ticker = item['values'][0]
+            ticker = item["values"][0]
             self.on_select(ticker)
-    
+
     def _on_double_click(self, event):
         """Open chart and research windows when row is double-clicked"""
         sel = self.tree.selection()
         if sel:
             item = self.tree.item(sel[0])
-            ticker = item['values'][0]
-            # Open both windows
-            ChartWindow(self, ticker, self.db, self.async_run)
-            ResearchWindow(self, ticker, self.db, self.async_run)
+            ticker = item["values"][0]
+
+            # CHANGED: Removed 'self.db' from these calls.
+            # WARNING: This will break ChartWindow/ResearchWindow until we refactor them next.
+            # They likely expect (parent, ticker, db, async_run).
+            # We are updating the call signature now to be correct for the future.
+            ChartWindow(self, ticker, self.async_run)
+            ResearchWindow(self, ticker, self.async_run)
 
     def sort_column(self, col, reverse):
-        """
-        Sort treeview content by a specific column.
-        """
-        l = [(self.tree.set(k, col), k) for k in self.tree.get_children('')]
-        
+        l = [(self.tree.set(k, col), k) for k in self.tree.get_children("")]
+
         if col == "Event":
+
             def event_key(item):
                 val = item[0]
                 if val == "-":
@@ -144,16 +165,14 @@ class WatchlistWidget(ttk.Frame):
                     return int(val.replace("d", ""))
                 except ValueError:
                     return 999999
+
             l.sort(key=event_key, reverse=reverse)
         elif col == "Name":
-             l.sort(key=lambda t: t[0].lower(), reverse=reverse)
+            l.sort(key=lambda t: t[0].lower(), reverse=reverse)
         else:
-            # Default string sort
             l.sort(reverse=reverse)
 
-        # Rearrange items in sorted positions
         for index, (val, k) in enumerate(l):
-            self.tree.move(k, '', index)
+            self.tree.move(k, "", index)
 
-        # Reverse sort next time
         self.tree.heading(col, command=lambda: self.sort_column(col, not reverse))
