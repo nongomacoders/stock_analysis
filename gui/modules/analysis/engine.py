@@ -42,44 +42,11 @@ async def analyze_price_change(ticker: str, new_price: float, level_hit: float):
     print(f"AI: Price analysis saved for {ticker}.")
 
 
-async def generate_master_research(ticker: str, deep_research=None, cutoff_date=None):
+async def generate_master_research(ticker: str, deep_research=None):
     print(f"AI: Generating Research Summary for {ticker}...")
-
-    # 1. Fetch Recent SENS
-    sens_query = "SELECT publication_datetime, content FROM SENS WHERE ticker = $1"
-    params = [ticker]
-
-    if cutoff_date:
-        sens_query += (
-            " AND publication_datetime > $2 ORDER BY publication_datetime DESC"
-        )
-        params.append(cutoff_date)
-    else:
-        sens_query += " ORDER BY publication_datetime DESC LIMIT 20"
-
-    rows = await DBEngine.fetch(sens_query, *params)
-    sens_str = "\n".join([f"{r['publication_datetime']}: {r['content']}" for r in rows])
-    if not sens_str:
-        sens_str = "No recent SENS data found."
-
-    # 2. Generate
-    prompt = build_research_prompt(ticker, sens_str, deep_research)
+    # 1. Generate
+    prompt = build_research_prompt(deep_research)
     return await query_ai(prompt)
-
-
-# --- Helpers ---
-async def _fetch_context(ticker):
-    # Ticker coming from SENS often has .JO, but DB stores master data without it?
-    # Adjust based on your specific DB setup. Assuming strict match for now.
-    q = "SELECT research, strategy FROM stock_analysis WHERE ticker = $1"
-    rows = await DBEngine.fetch(q, ticker)
-    if not rows:
-        # Fallback: Try stripping .JO if not found
-        clean_ticker = ticker.replace(".JO", "")
-        rows = await DBEngine.fetch(q, clean_ticker)
-
-    return dict(rows[0]) if rows else None
-
 
 async def _save_log(ticker, type_, content, analysis):
     q = """

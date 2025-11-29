@@ -27,3 +27,36 @@ async def get_sens_for_ticker(ticker: str, limit=50):
     """
     rows = await DBEngine.fetch(query, ticker, limit)
     return [dict(row) for row in rows]
+
+
+async def save_strategy_data(ticker: str, content: str):
+    """Update the strategy column for a ticker."""
+    query = """
+        UPDATE stock_analysis
+        SET strategy = $2
+        WHERE ticker = $1
+    """
+    await DBEngine.execute(query, ticker, content)
+
+
+async def save_research_data(ticker: str, content: str):
+    """Update the research column for a ticker."""
+    query = """
+        UPDATE stock_analysis
+        SET research = $2
+        WHERE ticker = $1
+    """
+    await DBEngine.execute(query, ticker, content)
+
+
+async def save_deep_research_data(ticker: str, content: str):
+    """Update the deepresearch column for a ticker."""
+    query = """
+        UPDATE stock_analysis
+        SET deepresearch = $2
+        WHERE ticker = $1
+    """
+    await DBEngine.execute(query, ticker, content)
+
+
+

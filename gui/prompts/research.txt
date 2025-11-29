@@ -29,8 +29,10 @@ After those bullets, write the body of the report with the following sections an
 7. Conclusion (one paragraph, clear rating: Buy / Hold / Sell)
 
 Rules:
+- Answer in plain text only. Do NOT use markdown, bullets with asterisks, hashes (#), or bold/italic tags.
+- Keep each sentence short and on a new line.
 - Currency in ZAR unless I specify otherwise.
 - Keep numbers rounded and easy to read.
 - If some data (like analyst targets) is not provided, clearly state that it is not available instead of guessing.
 - Keep the full report concise and practical for an investor.
-I will now paste the information for the stock. Use this template every time I ask for a valuation or thesis.
+I will now paste and attach the information for the stock.

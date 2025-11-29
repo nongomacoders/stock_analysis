@@ -6,6 +6,9 @@ import subprocess
 import sys
 import os
 
+# Add project root to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 # Updated Imports
 from core.db.engine import DBEngine
 from components.watchlist import WatchlistWidget

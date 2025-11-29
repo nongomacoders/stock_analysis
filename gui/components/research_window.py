@@ -2,7 +2,8 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 # --- NEW IMPORT ---
-from modules.data.research import get_research_data, get_sens_for_ticker
+from modules.data.research import get_research_data, get_sens_for_ticker, save_strategy_data, save_research_data, save_deep_research_data
+from modules.analysis.engine import generate_master_research
 
 
 class ResearchWindow(ttk.Toplevel):
@@ -32,9 +33,18 @@ class ResearchWindow(ttk.Toplevel):
         self.notebook = ttk.Notebook(self, bootstyle="primary")
         self.notebook.pack(fill=BOTH, expand=True, padx=10, pady=10)
 
-        self.deep_research_tab = self.create_text_tab()
-        self.master_strategy_tab = self.create_text_tab()
-        self.master_research_tab = self.create_text_tab()
+        self.deep_research_tab = self.create_text_tab(editable=True)
+        self.master_strategy_tab = self.create_text_tab(editable=True)
+        self.master_research_tab = self.create_text_tab(
+            editable=True,
+            extra_buttons=[
+                {
+                    "text": "Generate New Research",
+                    "command": self.generate_research,
+                    "bootstyle": "info",
+                }
+            ],
+        )
 
         self.notebook.add(self.deep_research_tab, text="Deep Research")
         self.notebook.add(self.master_strategy_tab, text="Strategy")
@@ -43,8 +53,32 @@ class ResearchWindow(ttk.Toplevel):
         self.sens_tab = self.create_sens_tab()
         self.notebook.add(self.sens_tab, text="SENS")
 
-    def create_text_tab(self):
+    def create_text_tab(self, editable=False, extra_buttons=None):
         frame = ttk.Frame(self.notebook)
+        
+        # Toolbar for editable tabs
+        if editable:
+            toolbar = ttk.Frame(frame)
+            toolbar.pack(side=TOP, fill=X, padx=5, pady=5)
+            
+            # Save Button
+            ttk.Button(
+                toolbar, 
+                text="Save Changes", 
+                bootstyle="success", 
+                command=lambda: self.save_tab_content(frame)
+            ).pack(side=RIGHT, padx=5)
+
+            # Extra Buttons
+            if extra_buttons:
+                for btn_config in extra_buttons:
+                    ttk.Button(
+                        toolbar,
+                        text=btn_config["text"],
+                        bootstyle=btn_config.get("bootstyle", "primary"),
+                        command=btn_config["command"],
+                    ).pack(side=RIGHT, padx=5)
+
         text_frame = ttk.Frame(frame)
         text_frame.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
@@ -58,6 +92,7 @@ class ResearchWindow(ttk.Toplevel):
         scrollbar.config(command=text_widget.yview)
 
         frame.text_widget = text_widget
+        frame.editable = editable
         return frame
 
     def create_sens_tab(self):
@@ -145,4 +180,54 @@ class ResearchWindow(ttk.Toplevel):
         tab.text_widget.config(state=NORMAL)
         tab.text_widget.delete("1.0", END)
         tab.text_widget.insert("1.0", content if content else "No data available.")
-        tab.text_widget.config(state=DISABLED)
+        
+        # Only disable if not editable
+        if not getattr(tab, "editable", False):
+            tab.text_widget.config(state=DISABLED)
+
+    def save_tab_content(self, tab_frame):
+        """Save content based on which tab triggered the save."""
+        content = tab_frame.text_widget.get("1.0", END).strip()
+        
+        if tab_frame == self.master_strategy_tab:
+            self.async_run(save_strategy_data(self.ticker, content))
+            print(f"Strategy saved for {self.ticker}")
+        elif tab_frame == self.master_research_tab:
+            self.async_run(save_research_data(self.ticker, content))
+            print(f"Research saved for {self.ticker}")
+        elif tab_frame == self.deep_research_tab:
+            self.async_run(save_deep_research_data(self.ticker, content))
+            print(f"Deep Research saved for {self.ticker}")
+
+    def generate_research(self):
+        """Trigger AI research generation."""
+        from ttkbootstrap.dialogs import Messagebox
+        
+        confirm = Messagebox.yesno(
+            "This will overwrite existing research. Continue?",
+            "Generate Research",
+            parent=self
+        )
+        if confirm != "Yes":
+            return
+
+        try:
+            print(f"Generating research for {self.ticker}...")
+            # Show loading state
+            self.master_research_tab.text_widget.config(state=NORMAL)
+            self.master_research_tab.text_widget.delete("1.0", END)
+            self.master_research_tab.text_widget.insert("1.0", "Generating research... please wait...")
+            self.master_research_tab.text_widget.config(state=DISABLED)
+            self.update()
+
+            # Generate
+            deep_research=self.deep_research_tab.text_widget.get("1.0", END).strip()
+            new_research = self.async_run(generate_master_research(self.ticker,deep_research))
+            
+            # Update UI
+            self._fill_tab(self.master_research_tab, new_research)
+            print("Research generation complete.")
+            
+        except Exception as e:
+            print(f"Error generating research: {e}")
+            self._fill_tab(self.master_research_tab, f"Error: {str(e)}")
