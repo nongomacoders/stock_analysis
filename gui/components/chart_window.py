@@ -26,6 +26,26 @@ class ChartWindow(ttk.Toplevel):
         self.create_widgets()
         self.load_charts()
 
+    def update_ticker(self, ticker):
+        """Update the window with a new ticker"""
+        self.ticker = ticker
+        self.title(f"{ticker} - Price Charts")
+        
+        # Update title label
+        for widget in self.winfo_children():
+            if isinstance(widget, ttk.Frame) and str(widget).endswith("frame"): # Find title frame
+                 for child in widget.winfo_children():
+                     if isinstance(child, ttk.Label):
+                         child.configure(text=f"{self.ticker} - Historical Price Charts")
+                         break
+        
+        # Clear existing charts
+        for frame in self.chart_frames.values():
+            for widget in frame.winfo_children():
+                widget.destroy()
+                
+        self.load_charts()
+
     def create_widgets(self):
         # Title
         title_frame = ttk.Frame(self, bootstyle="secondary")

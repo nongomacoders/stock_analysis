@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watchlist Widget Wireframe</title>
+<style>
+    body {
+        font-family: "Helvetica", sans-serif;
+        padding: 20px;
+        background-color: #f0f0f0;
+    }
+    
+    /* Simulating the ttk.Frame container */
+    .window-container {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 1200px;
+        height: 500px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Simulating the Treeview Header */
+    .tree-header {
+        display: flex;
+        background-color: #f8f9fa;
+        border-bottom: 2px groove #ddd;
+        font-size: 10pt;
+        font-weight: bold;
+    }
+
+    .header-cell {
+        padding: 8px;
+        border-right: 1px solid #eee;
+        position: relative;
+    }
+
+    /* Simulating the Treeview Rows */
+    .tree-body {
+        overflow-y: scroll;
+        flex-grow: 1;
+        background: white;
+    }
+
+    .tree-row {
+        display: flex;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+        color: black;
+    }
+
+    .cell {
+        padding: 6px 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Column Widths & Alignments from code */
+    /* Ticker: width=60, anchor=W */
+    .col-ticker { width: 60px; text-align: left; }
+    
+    /* Name: width=80, anchor=W */
+    .col-name { width: 80px; text-align: left; }
+    
+    /* Price: width=70, anchor=E */
+    .col-price { width: 70px; text-align: right; }
+    
+    /* Status: width=113, anchor=W */
+    .col-status { width: 113px; text-align: left; }
+    
+    /* Event: width=50, anchor=CENTER */
+    .col-event { width: 50px; text-align: center; }
+    
+    /* Strategy: width=400, anchor=W, stretch=True (flex-grow) */
+    .col-strategy { width: 400px; text-align: left; flex-grow: 1; }
+    
+    /* News: width=400, anchor=W, stretch=True (flex-grow) */
+    .col-news { width: 400px; text-align: left; flex-grow: 1; }
+
+    /* Row Tags/Colors */
+    .tag-holding {
+        background-color: #d1e7dd; /* Light Green */
+    }
+    
+    .tag-pretrade {
+        background-color: #E6E6FA; /* Lavender */
+    }
+    
+    .tree-row:hover {
+        cursor: pointer;
+        filter: brightness(0.95);
+    }
+</style>
+</head>
+<body>
+
+    <h3>Watchlist Widget Wireframe</h3>
+    <p>Simulating <code>ttkbootstrap</code> Treeview based on <code>watchlist.py</code></p>
+
+    <div class="window-container">
+        <div class="tree-header">
+            <div class="header-cell col-ticker">Ticker</div>
+            <div class="header-cell col-name">Name</div>
+            <div class="header-cell col-price">Price</div>
+            <div class="header-cell col-status">Status</div>
+            <div class="header-cell col-event">Event</div>
+            <div class="header-cell col-strategy">Strategy</div>
+            <div class="header-cell col-news">News</div>
+        </div>
+
+        <div class="tree-body">
+            <div class="tree-row tag-holding">
+                <div class="cell col-ticker">NVDA</div>
+                <div class="cell col-name">NVIDIA Cor</div>
+                <div class="cell col-price">140</div>
+                <div class="cell col-status">10% > Entry</div>
+                <div class="cell col-event">-</div>
+                <div class="cell col-strategy">Long term trend following strategy...</div>
+                <div class="cell col-news">Earnings beat expectations by 15%...</div>
+            </div>
+
+            <div class="tree-row tag-pretrade">
+                <div class="cell col-ticker">AMD</div>
+                <div class="cell col-name">Adv Micro</div>
+                <div class="cell col-price">115</div>
+                <div class="cell col-status">Pre-Trade</div>
+                <div class="cell col-event">5d</div>
+                <div class="cell col-strategy">Pullback to 50 EMA looking for support...</div>
+                <div class="cell col-news">New chip architecture announced...</div>
+            </div>
+
+             <div class="tree-row">
+                <div class="cell col-ticker">MSFT</div>
+                <div class="cell col-name">Microsoft</div>
+                <div class="cell col-price">410</div>
+                <div class="cell col-status">Watch</div>
+                <div class="cell col-event">12d</div>
+                <div class="cell col-strategy">Consolidation pattern near all time highs...</div>
+                <div class="cell col-news">Cloud revenue increases year over year...</div>
+            </div>
+
+            <div class="tree-row">
+                <div class="cell col-ticker">GOOGL</div>
+                <div class="cell col-name">Alphabet I</div>
+                <div class="cell col-price">170</div>
+                <div class="cell col-status">Near Stop</div>
+                <div class="cell col-event">-</div>
+                <div class="cell col-strategy">Mean reversion setup on daily timeframe...</div>
+                <div class="cell col-news">Antitrust lawsuit updates released today...</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

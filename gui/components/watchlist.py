@@ -67,6 +67,7 @@ class WatchlistWidget(ttk.Frame):
         # --- ROW COLORS ---
         self.tree.tag_configure("holding", background="#d1e7dd", foreground="black")
         self.tree.tag_configure("pretrade", background="#E6E6FA", foreground="black")
+        self.tree.tag_configure("unread", background="#ffcccc", foreground="black")
 
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
         self.tree.bind("<Double-Button-1>", self._on_double_click)
@@ -91,7 +92,9 @@ class WatchlistWidget(ttk.Frame):
 
             # 2. Background Tag
             row_tag = ""
-            if row["is_holding"]:
+            if row.get("unread_log_count", 0) > 0:
+                row_tag = "unread"
+            elif row["is_holding"]:
                 row_tag = "holding"
             elif row["status"] == "Pre-Trade":
                 row_tag = "pretrade"

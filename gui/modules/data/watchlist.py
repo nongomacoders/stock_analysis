@@ -16,6 +16,8 @@ async def fetch_watchlist_data():
                 ORDER BY a.log_timestamp DESC LIMIT 1) as latest_news,
             (SELECT count(*) FROM portfolio_holdings ph 
                 WHERE ph.ticker = w.ticker) > 0 as is_holding,
+            (SELECT count(*) FROM action_log a 
+                WHERE a.ticker = w.ticker AND a.is_read = false) as unread_log_count,
             (SELECT (results_release_date + interval '1 year')::date 
                 FROM raw_stock_valuations rsv 
                 WHERE rsv.ticker = w.ticker 

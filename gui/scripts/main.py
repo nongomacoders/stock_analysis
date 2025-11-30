@@ -11,14 +11,26 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Updated Imports
 from core.db.engine import DBEngine
+from core.db.notifier import DBNotifier
 from components.watchlist import WatchlistWidget
+
+
+from components.chart_window import ChartWindow
+from components.research_window import ResearchWindow
 
 
 class CommandCenter(ttk.Window):
     def __init__(self):
         super().__init__(themename="cosmo")
         self.title("JSE Command Center")
-        self.geometry("1280x800")
+        
+        # Get screen dimensions
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        
+        # Set geometry to left half of screen
+        # Format: widthxheight+x+y
+        self.geometry(f"{screen_width // 2}x{screen_height}+0+0")
 
         # 1. Initialize Async Loop
         self.loop = asyncio.new_event_loop()
@@ -31,9 +43,17 @@ class CommandCenter(ttk.Window):
 
         # 3. Start Background Services
         self.start_market_agent()
+        
+        # 4. Initialize Database Notifier
+        self.notifier = DBNotifier()
+        self.async_run(self.notifier.start_listening('action_log_changes', self.on_action_log_notification))
 
-        # 4. Build UI
+        # 5. Build UI
         self.create_layout()
+        
+        # Window References
+        self.chart_window = None
+        self.research_window = None
 
     def _run_event_loop(self):
         """Run the asyncio event loop in a separate thread"""
@@ -76,11 +96,47 @@ class CommandCenter(ttk.Window):
     def on_ticker_select(self, ticker):
         """Callback when watchlist row is clicked"""
         print(f"Selected: {ticker}")
+        
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        
+        # Chart Window - Right Upper Quadrant
+        if self.chart_window and self.chart_window.winfo_exists():
+            self.chart_window.update_ticker(ticker)
+            self.chart_window.lift()
+        else:
+            self.chart_window = ChartWindow(self, ticker, self.async_run)
+            c_w = screen_width // 2
+            c_h = screen_height // 2
+            c_x = screen_width // 2
+            c_y = 0
+            self.chart_window.geometry(f"{c_w}x{c_h}+{c_x}+{c_y}")
+        
+        # Research Window - Right Lower Quadrant
+        if self.research_window and self.research_window.winfo_exists():
+            self.research_window.update_ticker(ticker)
+            self.research_window.lift()
+        else:
+            self.research_window = ResearchWindow(self, ticker, self.async_run, on_data_change=self.watchlist.refresh)
+            r_w = screen_width // 2
+            r_h = screen_height // 2
+            r_x = screen_width // 2
+            r_y = screen_height // 2
+            self.research_window.geometry(f"{r_w}x{r_h}+{r_x}+{r_y}")
+    
+    def on_action_log_notification(self, payload: str):
+        """Handle action_log change notifications from PostgreSQL"""
+        # Refresh watchlist when action_log changes
+        # Use after() to ensure refresh happens on main thread
+        self.after(0, self.watchlist.refresh)
 
     def on_closing(self):
         """Cleanup when window closes"""
         if hasattr(self, "market_agent_process"):
             self.market_agent_process.terminate()
+        # Stop notifier
+        if hasattr(self, "notifier"):
+            self.async_run(self.notifier.stop_listening())
         # Close DB Pool
         self.async_run(DBEngine.close())
         self.destroy()
