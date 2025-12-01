@@ -8,6 +8,7 @@ import mplfinance as mpf
 
 # --- NEW IMPORT ---
 from modules.data.market import get_historical_prices
+from modules.data.metrics import get_stock_metrics
 
 
 class ChartWindow(ttk.Toplevel):
@@ -56,14 +57,18 @@ class ChartWindow(ttk.Toplevel):
             font=("Helvetica", 16, "bold"),
         ).pack()
 
-        # Create 2x2 grid for charts
-        chart_frame = ttk.Frame(self)
-        chart_frame.pack(fill=BOTH, expand=True, padx=10, pady=10)
+        # Create Notebook for tabs
+        self.notebook = ttk.Notebook(self, bootstyle="primary")
+        self.notebook.pack(fill=BOTH, expand=True, padx=10, pady=10)
 
-        chart_frame.grid_rowconfigure(0, weight=1)
-        chart_frame.grid_rowconfigure(1, weight=1)
-        chart_frame.grid_columnconfigure(0, weight=1)
-        chart_frame.grid_columnconfigure(1, weight=1)
+        # Charts Tab
+        chart_tab = ttk.Frame(self.notebook)
+        self.notebook.add(chart_tab, text="Charts")
+
+        chart_tab.grid_rowconfigure(0, weight=1)
+        chart_tab.grid_rowconfigure(1, weight=1)
+        chart_tab.grid_columnconfigure(0, weight=1)
+        chart_tab.grid_columnconfigure(1, weight=1)
 
         self.chart_frames = {}
         periods = [
@@ -74,9 +79,49 @@ class ChartWindow(ttk.Toplevel):
         ]
 
         for period_key, period_label, row, col in periods:
-            frame = ttk.Labelframe(chart_frame, text=period_label, bootstyle="primary")
+            frame = ttk.Labelframe(chart_tab, text=period_label, bootstyle="primary")
             frame.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
             self.chart_frames[period_key] = frame
+
+        # Metrics Tab
+        self.metrics_tab = self.create_metrics_tab()
+        self.notebook.add(self.metrics_tab, text="Metrics")
+
+    def create_metrics_tab(self):
+        """Create the metrics tab with key stock metrics"""
+        frame = ttk.Frame(self.notebook)
+        
+        # Create a container frame that will be centered
+        center_container = ttk.Frame(frame)
+        center_container.pack(expand=True, fill=NONE, padx=10, pady=10)
+        
+        # Create Treeview
+        columns = ("metric", "value")
+        self.metrics_tree = ttk.Treeview(
+            center_container, 
+            columns=columns, 
+            show="headings", 
+            bootstyle="primary",
+            height=10  # Set a reasonable height
+        )
+        
+        # Define headings
+        self.metrics_tree.heading("metric", text="Metric")
+        self.metrics_tree.heading("value", text="Value")
+        
+        # Define columns with fixed widths
+        self.metrics_tree.column("metric", width=200, anchor=W)
+        self.metrics_tree.column("value", width=150, anchor=E)
+        
+        # Add scrollbar
+        scrollbar = ttk.Scrollbar(center_container, orient=VERTICAL, command=self.metrics_tree.yview)
+        self.metrics_tree.configure(yscrollcommand=scrollbar.set)
+        
+        # Pack side-by-side in the centered container
+        self.metrics_tree.pack(side=LEFT, fill=Y)
+        scrollbar.pack(side=RIGHT, fill=Y)
+        
+        return frame
 
     def load_charts(self):
         """Load and display all charts"""
@@ -86,6 +131,53 @@ class ChartWindow(ttk.Toplevel):
             # CHANGED: Call module function directly
             data = self.async_run(get_historical_prices(self.ticker, days))
             self.plot_chart(period_key, data)
+        
+        # Load metrics
+        self.load_metrics()
+
+    def load_metrics(self):
+        """Load and display stock metrics"""
+        # Clear existing items
+        for item in self.metrics_tree.get_children():
+            self.metrics_tree.delete(item)
+        
+        # Fetch metrics data
+        metrics = self.async_run(get_stock_metrics(self.ticker))
+        
+        if not metrics:
+            self.metrics_tree.insert("", END, values=("Status", "No metrics data available"))
+            return
+        
+        # Helper to format and insert
+        def add_row(label, value, fmt="{}"):
+            display_val = fmt.format(value) if value is not None else "N/A"
+            self.metrics_tree.insert("", END, values=(label, display_val))
+
+        # Current Price
+        price = metrics.get('current_price')
+        add_row("Current Price", price/100 if price else None, "R {:.2f}")
+        
+        # P/E Ratio
+        add_row("P/E Ratio", metrics.get('pe_ratio'), "{:.2f}")
+        
+        # Dividend Yield
+        add_row("Dividend Yield", metrics.get('div_yield_perc'), "{:.2f}%")
+        
+        # PEG Ratio (Historical)
+        add_row("PEG Ratio (Hist)", metrics.get('peg_ratio_historical'), "{:.2f}")
+
+        # Graham Fair Value
+        gfv = metrics.get('graham_fair_value')
+        add_row("Graham Fair Value", gfv/100 if gfv else None, "R {:.2f}")
+
+        # Valuation Premium
+        add_row("Valuation Premium", metrics.get('valuation_premium_perc'), "{:.2f}%")
+
+        # Historical Growth CAGR
+        add_row("Hist. Growth CAGR", metrics.get('historical_growth_cagr'), "{:.2f}%")
+        
+        # Financials Date
+        add_row("Financials Date", metrics.get('financials_date'), "{}")
 
     def plot_chart(self, period_key, data):
         """Plot a candlestick chart"""
@@ -138,7 +230,8 @@ class ChartWindow(ttk.Toplevel):
             return
 
         # Create Plot
-        fig, ax = plt.subplots(figsize=(5, 3), dpi=100)
+        fig = Figure(figsize=(5, 3), dpi=100)
+        ax = fig.add_subplot(111)
         mpf.plot(
             df,
             type="candle",

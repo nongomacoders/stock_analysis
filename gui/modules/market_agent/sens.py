@@ -36,14 +36,21 @@ async def run_sens_check():
 
     for row in sens_rows:
         try:
-            ticker = row.find(
+            ticker_link = row.find(
                 "a", title="Visit Click a company for this listing"
-            ).get_text(strip=True)
+            )
+            if not ticker_link:
+                continue
+                
+            ticker = ticker_link.get_text(strip=True)
             if ticker not in db_tickers:
                 continue
 
-            time_str = row.find("time").get_text(strip=True)
-            pub_date = _parse_date(time_str)
+            time_elem = row.find("time")
+            if not time_elem:
+                continue
+
+            pub_date = _parse_date(time_elem)
             if not pub_date:
                 continue
 
@@ -56,7 +63,11 @@ async def run_sens_check():
                 continue
 
             # Fetch Content
-            link = row.find("a", title="Go to SENS announcement")["href"]
+            link_elem = row.find("a", title="Go to SENS announcement")
+            if not link_elem:
+                continue
+                
+            link = link_elem["href"]
             if link.startswith("/"):
                 link = BASE_URL + link
 
@@ -66,11 +77,14 @@ async def run_sens_check():
             ins_q = "INSERT INTO SENS (ticker, publication_datetime, content) VALUES ($1, $2, $3)"
             await DBEngine.execute(ins_q, f"{ticker}.JO", pub_date, content)
 
-            print(f"  -> NEW SENS: {ticker} @ {time_str}")
+            print(f"  -> NEW SENS: {ticker} @ {pub_date}")
             new_items.append((f"{ticker}.JO", content))
 
         except Exception as e:
             print(f"Error processing row: {e}")
+
+    if not new_items:
+        print("No new SENS announcements found.")
 
     # Trigger AI
     import modules.analysis.engine as ai_engine
@@ -82,9 +96,21 @@ async def run_sens_check():
         await ai_engine.analyze_new_sens(t_full, content)
 
 
-def _parse_date(s):
+def _parse_date(elem):
+    # Try datetime attribute first (ISO 8601)
+    if elem.has_attr("datetime"):
+        try:
+            dt = datetime.fromisoformat(elem["datetime"])
+            # Return naive datetime to match previous behavior/DB expectation
+            return dt.replace(tzinfo=None)
+        except ValueError:
+            pass
+
+    # Fallback to text parsing
     try:
-        return datetime.strptime(s, "%d.%m.%y %H:%M")
+        # Use separator=" " to ensure "Date Time" not "DateTime"
+        text = elem.get_text(separator=" ", strip=True)
+        return datetime.strptime(text, "%d.%m.%y %H:%M")
     except:
         return None
 

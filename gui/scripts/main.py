@@ -28,9 +28,13 @@ class CommandCenter(ttk.Window):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         
+        # Account for taskbar (typically 40-60 pixels)
+        taskbar_height = 80
+        usable_height = screen_height - taskbar_height
+        
         # Set geometry to left half of screen
         # Format: widthxheight+x+y
-        self.geometry(f"{screen_width // 2}x{screen_height}+0+0")
+        self.geometry(f"{screen_width // 2}x{usable_height}+0+0")
 
         # 1. Initialize Async Loop
         self.loop = asyncio.new_event_loop()
@@ -100,28 +104,32 @@ class CommandCenter(ttk.Window):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         
-        # Chart Window - Right Upper Quadrant
+        # Account for taskbar
+        taskbar_height = 80
+        usable_height = screen_height - taskbar_height
+        
+        # Chart Window - Right Lower Quadrant
         if self.chart_window and self.chart_window.winfo_exists():
             self.chart_window.update_ticker(ticker)
             self.chart_window.lift()
         else:
             self.chart_window = ChartWindow(self, ticker, self.async_run)
             c_w = screen_width // 2
-            c_h = screen_height // 2
+            c_h = usable_height // 2
             c_x = screen_width // 2
-            c_y = 0
+            c_y = usable_height // 2 + 20  # Add 10px gap
             self.chart_window.geometry(f"{c_w}x{c_h}+{c_x}+{c_y}")
         
-        # Research Window - Right Lower Quadrant
+        # Research Window - Right Upper Quadrant
         if self.research_window and self.research_window.winfo_exists():
             self.research_window.update_ticker(ticker)
             self.research_window.lift()
         else:
             self.research_window = ResearchWindow(self, ticker, self.async_run, on_data_change=self.watchlist.refresh)
             r_w = screen_width // 2
-            r_h = screen_height // 2
+            r_h = usable_height // 2
             r_x = screen_width // 2
-            r_y = screen_height // 2
+            r_y = 0
             self.research_window.geometry(f"{r_w}x{r_h}+{r_x}+{r_y}")
     
     def on_action_log_notification(self, payload: str):

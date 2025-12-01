@@ -54,3 +54,12 @@ async def _save_log(ticker, type_, content, analysis):
         VALUES ($1, $2, $3, $4)
     """
     await DBEngine.execute(q, ticker, type_, content, analysis)
+
+
+async def _fetch_context(ticker: str):
+    q = "SELECT research, strategy FROM stock_analysis WHERE ticker = $1"
+    rows = await DBEngine.fetch(q, ticker)
+    if not rows:
+        print(f"AI: No context found for {ticker}")
+        return None
+    return rows[0]

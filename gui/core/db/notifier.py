@@ -65,9 +65,15 @@ class DBNotifier:
                 await self._listener_task
             except asyncio.CancelledError:
                 pass
-                
-        # Release connection back to pool
+        
+        # Remove listener and release connection back to pool
         if self._connection:
+            try:
+                # Remove all listeners before releasing
+                await self._connection.remove_listener('action_log_changes', lambda *args: None)
+            except:
+                pass  # Ignore errors during cleanup
+            
             pool = await DBEngine.get_pool()
             await pool.release(self._connection)
             self._connection = None
