@@ -108,7 +108,7 @@ class CommandCenter(ttk.Window):
 
         # Main Watchlist Grid
         # CHANGE: Removed 'self.db' argument. The widget should now import data modules directly.
-        self.watchlist = WatchlistWidget(self, self.on_ticker_select, self.async_run, self.async_run_bg)
+        self.watchlist = WatchlistWidget(self, self.on_ticker_select, self.async_run, self.async_run_bg, self.notifier)
         self.watchlist.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
         # Initial Load
@@ -157,14 +157,22 @@ class CommandCenter(ttk.Window):
 
     def on_closing(self):
         """Cleanup when window closes"""
+        print("Closing application...")
+
+        # 1. Terminate external processes
         if hasattr(self, "market_agent_process"):
             self.market_agent_process.terminate()
-        # Stop notifier
-        if hasattr(self, "notifier"):
-            self.async_run(self.notifier.stop_listening())
-        # Close DB Pool
-        self.async_run(DBEngine.close())
-        self.destroy()
+
+        # 2. Schedule async cleanup and stop the loop
+        # We use async_run_bg so we don't block the main thread here.
+        async def cleanup_and_stop_loop():
+            if hasattr(self, "notifier"):
+                await self.notifier.stop_listening()
+            await DBEngine.close()
+            self.loop.stop()
+
+        asyncio.run_coroutine_threadsafe(cleanup_and_stop_loop(), self.loop)
+        self.destroy() # Destroy the window, allowing the mainloop to exit
 
 
 if __name__ == "__main__":

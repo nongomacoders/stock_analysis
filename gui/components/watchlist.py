@@ -1,6 +1,6 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-from datetime import date
+from datetime import date, datetime
 
 # --- UPDATED IMPORTS ---
 # 1. Utilities moved to core
@@ -12,16 +12,31 @@ from modules.data.watchlist import fetch_watchlist_data
 # 3. Child windows (Note: These will need refactoring next)
 from components.chart_window import ChartWindow
 from components.research_window import ResearchWindow
+from components.todo_widget import TodoWidget
 
 
 class WatchlistWidget(ttk.Frame):
-    def __init__(self, parent, on_select_callback, async_run, async_run_bg):
+    def __init__(self, parent, on_select_callback, async_run, async_run_bg, notifier):
         # CHANGED: Removed 'db_layer' from arguments, added async_run_bg
         super().__init__(parent)
         self.on_select = on_select_callback
         self.async_run = async_run
         self.async_run_bg = async_run_bg
+        self.notifier = notifier
+
         self.create_widgets()
+
+        # Initial data load
+        self.refresh()
+
+    def refresh(self):
+        """Refresh the watchlist tab."""
+        self.refresh_watchlist()
+
+    def on_tab_change(self, event):
+        """Callback for when the notebook tab is changed."""
+        selected_tab = self.notebook.index(self.notebook.select())
+        # You can add logic here if certain tabs need to refresh on view
 
     def create_widgets(self):
         # --- STYLE CONFIGURATION ---
@@ -33,9 +48,25 @@ class WatchlistWidget(ttk.Frame):
             font=("Helvetica", 10, "bold"),
         )
 
+        # --- NOTEBOOK FOR TABS ---
+        self.notebook = ttk.Notebook(self, bootstyle="primary")
+        self.notebook.pack(fill=BOTH, expand=True)
+        self.notebook.bind("<<NotebookTabChanged>>", self.on_tab_change)
+
+        # --- TAB 1: WATCHLIST ---
+        watchlist_frame = ttk.Frame(self.notebook)
+        self.notebook.add(watchlist_frame, text="Watchlist")
+        self.create_watchlist_tab(watchlist_frame)
+
+        # --- TAB 2: DAILY TODO ---
+        todo_frame = TodoWidget(self.notebook, self.async_run, self.async_run_bg, self.notifier)
+        self.notebook.add(todo_frame, text=f"Daily TODO ({date.today().strftime('%a %d %b')})")
+
+    def create_watchlist_tab(self, parent_frame):
+        """Creates the content for the Watchlist tab."""
         # --- COLUMNS ---
         cols = ("Ticker", "Name", "Price", "Status", "Event", "Strategy", "News")
-        self.tree = ttk.Treeview(self, columns=cols, show="headings")
+        self.tree = ttk.Treeview(parent_frame, columns=cols, show="headings")
 
         self.tree.heading("Ticker", text="Ticker")
         self.tree.heading(
@@ -59,11 +90,11 @@ class WatchlistWidget(ttk.Frame):
         self.tree.column("News", width=400, anchor=W, stretch=True)
 
         # Scrollbar
-        scrolly = ttk.Scrollbar(self, orient=VERTICAL, command=self.tree.yview)
+        scrolly = ttk.Scrollbar(parent_frame, orient=VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrolly.set)
 
         scrolly.pack(side=RIGHT, fill=Y)
-        self.tree.pack(side=LEFT, fill=BOTH, expand=True)
+        self.tree.pack(fill=BOTH, expand=True)
 
         # --- ROW COLORS ---
         self.tree.tag_configure("holding", background="#d1e7dd", foreground="black")
@@ -73,7 +104,7 @@ class WatchlistWidget(ttk.Frame):
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
         self.tree.bind("<Double-Button-1>", self._on_double_click)
 
-    def refresh(self):
+    def refresh_watchlist(self):
         """Refresh watchlist data (non-blocking)."""
         def on_data_loaded(data):
             if not data:
@@ -137,7 +168,7 @@ class WatchlistWidget(ttk.Frame):
                     ),
                     tags=(row_tag,),
                 )
-        
+
         self.async_run_bg(fetch_watchlist_data(), callback=on_data_loaded)
 
     def _on_row_click(self, event):
