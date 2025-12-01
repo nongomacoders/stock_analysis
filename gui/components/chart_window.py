@@ -1,14 +1,11 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
-import pandas as pd
-import mplfinance as mpf
 
 # --- NEW IMPORT ---
 from modules.data.market import get_historical_prices
 from modules.data.metrics import get_stock_metrics
+from components.base_chart import BaseChart
 
 
 class ChartWindow(ttk.Toplevel):
@@ -29,6 +26,7 @@ class ChartWindow(ttk.Toplevel):
 
     def update_ticker(self, ticker):
         """Update the window with a new ticker"""
+        print(f"\n[ChartWindow] Updating to ticker: {ticker}")
         self.ticker = ticker
         self.title(f"{ticker} - Price Charts")
         
@@ -41,10 +39,17 @@ class ChartWindow(ttk.Toplevel):
                          break
         
         # Clear existing charts
-        for frame in self.chart_frames.values():
-            for widget in frame.winfo_children():
-                widget.destroy()
-                
+        print("[ChartWindow] Destroying old chart widgets...")
+        for chart_widget in self.charts.values():
+            chart_widget.destroy()
+        self.charts.clear()
+
+        # Re-create the chart widgets for the new ticker
+        print("[ChartWindow] Re-creating chart widgets...")
+        self.create_chart_widgets(self.chart_tab)
+
+        # Reload data for the new ticker
+        print("[ChartWindow] Triggering chart load.")
         self.load_charts()
 
     def create_widgets(self):
@@ -62,30 +67,35 @@ class ChartWindow(ttk.Toplevel):
         self.notebook.pack(fill=BOTH, expand=True, padx=10, pady=10)
 
         # Charts Tab
-        chart_tab = ttk.Frame(self.notebook)
-        self.notebook.add(chart_tab, text="Charts")
+        self.chart_tab = ttk.Frame(self.notebook)
+        self.notebook.add(self.chart_tab, text="Charts")
 
-        chart_tab.grid_rowconfigure(0, weight=1)
-        chart_tab.grid_rowconfigure(1, weight=1)
-        chart_tab.grid_columnconfigure(0, weight=1)
-        chart_tab.grid_columnconfigure(1, weight=1)
+        self.chart_tab.grid_rowconfigure(0, weight=1)
+        self.chart_tab.grid_rowconfigure(1, weight=1)
+        self.chart_tab.grid_columnconfigure(0, weight=1)
+        self.chart_tab.grid_columnconfigure(1, weight=1)
+        
+        self.create_chart_widgets(self.chart_tab)
 
-        self.chart_frames = {}
+        # Metrics Tab
+        self.metrics_tab = self.create_metrics_tab()
+        self.notebook.add(self.metrics_tab, text="Metrics")
+
+    def create_chart_widgets(self, parent_frame):
+        """Creates and grids the individual BaseChart widgets."""
+        self.charts = {}
         periods = [
             ("3M", "3 Months", 0, 0),
             ("6M", "6 Months", 0, 1),
             ("1Y", "1 Year", 1, 0),
             ("5Y", "5 Years", 1, 1),
         ]
-
         for period_key, period_label, row, col in periods:
-            frame = ttk.Labelframe(chart_tab, text=period_label, bootstyle="primary")
-            frame.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
-            self.chart_frames[period_key] = frame
-
-        # Metrics Tab
-        self.metrics_tab = self.create_metrics_tab()
-        self.notebook.add(self.metrics_tab, text="Metrics")
+            chart_frame = ttk.Labelframe(parent_frame, text=period_label, bootstyle="primary")
+            chart_frame.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
+            chart_widget = BaseChart(chart_frame, period_label)
+            chart_widget.pack(fill=BOTH, expand=True) # Add this line to place the chart widget
+            self.charts[period_key] = chart_widget
 
     def create_metrics_tab(self):
         """Create the metrics tab with key stock metrics"""
@@ -125,13 +135,20 @@ class ChartWindow(ttk.Toplevel):
 
     def load_charts(self):
         """Load and display all charts"""
+        print("[ChartWindow] load_charts called.")
         periods = {"3M": 90, "6M": 180, "1Y": 365, "5Y": 1825}
 
         for period_key, days in periods.items():
-            # CHANGED: Call module function directly
+            print(f"[ChartWindow] Fetching data for {period_key} ({days} days)...")
             data = self.async_run(get_historical_prices(self.ticker, days))
-            self.plot_chart(period_key, data)
-        
+            if data:
+                print(f"[ChartWindow]   -> Fetched {len(data)} rows for {period_key}.")
+            else:
+                print(f"[ChartWindow]   -> No data fetched for {period_key}.")
+            chart = self.charts.get(period_key)
+            if chart:
+                print(f"[ChartWindow]   -> Plotting {period_key} chart.")
+                chart.plot(data, period_key)
         # Load metrics
         self.load_metrics()
 
@@ -178,89 +195,3 @@ class ChartWindow(ttk.Toplevel):
         
         # Financials Date
         add_row("Financials Date", metrics.get('financials_date'), "{}")
-
-    def plot_chart(self, period_key, data):
-        """Plot a candlestick chart"""
-        frame = self.chart_frames[period_key]
-
-        if not data:
-            self._show_no_data(frame, "No data available")
-            return
-
-        df = pd.DataFrame(data)
-        df["trade_date"] = pd.to_datetime(df["trade_date"])
-        df.set_index("trade_date", inplace=True)
-
-        # Convert prices (cents -> rands)
-        for col in ["open_price", "high_price", "low_price", "close_price"]:
-            df[col] = pd.to_numeric(df[col], errors="coerce") / 100
-
-        # Rename for mplfinance
-        df = df.rename(
-            columns={
-                "open_price": "Open",
-                "high_price": "High",
-                "low_price": "Low",
-                "close_price": "Close",
-            }
-        )
-
-        df = df.dropna(subset=["Open", "High", "Low", "Close"])
-
-        if df.empty:
-            self._show_no_data(frame, "No valid OHLC data")
-            return
-
-        # Resample
-        if period_key == "5Y":
-            df = (
-                df.resample("ME")
-                .agg({"Open": "first", "High": "max", "Low": "min", "Close": "last"})
-                .dropna()
-            )
-        elif period_key == "1Y":
-            df = (
-                df.resample("W")
-                .agg({"Open": "first", "High": "max", "Low": "min", "Close": "last"})
-                .dropna()
-            )
-
-        if df.empty:
-            self._show_no_data(frame, "Insufficient data for resampling")
-            return
-
-        # Create Plot
-        fig = Figure(figsize=(5, 3), dpi=100)
-        ax = fig.add_subplot(111)
-        mpf.plot(
-            df,
-            type="candle",
-            ax=ax,
-            style="charles",
-            volume=False,
-            show_nontrading=False,
-        )
-
-        ax.set_xlabel("Date", fontsize=9)
-        ax.set_ylabel("Price (ZAR)", fontsize=9)
-        ax.tick_params(axis="both", labelsize=8)
-        ax.grid(True, alpha=0.3)
-
-        min_p, max_p = df["Low"].min(), df["High"].max()
-        ax.set_title(f"Range: R{min_p:.2f} - R{max_p:.2f}", fontsize=10)
-        fig.tight_layout()
-
-        canvas = FigureCanvasTkAgg(fig, master=frame)
-        canvas.draw()
-        canvas.get_tk_widget().pack(fill=BOTH, expand=True)
-
-    def _show_no_data(self, frame, message):
-        fig = Figure(figsize=(5, 3), dpi=100)
-        ax = fig.add_subplot(111)
-        ax.text(0.5, 0.5, message, ha="center", va="center", fontsize=12)
-        ax.set_title("No Data", fontsize=10)
-        fig.tight_layout()
-
-        canvas = FigureCanvasTkAgg(fig, master=frame)
-        canvas.draw()
-        canvas.get_tk_widget().pack(fill=BOTH, expand=True)
