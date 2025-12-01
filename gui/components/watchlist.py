@@ -12,6 +12,7 @@ from modules.data.watchlist import fetch_watchlist_data
 # 3. Child windows (Note: These will need refactoring next)
 from components.chart_window import ChartWindow
 from components.research_window import ResearchWindow
+from components.technical_analysis_window import TechnicalAnalysisWindow
 from components.todo_widget import TodoWidget
 
 
@@ -64,6 +65,17 @@ class WatchlistWidget(ttk.Frame):
 
     def create_watchlist_tab(self, parent_frame):
         """Creates the content for the Watchlist tab."""
+        # --- TOOLBAR ---
+        toolbar = ttk.Frame(parent_frame, padding=5)
+        toolbar.pack(side=TOP, fill=X)
+        
+        ttk.Button(
+            toolbar, 
+            text="Technical Analysis", 
+            command=self.open_technical_analysis,
+            bootstyle="info-outline"
+        ).pack(side=LEFT)
+
         # --- COLUMNS ---
         cols = ("Ticker", "Name", "Price", "Status", "Event", "Strategy", "News")
         self.tree = ttk.Treeview(parent_frame, columns=cols, show="headings")
@@ -214,3 +226,14 @@ class WatchlistWidget(ttk.Frame):
             self.tree.move(k, "", index)
 
         self.tree.heading(col, command=lambda: self.sort_column(col, not reverse))
+
+    def open_technical_analysis(self):
+        """Open the Technical Analysis window for the selected ticker."""
+        sel = self.tree.selection()
+        if not sel:
+            return
+
+        item = self.tree.item(sel[0])
+        ticker = item["values"][0]
+        
+        TechnicalAnalysisWindow(self, ticker, self.async_run_bg)

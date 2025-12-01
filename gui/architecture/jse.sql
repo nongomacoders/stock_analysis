@@ -27,6 +27,22 @@ CREATE TABLE IF NOT EXISTS public.daily_stock_data
     CONSTRAINT daily_stock_data_pkey PRIMARY KEY (ticker, trade_date)
 );
 
+CREATE TABLE IF NOT EXISTS public.daily_todos
+(
+    id serial NOT NULL,
+    task_date date NOT NULL,
+    title text COLLATE pg_catalog."default" NOT NULL,
+    description text COLLATE pg_catalog."default",
+    ticker character varying(16) COLLATE pg_catalog."default",
+    priority text COLLATE pg_catalog."default" NOT NULL DEFAULT 'medium'::text,
+    status text COLLATE pg_catalog."default" NOT NULL DEFAULT 'active'::text,
+    sort_order integer,
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    updated_at timestamp with time zone NOT NULL DEFAULT now(),
+    completed_at timestamp with time zone,
+    CONSTRAINT daily_todos_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS public.historical_earnings
 (
     earnings_id serial NOT NULL,
@@ -201,13 +217,14 @@ CREATE TABLE IF NOT EXISTS public.watchlist
 (
     watchlist_id serial NOT NULL,
     ticker character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    price_level numeric(12, 2),
+    target_price numeric(12, 2),
     entry_price numeric(12, 2),
     stop_loss numeric(12, 2),
     reward_risk_ratio numeric(10, 2),
     date_added date DEFAULT CURRENT_DATE,
     notes text COLLATE pg_catalog."default",
     status character varying(20) COLLATE pg_catalog."default" DEFAULT 'Pending'::character varying,
+    is_long boolean DEFAULT true,
     CONSTRAINT watchlist_pkey PRIMARY KEY (watchlist_id)
 );
 
