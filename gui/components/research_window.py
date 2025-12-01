@@ -7,23 +7,32 @@ from modules.analysis.engine import generate_master_research
 
 
 class ResearchWindow(ttk.Toplevel):
-    def __init__(self, parent, ticker, async_run, on_data_change=None):
-        # CHANGED: Removed db_layer argument
+    def __init__(self, parent, ticker, async_run, async_run_bg, notifier, on_data_change=None):
+        # CHANGED: Removed db_layer argument, added async_run_bg for non-blocking operations
         super().__init__(parent)
-        self.title(f"{ticker} - Research")
+        self.title(f"{ticker} - Research & Action Log")
         self.geometry("900x700")
 
         self.ticker = ticker
         self.async_run = async_run
+        self.async_run_bg = async_run_bg
         self.on_data_change = on_data_change
+
+        # Listen for DB notifications
+        self.notifier = notifier
+        self.async_run(self.notifier.add_listener('action_log_changes', self.on_action_log_notification))
 
         self.create_widgets()
         self.load_research()
 
+    def on_action_log_notification(self, payload: str):
+        """Callback for DB notifications to reload the action log."""
+        self.after(0, self.load_action_logs)
+
     def update_ticker(self, ticker):
         """Update the window with a new ticker"""
         self.ticker = ticker
-        self.title(f"{ticker} - Research")
+        self.title(f"{ticker} - Research & Action Log")
         
         # Update title label
         for widget in self.winfo_children():
@@ -267,20 +276,14 @@ class ResearchWindow(ttk.Toplevel):
         data = self.action_log_tab.logs_map.get(item_id)
         
         if data and not data.get("is_read", False):
-            self.async_run(mark_log_read(data["log_id"]))
-            
-            # Update local data
-            data["is_read"] = True
-            
-            # Reload logs to re-sort
-            self.load_action_logs()
-            
-            # Disable button
-            self.mark_read_btn.config(state=DISABLED)
-            
-            # Notify parent to refresh (e.g. watchlist)
-            if self.on_data_change:
-                self.on_data_change()
+            def on_complete(result):
+                """Callback after mark_log_read completes."""
+                # The UI (both watchlist and this window's action log) will be updated via the DB notifier.
+                # We only need to disable the button here for immediate feedback.
+                self.mark_read_btn.config(state=DISABLED)
+
+            # Use non-blocking async to prevent UI freeze
+            self.async_run_bg(mark_log_read(data["log_id"]), callback=on_complete)
 
     def load_research(self):
         # CHANGED: Call module functions
@@ -312,26 +315,27 @@ class ResearchWindow(ttk.Toplevel):
             )
 
     def load_action_logs(self):
-        """Fetch and display action logs."""
-        action_logs = self.async_run(get_action_logs(self.ticker))
+        """Fetch and display action logs (non-blocking)."""
+        def on_logs_loaded(action_logs):
+            self.action_log_tab.tree.delete(*self.action_log_tab.tree.get_children())
+            self.action_log_tab.logs_map.clear()
+
+            if action_logs:
+                for item in action_logs:
+                    d_str = item["log_timestamp"].strftime("%Y-%m-%d %H:%M")
+                    t_type = item["trigger_type"]
+                    content = item["trigger_content"]
+                    status = "Read" if item.get("is_read") else "Unread"
+                    first_line = content.strip().split("\n")[0] if content else "No content"
+
+                    iid = self.action_log_tab.tree.insert("", END, values=(d_str, t_type, first_line, status))
+                    self.action_log_tab.logs_map[iid] = item
+            else:
+                self.action_log_tab.tree.insert(
+                    "", END, values=("", "", "No Action Logs found.", "")
+                )
         
-        self.action_log_tab.tree.delete(*self.action_log_tab.tree.get_children())
-        self.action_log_tab.logs_map.clear()
-
-        if action_logs:
-            for item in action_logs:
-                d_str = item["log_timestamp"].strftime("%Y-%m-%d %H:%M")
-                t_type = item["trigger_type"]
-                content = item["trigger_content"]
-                status = "Read" if item.get("is_read") else "Unread"
-                first_line = content.strip().split("\n")[0] if content else "No content"
-
-                iid = self.action_log_tab.tree.insert("", END, values=(d_str, t_type, first_line, status))
-                self.action_log_tab.logs_map[iid] = item
-        else:
-             self.action_log_tab.tree.insert(
-                "", END, values=("", "", "No Action Logs found.", "")
-            )
+        self.async_run_bg(get_action_logs(self.ticker), callback=on_logs_loaded)
 
     def _fill_tab(self, tab, content):
         tab.text_widget.config(state=NORMAL)

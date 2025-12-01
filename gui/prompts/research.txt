@@ -30,6 +30,7 @@ After those bullets, write the body of the report with the following sections an
 
 Rules:
 - Answer in plain text only. Do NOT use markdown, bullets with asterisks, hashes (#), or bold/italic tags.
+- Dont use citations or references.
 - Keep each sentence short and on a new line.
 - Currency in ZAR unless I specify otherwise.
 - Keep numbers rounded and easy to read.

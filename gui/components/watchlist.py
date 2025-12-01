@@ -15,11 +15,12 @@ from components.research_window import ResearchWindow
 
 
 class WatchlistWidget(ttk.Frame):
-    def __init__(self, parent, on_select_callback, async_run):
-        # CHANGED: Removed 'db_layer' from arguments
+    def __init__(self, parent, on_select_callback, async_run, async_run_bg):
+        # CHANGED: Removed 'db_layer' from arguments, added async_run_bg
         super().__init__(parent)
         self.on_select = on_select_callback
         self.async_run = async_run
+        self.async_run_bg = async_run_bg
         self.create_widgets()
 
     def create_widgets(self):
@@ -73,66 +74,71 @@ class WatchlistWidget(ttk.Frame):
         self.tree.bind("<Double-Button-1>", self._on_double_click)
 
     def refresh(self):
-        for item in self.tree.get_children():
-            self.tree.delete(item)
+        """Refresh watchlist data (non-blocking)."""
+        def on_data_loaded(data):
+            if not data:
+                return
+                
+            # Clear existing items
+            for item in self.tree.get_children():
+                self.tree.delete(item)
+            
+            today = date.today()
 
-        # CHANGED: Now calling the module function directly via async_run
-        # The function fetch_watchlist_data() creates its own DB connection
-        data = self.async_run(fetch_watchlist_data())
-        today = date.today()
+            for row in data:
+                # 1. Event Days
+                next_date = row.get("next_event_date")
+                days_str = "-"
 
-        for row in data:
-            # 1. Event Days
-            next_date = row.get("next_event_date")
-            days_str = "-"
+                if next_date:
+                    days = (next_date - today).days
+                    days_str = f"{days}d"
 
-            if next_date:
-                days = (next_date - today).days
-                days_str = f"{days}d"
+                # 2. Background Tag
+                row_tag = ""
+                if row.get("unread_log_count", 0) > 0:
+                    row_tag = "unread"
+                elif row["is_holding"]:
+                    row_tag = "holding"
+                elif row["status"] == "Pre-Trade":
+                    row_tag = "pretrade"
 
-            # 2. Background Tag
-            row_tag = ""
-            if row.get("unread_log_count", 0) > 0:
-                row_tag = "unread"
-            elif row["is_holding"]:
-                row_tag = "holding"
-            elif row["status"] == "Pre-Trade":
-                row_tag = "pretrade"
+                # 3. Proximity Text
+                prox_text, _ = get_proximity_status(
+                    row["close_price"], row["entry_price"], row["stop_loss"], row["target"]
+                )
 
-            # 3. Proximity Text
-            prox_text, _ = get_proximity_status(
-                row["close_price"], row["entry_price"], row["stop_loss"], row["target"]
-            )
+                # 4. Truncate Text
+                strategy_text = str(row.get("strategy", "") or "").replace("\n", " ")
+                if len(strategy_text) > 100:
+                    strategy_text = strategy_text[:100] + "..."
 
-            # 4. Truncate Text
-            strategy_text = str(row.get("strategy", "") or "").replace("\n", " ")
-            if len(strategy_text) > 100:
-                strategy_text = strategy_text[:100] + "..."
+                news_text = str(row.get("latest_news", "") or "").replace("\n", " ")
+                if len(news_text) > 100:
+                    news_text = news_text[:100] + "..."
 
-            news_text = str(row.get("latest_news", "") or "").replace("\n", " ")
-            if len(news_text) > 100:
-                news_text = news_text[:100] + "..."
+                full_name = row["full_name"] if row["full_name"] else ""
+                short_name = full_name[:10]
 
-            full_name = row["full_name"] if row["full_name"] else ""
-            short_name = full_name[:10]
+                price_val = row["close_price"]
+                price_str = f"{int(price_val)}" if price_val is not None else "-"
 
-            price_val = row["close_price"]
-            price_str = f"{int(price_val)}" if price_val is not None else "-"
-
-            self.tree.insert(
-                "",
-                "end",
-                values=(
-                    row["ticker"],
-                    short_name,
-                    price_str,
-                    prox_text,
-                    days_str,
-                    strategy_text,
-                    news_text,
-                ),
-                tags=(row_tag,),
-            )
+                self.tree.insert(
+                    "",
+                    "end",
+                    values=(
+                        row["ticker"],
+                        short_name,
+                        price_str,
+                        prox_text,
+                        days_str,
+                        strategy_text,
+                        news_text,
+                    ),
+                    tags=(row_tag,),
+                )
+        
+        self.async_run_bg(fetch_watchlist_data(), callback=on_data_loaded)
 
     def _on_row_click(self, event):
         sel = self.tree.selection()
@@ -148,12 +154,10 @@ class WatchlistWidget(ttk.Frame):
             item = self.tree.item(sel[0])
             ticker = item["values"][0]
 
-            # CHANGED: Removed 'self.db' from these calls.
-            # WARNING: This will break ChartWindow/ResearchWindow until we refactor them next.
-            # They likely expect (parent, ticker, db, async_run).
-            # We are updating the call signature now to be correct for the future.
-            ChartWindow(self, ticker, self.async_run)
-            ResearchWindow(self, ticker, self.async_run)
+            # Open Chart and Research windows, creating them if they don't exist.
+            # This logic is similar to on_ticker_select in main.py but is triggered by a double-click.
+            # We can simply call the on_select callback to reuse the logic from main.py.
+            self.on_select(ticker)
 
     def sort_column(self, col, reverse):
         l = [(self.tree.set(k, col), k) for k in self.tree.get_children("")]

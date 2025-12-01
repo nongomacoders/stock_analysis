@@ -1,6 +1,6 @@
 import asyncio
 import asyncpg
-from typing import Callable, Optional
+from typing import Callable, Optional, Dict, List
 from core.db.engine import DBEngine
 
 
@@ -12,68 +12,80 @@ class DBNotifier:
     
     def __init__(self):
         self._connection: Optional[asyncpg.Connection] = None
-        self._listener_task: Optional[asyncio.Task] = None
-        self._running = False
+        self._listener_tasks: Dict[str, asyncio.Task] = {}
+        self._callbacks: Dict[str, List[Callable]] = {}
         
-    async def start_listening(self, channel: str, callback: Callable[[str], None]):
+    async def add_listener(self, channel: str, callback: Callable[[str], None]):
         """
-        Start listening for notifications on the specified channel.
+        Add a callback for a specific notification channel.
+        Starts the underlying PostgreSQL listener if it's not already running for this channel.
         
         Args:
             channel: PostgreSQL notification channel name
             callback: Function to call when notification received (receives payload as string)
         """
-        if self._running:
-            return
+        # Add callback to the list for this channel
+        if channel not in self._callbacks:
+            self._callbacks[channel] = []
+        self._callbacks[channel].append(callback)
+        
+        # If we are not already listening on this channel, start a new listener.
+        if channel not in self._listener_tasks:
+            # Get a dedicated connection for listening
+            pool = await DBEngine.get_pool()
+            conn = await pool.acquire()
             
-        # Get connection from pool
-        pool = await DBEngine.get_pool()
-        self._connection = await pool.acquire()
+            # Add the actual asyncpg listener
+            await conn.add_listener(channel, self._notification_handler)
+            
+            # Store the task and connection so we can manage them
+            self._listener_tasks[channel] = asyncio.create_task(self._keep_alive(conn))
+            print(f"Notifier: Started listening on channel '{channel}'")
+
+    def _notification_handler(self, connection, pid, channel, payload):
+        """Internal handler that dispatches notifications to all registered callbacks for a channel."""
+        if channel in self._callbacks:
+            loop = asyncio.get_event_loop()
+            for callback in self._callbacks[channel]:
+                # Schedule each callback to run on the main event loop
+                loop.call_soon_threadsafe(self._handle_callback, callback, payload)
         
-        # Set up notification handler
-        def notification_handler(connection, pid, channel, payload):
-            # Call the callback with the payload
-            callback(payload)
-        
-        # Add listener
-        await self._connection.add_listener(channel, notification_handler)
-        
-        self._running = True
-        
-        # Keep the listener alive
-        self._listener_task = asyncio.create_task(self._keep_alive())
-        
-    async def _keep_alive(self):
-        """Keep the listener connection alive."""
+    def _handle_callback(self, callback: Callable[[str], None], payload: str):
+        """
+        Executes a single callback, handling both sync and async functions.
+        This runs on the main event loop.
+        """
         try:
-            while self._running:
-                await asyncio.sleep(1)
+            # Check if the callback is a coroutine function or a regular function.
+            if asyncio.iscoroutinefunction(callback):
+                # If it's an async function, create a task to run it.
+                asyncio.create_task(callback(payload))
+            else:
+                # If it's a regular function, call it directly.
+                callback(payload)
+        except Exception as e:
+            print(f"Error in notification callback: {e}")
+        
+    async def _keep_alive(self, connection: asyncpg.Connection):
+        """Keeps a listener connection alive until cancelled."""
+        try:
+            # This will wait indefinitely until the task is cancelled.
+            await asyncio.Future()
         except asyncio.CancelledError:
-            pass
+            # When cancelled, release the connection back to the pool
+            pool = await DBEngine.get_pool()
+            await pool.release(connection)
+            print(f"Notifier: Released connection for listener.")
             
     async def stop_listening(self):
         """Stop listening and cleanup resources."""
-        if not self._running:
-            return
-            
-        self._running = False
-        
-        # Cancel the keep-alive task
-        if self._listener_task:
-            self._listener_task.cancel()
+        for channel, task in self._listener_tasks.items():
+            task.cancel()
             try:
-                await self._listener_task
+                await task
             except asyncio.CancelledError:
                 pass
-        
-        # Remove listener and release connection back to pool
-        if self._connection:
-            try:
-                # Remove all listeners before releasing
-                await self._connection.remove_listener('action_log_changes', lambda *args: None)
-            except:
-                pass  # Ignore errors during cleanup
-            
-            pool = await DBEngine.get_pool()
-            await pool.release(self._connection)
-            self._connection = None
+            print(f"Notifier: Stopped listening on channel '{channel}'")
+
+        self._listener_tasks.clear()
+        self._callbacks.clear()

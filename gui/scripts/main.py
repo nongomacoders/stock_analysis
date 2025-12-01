@@ -50,7 +50,7 @@ class CommandCenter(ttk.Window):
         
         # 4. Initialize Database Notifier
         self.notifier = DBNotifier()
-        self.async_run(self.notifier.start_listening('action_log_changes', self.on_action_log_notification))
+        self.async_run(self.notifier.add_listener('action_log_changes', self.on_action_log_notification))
 
         # 5. Build UI
         self.create_layout()
@@ -68,6 +68,23 @@ class CommandCenter(ttk.Window):
         """Helper to run async coroutines from sync code"""
         future = asyncio.run_coroutine_threadsafe(coro, self.loop)
         return future.result()
+
+    def async_run_bg(self, coro, callback=None):
+        """Run async coroutine in background without blocking UI"""
+        future = asyncio.run_coroutine_threadsafe(coro, self.loop)
+        
+        def on_done(fut):
+            try:
+                result = fut.result()
+                if callback:
+                    # Schedule callback on main thread
+                    self.after(0, lambda: callback(result))
+            except Exception as e:
+                print(f"Background task error: {e}")
+                if callback:
+                    self.after(0, lambda: callback(None))
+        
+        future.add_done_callback(on_done)
 
     def start_market_agent(self):
         """Start market_agent.py as a background daemon process"""
@@ -91,7 +108,7 @@ class CommandCenter(ttk.Window):
 
         # Main Watchlist Grid
         # CHANGE: Removed 'self.db' argument. The widget should now import data modules directly.
-        self.watchlist = WatchlistWidget(self, self.on_ticker_select, self.async_run)
+        self.watchlist = WatchlistWidget(self, self.on_ticker_select, self.async_run, self.async_run_bg)
         self.watchlist.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
         # Initial Load
@@ -125,7 +142,7 @@ class CommandCenter(ttk.Window):
             self.research_window.update_ticker(ticker)
             self.research_window.lift()
         else:
-            self.research_window = ResearchWindow(self, ticker, self.async_run, on_data_change=self.watchlist.refresh)
+            self.research_window = ResearchWindow(self, ticker, self.async_run, self.async_run_bg, self.notifier, on_data_change=self.watchlist.refresh)
             r_w = screen_width // 2
             r_h = usable_height // 2
             r_x = screen_width // 2
