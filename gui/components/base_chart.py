@@ -2,6 +2,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import pandas as pd
 import mplfinance as mpf
+import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 

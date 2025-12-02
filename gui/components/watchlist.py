@@ -61,7 +61,7 @@ class WatchlistWidget(ttk.Frame):
 
         # --- TAB 2: DAILY TODO ---
         todo_frame = TodoWidget(self.notebook, self.async_run, self.async_run_bg, self.notifier)
-        self.notebook.add(todo_frame, text=f"Daily TODO ({date.today().strftime('%a %d %b')})")
+        self.notebook.add(todo_frame, text="Todo")
 
     def create_watchlist_tab(self, parent_frame):
         """Creates the content for the Watchlist tab."""

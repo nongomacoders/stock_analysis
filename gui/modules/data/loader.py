@@ -183,7 +183,6 @@ class RawFundamentalsLoader:
                             "results_release_date": self._parse_release_date(p_label),
                         }
                     )
-
         if not periods_info:
             return []
 
@@ -284,12 +283,14 @@ class RawFundamentalsLoader:
 
     def _parse_period_label(self, header):
         try:
-            m = re.match(r"([A-Za-z]+)\s+(\d{4})", header)
+            m = re.match(r"([A-Za-z]+)\s*(\d{4})", header)
             if not m:
                 return None
             from dateutil import parser
 
-            return parser.parse(header).date()
+            # Parse only Month YYYY from matched groups
+            date_str = f"{m.group(1)} {m.group(2)}"
+            return parser.parse(date_str).date()
         except:
             return None
 

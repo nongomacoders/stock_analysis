@@ -38,16 +38,6 @@ class ChartWindow(ttk.Toplevel):
                          child.configure(text=f"{self.ticker} - Historical Price Charts")
                          break
         
-        # Clear existing charts
-        print("[ChartWindow] Destroying old chart widgets...")
-        for chart_widget in self.charts.values():
-            chart_widget.destroy()
-        self.charts.clear()
-
-        # Re-create the chart widgets for the new ticker
-        print("[ChartWindow] Re-creating chart widgets...")
-        self.create_chart_widgets(self.chart_tab)
-
         # Reload data for the new ticker
         print("[ChartWindow] Triggering chart load.")
         self.load_charts()

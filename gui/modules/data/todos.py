@@ -2,12 +2,11 @@ from core.db.engine import DBEngine
 from datetime import date
 
 
-async def get_daily_todos(task_date: date):
-    """Fetch all TODOs for a given date, ordered by priority and status."""
+async def get_todos():
+    """Fetch all TODOs, ordered by priority and status."""
     query = """
-        SELECT id, title, description, ticker, priority, status, sort_order
+        SELECT id, task_date, title, description, ticker, priority, status, sort_order
         FROM daily_todos
-        WHERE task_date = $1
         ORDER BY
             -- Active tasks first
             CASE status WHEN 'active' THEN 1 ELSE 2 END,
@@ -17,7 +16,7 @@ async def get_daily_todos(task_date: date):
             sort_order ASC,
             created_at ASC
     """
-    rows = await DBEngine.fetch(query, task_date)
+    rows = await DBEngine.fetch(query)
     return [dict(row) for row in rows]
 
 

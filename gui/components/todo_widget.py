@@ -5,7 +5,7 @@ from datetime import date
 
 # Ensure 'delete_todo' is available in your data module
 from modules.data.todos import (
-    get_daily_todos,
+    get_todos,
     update_todo_status,
     add_todo,
     delete_todo,
@@ -65,13 +65,15 @@ class TodoWidget(ttk.Frame):
         add_btn.pack(side=LEFT, padx=10)
 
         # --- TREEVIEW (Main) ---
-        cols = ("Priority", "Title", "Ticker", "Status")
+        cols = ("Date", "Priority", "Title", "Ticker", "Status")
         self.todo_tree = ttk.Treeview(self, columns=cols, show="headings")
+        self.todo_tree.heading("Date", text="Date")
         self.todo_tree.heading("Priority", text="Priority")
         self.todo_tree.heading("Title", text="Title")
         self.todo_tree.heading("Ticker", text="Ticker")
         self.todo_tree.heading("Status", text="Status")
 
+        self.todo_tree.column("Date", width=100, anchor=W, stretch=False)
         self.todo_tree.column("Priority", width=80, anchor=W, stretch=False)
         self.todo_tree.column("Title", width=400, anchor=W, stretch=True)
         self.todo_tree.column("Ticker", width=100, anchor=W, stretch=False)
@@ -131,7 +133,7 @@ class TodoWidget(ttk.Frame):
 
             if not data:
                 self.todo_tree.insert(
-                    "", "end", values=("", "No tasks for today!", "", "")
+                    "", "end", values=("", "", "No tasks found!", "", "")
                 )
                 return
 
@@ -143,10 +145,13 @@ class TodoWidget(ttk.Frame):
                 elif status == "deferred":
                     tags = ("deferred",)
 
+                task_date_str = row["task_date"].strftime("%Y-%m-%d") if row.get("task_date") else ""
+
                 iid = self.todo_tree.insert(
                     "",
                     "end",
                     values=(
+                        task_date_str,
                         row["priority"].title(),
                         row["title"],
                         row.get("ticker") or "-",
@@ -156,7 +161,7 @@ class TodoWidget(ttk.Frame):
                 )
                 self.todo_map[iid] = row
 
-        self.async_run_bg(get_daily_todos(date.today()), callback=on_todos_loaded)
+        self.async_run_bg(get_todos(), callback=on_todos_loaded)
 
     def add_task(self):
         """Collects input and adds a task."""

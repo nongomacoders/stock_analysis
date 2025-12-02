@@ -9,19 +9,22 @@ from core.utils.math import convert_yf_price_to_cents
 import modules.analysis.engine as ai_engine
 
 
-async def run_eod_price_download():
+async def run_price_update():
     """Downloads prices and triggers alerts."""
-    print("+++ Running EOD Price Download +++")
+    print("+++ Running Price Update +++")
 
     # 1. Determine Date Range
     last_row = await DBEngine.fetch("SELECT MAX(trade_date) as d FROM daily_stock_data")
     last_date = last_row[0]["d"] if last_row and last_row[0]["d"] else None
+    
+    print(f"DEBUG: Last DB Date: {last_date}")
 
     today = date.today()
     params = {"period": "5y"}  # Default to full download if empty
 
     if last_date:
         diff = (today - last_date).days
+        print(f"DEBUG: Days since last update: {diff}")
         if diff <= 2:
             params = {"period": "2d"}
         else:
@@ -29,17 +32,23 @@ async def run_eod_price_download():
                 "start": last_date + timedelta(days=1),
                 "end": today + timedelta(days=1),
             }
+    
+    print(f"DEBUG: Download params: {params}")
 
     # 2. Get Tickers
     rows = await DBEngine.fetch("SELECT ticker FROM stock_details")
     tickers = [r["ticker"] for r in rows]
     if not tickers:
+        print("DEBUG: No tickers found in DB.")
         return
 
     # 3. Download
     print(f"Downloading for {len(tickers)} tickers...")
     try:
         data = yf.download(tickers, auto_adjust=True, progress=False, **params)
+        print(f"DEBUG: Downloaded data shape: {data.shape}")
+        if data.empty:
+            print("DEBUG: Data is empty.")
     except Exception as e:
         print(f"YFinance Error: {e}")
         return
@@ -49,6 +58,7 @@ async def run_eod_price_download():
 
     # 4. Process & Save
     records = await _process_and_save(data, tickers)
+    print(f"DEBUG: Records saved: {records}")
     if records > 0:
         await DBEngine.execute(
             "INSERT INTO price_update_log (records_saved) VALUES ($1)", records
@@ -59,20 +69,39 @@ async def run_eod_price_download():
 
 async def _process_and_save(data, all_tickers):
     # Handle yfinance multi-index complexity
+    print(f"DEBUG: Data columns type: {type(data.columns)}")
     if isinstance(data.columns, pd.MultiIndex):
+        print("DEBUG: MultiIndex detected. Stacking...")
         df = data.stack().reset_index()
-        df.rename(columns={"level_1": "ticker"}, inplace=True)
+        print(f"DEBUG: Stacked columns: {df.columns}")
+        # Check if 'level_1' is indeed the ticker column or if it's named 'Ticker'
+        if "level_1" in df.columns:
+            df.rename(columns={"level_1": "ticker"}, inplace=True)
+        elif "Ticker" in df.columns:
+            df.rename(columns={"Ticker": "ticker"}, inplace=True)
+            
     elif "Close" in data.columns:
+        print("DEBUG: Single index detected.")
         df = data.reset_index()
         df["ticker"] = all_tickers[0] if all_tickers else "UNKNOWN"
         df.rename(columns={"Date": "trade_date"}, inplace=True)
     else:
+        print("DEBUG: Unknown data format.")
         return 0
 
+    print(f"DEBUG: DF Columns before rename: {df.columns}")
     df.rename(
-        columns={"Open": "o", "High": "h", "Low": "l", "Close": "c", "Volume": "v"},
+        columns={"Open": "o", "High": "h", "Low": "l", "Close": "c", "Volume": "v", "Date": "trade_date"},
         inplace=True,
     )
+    print(f"DEBUG: DF Columns after rename: {df.columns}")
+    
+    # Check if we have the required columns
+    required = {'o', 'h', 'l', 'c', 'v', 'ticker', 'trade_date'}
+    if not required.issubset(df.columns):
+        print(f"DEBUG: Missing columns. Have: {df.columns}, Need: {required}")
+        return 0
+
     count = 0
 
     q = """
@@ -98,7 +127,8 @@ async def _process_and_save(data, all_tickers):
             )
             await DBEngine.execute(q, *args)
             count += 1
-        except Exception:
+        except Exception as e:
+            print(f"DEBUG: Error processing row: {e}")
             continue
     return count
 

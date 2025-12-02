@@ -4,7 +4,8 @@ from core.db.engine import DBEngine
 
 # Import the workers we created in the previous step
 from modules.market_agent.sens import run_sens_check
-from modules.market_agent.prices import run_eod_price_download
+from modules.market_agent.prices import run_price_update
+from modules.market_agent.fundamentals import run_fundamentals_check
 
 # --- Scheduler Configuration ---
 RUN_START = dt_time(7, 0)  # 7:00 AM
@@ -22,34 +23,34 @@ async def run_market_agent():
 
     # Ensure DB pool is ready
     await DBEngine.get_pool()
-
-    # Flags
-    eod_done_today = False
+    
+    # Track last fundamentals run to avoid duplicates
+    fundamentals_last_run_date = None
 
     try:
         while True:
             now = datetime.now()
             is_weekday = 0 <= now.weekday() <= 4  # Mon-Fri
             is_work_hours = RUN_START <= now.time() <= RUN_END
+            
+            print(f"DEBUG: Now={now}, Weekday={is_weekday}, WorkHours={is_work_hours}")
 
-            # 1. Nightly Reset (Reset flags just after midnight)
-            if now.time() > MIDNIGHT and now.time() < RUN_START:
-                if eod_done_today:
-                    print("Nightly Reset: Clearing flags.")
-                    eod_done_today = False
-
-            # 2. SENS Check (Runs periodically during work hours)
+            # 1. SENS & Price Check (Runs periodically during work hours)
             if is_weekday and is_work_hours:
+                print("DEBUG: Inside work hours block. Running checks...")
                 # We await this, so it finishes before sleeping
                 await run_sens_check()
+                await run_price_update()
+                
+                # Run fundamentals check once per day
+                today = now.date()
+                if fundamentals_last_run_date != today:
+                    await run_fundamentals_check()
+                    fundamentals_last_run_date = today
+            else:
+                print("DEBUG: Outside work hours. Skipping checks.")
 
-            # 3. EOD Price Download (Runs once after market close)
-            if is_weekday and now.time() > CLOSE_TIME and not eod_done_today:
-                print("Market Closed: Starting EOD Price Download...")
-                await run_eod_price_download()
-                eod_done_today = True
-
-            # 4. Smart Sleep Strategy
+            # 2. Smart Sleep Strategy
             # If it's work hours, check every 15 mins (900s).
             # If it's night/weekend, check every 10 mins (600s) just to keep heartbeat.
             sleep_seconds = 900 if (is_weekday and is_work_hours) else 600
