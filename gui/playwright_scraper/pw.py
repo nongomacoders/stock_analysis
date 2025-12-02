@@ -158,38 +158,3 @@ async def scrape_ticker_fundamentals(ticker: str):
         import traceback
         traceback.print_exc()
         return None
-
-async def main():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
-        context_options = {"storage_state": AUTH_FILE} if os.path.exists(AUTH_FILE) else {}
-        context = await browser.new_context(**context_options)
-        page = await context.new_page()
-        
-        await ensure_logged_in(page, context)
-        
-        tickers = ["NPN"] 
-        
-        for ticker in tickers:
-            print(f"\n>>> Fetching {ticker}...")
-            target_url = f"{BASE_URL}/Results.aspx?c={ticker}&x=JSE"
-            
-            await page.goto(target_url, wait_until="domcontentloaded")
-            
-            # Check for concurrent login dialog
-            await handle_concurrent_login_dialog(page)
-            
-            if "Home.aspx" in page.url:
-                print(f"❌ Failed. Redirected to Home.")
-            else:
-                await ensure_comprehensive_data(page)
-                content = await page.content()
-                await clean_and_print_data(content, ticker)
-            
-            await asyncio.sleep(1)
-
-        print("\n✅ Scraping Complete.")
-        await browser.close()
-
-if __name__ == "__main__":
-    asyncio.run(main())
