@@ -5,6 +5,7 @@ import pandas as pd
 import mplfinance as mpf
 from modules.data.market import get_historical_prices
 from components.base_chart import BaseChart
+from core.db.engine import DBEngine
 
 class TechnicalAnalysisWindow(ttk.Toplevel):
     def __init__(self, parent, ticker, async_run_bg):
@@ -18,8 +19,17 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         # Configure matplotlib style
         plt.style.use("seaborn-v0_8-darkgrid")
 
+        # Price levels for drawing
+        self.entry_price = None
+        self.stop_loss = None
+        self.target_price = None
+        self.horizontal_lines = []  # Store line objects for removal
+
         self.create_widgets()
         self.load_chart("1 Year") # Default to 1 Year
+        
+        # Bind keypress events
+        self.bind_all("<KeyPress>", self.on_key_press)
 
     def create_widgets(self):
         # Top Control Panel
@@ -45,6 +55,12 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         
         self.chart = BaseChart(self.chart_frame, "Technical Chart")
         self.chart.pack(fill=BOTH, expand=True)
+        
+        # Store current cursor y-position
+        self.current_cursor_y = None
+        
+        # Connect mouse motion to track cursor position
+        self.chart.canvas.mpl_connect("motion_notify_event", self.on_chart_mouse_move)
 
     def on_period_change(self, event):
         period_label = self.period_var.get()
@@ -143,5 +159,93 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             # 6. Plot
             # Pass "Custom" as period_key to avoid BaseChart internal resampling
             self.chart.plot(df_view, "Custom", addplot=ap)
+            
+            # Redraw existing horizontal lines if any
+            self.redraw_horizontal_lines()
 
         self.async_run_bg(get_historical_prices(self.ticker, fetch_days), callback=on_data_loaded)
+    
+    def on_chart_mouse_move(self, event):
+        """Track cursor y-position on the chart."""
+        if event.inaxes == self.chart.ax and event.ydata is not None:
+            self.current_cursor_y = event.ydata
+    
+    def on_key_press(self, event):
+        """Handle keypress events to draw horizontal lines."""
+        key = event.char.lower()
+        
+        if key not in ['e', 'l', 't']:
+            return
+        
+        if self.current_cursor_y is None:
+            print(f"[TechAnalysis] No cursor position available")
+            return
+        
+        price = round(self.current_cursor_y, 2)
+        
+        # Set the appropriate price level and color
+        if key == 'e':
+            self.entry_price = price
+            color = 'blue'
+            label = f'Entry: R{price:.2f}'
+            print(f"[TechAnalysis] Entry price set to R{price:.2f}")
+        elif key == 'l':
+            self.stop_loss = price
+            color = 'red'
+            label = f'Stop Loss: R{price:.2f}'
+            print(f"[TechAnalysis] Stop loss set to R{price:.2f}")
+        elif key == 't':
+            self.target_price = price
+            color = 'green'
+            label = f'Target: R{price:.2f}'
+            print(f"[TechAnalysis] Target price set to R{price:.2f}")
+        
+        # Draw the horizontal line
+        self.draw_horizontal_line(price, color, label)
+        
+        # Save to database if we have all three levels
+        if self.entry_price and self.stop_loss and self.target_price:
+            self.save_to_watchlist()
+    
+    def draw_horizontal_line(self, price: float, color: str, label: str):
+        """Draw a horizontal line on the chart at the specified price."""
+        line = self.chart.ax.axhline(y=price, color=color, linestyle='--', linewidth=1.5, label=label, alpha=0.7)
+        self.horizontal_lines.append((price, color, label, line))
+        self.chart.ax.legend(loc='upper left', fontsize=8)
+        self.chart.canvas.draw()
+    
+    def redraw_horizontal_lines(self):
+        """Redraw all horizontal lines after chart refresh."""
+        # Clear old line objects
+        temp_lines = [(p, c, l) for p, c, l, _ in self.horizontal_lines]
+        self.horizontal_lines.clear()
+        
+        # Redraw each line
+        for price, color, label in temp_lines:
+            line = self.chart.ax.axhline(y=price, color=color, linestyle='--', linewidth=1.5, label=label, alpha=0.7)
+            self.horizontal_lines.append((price, color, label, line))
+        
+        if self.horizontal_lines:
+            self.chart.ax.legend(loc='upper left', fontsize=8)
+            self.chart.canvas.draw()
+    
+    def save_to_watchlist(self):
+        """Save price levels to watchlist database and calculate is_long."""
+        # Calculate if trade is long or short
+        is_long = self.target_price > self.entry_price
+        
+        print(f"[TechAnalysis] Saving to watchlist: Entry={self.entry_price}, Stop={self.stop_loss}, Target={self.target_price}, IsLong={is_long}")
+        
+        async def update_watchlist():
+            query = """
+                UPDATE watchlist 
+                SET entry_price = $1, stop_loss = $2, target_price = $3, is_long = $4
+                WHERE ticker = $5
+            """
+            await DBEngine.execute(query, self.entry_price, self.stop_loss, self.target_price, is_long, self.ticker)
+            print(f"[TechAnalysis] Watchlist updated for {self.ticker}")
+        
+        def on_update_complete(result):
+            print(f"[TechAnalysis] Database update completed")
+        
+        self.async_run_bg(update_watchlist(), callback=on_update_complete)
