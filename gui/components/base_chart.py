@@ -6,8 +6,14 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from typing import List, Tuple, Optional, Any
-from core.utils.chart_drawing_utils import prepare_mpf_hlines, add_legend_for_hlines
+
+from core.utils.chart_drawing_utils import (
+    prepare_mpf_hlines,
+    add_legend_for_hlines,
+    build_ma_addplots,
+)
 from core.utils.dataframe_utils import prepare_df_source
+
 
 class BaseChart(ttk.Frame):
     """A base class for a single mplfinance chart.
@@ -107,9 +113,6 @@ class BaseChart(ttk.Frame):
         # ---------------------------------------------------------------------
         self.ax.clear()
 
-        # df_source will be set either by prepare_df_source (new plot) or
-        # taken from self.df_source for reuse. Assert here so static checkers
-        # know df_source is a DataFrame.
         assert df_source is not None
         df = df_source.copy()
 
@@ -127,7 +130,7 @@ class BaseChart(ttk.Frame):
                 .dropna()
             )
 
-        # In case resampling removed everything
+        # Require valid OHLC after resampling
         df = df.dropna(subset=["Open", "High", "Low", "Close"])
         if df.empty:
             self._show_no_data("Insufficient data for resampling")
@@ -139,12 +142,33 @@ class BaseChart(ttk.Frame):
         print(f"  [BaseChart:{self.period_label}] Plotting {len(df)} data points.")
 
         # ---------------------------------------------------------------------
-        # 3) Build hlines for mplfinance (from stored horizontal_lines + optional lines param)
+        # 3) Build moving-average addplots (50d & 200d using last 300 days)
+        #     (attach to external Axes via ax=self.ax)
+        # ---------------------------------------------------------------------
+        ma_addplots = build_ma_addplots(self.df_source, df, self.ax)
+
+        # ---------------------------------------------------------------------
+        # 4) Build hlines for mplfinance (from stored_horizontal_lines + lines)
         # ---------------------------------------------------------------------
         hline_kwargs = prepare_mpf_hlines(self.horizontal_lines, lines)
 
         # ---------------------------------------------------------------------
-        # 4) Call mplfinance.plot
+        # 5) Build final addplot payload (merge caller's addplot with our MAs)
+        # ---------------------------------------------------------------------
+        final_addplot: Optional[Any] = None
+
+        if addplot is not None and ma_addplots is not None:
+            if isinstance(addplot, (list, tuple)):
+                final_addplot = list(addplot) + ma_addplots
+            else:
+                final_addplot = [addplot] + ma_addplots
+        elif addplot is not None:
+            final_addplot = addplot
+        else:
+            final_addplot = ma_addplots
+
+        # ---------------------------------------------------------------------
+        # 6) Call mplfinance.plot
         # ---------------------------------------------------------------------
         plot_kwargs = {
             "type": "candle",
@@ -155,11 +179,10 @@ class BaseChart(ttk.Frame):
         }
 
         if hline_kwargs:
-            # Ensure all hlines are plain floats (no Decimals etc.)
             plot_kwargs["hlines"] = hline_kwargs
 
-        if addplot is not None:
-            plot_kwargs["addplot"] = addplot
+        if final_addplot is not None:
+            plot_kwargs["addplot"] = final_addplot
 
         mpf.plot(df, **plot_kwargs)
 
@@ -173,11 +196,7 @@ class BaseChart(ttk.Frame):
         min_p, max_p = df["Low"].min(), df["High"].max()
         self.ax.set_title(f"Range: R{min_p:.2f} - R{max_p:.2f}", fontsize=10)
 
-        # Legend: build from horizontal_lines labels (dummy line handles)
-        legend = getattr(self.ax, "legend_", None)
-        if legend is not None:
-            legend.remove()
-
+        # Legend for horizontal lines
         add_legend_for_hlines(self.ax, self.horizontal_lines)
 
         self.fig.tight_layout()
@@ -231,11 +250,9 @@ class BaseChart(ttk.Frame):
 
     def add_horizontal_line(self, price: float, color: str, label: str):
         """Store a horizontal line level and re-plot using mplfinance hlines."""
-        # Coerce Decimal / other numeric types to float
         try:
             price = float(price)
         except Exception:
-            # if it really can't be converted, bail quietly
             return
 
         self.horizontal_lines.append((price, color, label))
@@ -251,10 +268,7 @@ class BaseChart(ttk.Frame):
         self._replot_with_current_data()
 
     def set_horizontal_lines(self, items: List[Tuple[float, str, str]]):
-        """Replace stored horizontal lines with the provided items.
-
-        items should be a list of (price, color, label).
-        """
+        """Replace stored horizontal lines with the provided items."""
         self.horizontal_lines = list(items)
         self._replot_with_current_data()
 

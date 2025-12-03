@@ -1,68 +1,79 @@
-import typing
+from typing import List, Tuple, Optional, Any
+import pandas as pd
+import mplfinance as mpf
+from matplotlib.axes import Axes
 from matplotlib.lines import Line2D
 
 
-def _safe_float_list(values: typing.Iterable) -> list:
-    """Convert an iterable of numeric-like values to plain floats, skipping invalid ones."""
-    out = []
-    for v in values:
+def prepare_mpf_hlines(
+    stored_hlines: List[Tuple[float, str, str]],
+    extra_lines: Optional[Any] = None,
+) -> Optional[dict]:
+    """
+    Build an mplfinance-compatible 'hlines' dict from:
+      - stored_hlines: list of (price, color, label)
+      - extra_lines: optional external specification (dict or list)
+
+    Returns a dict suitable for mpf.plot(..., hlines=...) or None if no lines.
+    """
+    prices: List[float] = []
+    colors: List[str] = []
+
+    # 1) From stored horizontal lines
+    for price, color, label in stored_hlines or []:
+        prices.append(price)
+        colors.append(color)
+
+    # 2) Merge any extra 'lines' argument from callers (if still used anywhere)
+    if extra_lines is not None:
+        if isinstance(extra_lines, dict):
+            extra_prices = extra_lines.get("hlines", [])
+            if isinstance(extra_prices, (list, tuple)):
+                prices.extend(extra_prices)
+        elif isinstance(extra_lines, (list, tuple)):
+            prices.extend(extra_lines)
+
+    # Nothing to draw
+    if not prices:
+        return None
+
+    # Coerce all prices to plain floats and filter out bad values
+    safe_prices: List[float] = []
+    safe_colors: List[str] = []
+
+    for i, p in enumerate(prices):
         try:
-            out.append(float(v))
+            fp = float(p)
         except Exception:
             continue
-    return out
 
+        safe_prices.append(fp)
+        if i < len(colors):
+            safe_colors.append(colors[i])
 
-def prepare_mpf_hlines(horizontal_lines: typing.Iterable[typing.Tuple[float, str, str]],
-                       lines: typing.Optional[typing.Any] = None) -> typing.Optional[dict]:
-    """Build the `hlines` dictionary that can be passed to mplfinance.plot.
-
-    horizontal_lines: Iterable of (price, color, label)
-    lines: Optional external param (list or dict with key 'hlines'). If provided it will be merged.
-
-    Returns: A dict appropriate for `plot_kwargs['hlines']` or None if no lines.
-    """
-    hlines_prices = []
-    hlines_colors = []
-
-    # From stored horizontal_lines
-    for price, color, label in (horizontal_lines or []):
-        hlines_prices.append(price)
-        hlines_colors.append(color)
-
-    # Optionally merge external 'lines' if needed
-    if lines is not None:
-        if isinstance(lines, dict):
-            extra = lines.get("hlines", [])
-            if isinstance(extra, (list, tuple)):
-                hlines_prices.extend(extra)
-        elif isinstance(lines, (list, tuple)):
-            hlines_prices.extend(lines)
-
-    if not hlines_prices:
+    if not safe_prices:
         return None
 
-    safe_hlines = _safe_float_list(hlines_prices)
-    if not safe_hlines:
-        return None
+    # If we have a 1-to-1 list of colors, use it; otherwise let mplfinance pick one
+    if safe_colors and len(safe_colors) == len(safe_prices):
+        colors_for_mpf: Any = safe_colors
+    else:
+        colors_for_mpf = "r"
 
-    colors = hlines_colors if len(hlines_colors) == len(safe_hlines) else "r"
-
-    return dict(
-        hlines=safe_hlines,
-        colors=colors,
-        linestyle="--",
-        linewidths=1.5,
-        alpha=0.7,
-    )
+    return {
+        "hlines": safe_prices,
+        "colors": colors_for_mpf,
+        "linestyle": "--",
+        "linewidths": 1.5,
+        "alpha": 0.7,
+    }
 
 
-def add_legend_for_hlines(ax, horizontal_lines: typing.Iterable[typing.Tuple[float, str, str]]):
-    """Create legend handles for a list of horizontal lines and attach them to ax.
-
-    If there are no horizontal_lines, the legend (if present) is removed.
+def add_legend_for_hlines(ax: Axes, stored_hlines: List[Tuple[float, str, str]]) -> None:
     """
-    # Remove previous legend if present
+    Build a legend from stored_hlines (price, color, label) using dummy Line2D handles.
+    Removes any previous legend first.
+    """
     legend = getattr(ax, "legend_", None)
     if legend is not None:
         try:
@@ -70,27 +81,119 @@ def add_legend_for_hlines(ax, horizontal_lines: typing.Iterable[typing.Tuple[flo
         except Exception:
             pass
 
-    if not horizontal_lines:
+    if not stored_hlines:
         return
 
-    handles = []
-    labels = []
-    for price, color, label in horizontal_lines:
-        handles.append(Line2D([], [], color=color, linestyle="--", linewidth=1.5))
-        labels.append(label)
+    handles: List[Line2D] = []
+    for price, color, label in stored_hlines:
+        if not label:
+            continue
+        handles.append(
+            Line2D(
+                [0],
+                [0],
+                color=color,
+                linestyle="--",
+                linewidth=1.5,
+                label=label,
+            )
+        )
+
+    if not handles:
+        return
 
     try:
-        ax.legend(handles, labels, loc="upper left", fontsize=8)
+        ax.legend(handles=handles, loc="upper left", fontsize=8)
     except Exception:
-        # If legend fails for any reason, just skip it silently
+        # If legend creation fails for any reason, just suppress it
         pass
 
 
-def add_axhline(ax, price: float, color: str = "r", label: typing.Optional[str] = None,
-                linestyle: str = "--", linewidth: float = 1.5, alpha: float = 0.7):
-    """Helper to add an axhline to an Axis and return the Line2D object."""
+def add_axhline(
+    ax: Axes,
+    price: float,
+    color: str = "r",
+    label: Optional[str] = None,
+    linestyle: str = "--",
+    linewidth: float = 1.5,
+    alpha: float = 0.7,
+):
+    """
+    Simple helper to draw a horizontal line on an Axes and return the Line2D object.
+
+    This is kept for backward compatibility with existing code that imports
+    add_axhline from core.utils.chart_drawing_utils.
+    """
     try:
-        line = ax.axhline(y=price, color=color, linestyle=linestyle, linewidth=linewidth, label=label, alpha=alpha)
+        line = ax.axhline(
+            y=float(price),
+            color=color,
+            linestyle=linestyle,
+            linewidth=linewidth,
+            label=label,
+            alpha=alpha,
+        )
         return line
     except Exception:
         return None
+
+
+def build_ma_addplots(
+    df_source: Optional[pd.DataFrame],
+    df_display: Optional[pd.DataFrame],
+    ax: Axes,
+) -> Optional[List[Any]]:
+    """
+    Build 50- and 200-day simple moving-average addplots.
+
+    - Uses the last 300 calendar days from df_source (assumed daily OHLC in rands).
+    - Computes daily SMAs and reindexes them to df_display.index so that the
+      MAs line up with whatever resampling is used (3M/6M daily, 1Y weekly,
+      5Y monthly, etc.).
+    - Returns a list of mpf.make_addplot(...) objects or None if not possible.
+
+    IMPORTANT for external-axes mode:
+    - We must pass ax=<Axes> to make_addplot(), NOT panel=0, otherwise
+      mplfinance will complain that addplot 'ax' kwargs are invalid.
+    """
+    if df_source is None or df_source.empty:
+        return None
+    if df_display is None or df_display.empty:
+        return None
+    if "Close" not in df_source.columns:
+        return None
+    if not isinstance(df_source.index, pd.DatetimeIndex):
+        return None
+
+    # Restrict to last 300 calendar days of source data
+    end = df_source.index.max()
+    start = end - pd.Timedelta(days=300)
+    df_window = df_source.loc[start:end].copy()
+
+    if df_window.empty:
+        return None
+
+    close = df_window["Close"].astype(float)
+
+    # 50- and 200-day SMAs on *daily* data
+    ma50 = close.rolling(window=50, min_periods=1).mean()
+    ma200 = close.rolling(window=200, min_periods=1).mean()
+
+    # Align the MAs to df_display.index (which might be weekly/monthly)
+    ma50_resampled = ma50.reindex(df_display.index, method="pad")
+    ma200_resampled = ma200.reindex(df_display.index, method="pad")
+
+    if ma50_resampled.isna().all() and ma200_resampled.isna().all():
+        return None
+
+    addplots: List[Any] = []
+
+    # NOTE: we attach them to the external Axes via ax=<Axes>, not panel=0
+    addplots.append(
+        mpf.make_addplot(ma50_resampled, width=0.9, color="tab:blue", ax=ax)
+    )
+    addplots.append(
+        mpf.make_addplot(ma200_resampled, width=0.9, color="tab:orange", ax=ax)
+    )
+
+    return addplots if addplots else None
