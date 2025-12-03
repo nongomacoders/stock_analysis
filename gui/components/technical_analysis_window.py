@@ -5,6 +5,7 @@ import pandas as pd
 import mplfinance as mpf
 from modules.data.market import get_historical_prices
 from components.base_chart import BaseChart
+from core.utils.chart_drawing_utils import add_axhline, add_legend_for_hlines
 from core.db.engine import DBEngine
 from components.analysis_control_panel import AnalysisControlPanel
 
@@ -131,7 +132,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 adder(price, color, label)
             else:
                 try:
-                    line = self.chart.ax.axhline(y=price, color=color, linestyle='--', linewidth=1.5, label=label, alpha=0.7)
+                    line = add_axhline(self.chart.ax, price, color=color, label=label)
                     stored = getattr(self.chart, "horizontal_lines", None)
                     if isinstance(stored, list):
                         stored.append((price, color, label, line))
@@ -153,7 +154,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 adder(price, color, label)
             else:
                 try:
-                    line = self.chart.ax.axhline(y=price, color=color, linestyle='--', linewidth=1.5, label=label, alpha=0.7)
+                    line = add_axhline(self.chart.ax, price, color=color, label=label)
                     stored = getattr(self.chart, "horizontal_lines", None)
                     if isinstance(stored, list):
                         stored.append((price, color, label, line))
@@ -175,7 +176,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 adder(price, color, label)
             else:
                 try:
-                    line = self.chart.ax.axhline(y=price, color=color, linestyle='--', linewidth=1.5, label=label, alpha=0.7)
+                    line = add_axhline(self.chart.ax, price, color=color, label=label)
                     stored = getattr(self.chart, "horizontal_lines", None)
                     if isinstance(stored, list):
                         stored.append((price, color, label, line))
@@ -338,9 +339,9 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                         # fallback: attempt to draw directly
                         try:
                             for p, c, l in to_store:
-                                self.chart.ax.axhline(y=p, color=c, linestyle='--', linewidth=1.5, label=l, alpha=0.7)
+                                add_axhline(self.chart.ax, price=p, color=c, label=l)
                             try:
-                                self.chart.ax.legend(loc='upper left', fontsize=8)
+                                add_legend_for_hlines(self.chart.ax, to_store)
                             except Exception:
                                 pass
                             self.chart.canvas.draw()

@@ -5,9 +5,9 @@ import mplfinance as mpf
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.lines import Line2D
 from typing import List, Tuple, Optional, Any
-
+from core.utils.chart_drawing_utils import prepare_mpf_hlines, add_legend_for_hlines
+from core.utils.dataframe_utils import prepare_df_source
 
 class BaseChart(ttk.Frame):
     """A base class for a single mplfinance chart.
@@ -79,54 +79,11 @@ class BaseChart(ttk.Frame):
         # 1) Prepare df_source
         # ---------------------------------------------------------------------
         if not _reuse_source:
-            # Normal new plot call: we expect fresh data and a period_key
-            if (
-                data is None
-                or (isinstance(data, list) and not data)
-                or (isinstance(data, pd.DataFrame) and data.empty)
-            ):
-                self._show_no_data("No data available")
-                print(
-                    f"  [BaseChart:{self.period_label}] No data provided, showing message."
-                )
-                return
-
-            if period_key is None:
-                self._show_no_data("No period key specified")
-                print(f"  [BaseChart:{self.period_label}] No period_key, cannot plot.")
-                return
-
-            # Convert incoming data to DataFrame in expected OHLC format
-            if isinstance(data, pd.DataFrame):
-                df_source = data.copy()
-            else:
-                df_source = pd.DataFrame(data)
-                df_source["trade_date"] = pd.to_datetime(df_source["trade_date"])
-                df_source.set_index("trade_date", inplace=True)
-
-                # Convert prices (cents -> rands)
-                for col in ["open_price", "high_price", "low_price", "close_price"]:
-                    df_source[col] = (
-                        pd.to_numeric(df_source[col], errors="coerce") / 100.0
-                    )
-
-                df_source = df_source.rename(
-                    columns={
-                        "open_price": "Open",
-                        "high_price": "High",
-                        "low_price": "Low",
-                        "close_price": "Close",
-                    }
-                )
-
-            # Clean: require valid OHLC
-            df_source = df_source.dropna(subset=["Open", "High", "Low", "Close"])
-
-            if df_source.empty:
-                self._show_no_data("No valid OHLC data")
-                print(
-                    f"  [BaseChart:{self.period_label}] DataFrame is empty after cleaning."
-                )
+            # Delegate data preparation/validation to util
+            df_source, err = prepare_df_source(data, period_key)
+            if err is not None:
+                self._show_no_data(err)
+                print(f"  [BaseChart:{self.period_label}] {err}")
                 return
 
             # Store for future replots (e.g. horizontal line changes)
@@ -150,6 +107,10 @@ class BaseChart(ttk.Frame):
         # ---------------------------------------------------------------------
         self.ax.clear()
 
+        # df_source will be set either by prepare_df_source (new plot) or
+        # taken from self.df_source for reuse. Assert here so static checkers
+        # know df_source is a DataFrame.
+        assert df_source is not None
         df = df_source.copy()
 
         # Resample based on period
@@ -180,23 +141,7 @@ class BaseChart(ttk.Frame):
         # ---------------------------------------------------------------------
         # 3) Build hlines for mplfinance (from stored horizontal_lines + optional lines param)
         # ---------------------------------------------------------------------
-        hlines_prices = []
-        hlines_colors = []
-
-        # From stored horizontal_lines
-        for price, color, label in self.horizontal_lines:
-            hlines_prices.append(price)
-            hlines_colors.append(color)
-
-        # Optionally merge external 'lines' if you still want to support it
-        if lines is not None:
-            if isinstance(lines, dict):
-                extra = lines.get("hlines", [])
-                if isinstance(extra, (list, tuple)):
-                    hlines_prices.extend(extra)
-                    # (You could merge colors from lines.get("colors") here if desired.)
-            elif isinstance(lines, (list, tuple)):
-                hlines_prices.extend(lines)
+        hline_kwargs = prepare_mpf_hlines(self.horizontal_lines, lines)
 
         # ---------------------------------------------------------------------
         # 4) Call mplfinance.plot
@@ -209,26 +154,9 @@ class BaseChart(ttk.Frame):
             "show_nontrading": False,
         }
 
-        if hlines_prices:
+        if hline_kwargs:
             # Ensure all hlines are plain floats (no Decimals etc.)
-            safe_hlines = []
-            for p in hlines_prices:
-                try:
-                    safe_hlines.append(float(p))
-                except Exception:
-                    # skip any value that can't be turned into a float
-                    continue
-
-            if safe_hlines:
-                plot_kwargs["hlines"] = dict(
-                    hlines=safe_hlines,
-                    colors=(
-                        hlines_colors if len(hlines_colors) == len(safe_hlines) else "r"
-                    ),
-                    linestyle="--",
-                    linewidths=1.5,
-                    alpha=0.7,
-                )
+            plot_kwargs["hlines"] = hline_kwargs
 
         if addplot is not None:
             plot_kwargs["addplot"] = addplot
@@ -250,14 +178,7 @@ class BaseChart(ttk.Frame):
         if legend is not None:
             legend.remove()
 
-        if self.horizontal_lines:
-            handles = []
-            labels = []
-            for price, color, label in self.horizontal_lines:
-                handle = Line2D([], [], color=color, linestyle="--", linewidth=1.5)
-                handles.append(handle)
-                labels.append(label)
-            self.ax.legend(handles, labels, loc="upper left", fontsize=8)
+        add_legend_for_hlines(self.ax, self.horizontal_lines)
 
         self.fig.tight_layout()
 
