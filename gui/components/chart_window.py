@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 # --- NEW IMPORT ---
 from modules.data.market import get_historical_prices
 from modules.data.metrics import get_stock_metrics
+from core.db.engine import DBEngine
 from components.base_chart import BaseChart
 
 
@@ -128,6 +129,35 @@ class ChartWindow(ttk.Toplevel):
         print("[ChartWindow] load_charts called.")
         periods = {"3M": 90, "6M": 180, "1Y": 365, "5Y": 1825}
 
+        # --- Try to load saved horizontal-line prices from the watchlist table ---
+        saved_levels = []
+        try:
+            async_query = """
+                SELECT entry_price, stop_loss, target_price
+                FROM watchlist
+                WHERE ticker = $1
+            """
+            rows = self.async_run(DBEngine.fetch(async_query, self.ticker))
+            if rows:
+                row = dict(rows[0])
+                raw_entry = row.get("entry_price")
+                raw_stop = row.get("stop_loss")
+                raw_target = row.get("target_price")
+
+                # DB returns Decimal objects for numeric columns; coerce to float
+                if raw_entry is not None:
+                    price_r = float(raw_entry) / 100.0
+                    saved_levels.append((price_r, "blue", f"Entry: R{price_r:.2f}"))
+                if raw_stop is not None:
+                    price_r = float(raw_stop) / 100.0
+                    saved_levels.append((price_r, "red", f"Stop Loss: R{price_r:.2f}"))
+                if raw_target is not None:
+                    price_r = float(raw_target) / 100.0
+                    saved_levels.append((price_r, "green", f"Target: R{price_r:.2f}"))
+        except Exception as ex:
+            print(f"[ChartWindow]   -> Failed to load saved horizontal line levels: {ex}")
+            saved_levels = []
+
         for period_key, days in periods.items():
             print(f"[ChartWindow] Fetching data for {period_key} ({days} days)...")
             data = self.async_run(get_historical_prices(self.ticker, days))
@@ -138,6 +168,15 @@ class ChartWindow(ttk.Toplevel):
             chart = self.charts.get(period_key)
             if chart:
                 print(f"[ChartWindow]   -> Plotting {period_key} chart.")
+                # Apply any saved horizontal-line levels to the chart before plotting
+                if saved_levels:
+                    try:
+                        setter = getattr(chart, "set_horizontal_lines", None)
+                        if callable(setter):
+                            setter(saved_levels)
+                    except Exception:
+                        pass
+
                 chart.plot(data, period_key)
         # Load metrics
         self.load_metrics()
