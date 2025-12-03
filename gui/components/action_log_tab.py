@@ -1,5 +1,6 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import TOP, X, RIGHT, HORIZONTAL, BOTH, LEFT, VERTICAL, Y, WORD, END, DISABLED,NORMAL
+
 
 from modules.data.research import get_action_logs, mark_log_read
 

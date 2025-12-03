@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import TOP, X, BOTH
 
 # --- NEW IMPORT ---
 from modules.data.research import get_research_data, get_sens_for_ticker, save_strategy_data, save_research_data, save_deep_research_data, get_action_logs, mark_log_read

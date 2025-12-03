@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import TOP, X, LEFT, W, BOTH
 import asyncio
 import threading
 import subprocess
@@ -76,13 +76,13 @@ class CommandCenter(ttk.Window):
         def on_done(fut):
             try:
                 result = fut.result()
-                if callback:
-                    # Schedule callback on main thread
-                    self.after(0, lambda: callback(result))
+                if callable(callback):
+                    # Schedule callback on main thread passing result as arg
+                    self.after(0, callback, result)
             except Exception as e:
                 print(f"Background task error: {e}")
-                if callback:
-                    self.after(0, lambda: callback(None))
+                if callable(callback):
+                    self.after(0, callback, None)
         
         future.add_done_callback(on_done)
 

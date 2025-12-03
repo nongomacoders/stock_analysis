@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import RIGHT, DISABLED, NORMAL, END, WORD
 from ttkbootstrap.dialogs import Messagebox
 
 from modules.data.research import save_research_data

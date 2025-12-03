@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import TOP, X, RIGHT, Y, LEFT, BOTH, WORD, END, NORMAL
 
 
 class BaseTextTab(ttk.Frame):

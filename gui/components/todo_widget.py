@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import TOP, X, LEFT, RIGHT, BOTH, VERTICAL, Y, W, END
 from tkinter import Menu
 from datetime import date
 

@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import BOTH, TOP, X, LEFT, RIGHT, VERTICAL, Y, W, E, CENTER, END
 from datetime import date, datetime
 
 # --- UPDATED IMPORTS ---

@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
+from ttkbootstrap.constants import HORIZONTAL, BOTH, VERTICAL, LEFT, RIGHT, Y, WORD, END, NORMAL, DISABLED
 
 
 class SensTab(ttk.Frame):
