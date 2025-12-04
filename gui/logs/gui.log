@@ -1,1 +1,8 @@
-2025-12-04 08:08:11,891 __main__ INFO: Selected: TKG.JO
+2025-12-04 08:47:34,458 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-04 08:47:34,484 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-04 08:47:37,882 __main__ INFO: Selected: ABG.JO
+2025-12-04 08:47:45,412 __main__ INFO: Closing application...
+2025-12-04 08:47:45,416 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-04 08:47:45,416 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
+2025-12-04 08:47:45,416 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-04 08:47:45,416 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'

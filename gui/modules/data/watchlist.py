@@ -111,19 +111,20 @@ async def select_tickers_for_valuation(limit=None):
         else:
             logger.info('\n  CALCULATION:')
             logger.info('    Next Expected = NULL (insufficient data)')
-            
-            logger.info('\n  FILTER LOGIC:')
-            logger.info('    Current Date:    %s', today)
-            logger.info('    Next Expected:   %s', next_exp)
-        
-            if next_exp:
-                is_eligible = next_exp <= today
-                logger.info('    Comparison:      %s <= %s = %s', next_exp, today, is_eligible)
+
+        # --- FILTER LOGIC (applies to both cases) ---
+        logger.info('\n  FILTER LOGIC:')
+        logger.info('    Current Date:    %s', today)
+        logger.info('    Next Expected:   %s', next_exp)
+
+        if next_exp:
+            is_eligible = next_exp <= today
+            logger.info('    Comparison:      %s <= %s = %s', next_exp, today, is_eligible)
             status = "[PASS] - Will be loaded" if is_eligible else "[FAIL] - Too early, will be skipped"
-            else:
-                is_eligible = True
-                status = "[PASS] - No data yet, will be loaded"
-                logger.info('    Comparison:      NULL (always passes)')
+        else:
+            is_eligible = True
+            status = "[PASS] - No data yet, will be loaded"
+            logger.info('    Comparison:      NULL (always passes)')
             
         logger.info('\n  RESULT: %s', status)
         logger.info('%s', '='*80)
