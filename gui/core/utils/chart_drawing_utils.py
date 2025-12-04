@@ -109,33 +109,7 @@ def add_legend_for_hlines(ax: Axes, stored_hlines: List[Tuple[float, str, str]])
         pass
 
 
-def add_axhline(
-    ax: Axes,
-    price: float,
-    color: str = "r",
-    label: Optional[str] = None,
-    linestyle: str = "--",
-    linewidth: float = 1.5,
-    alpha: float = 0.7,
-):
-    """
-    Simple helper to draw a horizontal line on an Axes and return the Line2D object.
-
-    This is kept for backward compatibility with existing code that imports
-    add_axhline from core.utils.chart_drawing_utils.
-    """
-    try:
-        line = ax.axhline(
-            y=float(price),
-            color=color,
-            linestyle=linestyle,
-            linewidth=linewidth,
-            label=label,
-            alpha=alpha,
-        )
-        return line
-    except Exception:
-        return None
+# Public chart drawing helpers for the application
 
 
 def build_ma_addplots(

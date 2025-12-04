@@ -5,8 +5,12 @@ import pandas as pd
 import mplfinance as mpf
 from modules.data.market import get_historical_prices
 from components.base_chart import BaseChart
-from core.utils.chart_drawing_utils import add_axhline, add_legend_for_hlines
 from core.db.engine import DBEngine
+from core.utils.technical_utils import (
+    build_saved_levels_from_row,
+    price_from_db,
+    update_analysis_db,
+)
 from components.analysis_control_panel import AnalysisControlPanel
 
 class TechnicalAnalysisWindow(ttk.Toplevel):
@@ -119,72 +123,26 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             print(f"[TechAnalysis] No cursor position available")
             return
 
-        # Set price and draw per-key in a single branch to avoid unbound var issues
-        if key == 'e':
-            price = round(cursor_y, 2)
-            self.entry_price = price
-            color = 'blue'
-            label = f'Entry: R{price:.2f}'
-            print(f"[TechAnalysis] Entry price set to R{price:.2f}")
+        # Map keys to attributes / colors / panel updates so we can handle in one place
+        key_map = {
+            'e': ('entry_price', 'blue', 'entry'),
+            'l': ('stop_loss', 'red', 'stop'),
+            't': ('target_price', 'green', 'target'),
+        }
 
-            adder = getattr(self.chart, "add_horizontal_line", None)
-            if callable(adder):
-                adder(price, color, label)
-            else:
-                try:
-                    line = add_axhline(self.chart.ax, price, color=color, label=label)
-                    stored = getattr(self.chart, "horizontal_lines", None)
-                    if isinstance(stored, list):
-                        stored.append((price, color, label, line))
-                    self.chart.canvas.draw()
-                except Exception:
-                    pass
-            # Update UI panel
-            self.analysis_panel.set_values(entry=price)
+        attr_name, color, panel_field = key_map[key]
+        price = round(cursor_y, 2)
+        setattr(self, attr_name, price)
+        label = f"{panel_field.capitalize()}: R{price:.2f}" if panel_field != 'entry' else f"Entry: R{price:.2f}"
+        print(f"[TechAnalysis] {panel_field.capitalize()} price set to R{price:.2f}")
 
-        elif key == 'l':
-            price = round(cursor_y, 2)
-            self.stop_loss = price
-            color = 'red'
-            label = f'Stop Loss: R{price:.2f}'
-            print(f"[TechAnalysis] Stop loss set to R{price:.2f}")
+        # Use BaseChart API to add a horizontal line — we expect this to exist
+        # and prefer centralized behavior (no direct ax manipulation here).
+        self.chart.add_horizontal_line(price, color, label)
 
-            adder = getattr(self.chart, "add_horizontal_line", None)
-            if callable(adder):
-                adder(price, color, label)
-            else:
-                try:
-                    line = add_axhline(self.chart.ax, price, color=color, label=label)
-                    stored = getattr(self.chart, "horizontal_lines", None)
-                    if isinstance(stored, list):
-                        stored.append((price, color, label, line))
-                    self.chart.canvas.draw()
-                except Exception:
-                    pass
-            # Update UI panel
-            self.analysis_panel.set_values(stop=price)
-
-        elif key == 't':
-            price = round(cursor_y, 2)
-            self.target_price = price
-            color = 'green'
-            label = f'Target: R{price:.2f}'
-            print(f"[TechAnalysis] Target price set to R{price:.2f}")
-
-            adder = getattr(self.chart, "add_horizontal_line", None)
-            if callable(adder):
-                adder(price, color, label)
-            else:
-                try:
-                    line = add_axhline(self.chart.ax, price, color=color, label=label)
-                    stored = getattr(self.chart, "horizontal_lines", None)
-                    if isinstance(stored, list):
-                        stored.append((price, color, label, line))
-                    self.chart.canvas.draw()
-                except Exception:
-                    pass
-            # Update UI panel
-            self.analysis_panel.set_values(target=price)
+        # Update UI panel
+        kwargs = {panel_field: price}
+        self.analysis_panel.set_values(**kwargs)
 
         # (UI updated in each branch)
 
@@ -251,29 +209,11 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         )
 
         # --- 6) Persist to DB in CENTS ---
-        async def update_db():
-            # Update watchlist
-            query_wl = """
-                UPDATE watchlist 
-                SET entry_price = $1, stop_loss = $2, target_price = $3, is_long = $4
-                WHERE ticker = $5
-            """
-            await DBEngine.execute(
-                query_wl, entry_c, stop_c, target_c, is_long, self.ticker
-            )
+        # offload DB updates to helper that performs the same async operations
+        async def update_db_wrapper():
+            await update_analysis_db(self.ticker, entry_c, stop_c, target_c, is_long, strategy)
 
-            # Update stock_analysis
-            query_sa = """
-                INSERT INTO stock_analysis (ticker, strategy)
-                VALUES ($1, $2)
-                ON CONFLICT (ticker) 
-                DO UPDATE SET strategy = EXCLUDED.strategy
-            """
-            await DBEngine.execute(query_sa, self.ticker, strategy)
-
-            print(f"[TechAnalysis] Database updated for {self.ticker}")
-
-        self.async_run_bg(update_db())
+        self.async_run_bg(update_db_wrapper())
     
 
 
@@ -295,14 +235,14 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
         def on_loaded(data):
             if data:
-                # Convert DB cents → rands
+                # Convert DB cents → rands (use helper to handle Decimal/None)
                 raw_entry = data.get("entry_price")
                 raw_target = data.get("target_price")
                 raw_stop = data.get("stop_loss")
 
-                self.entry_price  = raw_entry  / 100 if raw_entry  else None
-                self.target_price = raw_target / 100 if raw_target else None
-                self.stop_loss    = raw_stop   / 100 if raw_stop   else None
+                self.entry_price = price_from_db(raw_entry)
+                self.target_price = price_from_db(raw_target)
+                self.stop_loss = price_from_db(raw_stop)
                 strategy = data.get("strategy")
 
                 # Update Panel
@@ -314,38 +254,15 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 )
 
                 # Pass the prices to BaseChart so it can draw them after the plot
-                to_store = []
-                if self.entry_price:
-                    to_store.append((self.entry_price, 'blue', f'Entry: R{self.entry_price:.2f}'))
-                if self.stop_loss:
-                    to_store.append((self.stop_loss, 'red', f'Stop Loss: R{self.stop_loss:.2f}'))
-                if self.target_price:
-                    to_store.append((self.target_price, 'green', f'Target: R{self.target_price:.2f}'))
+                to_store = build_saved_levels_from_row(data)
 
                 if to_store:
                     setter = getattr(self.chart, "set_horizontal_lines", None)
                     redrawer = getattr(self.chart, "redraw_horizontal_lines", None)
+                    # use BaseChart API where supported
                     if callable(setter):
                         setter(to_store)
-                    else:
-                        # fallback: append entries to horizontal_lines storage
-                        stored = getattr(self.chart, "horizontal_lines", None)
-                        if isinstance(stored, list):
-                            stored.extend([(p, c, l, None) for (p, c, l) in to_store])
-
                     if callable(redrawer):
                         redrawer()
-                    else:
-                        # fallback: attempt to draw directly
-                        try:
-                            for p, c, l in to_store:
-                                add_axhline(self.chart.ax, price=p, color=c, label=l)
-                            try:
-                                add_legend_for_hlines(self.chart.ax, to_store)
-                            except Exception:
-                                pass
-                            self.chart.canvas.draw()
-                        except Exception:
-                            pass
 
         self.async_run_bg(fetch_data(), callback=on_loaded)
