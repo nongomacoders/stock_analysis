@@ -179,14 +179,19 @@ class ChartWindow(ttk.Toplevel):
                 logging.getLogger(__name__).debug(
                     "[ChartWindow]   -> Plotting %s chart.", period_key
                 )
-                # Apply any saved horizontal-line levels to the chart before plotting
-                if saved_levels:
-                    try:
-                        setter = getattr(chart, "set_horizontal_lines", None)
-                        if callable(setter):
-                            setter(saved_levels)
-                    except Exception:
-                        pass
+                # If we have saved horizontal-line tuples (price,color,label),
+                # assign them directly to the chart instance so they act as
+                # stored_hlines for this plot. We avoid calling
+                # set_horizontal_lines() here because that method triggers a
+                # replot using the chart's stored df (which may be stale) —
+                # instead we set the attribute directly and then plot with
+                # the data for the current period so the hlines map correctly.
+                try:
+                    if saved_levels:
+                        chart.horizontal_lines = list(saved_levels)
+                except Exception:
+                    # Fallback: ignore if chart doesn't support attribute
+                    pass
 
                 chart.plot(data, period_key)
         # Load metrics

@@ -1,7 +1,11 @@
-2025-12-04 11:57:49,266 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-04 11:57:49,276 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-04 11:58:05,643 __main__ INFO: Closing application...
-2025-12-04 11:58:05,643 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-04 11:58:05,643 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
-2025-12-04 11:58:05,643 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-04 11:58:05,643 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
+2025-12-04 13:58:21,405 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-04 13:58:21,417 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-04 13:58:23,017 __main__ INFO: Selected: ABG.JO
+2025-12-04 13:58:47,853 __main__ INFO: Selected: BAT.JO
+2025-12-04 13:58:47,853 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: BAT.JO
+2025-12-04 13:59:03,968 __main__ INFO: Closing application...
+2025-12-04 13:59:03,974 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-04 13:59:03,974 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
+2025-12-04 13:59:03,975 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-04 13:59:03,975 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
