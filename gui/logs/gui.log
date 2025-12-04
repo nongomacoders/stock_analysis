@@ -1,36 +1,22 @@
-2025-12-04 20:25:18,560 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-04 20:25:18,564 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-04 20:25:40,234 __main__ INFO: Selected: BID.JO
-2025-12-04 20:25:53,360 components.status_widget INFO: StatusWidget.on_save called for BID.JO -> WL-Active
-2025-12-04 20:25:53,367 modules.data.watchlist INFO: Updated watchlist status for BID.JO -> WL-Active
-2025-12-04 20:25:53,367 components.status_widget INFO: StatusWidget._on_done called for BID.JO result=True
-2025-12-04 20:25:54,784 components.technical_analysis_window INFO: Status for BID.JO set to WL-Active
-2025-12-04 20:25:57,975 __main__ INFO: Selected: GRT.JO
-2025-12-04 20:25:57,975 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: GRT.JO
-2025-12-04 20:26:09,991 components.status_widget INFO: StatusWidget.on_save called for GRT.JO -> WL-Active
-2025-12-04 20:26:09,999 modules.data.watchlist INFO: Updated watchlist status for GRT.JO -> WL-Active
-2025-12-04 20:26:09,999 components.status_widget INFO: StatusWidget._on_done called for GRT.JO result=True
-2025-12-04 20:26:11,610 components.technical_analysis_window INFO: Status for GRT.JO set to WL-Active
-2025-12-04 20:26:13,255 __main__ INFO: Selected: RNI.JO
-2025-12-04 20:26:13,257 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: RNI.JO
-2025-12-04 20:26:20,138 components.status_widget INFO: StatusWidget.on_save called for RNI.JO -> WL-Active
-2025-12-04 20:26:20,139 modules.data.watchlist INFO: Updated watchlist status for RNI.JO -> WL-Active
-2025-12-04 20:26:20,139 components.status_widget INFO: StatusWidget._on_done called for RNI.JO result=True
-2025-12-04 20:26:21,459 components.technical_analysis_window INFO: Status for RNI.JO set to WL-Active
-2025-12-04 20:26:23,525 __main__ INFO: Selected: OMN.JO
-2025-12-04 20:26:23,525 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: OMN.JO
-2025-12-04 20:26:31,639 components.status_widget INFO: StatusWidget.on_save called for OMN.JO -> WL-Active
-2025-12-04 20:26:31,642 modules.data.watchlist INFO: Updated watchlist status for OMN.JO -> WL-Active
-2025-12-04 20:26:31,642 components.status_widget INFO: StatusWidget._on_done called for OMN.JO result=True
-2025-12-04 20:26:32,836 components.technical_analysis_window INFO: Status for OMN.JO set to WL-Active
-2025-12-04 20:26:44,171 __main__ INFO: Selected: NTU.JO
-2025-12-04 20:26:44,171 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: NTU.JO
-2025-12-04 20:27:10,575 __main__ INFO: Closing application...
-2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
-2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
+2025-12-04 21:34:06,827 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-04 21:34:06,840 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-04 21:34:49,794 __main__ INFO: Selected: BLU.JO
+2025-12-04 21:35:06,978 components.technical_analysis_window INFO: [TechAnalysis] Stop price set to R9.22
+2025-12-04 21:35:10,802 components.technical_analysis_window INFO: [TechAnalysis] Entry price set to R10.15
+2025-12-04 21:35:14,344 components.technical_analysis_window INFO: [TechAnalysis] Target price set to R16.94
+2025-12-04 21:35:16,241 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=10.15, Target=16.94, Stop=9.22, IsLong=True
+2025-12-04 21:35:26,398 __main__ INFO: Selected: CML.JO
+2025-12-04 21:35:26,398 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: CML.JO
+2025-12-04 21:35:48,928 components.technical_analysis_window INFO: [TechAnalysis] Target price set to R45.69
+2025-12-04 21:36:00,153 components.technical_analysis_window INFO: [TechAnalysis] Entry price set to R45.85
+2025-12-04 21:36:03,956 components.technical_analysis_window INFO: [TechAnalysis] Stop price set to R43.61
+2025-12-04 21:36:07,886 components.technical_analysis_window INFO: [TechAnalysis] Target price set to R50.12
+2025-12-04 21:36:10,558 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=45.85, Target=50.12, Stop=43.61, IsLong=True
+2025-12-04 21:36:31,798 components.status_widget INFO: StatusWidget.on_save called for CML.JO -> WL-Active
+2025-12-04 21:36:31,804 modules.data.watchlist INFO: Updated watchlist status for CML.JO -> WL-Active
+2025-12-04 21:36:31,804 components.status_widget INFO: StatusWidget._on_done called for CML.JO result=True
+2025-12-04 21:36:33,462 components.technical_analysis_window INFO: Status for CML.JO set to WL-Active
+2025-12-04 21:36:54,508 __main__ INFO: Selected: BAT.JO
+2025-12-04 21:36:54,508 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: BAT.JO

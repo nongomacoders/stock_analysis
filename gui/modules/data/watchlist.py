@@ -11,7 +11,7 @@ async def fetch_watchlist_data():
     query = """
         SELECT 
             w.ticker, sd.full_name, sd.priority, w.status,
-            w.entry_price, w.stop_loss, w.target_price as target,
+            w.entry_price, w.stop_loss, w.target_price as target, w.is_long,
             p.close_price,
             sa.strategy,
             (SELECT trigger_content FROM action_log a 

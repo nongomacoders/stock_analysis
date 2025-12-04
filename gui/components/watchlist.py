@@ -113,7 +113,7 @@ class WatchlistWidget(ttk.Frame):
         ).pack(side=LEFT, padx=(6, 0))
 
         # --- COLUMNS ---
-        cols = ("Ticker", "Name", "Price", "Status", "Event", "Strategy", "News")
+        cols = ("Ticker", "Name", "Price", "Proximity", "Event", "Strategy", "News")
         self.tree = ttk.Treeview(parent_frame, columns=cols, show="headings")
 
         self.tree.heading("Ticker", text="Ticker")
@@ -121,7 +121,7 @@ class WatchlistWidget(ttk.Frame):
             "Name", text="Name", command=lambda: self.sort_column("Name", False)
         )
         self.tree.heading("Price", text="Price")
-        self.tree.heading("Status", text="Status")
+        self.tree.heading("Proximity", text="Proximity")
         self.tree.heading(
             "Event", text="Event", command=lambda: self.sort_column("Event", False)
         )
@@ -132,7 +132,7 @@ class WatchlistWidget(ttk.Frame):
         self.tree.column("Ticker", width=60, anchor=W, stretch=False)
         self.tree.column("Name", width=80, anchor=W, stretch=False)
         self.tree.column("Price", width=70, anchor=E, stretch=False)
-        self.tree.column("Status", width=113, anchor=W, stretch=False)
+        self.tree.column("Proximity", width=130, anchor=W, stretch=False)
         self.tree.column("Event", width=50, anchor=CENTER, stretch=False)
         self.tree.column("Strategy", width=400, anchor=W, stretch=True)
         self.tree.column("News", width=400, anchor=W, stretch=True)
@@ -185,7 +185,7 @@ class WatchlistWidget(ttk.Frame):
 
                 # 3. Proximity Text
                 prox_text, _ = get_proximity_status(
-                    row["close_price"], row["entry_price"], row["stop_loss"], row["target"]
+                    row["close_price"], row["entry_price"], row["stop_loss"], row["target"], row.get("is_long", True)
                 )
 
                 # 4. Truncate Text
