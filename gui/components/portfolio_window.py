@@ -11,6 +11,7 @@ from components.portfolio_list_widget import PortfolioListWidget
 from components.holdings_widget import HoldingsWidget
 from components.holding_form_widget import HoldingFormWidget
 from components.totals_status_widget import TotalsStatusWidget
+from components.button_utils import run_bg_with_button
 
 logger = logging.getLogger(__name__)
 
@@ -50,9 +51,12 @@ class PortfolioWindow(ttk.Toplevel):
 
         btn_frame = ttk.Frame(left)
         btn_frame.pack(fill=X, pady=(6, 0))
-        ttk.Button(btn_frame, text="New", bootstyle="success", command=self.create_portfolio).pack(side=LEFT, padx=4)
-        ttk.Button(btn_frame, text="Rename", command=self.rename_portfolio).pack(side=LEFT, padx=4)
-        ttk.Button(btn_frame, text="Delete", bootstyle="danger", command=self.delete_portfolio).pack(side=LEFT, padx=4)
+        self.create_btn = ttk.Button(btn_frame, text="New", bootstyle="success", command=self.create_portfolio)
+        self.create_btn.pack(side=LEFT, padx=4)
+        self.rename_btn = ttk.Button(btn_frame, text="Rename", command=self.rename_portfolio)
+        self.rename_btn.pack(side=LEFT, padx=4)
+        self.delete_portfolio_btn = ttk.Button(btn_frame, text="Delete", bootstyle="danger", command=self.delete_portfolio)
+        self.delete_portfolio_btn.pack(side=LEFT, padx=4)
 
         # Right: Holdings + form
         right = ttk.Frame(container)
@@ -101,7 +105,8 @@ class PortfolioWindow(ttk.Toplevel):
         self.add_update_btn = ttk.Button(actions, text="Add/Update Holding", bootstyle="primary", command=self.add_or_update_holding)
         self.add_update_btn.pack(side=LEFT, padx=4)
         self.add_update_btn.configure(state="disabled")
-        ttk.Button(actions, text="Delete Holding", bootstyle="danger", command=self.delete_holding).pack(side=LEFT, padx=4)
+        self.delete_holding_btn = ttk.Button(actions, text="Delete Holding", bootstyle="danger", command=self.delete_holding)
+        self.delete_holding_btn.pack(side=LEFT, padx=4)
         # quick download latest prices from yfinance for all tickers
         self.get_prices_btn = ttk.Button(actions, text="Get latest prices", bootstyle="info", command=self.fetch_latest_prices)
         self.get_prices_btn.pack(side=LEFT, padx=6)
@@ -196,10 +201,9 @@ class PortfolioWindow(ttk.Toplevel):
         Uses the existing modules.market_agent.prices.run_price_update implementation.
         """
         try:
-            # disable the button while running
-            self.get_prices_btn.configure(state="disabled")
+            # update status and use helper to disable the button while running
             self.status_label.configure(text="Downloading latest prices...")
-            self.async_run_bg(run_price_update(), callback=self._on_prices_fetched)
+            run_bg_with_button(self.get_prices_btn, self.async_run_bg, run_price_update(), callback=self._on_prices_fetched)
         except Exception:
             logger.exception("Failed starting price download")
             try:
@@ -249,7 +253,11 @@ class PortfolioWindow(ttk.Toplevel):
         name = simpledialog.askstring("Create Portfolio", "Portfolio name:", parent=self)
         if not name:
             return
-        self.async_run_bg(self.service.create_portfolio(name), callback=lambda _: self.load_portfolios())
+        try:
+            run_bg_with_button(self.create_btn, self.async_run_bg, self.service.create_portfolio(name), callback=lambda _: self.load_portfolios())
+        except Exception:
+            # fallback
+            self.async_run_bg(self.service.create_portfolio(name), callback=lambda _: self.load_portfolios())
 
     # PortfolioService handles create_portfolio
 
@@ -264,7 +272,10 @@ class PortfolioWindow(ttk.Toplevel):
         new_name = simpledialog.askstring("Rename Portfolio", "New name:", initialvalue=name, parent=self)
         if not new_name:
             return
-        self.async_run_bg(self.service.rename_portfolio(pid, new_name), callback=lambda _: self.load_portfolios())
+        try:
+            run_bg_with_button(self.rename_btn, self.async_run_bg, self.service.rename_portfolio(pid, new_name), callback=lambda _: self.load_portfolios())
+        except Exception:
+            self.async_run_bg(self.service.rename_portfolio(pid, new_name), callback=lambda _: self.load_portfolios())
 
     # PortfolioService handles rename_portfolio
 
@@ -274,7 +285,10 @@ class PortfolioWindow(ttk.Toplevel):
             return
         if not messagebox.askyesno("Confirm", "Delete portfolio and all holdings?", parent=self):
             return
-        self.async_run_bg(self.service.delete_portfolio(pid), callback=lambda _: self.load_portfolios())
+        try:
+            run_bg_with_button(self.delete_portfolio_btn, self.async_run_bg, self.service.delete_portfolio(pid), callback=lambda _: self.load_portfolios())
+        except Exception:
+            self.async_run_bg(self.service.delete_portfolio(pid), callback=lambda _: self.load_portfolios())
 
     # PortfolioService handles delete_portfolio
 
@@ -300,10 +314,16 @@ class PortfolioWindow(ttk.Toplevel):
         # If the user clicked a holding and its id is tracked, update that specific holding by id
         if hasattr(self, "selected_holding_id") and self.selected_holding_id:
             hid = self.selected_holding_id
-            self.async_run_bg(self.service.update_holding(hid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
+            try:
+                run_bg_with_button(self.add_update_btn, self.async_run_bg, self.service.update_holding(hid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
+            except Exception:
+                self.async_run_bg(self.service.update_holding(hid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
         else:
             # no selection -> upsert by ticker for this portfolio (create or update)
-            self.async_run_bg(self.service.upsert_holding(pid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
+            try:
+                run_bg_with_button(self.add_update_btn, self.async_run_bg, self.service.upsert_holding(pid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
+            except Exception:
+                self.async_run_bg(self.service.upsert_holding(pid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
 
     # PortfolioService handles upsert_holding
 
@@ -320,7 +340,16 @@ class PortfolioWindow(ttk.Toplevel):
         except Exception:
             logger.exception("Invalid selected holding id for deletion: %s", hid)
             return
-        self.async_run_bg(self.service.delete_holding(hid_int), callback=lambda _: self.on_portfolio_select())
+        try:
+            # Delete the holding and mark its watchlist status as WL-Active in the same background operation
+            run_bg_with_button(
+                self.delete_holding_btn,
+                self.async_run_bg,
+                self.service.delete_holding_and_mark_wl_active(hid_int),
+                callback=lambda _ : self.on_portfolio_select(),
+            )
+        except Exception:
+            self.async_run_bg(self.service.delete_holding_and_mark_wl_active(hid_int), callback=lambda _: self.on_portfolio_select())
 
     # PortfolioService handles delete_holding
 

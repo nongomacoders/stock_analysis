@@ -70,14 +70,14 @@ class ResearchWindow(ttk.Toplevel):
         self.notebook.pack(fill=BOTH, expand=True, padx=10, pady=10)
 
         # Use the new component for the Deep Research tab
-        self.deep_research_tab = DeepResearchTab(self.notebook, self.ticker, self.async_run)
+        self.deep_research_tab = DeepResearchTab(self.notebook, self.ticker, self.async_run, self.async_run_bg)
 
         # Use the new component for the Strategy tab
-        self.master_strategy_tab = StrategyTab(self.notebook, self.ticker, self.async_run)
+        self.master_strategy_tab = StrategyTab(self.notebook, self.ticker, self.async_run, self.async_run_bg)
 
         # Use the new component for the Research tab, passing a reference to the deep research tab
         self.master_research_tab = ResearchTab(
-            self.notebook, self.ticker, self.async_run, self.deep_research_tab
+            self.notebook, self.ticker, self.async_run, self.deep_research_tab, self.async_run_bg
         )
 
         self.notebook.add(self.deep_research_tab, text="Deep Research")

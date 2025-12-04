@@ -42,12 +42,36 @@ async def update_analysis_db(ticker: str, entry_c: Optional[int], stop_c: Option
 
     This mirrors logic previously embedded in TechnicalAnalysisWindow.save_analysis.
     """
-    query_wl = """
-        UPDATE watchlist 
-        SET entry_price = $1, stop_loss = $2, target_price = $3, is_long = $4
-        WHERE ticker = $5
-    """
-    await DBEngine.execute(query_wl, entry_c, stop_c, target_c, is_long, ticker)
+    # Use upsert so a missing watchlist row is created when saving analysis
+    # First try UPDATE; if it affected 0 rows, INSERT a new watchlist row.
+    res = await DBEngine.execute(
+        "UPDATE watchlist SET entry_price = $1, stop_loss = $2, target_price = $3, is_long = $4 WHERE ticker = $5",
+        entry_c,
+        stop_c,
+        target_c,
+        is_long,
+        ticker,
+    )
+    # asyncpg returns a command tag like 'UPDATE 0' or 'UPDATE 1'
+    updated = 0
+    if isinstance(res, str) and res.split()[0].upper() == 'UPDATE':
+        try:
+            updated = int(res.split()[1]) if len(res.split()) > 1 else 0
+        except Exception:
+            updated = 0
+
+    if updated > 0:
+        return
+
+    # nothing updated - insert row instead
+    await DBEngine.execute(
+        "INSERT INTO watchlist (ticker, entry_price, stop_loss, target_price, is_long) VALUES ($1, $2, $3, $4, $5)",
+        ticker,
+        entry_c,
+        stop_c,
+        target_c,
+        is_long,
+    )
 
     query_sa = """
         INSERT INTO stock_analysis (ticker, strategy)

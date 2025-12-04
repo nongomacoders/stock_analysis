@@ -33,7 +33,7 @@ async def fetch_watchlist_data():
             SELECT close_price FROM daily_stock_data 
             WHERE ticker = w.ticker ORDER BY trade_date DESC LIMIT 1
         ) p ON true
-        WHERE w.status NOT IN ('Closed', 'Pending', 'WL-Sleep')
+        WHERE w.status NOT IN ('WL-Sleep')
         ORDER BY 
             CASE WHEN sd.priority = 'A' THEN 1 
                  WHEN sd.priority = 'B' THEN 2 
@@ -162,3 +162,32 @@ async def select_tickers_for_valuation(limit=None):
     logger.info('%s', '='*80 + '\n')
     
     return selected_tickers
+
+
+async def set_watchlist_status(ticker: str, status: str):
+    """Set the status value for a watchlist row (ticker).
+
+    Returns True when an update occurred, False otherwise.
+    """
+    try:
+        # Try an UPDATE first; if no rows were touched, INSERT the row.
+        res = await DBEngine.execute("UPDATE watchlist SET status = $1 WHERE ticker = $2", status, ticker)
+        # asyncpg returns a command tag like 'UPDATE 0' or 'UPDATE 1'
+        if isinstance(res, str) and res.split()[0].upper() == 'UPDATE':
+            try:
+                n = int(res.split()[1]) if len(res.split()) > 1 else 0
+            except Exception:
+                n = 0
+            if n > 0:
+                logger.info("Updated watchlist status for %s -> %s", ticker, status)
+                return True
+
+        # No rows updated -> attempt insert (row may be missing)
+        await DBEngine.execute("INSERT INTO watchlist (ticker, status) VALUES ($1, $2)", ticker, status)
+        logger.info("Inserted watchlist row for %s -> %s", ticker, status)
+        return True
+        logger.info("Set watchlist status for %s -> %s", ticker, status)
+        return True
+    except Exception:
+        logger.exception("Failed setting watchlist status for %s", ticker)
+        return False

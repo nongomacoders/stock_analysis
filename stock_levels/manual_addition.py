@@ -116,6 +116,11 @@ class StockEditorApp:
             button_container, text="Download 5Y Price Data", command=self.download_5y_data_ui
         )
         self.download_button.pack(side="left", padx=15)
+        
+        self.watchlist_button = ttk.Button(
+            button_container, text="Add to Watchlist", command=self.add_to_watchlist
+        )
+        self.watchlist_button.pack(side="left", padx=5)
         # --- END NEW DOWNLOAD BUTTON ---
 
         self.clear_button = ttk.Button(
@@ -400,6 +405,36 @@ class StockEditorApp:
                 conn.close()
                 print("DEBUG: delete_stock: DB connection closed.")
         print("DEBUG: delete_stock: Finished.")
+
+    def add_to_watchlist(self):
+        """Adds the current ticker to the watchlist with status 'Pending'."""
+        print("DEBUG: add_to_watchlist: Starting...")
+        ticker = self.format_ticker(self.ticker_entry.get())
+
+        if not ticker:
+            messagebox.showwarning("Input Error", "Ticker cannot be empty.")
+            return
+
+        conn = self.get_connection()
+        if not conn:
+            return
+
+        try:
+            with conn.cursor() as cursor:
+                query = "INSERT INTO watchlist (ticker, status) VALUES (%s, %s)"
+                cursor.execute(query, (ticker, 'Pending'))
+                conn.commit()
+
+            messagebox.showinfo("Success", f"Successfully added {ticker} to Watchlist.")
+
+        except Exception as e:
+            print(f"DEBUG: add_to_watchlist: FAILED: {e}")
+            messagebox.showerror("Database Error", f"Error adding to watchlist: {e}")
+            conn.rollback()
+        finally:
+            if conn:
+                conn.close()
+        print("DEBUG: add_to_watchlist: Finished.")
 
     # --- SENS Functions ---
 

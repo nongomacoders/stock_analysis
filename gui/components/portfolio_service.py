@@ -147,8 +147,29 @@ class PortfolioService:
                 await DBEngine.execute("UPDATE portfolio_holdings SET quantity = $1, average_buy_price = $2 WHERE id = $3", qty, avg_price, ex_id)
                 logger.info("Updated holding %s in portfolio %s", ticker, portfolio_id)
             else:
-                await DBEngine.execute("INSERT INTO portfolio_holdings (portfolio_id, ticker, quantity, average_buy_price) VALUES ($1, $2, $3, $4)", portfolio_id, ticker, qty, avg_price)
+                await DBEngine.execute(
+                    "INSERT INTO portfolio_holdings (portfolio_id, ticker, quantity, average_buy_price) VALUES ($1, $2, $3, $4)",
+                    portfolio_id,
+                    ticker,
+                    qty,
+                    avg_price,
+                )
                 logger.info("Added holding %s in portfolio %s", ticker, portfolio_id)
+                # If this ticker exists in the watchlist, mark it as Active-Trade
+                try:
+                    # Try update first, fall back to insert if no rows updated
+                    res = await DBEngine.execute("UPDATE watchlist SET status = $1 WHERE ticker = $2", "Active-Trade", ticker)
+                    updated = 0
+                    if isinstance(res, str) and res.split()[0].upper() == 'UPDATE':
+                        try:
+                            updated = int(res.split()[1]) if len(res.split()) > 1 else 0
+                        except Exception:
+                            updated = 0
+
+                    if updated == 0:
+                        await DBEngine.execute("INSERT INTO watchlist (ticker, status) VALUES ($1, $2)", ticker, "Active-Trade")
+                except Exception:
+                    logger.exception("Failed to mark watchlist status for %s", ticker)
         except Exception:
             logger.exception("Upsert holding failed")
 
@@ -171,6 +192,48 @@ class PortfolioService:
             logger.info("Deleted holding %s", hid)
         except Exception:
             logger.exception("Delete holding failed")
+
+    async def delete_holding_and_mark_wl_active(self, hid: int):
+        """Delete a holding by id and ensure the watchlist status for its ticker is set to WL-Active.
+
+        This queries the ticker first, deletes the holding, and then updates or inserts the
+        watchlist row so its status becomes WL-Active. Returns the ticker (if known) and
+        True on success, False on failure.
+        """
+        try:
+            # Find the ticker for this holding first
+            rows = await DBEngine.fetch("SELECT ticker FROM portfolio_holdings WHERE id = $1", int(hid))
+            ticker = None
+            if rows:
+                first = rows[0]
+                ticker = first.get("ticker") if isinstance(first, dict) else first["ticker"]
+
+            # Delete the holding
+            await DBEngine.execute("DELETE FROM portfolio_holdings WHERE id = $1", int(hid))
+            logger.info("Deleted holding %s (ticker=%s)", hid, ticker)
+
+            # If we found a ticker, mark it WL-Active in the watchlist (update then insert fallback)
+            if ticker:
+                try:
+                    res = await DBEngine.execute("UPDATE watchlist SET status = $1 WHERE ticker = $2", "WL-Active", ticker)
+                    updated = 0
+                    if isinstance(res, str) and res.split()[0].upper() == 'UPDATE':
+                        try:
+                            updated = int(res.split()[1]) if len(res.split()) > 1 else 0
+                        except Exception:
+                            updated = 0
+
+                    if updated == 0:
+                        await DBEngine.execute("INSERT INTO watchlist (ticker, status) VALUES ($1, $2)", ticker, "WL-Active")
+
+                    logger.info("Marked watchlist status for %s -> WL-Active", ticker)
+                except Exception:
+                    logger.exception("Failed to mark watchlist status for %s", ticker)
+
+            return True
+        except Exception:
+            logger.exception("delete_holding_and_mark_wl_active failed for id=%s", hid)
+            return False
 
     async def create_portfolio(self, name: str):
         try:

@@ -13,15 +13,20 @@ from core.utils.technical_utils import (
     update_analysis_db,
 )
 from components.analysis_control_panel import AnalysisControlPanel
+from components.status_widget import StatusWidget
+from components.button_utils import run_bg_with_button
 
 class TechnicalAnalysisWindow(ttk.Toplevel):
-    def __init__(self, parent, ticker, async_run_bg):
+    def __init__(self, parent, ticker, async_run_bg, on_status_saved_callback=None):
         super().__init__(parent)
         self.title(f"{ticker} - Technical Analysis")
         self.geometry("1000x700")
 
         self.ticker = ticker
         self.async_run_bg = async_run_bg
+
+        # Optional callback invoked after watchlist status changes.
+        self.on_status_saved_callback = on_status_saved_callback
 
         # Configure matplotlib style
         plt.style.use("seaborn-v0_8-darkgrid")
@@ -66,6 +71,9 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
         # Bottom Control Panel
         self.analysis_panel = AnalysisControlPanel(self, self.save_analysis)
+        # Status widget lets the user change the watchlist status for this ticker
+        self.status_widget = StatusWidget(control_frame, lambda: self.ticker, self.async_run_bg, on_saved=self._on_status_saved)
+        self.status_widget.pack(side=RIGHT, padx=(6,0))
         self.analysis_panel.pack(fill=X, side=BOTTOM)
 
         # BaseChart already tracks cursor position and manages mouse events
@@ -219,7 +227,30 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         async def update_db_wrapper():
             await update_analysis_db(self.ticker, entry_c, stop_c, target_c, is_long, strategy)
 
-        self.async_run_bg(update_db_wrapper())
+        try:
+            # Disable the save button while DB update runs
+            run_bg_with_button(self.analysis_panel.save_btn, self.async_run_bg, update_db_wrapper())
+        except Exception:
+            # fallback
+            self.async_run_bg(update_db_wrapper())
+
+    def _on_status_saved(self, ticker: str, status: str):
+        """Callback invoked when StatusWidget confirms a saved status."""
+        logging.getLogger(__name__).info("Status for %s set to %s", ticker, status)
+        # reload existing data so UI is kept consistent
+        try:
+            self.load_existing_data()
+        except Exception:
+            logging.getLogger(__name__).exception("Failed to refresh existing analysis data after status change")
+        # Notify parent that status changed so external UI (eg. watchlist) can refresh
+        try:
+            if callable(getattr(self, 'on_status_saved_callback', None)):
+                try:
+                    self.on_status_saved_callback()
+                except Exception:
+                    logging.getLogger(__name__).exception('on_status_saved_callback failed')
+        except Exception:
+            pass
     
 
 
@@ -228,7 +259,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         async def fetch_data():
             query = """
                 SELECT 
-                    w.entry_price, w.target_price, w.stop_loss,
+                    w.entry_price, w.target_price, w.stop_loss, w.status,
                     sa.strategy
                 FROM watchlist w
                 LEFT JOIN stock_analysis sa ON w.ticker = sa.ticker
@@ -250,6 +281,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 self.target_price = price_from_db(raw_target)
                 self.stop_loss = price_from_db(raw_stop)
                 strategy = data.get("strategy")
+                status = data.get("status")
 
                 # Update Panel
                 self.analysis_panel.set_values(
@@ -258,6 +290,15 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     stop=self.stop_loss,
                     strategy=strategy
                 )
+
+                # Update status widget if available
+                try:
+                    if hasattr(self, "status_widget") and status is not None:
+                        # If the status is not one of VALID_STATUSES, ignore
+                        if status in getattr(self.status_widget, "VALID_STATUSES", []):
+                            self.status_widget.status_var.set(status)
+                except Exception:
+                    logging.getLogger(__name__).exception("Failed updating status widget")
 
                 # Pass the prices to BaseChart so it can draw them after the plot
                 to_store = build_saved_levels_from_row(data)

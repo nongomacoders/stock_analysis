@@ -14,6 +14,34 @@ from components.chart_window import ChartWindow
 from components.research_window import ResearchWindow
 from components.technical_analysis_window import TechnicalAnalysisWindow
 from components.todo_widget import TodoWidget
+def sort_watchlist_records(rows, today=None):
+    """Return rows sorted by status priority and days to next event.
+
+    Priority order is: Active-Trade, Pre-Trade, WL-Active. Rows with missing
+    next_event_date are placed last within their status group.
+    """
+    if today is None:
+        today = date.today()
+
+    def _status_priority(s):
+        order = {"Active-Trade": 0, "Pre-Trade": 1, "WL-Active": 2}
+        return order.get(s, 3)
+
+    def _days_to_event(row):
+        next_date = row.get("next_event_date")
+        if not next_date:
+            return 999999
+        try:
+            return (next_date - today).days
+        except Exception:
+            try:
+                # Support string dates in ISO format as fallback
+                return (datetime.strptime(next_date, "%Y-%m-%d").date() - today).days
+            except Exception:
+                return 999999
+
+    return sorted(rows, key=lambda r: (_status_priority(r.get("status")), _days_to_event(r)))
+
 from components.portfolio_window import PortfolioWindow
 
 
@@ -136,7 +164,8 @@ class WatchlistWidget(ttk.Frame):
             
             today = date.today()
 
-            for row in data:
+            # Sort incoming data so Treeview shows the most important status groups in the desired order
+            for row in sort_watchlist_records(data):
                 # 1. Event Days
                 next_date = row.get("next_event_date")
                 days_str = "-"
@@ -244,7 +273,7 @@ class WatchlistWidget(ttk.Frame):
         item = self.tree.item(sel[0])
         ticker = item["values"][0]
         
-        TechnicalAnalysisWindow(self, ticker, self.async_run_bg)
+        TechnicalAnalysisWindow(self, ticker, self.async_run_bg, on_status_saved_callback=self.refresh)
 
     def open_portfolio_manager(self):
         # Open the portfolio manager window

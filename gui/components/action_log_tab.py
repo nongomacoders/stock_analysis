@@ -3,6 +3,7 @@ from ttkbootstrap.constants import TOP, X, RIGHT, HORIZONTAL, BOTH, LEFT, VERTIC
 
 
 from modules.data.research import get_action_logs, mark_log_read
+from components.button_utils import run_bg_with_button
 
 
 class ActionLogTab(ttk.Frame):
@@ -119,5 +120,10 @@ class ActionLogTab(ttk.Frame):
         data = self.logs_map.get(item_id)
 
         if data and not data.get("is_read", False):
-            self.mark_read_btn.config(state=DISABLED)
-            self.async_run_bg(mark_log_read(data["log_id"]))
+            # Use helper to disable the button while the mark-as-read background job runs
+            try:
+                run_bg_with_button(self.mark_read_btn, self.async_run_bg, mark_log_read(data["log_id"]), callback=lambda _ : self.load_action_logs())
+            except Exception:
+                # fallback to original behavior
+                self.mark_read_btn.config(state=DISABLED)
+                self.async_run_bg(mark_log_read(data["log_id"]))

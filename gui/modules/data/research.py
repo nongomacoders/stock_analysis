@@ -31,8 +31,16 @@ async def get_research_data(ticker: str):
         FROM stock_analysis
         WHERE ticker = $1
     """
+    import logging
+    logger = logging.getLogger(__name__)
+
     rows = await DBEngine.fetch(query, ticker)
-    return dict(rows[0]) if rows else None
+    if rows:
+        logger.debug("get_research_data: found row for %s", ticker)
+        return dict(rows[0])
+    else:
+        logger.debug("get_research_data: no stock_analysis row for %s", ticker)
+        return None
 
 
 async def get_sens_for_ticker(ticker: str, limit=50):
@@ -49,31 +57,43 @@ async def get_sens_for_ticker(ticker: str, limit=50):
 
 
 async def save_strategy_data(ticker: str, content: str):
-    """Update the strategy column for a ticker."""
+    """Upsert the strategy value for a ticker.
+
+    If the stock_analysis row doesn't exist this will insert it.
+    """
     query = """
-        UPDATE stock_analysis
-        SET strategy = $2
-        WHERE ticker = $1
+        INSERT INTO stock_analysis (ticker, strategy)
+        VALUES ($1, $2)
+        ON CONFLICT (ticker) DO UPDATE SET strategy = EXCLUDED.strategy
     """
     await DBEngine.execute(query, ticker, content)
 
 
 async def save_research_data(ticker: str, content: str):
     """Update the research column for a ticker."""
+    import logging
+    logger = logging.getLogger(__name__)
+
     query = """
-        UPDATE stock_analysis
-        SET research = $2
-        WHERE ticker = $1
+        INSERT INTO stock_analysis (ticker, research)
+        VALUES ($1, $2)
+        ON CONFLICT (ticker) DO UPDATE SET research = EXCLUDED.research
     """
-    await DBEngine.execute(query, ticker, content)
+    try:
+        logger.debug("Saving research for %s (content len=%d)", ticker, len(content) if content is not None else 0)
+        await DBEngine.execute(query, ticker, content)
+        logger.info("Saved research for %s", ticker)
+    except Exception:
+        logger.exception("Failed saving research for %s", ticker)
+        raise
 
 
 async def save_deep_research_data(ticker: str, content: str):
-    """Update the deepresearch column for a ticker."""
+    """Upsert deepresearch for a ticker (insert or update)."""
     query = """
-        UPDATE stock_analysis
-        SET deepresearch = $2
-        WHERE ticker = $1
+        INSERT INTO stock_analysis (ticker, deepresearch)
+        VALUES ($1, $2)
+        ON CONFLICT (ticker) DO UPDATE SET deepresearch = EXCLUDED.deepresearch
     """
     await DBEngine.execute(query, ticker, content)
 

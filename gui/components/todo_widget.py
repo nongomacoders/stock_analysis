@@ -59,10 +59,10 @@ class TodoWidget(ttk.Frame):
         self.priority_combo.pack(side=LEFT, padx=2)
 
         # 4. Add Button
-        add_btn = ttk.Button(
+        self.add_btn = ttk.Button(
             input_frame, text="Add", command=self.add_task, bootstyle="success"
         )
-        add_btn.pack(side=LEFT, padx=10)
+        self.add_btn.pack(side=LEFT, padx=10)
 
         # --- TREEVIEW (Main) ---
         cols = ("Date", "Priority", "Title", "Ticker", "Status")
@@ -184,16 +184,29 @@ class TodoWidget(ttk.Frame):
             self.title_entry.focus_set()
             self.refresh_todos()
 
-        self.async_run_bg(
-            add_todo(
+        from components.button_utils import run_bg_with_button
+
+        # Use helper to ensure the Add button is disabled while background work runs
+        try:
+            run_bg_with_button(self.add_btn, self.async_run_bg, add_todo(
                 task_date=date.today(),
                 title=title,
                 description=description,
                 ticker=ticker,
                 priority=priority,
-            ),
-            callback=on_task_added,
-        )
+            ), callback=on_task_added)
+        except Exception:
+            # fallback to existing call if helper fails
+            self.async_run_bg(
+                add_todo(
+                    task_date=date.today(),
+                    title=title,
+                    description=description,
+                    ticker=ticker,
+                    priority=priority,
+                ),
+                callback=on_task_added,
+            )
 
     def on_double_click(self, event):
         """Toggle status between active and done on double click."""

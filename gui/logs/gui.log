@@ -1,11 +1,36 @@
-2025-12-04 13:58:21,405 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-04 13:58:21,417 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-04 13:58:23,017 __main__ INFO: Selected: ABG.JO
-2025-12-04 13:58:47,853 __main__ INFO: Selected: BAT.JO
-2025-12-04 13:58:47,853 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: BAT.JO
-2025-12-04 13:59:03,968 __main__ INFO: Closing application...
-2025-12-04 13:59:03,974 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-04 13:59:03,974 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
-2025-12-04 13:59:03,975 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-04 13:59:03,975 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
+2025-12-04 20:25:18,560 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-04 20:25:18,564 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-04 20:25:40,234 __main__ INFO: Selected: BID.JO
+2025-12-04 20:25:53,360 components.status_widget INFO: StatusWidget.on_save called for BID.JO -> WL-Active
+2025-12-04 20:25:53,367 modules.data.watchlist INFO: Updated watchlist status for BID.JO -> WL-Active
+2025-12-04 20:25:53,367 components.status_widget INFO: StatusWidget._on_done called for BID.JO result=True
+2025-12-04 20:25:54,784 components.technical_analysis_window INFO: Status for BID.JO set to WL-Active
+2025-12-04 20:25:57,975 __main__ INFO: Selected: GRT.JO
+2025-12-04 20:25:57,975 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GRT.JO
+2025-12-04 20:26:09,991 components.status_widget INFO: StatusWidget.on_save called for GRT.JO -> WL-Active
+2025-12-04 20:26:09,999 modules.data.watchlist INFO: Updated watchlist status for GRT.JO -> WL-Active
+2025-12-04 20:26:09,999 components.status_widget INFO: StatusWidget._on_done called for GRT.JO result=True
+2025-12-04 20:26:11,610 components.technical_analysis_window INFO: Status for GRT.JO set to WL-Active
+2025-12-04 20:26:13,255 __main__ INFO: Selected: RNI.JO
+2025-12-04 20:26:13,257 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RNI.JO
+2025-12-04 20:26:20,138 components.status_widget INFO: StatusWidget.on_save called for RNI.JO -> WL-Active
+2025-12-04 20:26:20,139 modules.data.watchlist INFO: Updated watchlist status for RNI.JO -> WL-Active
+2025-12-04 20:26:20,139 components.status_widget INFO: StatusWidget._on_done called for RNI.JO result=True
+2025-12-04 20:26:21,459 components.technical_analysis_window INFO: Status for RNI.JO set to WL-Active
+2025-12-04 20:26:23,525 __main__ INFO: Selected: OMN.JO
+2025-12-04 20:26:23,525 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: OMN.JO
+2025-12-04 20:26:31,639 components.status_widget INFO: StatusWidget.on_save called for OMN.JO -> WL-Active
+2025-12-04 20:26:31,642 modules.data.watchlist INFO: Updated watchlist status for OMN.JO -> WL-Active
+2025-12-04 20:26:31,642 components.status_widget INFO: StatusWidget._on_done called for OMN.JO result=True
+2025-12-04 20:26:32,836 components.technical_analysis_window INFO: Status for OMN.JO set to WL-Active
+2025-12-04 20:26:44,171 __main__ INFO: Selected: NTU.JO
+2025-12-04 20:26:44,171 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: NTU.JO
+2025-12-04 20:27:10,575 __main__ INFO: Closing application...
+2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
+2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-04 20:27:10,581 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'

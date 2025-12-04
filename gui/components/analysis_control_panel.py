@@ -1,6 +1,8 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import X, W, BOTH, E, END
 from ttkbootstrap.scrolled import ScrolledText
+import logging
+from ttkbootstrap.dialogs import Messagebox
 
 class AnalysisControlPanel(ttk.Frame):
     """
@@ -98,4 +100,11 @@ class AnalysisControlPanel(ttk.Frame):
         """Trigger the save callback with current values."""
         values = self.get_values()
         if self.on_save_callback:
-            self.on_save_callback(values)
+            try:
+                self.on_save_callback(values)
+            except Exception:
+                logging.getLogger(__name__).exception("Error in AnalysisControlPanel save callback")
+                try:
+                    Messagebox.error("Save failed", "An error occurred saving analysis. See logs for details.")
+                except Exception:
+                    pass
