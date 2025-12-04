@@ -150,7 +150,9 @@ class PortfolioWindow(ttk.Toplevel):
         self.status_label.pack(side=LEFT, padx=8, pady=6)
 
         # Totals display (right side of status bar)
-        # Total P/L (R) and Total P/L (%) across all portfolios
+        # Total Value (R), Total P/L (R) and Total P/L (%) across all portfolios
+        self.total_value_label = ttk.Label(status, text="Total Value: R0.00")
+        self.total_value_label.pack(side=tk.RIGHT, padx=8, pady=6)
         self.total_pl_label = ttk.Label(status, text="Total P/L: R0.00")
         self.total_pl_label.pack(side=tk.RIGHT, padx=8, pady=6)
         self.total_pl_pct_label = ttk.Label(status, text="(0.00%)")
@@ -303,6 +305,7 @@ class PortfolioWindow(ttk.Toplevel):
 
             total_cost = 0.0
             total_pl = 0.0
+            total_value = 0.0
             for h, l in zip(holdings, latests if latests else [{}] * len(holdings)):
                 latest_price = None
                 if isinstance(l, dict) and l:
@@ -320,15 +323,19 @@ class PortfolioWindow(ttk.Toplevel):
                     avg_rands = float(avg) / 100.0
                     cost_value = avg_rands * float(qty)
                     total_cost += cost_value
+                    # prefer latest market value if we have it, otherwise fall back to cost
                     if latest_price is not None:
+                        total_value += float(latest_price) * float(qty)
                         pl = (float(latest_price) - avg_rands) * float(qty)
                         total_pl += pl
+                    else:
+                        total_value += cost_value
                 except Exception:
                     # skip if values malformed
                     continue
 
             total_pct = (total_pl / total_cost * 100.0) if total_cost != 0 else 0.0
-            return {"total_cost": total_cost, "total_pl": total_pl, "total_pct": total_pct}
+            return {"total_cost": total_cost, "total_pl": total_pl, "total_pct": total_pct, "total_value": total_value}
         except Exception:
             logger.exception("Failed to compute totals")
             return {"total_cost": 0.0, "total_pl": 0.0, "total_pct": 0.0}
@@ -337,8 +344,10 @@ class PortfolioWindow(ttk.Toplevel):
         try:
             total_pl = result.get("total_pl", 0.0)
             total_pct = result.get("total_pct", 0.0)
+            total_value = result.get("total_value", 0.0)
             # update labels
             self.total_pl_label.configure(text=f"Total P/L: R{total_pl:,.2f}")
+            self.total_value_label.configure(text=f"Total Value: R{total_value:,.2f}")
             # color the P/L value label
             try:
                 if total_pl > 0:
@@ -431,14 +440,12 @@ class PortfolioWindow(ttk.Toplevel):
                 values=(r["ticker"], r["quantity"], r["average_buy_price"], cost_display, latest_display, pl_display, pct_display),
                 tags=tag,
             )
-        # reset any previously selected holding when repopulating
-        self.selected_holding_id = None
-        # ensure the Add/Update button state reflects current contents / selection
+        # reset any previously selected holding when repopulating and clear form
+        # so that consecutive additions do not treat the previous entry as selected
         try:
-            self._validate_form()
+            self.clear_form()
         except Exception:
-            # ignore in GUI thread if validation not yet wired
-            pass
+            self.selected_holding_id = None
 
         # also refresh totals across all portfolios (async)
         try:
@@ -516,10 +523,10 @@ class PortfolioWindow(ttk.Toplevel):
         # If the user clicked a holding and its id is tracked, update that specific holding by id
         if hasattr(self, "selected_holding_id") and self.selected_holding_id:
             hid = self.selected_holding_id
-            self.async_run_bg(self._update_holding(hid, ticker, qty, avg), callback=lambda _: self.on_portfolio_select())
+            self.async_run_bg(self._update_holding(hid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
         else:
             # no selection -> upsert by ticker for this portfolio (create or update)
-            self.async_run_bg(self._upsert_holding(pid, ticker, qty, avg), callback=lambda _: self.on_portfolio_select())
+            self.async_run_bg(self._upsert_holding(pid, ticker, qty, avg), callback=lambda _ : self._post_mutation_refresh())
 
     async def _upsert_holding(self, portfolio_id, ticker, qty, avg_price):
         try:
@@ -607,6 +614,56 @@ class PortfolioWindow(ttk.Toplevel):
                 pass
         except Exception:
             logger.exception("Failed populating holding selection")
+
+    def clear_form(self):
+        """Clear the ticker/qty/avg form and reset selection state."""
+        try:
+            self.selected_holding_id = None
+        except Exception:
+            self.selected_holding_id = None
+        try:
+            # reset via StringVars so trace triggers validation
+            if hasattr(self, "ticker_var"):
+                self.ticker_var.set("")
+            if hasattr(self, "qty_var"):
+                self.qty_var.set("")
+            if hasattr(self, "avg_var"):
+                self.avg_var.set("")
+        except Exception:
+            # fall back to manual deletion
+            try:
+                self.ticker_entry.delete(0, END)
+                self.qty_entry.delete(0, END)
+                self.avg_entry.delete(0, END)
+            except Exception:
+                pass
+        try:
+            # clear any treeview selection
+            if hasattr(self, "holdings_list"):
+                sel = self.holdings_list.selection()
+                for s in sel:
+                    try:
+                        self.holdings_list.selection_remove(s)
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+        # make sure the Add/Update button state reflects emptied fields
+        try:
+            self._validate_form()
+        except Exception:
+            pass
+
+    def _post_mutation_refresh(self):
+        """Helper called after add/update/delete to refresh UI and clear form."""
+        try:
+            self.clear_form()
+        except Exception:
+            pass
+        try:
+            self.on_portfolio_select()
+        except Exception:
+            pass
 
     def on_close(self):
         self.destroy()

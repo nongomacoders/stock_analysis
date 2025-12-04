@@ -75,7 +75,14 @@ async def _process_and_save(data, all_tickers):
     logger.debug("Data columns type: %s", type(data.columns))
     if isinstance(data.columns, pd.MultiIndex):
         logger.debug("MultiIndex detected. Stacking...")
-        df = data.stack().reset_index()
+        # pandas is introducing a new stack implementation
+        # use future_stack=True when available to adopt new behavior and silence FutureWarning
+        # but fall back to the old call if the pandas version does not support the kw arg
+        try:
+            df = data.stack(future_stack=True).reset_index()
+        except TypeError:
+            # older pandas does not accept future_stack kw
+            df = data.stack().reset_index()
         logger.debug("Stacked columns: %s", df.columns)
         # Check if 'level_1' is indeed the ticker column or if it's named 'Ticker'
         if "level_1" in df.columns:
