@@ -14,6 +14,9 @@ class ImportTests(unittest.TestCase):
         mod_cw = importlib.import_module("components.chart_window")
         self.assertTrue(hasattr(mod_cw, "ChartWindow"))
 
+        mod_pw = importlib.import_module("components.portfolio_window")
+        self.assertTrue(hasattr(mod_pw, "PortfolioWindow"))
+
     def test_core_utils_no_add_axhline(self):
         # The top-level package should NOT expose add_axhline
         core_utils = importlib.import_module("core.utils")

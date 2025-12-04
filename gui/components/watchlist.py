@@ -14,6 +14,7 @@ from components.chart_window import ChartWindow
 from components.research_window import ResearchWindow
 from components.technical_analysis_window import TechnicalAnalysisWindow
 from components.todo_widget import TodoWidget
+from components.portfolio_window import PortfolioWindow
 
 
 class WatchlistWidget(ttk.Frame):
@@ -75,6 +76,13 @@ class WatchlistWidget(ttk.Frame):
             command=self.open_technical_analysis,
             bootstyle="info-outline"
         ).pack(side=LEFT)
+
+        ttk.Button(
+            toolbar,
+            text="Portfolio",
+            command=self.open_portfolio_manager,
+            bootstyle="secondary-outline",
+        ).pack(side=LEFT, padx=(6, 0))
 
         # --- COLUMNS ---
         cols = ("Ticker", "Name", "Price", "Status", "Event", "Strategy", "News")
@@ -237,3 +245,7 @@ class WatchlistWidget(ttk.Frame):
         ticker = item["values"][0]
         
         TechnicalAnalysisWindow(self, ticker, self.async_run_bg)
+
+    def open_portfolio_manager(self):
+        # Open the portfolio manager window
+        PortfolioWindow(self, self.async_run, self.async_run_bg)
