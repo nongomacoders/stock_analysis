@@ -1,4 +1,7 @@
 from core.db.engine import DBEngine
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 async def fetch_watchlist_data():
@@ -80,11 +83,11 @@ async def select_tickers_for_valuation(limit=None):
     
     debug_rows = await DBEngine.fetch(debug_query)
     
-    print("\n" + "="*80)
-    print("DEBUG: TICKER SELECTION FOR VALUATION - DETAILED ANALYSIS")
-    print("="*80)
-    print(f"CURRENT DATE: {debug_rows[0]['today'] if debug_rows else 'N/A'}")
-    print("="*80)
+    logger.debug("%s", '\n' + ('='*80))
+    logger.debug("TICKER SELECTION FOR VALUATION - DETAILED ANALYSIS")
+    logger.debug('%s', '='*80)
+    logger.info("CURRENT DATE: %s", debug_rows[0]['today'] if debug_rows else 'N/A')
+    logger.debug('%s', '='*80)
     
     for row in debug_rows:
         ticker = row['ticker']
@@ -94,36 +97,36 @@ async def select_tickers_for_valuation(limit=None):
         last_updated = row['last_updated_at']
         today = row['today']
         
-        print(f"\n{'='*80}")
-        print(f"TICKER: {ticker}")
-        print(f"{'='*80}")
-        print(f"  [1] Most recent results release date:  {most_recent}")
-        print(f"  [2] 2nd recent results release date:   {second_recent}")
-        print(f"  [*] Last updated (data scraped):       {last_updated}")
+        logger.info('%s', '\n' + ('='*80))
+        logger.info('TICKER: %s', ticker)
+        logger.info('%s', '='*80)
+        logger.info('  [1] Most recent results release date:  %s', most_recent)
+        logger.info('  [2] 2nd recent results release date:   %s', second_recent)
+        logger.info('  [*] Last updated (data scraped):       %s', last_updated)
         
         if second_recent:
-            print(f"\n  CALCULATION:")
-            print(f"    Next Expected = 2nd Recent + 1 Year")
-            print(f"    Next Expected = {second_recent} + 1 year = {next_exp}")
+            logger.info('\n  CALCULATION:')
+            logger.info('    Next Expected = 2nd Recent + 1 Year')
+            logger.info('    Next Expected = %s + 1 year = %s', second_recent, next_exp)
         else:
-            print(f"\n  CALCULATION:")
-            print(f"    Next Expected = NULL (insufficient data)")
+            logger.info('\n  CALCULATION:')
+            logger.info('    Next Expected = NULL (insufficient data)')
             
-        print(f"\n  FILTER LOGIC:")
-        print(f"    Current Date:    {today}")
-        print(f"    Next Expected:   {next_exp}")
+            logger.info('\n  FILTER LOGIC:')
+            logger.info('    Current Date:    %s', today)
+            logger.info('    Next Expected:   %s', next_exp)
         
-        if next_exp:
-            is_eligible = next_exp <= today
-            print(f"    Comparison:      {next_exp} <= {today} = {is_eligible}")
+            if next_exp:
+                is_eligible = next_exp <= today
+                logger.info('    Comparison:      %s <= %s = %s', next_exp, today, is_eligible)
             status = "[PASS] - Will be loaded" if is_eligible else "[FAIL] - Too early, will be skipped"
-        else:
-            is_eligible = True
-            status = "[PASS] - No data yet, will be loaded"
-            print(f"    Comparison:      NULL (always passes)")
+            else:
+                is_eligible = True
+                status = "[PASS] - No data yet, will be loaded"
+                logger.info('    Comparison:      NULL (always passes)')
             
-        print(f"\n  RESULT: {status}")
-        print(f"{'='*80}")
+        logger.info('\n  RESULT: %s', status)
+        logger.info('%s', '='*80)
     
     # Now run the actual query with filter
     query = """
@@ -151,10 +154,10 @@ async def select_tickers_for_valuation(limit=None):
     rows = await DBEngine.fetch(query)
     selected_tickers = [row["ticker"] for row in rows]
     
-    print("\n" + "="*80)
-    print(f"SELECTED TICKERS FOR LOADING ({len(selected_tickers)}):")
-    print("="*80)
-    print(", ".join(selected_tickers) if selected_tickers else "NONE")
-    print("="*80 + "\n")
+    logger.info('%s', '\n' + ('='*80))
+    logger.info('SELECTED TICKERS FOR LOADING (%s):', len(selected_tickers))
+    logger.info('%s', '='*80)
+    logger.info('%s', ', '.join(selected_tickers) if selected_tickers else 'NONE')
+    logger.info('%s', '='*80 + '\n')
     
     return selected_tickers

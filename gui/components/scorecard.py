@@ -1,5 +1,8 @@
 # Scorecard Component (Top HUD)
 # Displays portfolio summary
+import logging
+
+logger = logging.getLogger(__name__)
 
 def render():
-    print("Rendering Scorecard...")
+    logger.info("Rendering Scorecard...")

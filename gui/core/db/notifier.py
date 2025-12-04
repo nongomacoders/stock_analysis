@@ -2,6 +2,9 @@ import asyncio
 import asyncpg
 from typing import Callable, Optional, Dict, List
 from core.db.engine import DBEngine
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class DBNotifier:
@@ -40,7 +43,7 @@ class DBNotifier:
             
             # Store the task and connection so we can manage them
             self._listener_tasks[channel] = asyncio.create_task(self._keep_alive(conn))
-            print(f"Notifier: Started listening on channel '{channel}'")
+            logger.info("Notifier: Started listening on channel '%s'", channel)
 
     def _notification_handler(self, connection, pid, channel, payload):
         """Internal handler that dispatches notifications to all registered callbacks for a channel."""
@@ -63,8 +66,8 @@ class DBNotifier:
             else:
                 # If it's a regular function, call it directly.
                 callback(payload)
-        except Exception as e:
-            print(f"Error in notification callback: {e}")
+        except Exception:
+            logger.exception("Error in notification callback")
         
     async def _keep_alive(self, connection: asyncpg.Connection):
         """Keeps a listener connection alive until cancelled."""
@@ -75,7 +78,7 @@ class DBNotifier:
             # When cancelled, release the connection back to the pool
             pool = await DBEngine.get_pool()
             await pool.release(connection)
-            print(f"Notifier: Released connection for listener.")
+            logger.info("Notifier: Released connection for listener.")
             
     async def stop_listening(self):
         """Stop listening and cleanup resources."""
@@ -85,7 +88,7 @@ class DBNotifier:
                 await task
             except asyncio.CancelledError:
                 pass
-            print(f"Notifier: Stopped listening on channel '{channel}'")
+            logger.info("Notifier: Stopped listening on channel '%s'", channel)
 
         self._listener_tasks.clear()
         self._callbacks.clear()

@@ -5,6 +5,46 @@ import threading
 import subprocess
 import sys
 import os
+import logging
+from logging import FileHandler
+
+# Minimal, centralized logging configuration for the GUI application.
+# - Default level INFO, configurable via environment variable LOG_LEVEL.
+# - Simple timestamped format that is easy to grep in logs.
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
+logging.basicConfig(
+    level=LOG_LEVEL,
+    format="%(asctime)s %(name)s %(levelname)s: %(message)s",
+)
+
+# Persistent rotating file handler (defaults to gui/logs/gui.log)
+LOG_DIR = os.environ.get("LOG_DIR", os.path.join(os.path.dirname(__file__), "..", "logs"))
+LOG_DIR = os.path.abspath(LOG_DIR)
+os.makedirs(LOG_DIR, exist_ok=True)
+LOG_FILE = os.path.join(LOG_DIR, "gui.log")
+
+# FileHandler will open the log file in write mode (mode='w') which truncates
+# the file at startup, ensuring each session starts with a cleared file.
+
+# Add a rotating file handler if not already configured
+root_logger = logging.getLogger()
+has_file_handler = False
+for h in root_logger.handlers:
+    # check if a RotatingFileHandler already points to our file
+    try:
+        if getattr(h, "baseFilename", None) == LOG_FILE:
+            has_file_handler = True
+            break
+    except Exception:
+        # some handlers may not have baseFilename
+        continue
+
+if not has_file_handler:
+    # Use a simple file handler for the session logs (opened in write mode)
+    file_handler = FileHandler(LOG_FILE, mode="w", encoding="utf-8")
+    file_handler.setLevel(LOG_LEVEL)
+    file_handler.setFormatter(logging.Formatter("%(asctime)s %(name)s %(levelname)s: %(message)s"))
+    root_logger.addHandler(file_handler)
 
 # Add project root to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -80,7 +120,7 @@ class CommandCenter(ttk.Window):
                     # Schedule callback on main thread passing result as arg
                     self.after(0, callback, result)
             except Exception as e:
-                print(f"Background task error: {e}")
+                logging.getLogger(__name__).exception("Background task error: %s", e)
                 if callable(callback):
                     self.after(0, callback, None)
         
@@ -93,9 +133,10 @@ class CommandCenter(ttk.Window):
             agent_path = os.path.join(os.path.dirname(__file__), "market_agent.py")
 
             self.market_agent_process = subprocess.Popen([sys.executable, agent_path])
-            print(f"Market Agent started with PID: {self.market_agent_process.pid}")
         except Exception as e:
-            print(f"Failed to start market_agent.py: {e}")
+            logging.getLogger(__name__).exception(
+                "Failed to start market_agent.py: %s", e
+            )
 
     def create_layout(self):
         # Top HUD
@@ -116,7 +157,7 @@ class CommandCenter(ttk.Window):
 
     def on_ticker_select(self, ticker):
         """Callback when watchlist row is clicked"""
-        print(f"Selected: {ticker}")
+        logging.getLogger(__name__).info("Selected: %s", ticker)
         
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
@@ -157,7 +198,7 @@ class CommandCenter(ttk.Window):
 
     def on_closing(self):
         """Cleanup when window closes"""
-        print("Closing application...")
+        logging.getLogger(__name__).info("Closing application...")
 
         # 1. Terminate external processes
         if hasattr(self, "market_agent_process"):

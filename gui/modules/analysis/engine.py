@@ -8,7 +8,9 @@ from modules.analysis.prompts import (
 
 
 async def analyze_new_sens(ticker: str, content: str):
-    print(f"AI: Analyzing SENS for {ticker}...")
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info("AI: Analyzing SENS for %s...", ticker)
 
     # 1. Fetch Context
     row = await _fetch_context(ticker)
@@ -22,11 +24,13 @@ async def analyze_new_sens(ticker: str, content: str):
     # 3. Save Log
     headline = (content[:200] + "...") if len(content) > 200 else content
     await _save_log(ticker, "SENS", headline, analysis)
-    print(f"AI: SENS analysis saved for {ticker}.")
+    logger.info("AI: SENS analysis saved for %s.", ticker)
 
 
 async def analyze_price_change(ticker: str, new_price: float, level_hit: float):
-    print(f"AI: Analyzing Price Hit for {ticker} ({level_hit}c)...")
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info("AI: Analyzing Price Hit for %s (%sc)...", ticker, level_hit)
 
     row = await _fetch_context(ticker)
     if not row:
@@ -39,11 +43,13 @@ async def analyze_price_change(ticker: str, new_price: float, level_hit: float):
 
     trigger = f"Price crossed {level_hit}c, closing at {new_price}c."
     await _save_log(ticker, "Price Level", trigger, analysis)
-    print(f"AI: Price analysis saved for {ticker}.")
+    logger.info("AI: Price analysis saved for %s.", ticker)
 
 
 async def generate_master_research(ticker: str, deep_research=None):
-    print(f"AI: Generating Research Summary for {ticker}...")
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info("AI: Generating Research Summary for %s...", ticker)
     # 1. Generate
     prompt = build_research_prompt(deep_research)
     return await query_ai(prompt)
@@ -60,6 +66,8 @@ async def _fetch_context(ticker: str):
     q = "SELECT research, strategy FROM stock_analysis WHERE ticker = $1"
     rows = await DBEngine.fetch(q, ticker)
     if not rows:
-        print(f"AI: No context found for {ticker}")
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning("AI: No context found for %s", ticker)
         return None
     return rows[0]

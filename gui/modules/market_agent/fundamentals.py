@@ -1,5 +1,8 @@
 from datetime import date
 from core.db.engine import DBEngine
+import logging
+
+logger = logging.getLogger(__name__)
 from modules.data.loader import RawFundamentalsLoader
 
 
@@ -89,15 +92,15 @@ async def get_tickers_needing_update() -> list[str]:
             ticker
     """
     
-    print("\n" + "="*80)
-    print("DEBUG: MARKET AGENT - FUNDAMENTALS TICKER SELECTION")
-    print("="*80)
+    logger.debug("\n" + '='*80)
+    logger.debug("MARKET AGENT - FUNDAMENTALS TICKER SELECTION")
+    logger.debug('%s', '='*80)
     
     rows = await DBEngine.fetch(query)
     
     if rows:
-        print(f"CURRENT DATE: {rows[0]['today']}")
-        print("="*80)
+        logger.info("CURRENT DATE: %s", rows[0]['today'])
+        logger.info('%s', '='*80)
         
         for row in rows:
             ticker = row['ticker']
@@ -108,49 +111,49 @@ async def get_tickers_needing_update() -> list[str]:
             last_upd = row['last_updated_at']
             today = row['today']
             
-            print(f"\n{'='*80}")
-            print(f"TICKER: {ticker}")
-            print(f"{'='*80}")
-            print(f"  [1] Most recent release:    {last_rel}")
-            print(f"  [2] 2nd recent release:     {second_rel}")
-            print(f"  [*] Last updated (scraped): {last_upd}")
+            logger.info("%s", '\n' + ('='*80))
+            logger.info("TICKER: %s", ticker)
+            logger.info('%s', '='*80)
+            logger.info("  [1] Most recent release:    %s", last_rel)
+            logger.info("  [2] 2nd recent release:     %s", second_rel)
+            logger.info("  [*] Last updated (scraped): %s", last_upd)
             
             if second_rel:
-                print(f"\n  CALCULATION:")
-                print(f"    Next Expected = 2nd Recent + 1 Year")
-                print(f"    Next Expected = {second_rel} + 1 year")
-                print(f"    Next Expected = {next_exp.date() if hasattr(next_exp, 'date') else next_exp}")
+                logger.info("\n  CALCULATION:")
+                logger.info("    Next Expected = 2nd Recent + 1 Year")
+                logger.info("    Next Expected = %s + 1 year", second_rel)
+                logger.info("    Next Expected = %s", (next_exp.date() if hasattr(next_exp, 'date') else next_exp))
             else:
-                print(f"\n  CALCULATION:")
-                print(f"    Next Expected = {next_exp.date() if hasattr(next_exp, 'date') else next_exp} (default +180 days)")
+                logger.info("\n  CALCULATION:")
+                logger.info("    Next Expected = %s (default +180 days)", (next_exp.date() if hasattr(next_exp, 'date') else next_exp))
             
-            print(f"\n  FILTER LOGIC:")
-            print(f"    Current Date:      {today}")
-            print(f"    Next Expected:     {next_exp.date() if hasattr(next_exp, 'date') else next_exp}")
-            print(f"    Days Since Last:   {days_since}")
+            logger.info("\n  FILTER LOGIC:")
+            logger.info("    Current Date:      %s", today)
+            logger.info("    Next Expected:     %s", (next_exp.date() if hasattr(next_exp, 'date') else next_exp))
+            logger.info("    Days Since Last:   %s", days_since)
             
             if last_rel:
                 next_exp_date = next_exp.date() if hasattr(next_exp, 'date') else next_exp
                 check1 = today >= next_exp_date
                 check2 = days_since >= 150
-                print(f"    Check 1: {today} >= {next_exp_date} = {check1}")
-                print(f"    Check 2: {days_since} >= 150 = {check2}")
-                print(f"    Both checks: {check1 and check2}")
+                logger.info("    Check 1: %s >= %s = %s", today, next_exp_date, check1)
+                logger.info("    Check 2: %s >= 150 = %s", days_since, check2)
+                logger.info("    Both checks: %s", (check1 and check2))
                 status = "[PASS] - Will be loaded" if (check1 and check2) else "[FAIL] - Criteria not met"
             else:
                 status = "[PASS] - No data, will be loaded"
                 
-            print(f"\n  RESULT: {status}")
-            print(f"{'='*80}")
+            logger.info("\n  RESULT: %s", status)
+            logger.info('%s', '='*80)
         
         tickers = [row["ticker"] for row in rows]
-        print("\n" + "="*80)
-        print(f"SELECTED TICKERS ({len(tickers)}): {', '.join(tickers)}")
-        print("="*80 + "\n")
+        logger.info('%s', '\n' + ('='*80))
+        logger.info("SELECTED TICKERS (%s): %s", len(tickers), ', '.join(tickers))
+        logger.info('%s', '='*80 + '\n')
         return tickers
     else:
-        print("No tickers found needing updates")
-        print("="*80 + "\n")
+        logger.info("No tickers found needing updates")
+        logger.info('%s', '='*80 + '\n')
         return []
 
 
@@ -159,20 +162,20 @@ async def run_fundamentals_check():
     Main worker function to check and update fundamentals.
     Called daily by the market agent.
     """
-    print("+++ Running Fundamentals Check +++")
+    logger.info("+++ Running Fundamentals Check +++")
     
     # Get tickers needing update
     tickers = await get_tickers_needing_update()
     
     if not tickers:
-        print("No tickers need fundamentals updates today.")
+        logger.info("No tickers need fundamentals updates today.")
         return
     
     # Run the loader for these specific tickers
-    loader = RawFundamentalsLoader(log_callback=print)
+    loader = RawFundamentalsLoader(log_callback=logger.info)
     result = await loader.run_fundamentals_update(tickers=tickers)
     
-    print(f"\nFundamentals Update Summary:")
-    print(f"  Succeeded: {result['succeeded']}")
-    print(f"  Failed: {result['failed']}")
-    print(f"  Total periods: {result['total_periods']}")
+    logger.info("\nFundamentals Update Summary:")
+    logger.info("  Succeeded: %s", result['succeeded'])
+    logger.info("  Failed: %s", result['failed'])
+    logger.info("  Total periods: %s", result['total_periods'])

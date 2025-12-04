@@ -17,6 +17,7 @@ This demo helps manually verify cursor mapping and horizontal-line APIs.
 import tkinter as tk
 import pandas as pd
 import numpy as np
+import logging
 from components.base_chart import BaseChart
 
 
@@ -64,15 +65,17 @@ class DemoApp(tk.Tk):
         y = self.chart.get_cursor_y()
         if k in ('a', 's', 't'):
             if y is None:
-                print("No cursor y available — move the mouse over the chart first")
+                logging.getLogger(__name__).warning(
+                    "No cursor y available — move the mouse over the chart first"
+                )
                 return
             label = 'entry' if k == 'a' else ('stop' if k == 's' else 'target')
             color = 'blue' if label == 'entry' else ('red' if label == 'stop' else 'green')
             self.chart.add_horizontal_line(y, color, label)
-            print(f"Added {label} line at {y:.2f}")
+            logging.getLogger(__name__).info("Added %s line at %.2f", label, y)
         elif k == 'c':
             self.chart.clear_horizontal_lines()
-            print("Cleared all horizontal lines")
+            logging.getLogger(__name__).info("Cleared all horizontal lines")
         elif k in ('q', 'escape'):
             self.on_close()
 

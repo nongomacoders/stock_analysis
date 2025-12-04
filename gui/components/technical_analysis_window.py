@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import BOTH, X, LEFT, RIGHT, BOTTOM
 import matplotlib.pyplot as plt
+import logging
 import pandas as pd
 import mplfinance as mpf
 from modules.data.market import get_historical_prices
@@ -86,22 +87,30 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
         days, period_key = period_map.get(period_label, (365, "1Y"))
 
-        print(f"[TechAnalysis] Fetching data for {period_label} ({days} days)...")
+        logging.getLogger(__name__).debug(
+            "[TechAnalysis] Fetching data for %s (%d days)...", period_label, days
+        )
 
         def on_data_loaded(data):
             if not data:
                 self.chart._show_no_data(f"No data for {period_label}")
                 return
 
-            print(f"[TechAnalysis] Plotting {len(data)} rows for {period_label}")
-            print(f"[TechAnalysis] Period key: {period_key}")
+            logging.getLogger(__name__).debug(
+                "[TechAnalysis] Plotting %d rows for %s", len(data), period_label
+            )
+            logging.getLogger(__name__).debug("[TechAnalysis] Period key: %s", period_key)
 
             # Let BaseChart handle candles ONLY (no lines)
             # We do NOT add horizontal lines here because calling canvas.draw() after mpf.plot() clears the candles
             # Lines will only appear when user presses 'e', 'l', or 't' keys
-            print(f"[TechAnalysis] Calling BaseChart.plot() with period_key={period_key}")
+            logging.getLogger(__name__).debug(
+                "[TechAnalysis] Calling BaseChart.plot() with period_key=%s", period_key
+            )
             self.chart.plot(data, period_key, lines=None)
-            print(f"[TechAnalysis] BaseChart.plot() completed - candles rendered")
+            logging.getLogger(__name__).debug(
+                "[TechAnalysis] BaseChart.plot() completed - candles rendered"
+            )
 
         self.async_run_bg(get_historical_prices(self.ticker, days), callback=on_data_loaded)
 
@@ -120,7 +129,9 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         if callable(getter):
             cursor_y = getter()
         if cursor_y is None or not isinstance(cursor_y, (int, float)):
-            print(f"[TechAnalysis] No cursor position available")
+            logging.getLogger(__name__).warning(
+                "[TechAnalysis] No cursor position available"
+            )
             return
 
         # Map keys to attributes / colors / panel updates so we can handle in one place
@@ -134,7 +145,9 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         price = round(cursor_y, 2)
         setattr(self, attr_name, price)
         label = f"{panel_field.capitalize()}: R{price:.2f}" if panel_field != 'entry' else f"Entry: R{price:.2f}"
-        print(f"[TechAnalysis] {panel_field.capitalize()} price set to R{price:.2f}")
+        logging.getLogger(__name__).info(
+            "[TechAnalysis] %s price set to R%.2f", panel_field.capitalize(), price
+        )
 
         # Use BaseChart API to add a horizontal line — we expect this to exist
         # and prefer centralized behavior (no direct ax manipulation here).
@@ -168,20 +181,11 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         if callable(clearer):
             clearer()
         else:
-            # legacy fallback (shouldn't really be needed any more)
-            try:
-                stored = getattr(self.chart, "horizontal_lines", [])
-                for _, _, _, lobj in list(stored):
-                    try:
-                        if lobj is not None:
-                            lobj.remove()
-                    except Exception:
-                        pass
-                if isinstance(stored, list):
-                    stored.clear()
-                self.chart.canvas.draw()
-            except Exception:
-                pass
+            # If BaseChart doesn't provide clear_horizontal_lines (very old instances),
+            # skip explicit clearing and rely on the chart API to manage state.
+            logging.getLogger(__name__).warning(
+                "[TechAnalysis] clear_horizontal_lines not available — skipping explicit clear"
+            )
 
         # --- 4) Draw new lines from the UPDATED prices ---
         if self.entry_price is not None:
@@ -202,10 +206,12 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         if self.entry_price is not None and self.target_price is not None:
             is_long = self.target_price > self.entry_price
 
-        print(
-            f"[TechAnalysis] Saving analysis: "
-            f"Entry={self.entry_price}, Target={self.target_price}, "
-            f"Stop={self.stop_loss}, IsLong={is_long}"
+        logging.getLogger(__name__).info(
+            "[TechAnalysis] Saving analysis: Entry=%s, Target=%s, Stop=%s, IsLong=%s",
+            str(self.entry_price),
+            str(self.target_price),
+            str(self.stop_loss),
+            str(is_long),
         )
 
         # --- 6) Persist to DB in CENTS ---

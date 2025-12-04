@@ -1,5 +1,8 @@
 from modules.data.research import save_strategy_data
 from components.base_text_tab import BaseTextTab
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class StrategyTab(BaseTextTab):
@@ -12,4 +15,4 @@ class StrategyTab(BaseTextTab):
         """Saves the content of the text widget to the database."""
         content = self.get_content()
         self.async_run(save_strategy_data(self.ticker, content))
-        print(f"Strategy saved for {self.ticker}")
+        logger.info("Strategy saved for %s", self.ticker)

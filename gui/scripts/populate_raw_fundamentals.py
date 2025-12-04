@@ -1,6 +1,7 @@
 import asyncio
 import sys
 import os
+import logging
 
 # --- PATH FIX ---
 # This allows the script to import from 'core' and 'modules'
@@ -13,37 +14,39 @@ sys.path.append(project_root)
 from core.db.engine import DBEngine
 from modules.data.loader import RawFundamentalsLoader
 
+logger = logging.getLogger(__name__)
+
 
 async def main():
-    print("=" * 60)
-    print("POPULATING RAW STOCK VALUATIONS TABLE")
-    print("=" * 60)
+    logger.info("%s", '=' * 60)
+    logger.info("POPULATING RAW STOCK VALUATIONS TABLE")
+    logger.info("%s", '=' * 60)
 
     # 1. Initialize DB Pool
-    print("Initializing Database Connection...")
+    logger.info("Initializing Database Connection...")
     await DBEngine.get_pool()
 
     # 2. Run Loader
-    print("Running Fundamentals Loader...")
-    loader = RawFundamentalsLoader(log_callback=print)
+    logger.info("Running Fundamentals Loader...")
+    loader = RawFundamentalsLoader(log_callback=logger.info)
 
     # Run the update (tickers=None means "do all tickers in DB")
     result = await loader.run_fundamentals_update(tickers=None)
 
-    print("\n" + "=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
-    print(f"Succeeded: {result['succeeded']} tickers")
-    print(f"Failed: {result['failed']} tickers")
-    print(f"Total periods inserted: {result['total_periods']}")
+    logger.info("%s", '\n' + ('=' * 60))
+    logger.info("SUMMARY")
+    logger.info("%s", '=' * 60)
+    logger.info("Succeeded: %s tickers", result['succeeded'])
+    logger.info("Failed: %s tickers", result['failed'])
+    logger.info("Total periods inserted: %s", result['total_periods'])
 
     # 3. Close Pool
     await DBEngine.close()
 
     if result["succeeded"] > 0:
-        print("[SUCCESS] Process complete.")
+        logger.info("[SUCCESS] Process complete.")
     else:
-        print("[WARNING] No tickers processed successfully.")
+        logger.warning("[WARNING] No tickers processed successfully.")
 
 
 if __name__ == "__main__":

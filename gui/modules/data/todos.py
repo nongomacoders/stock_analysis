@@ -1,4 +1,7 @@
 from core.db.engine import DBEngine
+import logging
+
+logger = logging.getLogger(__name__)
 from datetime import date
 
 
@@ -58,8 +61,8 @@ async def add_todo(
             query, task_date, title, description, ticker_val, priority
         )
         return result[0]["id"] if result else None
-    except Exception as e:
-        print(f"Error adding TODO: {e}")
+    except Exception:
+        logger.exception("Error adding TODO")
         return None
 
 
@@ -69,6 +72,6 @@ async def delete_todo(todo_id: int):
     try:
         await DBEngine.execute(query, todo_id)
         return True
-    except Exception as e:
-        print(f"Error deleting TODO: {e}")
+    except Exception:
+        logger.exception("Error deleting TODO")
         return False

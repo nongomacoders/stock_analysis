@@ -1,7 +1,7 @@
 from datetime import date
 
 
-def calculate_days_to_event(event_dates):
+def _calculate_days_to_event(event_dates):
     """
     Returns the minimum days to the next event from a list of date objects.
     Returns 999 if no future events found.

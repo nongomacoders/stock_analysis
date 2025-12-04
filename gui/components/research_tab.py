@@ -5,6 +5,9 @@ from ttkbootstrap.dialogs import Messagebox
 from modules.data.research import save_research_data
 from modules.analysis.engine import generate_master_research
 from components.base_text_tab import BaseTextTab
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ResearchTab(BaseTextTab):
@@ -26,7 +29,7 @@ class ResearchTab(BaseTextTab):
         """Saves the content of the text widget to the database."""
         content = self.get_content()
         self.async_run(save_research_data(self.ticker, content))
-        print(f"Research saved for {self.ticker}")
+        logger.info("Research saved for %s", self.ticker)
 
     def generate_research(self):
         """Trigger AI research generation."""
@@ -39,7 +42,7 @@ class ResearchTab(BaseTextTab):
             return
 
         try:
-            print(f"Generating research for {self.ticker}...")
+            logger.info("Generating research for %s...", self.ticker)
             # Show loading state
             self.text_widget.config(state=NORMAL)
             self.text_widget.delete("1.0", END)
@@ -53,7 +56,7 @@ class ResearchTab(BaseTextTab):
             
             # Update UI
             self.load_content(new_research)
-            print("Research generation complete.")
+            logger.info("Research generation complete.")
         except Exception as e:
-            print(f"Error generating research: {e}")
+            logger.exception("Error generating research")
             self.load_content(f"Error: {str(e)}")

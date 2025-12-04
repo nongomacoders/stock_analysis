@@ -7,6 +7,8 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from typing import List, Tuple, Optional, Any
 
+import logging
+
 from core.utils.chart_drawing_utils import (
     prepare_mpf_hlines,
     add_legend_for_hlines,
@@ -79,7 +81,9 @@ class BaseChart(ttk.Frame):
         self.df_source + self.last_period_key. This is used internally when
         only the horizontal lines have changed.
         """
-        print(f"  [BaseChart:{self.period_label}] Plotting...")
+        logging.getLogger(__name__).debug(
+            "  [BaseChart:%s] Plotting...", self.period_label
+        )
 
         # ---------------------------------------------------------------------
         # 1) Prepare df_source
@@ -89,7 +93,9 @@ class BaseChart(ttk.Frame):
             df_source, err = prepare_df_source(data, period_key)
             if err is not None:
                 self._show_no_data(err)
-                print(f"  [BaseChart:{self.period_label}] {err}")
+                logging.getLogger(__name__).warning(
+                    "  [BaseChart:%s] %s", self.period_label, err
+                )
                 return
 
             # Store for future replots (e.g. horizontal line changes)
@@ -103,8 +109,8 @@ class BaseChart(ttk.Frame):
 
             if df_source is None or period_key is None:
                 self._show_no_data("No data to replot")
-                print(
-                    f"  [BaseChart:{self.period_label}] No df_source/period to reuse."
+                logging.getLogger(__name__).warning(
+                    "  [BaseChart:%s] No df_source/period to reuse.", self.period_label
                 )
                 return
 
@@ -134,12 +140,14 @@ class BaseChart(ttk.Frame):
         df = df.dropna(subset=["Open", "High", "Low", "Close"])
         if df.empty:
             self._show_no_data("Insufficient data for resampling")
-            print(
-                f"  [BaseChart:{self.period_label}] DataFrame is empty after resampling."
+            logging.getLogger(__name__).warning(
+                "  [BaseChart:%s] DataFrame is empty after resampling.", self.period_label
             )
             return
 
-        print(f"  [BaseChart:{self.period_label}] Plotting {len(df)} data points.")
+        logging.getLogger(__name__).debug(
+            "  [BaseChart:%s] Plotting %d data points.", self.period_label, len(df)
+        )
 
         # ---------------------------------------------------------------------
         # 3) Build moving-average addplots (50d & 200d using last 300 days)
@@ -206,7 +214,9 @@ class BaseChart(ttk.Frame):
 
         # Draw canvas
         self.canvas.draw()
-        print(f"  [BaseChart:{self.period_label}] Canvas drawn.")
+        logging.getLogger(__name__).debug(
+            "  [BaseChart:%s] Canvas drawn.", self.period_label
+        )
 
     # -------------------------------------------------------------------------
     # Mouse interaction

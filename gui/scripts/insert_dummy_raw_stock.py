@@ -2,6 +2,7 @@ import asyncio
 import sys
 import os
 from datetime import date
+import logging
 
 # Add project root to path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -10,8 +11,10 @@ sys.path.append(project_root)
 
 from core.db.engine import DBEngine
 
+logger = logging.getLogger(__name__)
+
 async def insert_dummy_data():
-    print("Inserting dummy data for OPA.JO...")
+    logger.info("Inserting dummy data for OPA.JO...")
     
     # Dummy data details
     # Period End: 30 June 2025
@@ -48,10 +51,10 @@ async def insert_dummy_data():
             "manual_dummy",
             0.0, 0.0, 0.0, 0.0 # Zero values for metrics
         )
-        print("[SUCCESS] Dummy entry inserted for OPA.JO")
+        logger.info("[SUCCESS] Dummy entry inserted for OPA.JO")
         
-    except Exception as e:
-        print(f"[ERROR] Failed to insert dummy data: {e}")
+    except Exception:
+        logger.exception("Failed to insert dummy data")
     finally:
         await DBEngine.close()
 

@@ -1,4 +1,7 @@
 from core.db.engine import DBEngine
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 async def get_latest_price(ticker: str):
@@ -30,6 +33,6 @@ async def insert_price_hit_log(ticker, level):
     try:
         await DBEngine.execute(query, ticker, level)
         return True
-    except Exception as e:
-        print(f"DB ERROR: Failed to insert price hit log: {e}")
+    except Exception:
+        logger.exception("DB ERROR: Failed to insert price hit log")
         return False

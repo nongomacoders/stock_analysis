@@ -4,6 +4,9 @@ from datetime import datetime
 import threading
 from core.db.engine import DBEngine
 from core.config import DB_CONFIG
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 BASE_URL = "https://www.moneyweb.co.za"
@@ -13,7 +16,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 async def run_sens_check():
     """Main SENS scraping logic."""
-    print(f"\n[{datetime.now().strftime('%H:%M')}] --- Running SENS Check ---")
+    logger.info("\n[%s] --- Running SENS Check ---", datetime.now().strftime('%H:%M'))
 
     # 1. Fetch Tickers
     q_tickers = "SELECT ticker FROM stock_details"
@@ -28,8 +31,8 @@ async def run_sens_check():
         resp = requests.get(LIST_URL, headers=HEADERS, timeout=10)
         soup = BeautifulSoup(resp.content, "html.parser")
         sens_rows = soup.find_all("div", class_="sens-row")
-    except Exception as e:
-        print(f"SENS HTTP Error: {e}")
+    except Exception:
+        logger.exception("SENS HTTP Error")
         return
 
     new_items = []
@@ -77,14 +80,14 @@ async def run_sens_check():
             ins_q = "INSERT INTO SENS (ticker, publication_datetime, content) VALUES ($1, $2, $3)"
             await DBEngine.execute(ins_q, f"{ticker}.JO", pub_date, content)
 
-            print(f"  -> NEW SENS: {ticker} @ {pub_date}")
+            logger.info("  -> NEW SENS: %s @ %s", ticker, pub_date)
             new_items.append((f"{ticker}.JO", content))
 
-        except Exception as e:
-            print(f"Error processing row: {e}")
+        except Exception:
+            logger.exception("Error processing row")
 
     if not new_items:
-        print("No new SENS announcements found.")
+        logger.info("No new SENS announcements found.")
 
     # Trigger AI
     import modules.analysis.engine as ai_engine

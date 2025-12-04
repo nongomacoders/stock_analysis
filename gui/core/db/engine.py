@@ -1,4 +1,7 @@
 import asyncpg
+import logging
+
+logger = logging.getLogger(__name__)
 from core.config import DB_CONFIG
 
 class DBEngine:
@@ -17,9 +20,9 @@ class DBEngine:
                     min_size=2,
                     max_size=10
                 )
-            except Exception as e:
-                print(f"CRITICAL DB ERROR: Could not create pool: {e}")
-                raise e
+            except Exception:
+                logger.exception("CRITICAL DB ERROR: Could not create pool")
+                raise
         return cls._pool
 
     @classmethod

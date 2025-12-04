@@ -1,5 +1,8 @@
 from modules.data.research import save_deep_research_data
 from components.base_text_tab import BaseTextTab
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class DeepResearchTab(BaseTextTab):
@@ -12,4 +15,4 @@ class DeepResearchTab(BaseTextTab):
         """Saves the content of the text widget to the database."""
         content = self.get_content()
         self.async_run(save_deep_research_data(self.ticker, content))
-        print(f"Deep Research saved for {self.ticker}")
+        logger.info("Deep Research saved for %s", self.ticker)

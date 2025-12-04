@@ -1,17 +1,20 @@
 import asyncio
 import os
 import sys
+import logging
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 
 # Add playwright directory to path to import env
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'playwright_scraper'))
 
+logger = logging.getLogger(__name__)
+
 # Import credentials
 try:
     from env import USERNAME, PASSWORD
 except ImportError:
-    print("Error: env.py not found in playwright_scraper directory. Please check your setup.")
+    logger.error("Error: env.py not found in playwright_scraper directory. Please check your setup.")
     sys.exit(1)
 
 AUTH_FILE = os.path.join(os.path.dirname(__file__), '..', 'playwright_scraper', 'auth.json')
@@ -40,16 +43,16 @@ async def ensure_comprehensive_data(page):
         else:
             pass
     except Exception as e:
-        print(f"   [View] Error toggling highlights: {e}")
+        logger.exception("Error toggling highlights in view")
 
 async def clean_and_print_data(html_content, ticker):
     """
     Extracts multiple financial tables by ID, cleans columns, and prints them.
     """
     soup = BeautifulSoup(html_content, 'html.parser')
-    print(f"\n{'='*60}")
-    print(f"FINANCIAL REPORT: {ticker}")
-    print(f"{'='*60}")
+    logger.info("%s", '\n' + ('='*60))
+    logger.info("FINANCIAL REPORT: %s", ticker)
+    logger.info("%s", ('='*60))
 
     data_found = False
 
@@ -64,7 +67,7 @@ async def clean_and_print_data(html_content, ticker):
             continue
 
         data_found = True
-        print(f"\n--- {table_name} ---")
+        logger.info("\n--- %s ---", table_name)
 
         # --- HEADER PROCESSING ---
         header_row = rows[0]
@@ -91,8 +94,8 @@ async def clean_and_print_data(html_content, ticker):
             headers[1] = "OF"
             
         # Print headers with spacing
-        print(f"{' | '.join(headers)}")
-        print("-" * 60)
+        logger.info("%s", ' | '.join(headers))
+        logger.info("%s", '-' * 60)
 
         # --- ROW PROCESSING ---
         for row in rows[1:]:
@@ -107,10 +110,10 @@ async def clean_and_print_data(html_content, ticker):
             if growth_idx != -1 and len(cols) > growth_idx:
                 cols.pop(growth_idx)
                 
-            print(f"{' | '.join(cols)}")
+                logger.info("%s", ' | '.join(cols))
             
     if not data_found:
-        print("WARNING: No standard financial tables (fin_I, fin_B, etc.) found.")
+        logger.warning("No standard financial tables (fin_I, fin_B, etc.) found.")
 
 async def handle_concurrent_login_dialog(page):
     """
@@ -119,13 +122,13 @@ async def handle_concurrent_login_dialog(page):
     try:
         concurrent_dialog = page.locator("text='Concurrent Logins Detected'")
         if await concurrent_dialog.is_visible(timeout=3000):
-            print("WARNING: Concurrent login detected dialog found - dismissing...")
+            logger.warning("Concurrent login detected dialog found - dismissing...")
             
             close_button = page.locator("button.close, button:has-text('×')")
             if await close_button.is_visible(timeout=2000):
                 await close_button.click()
                 await asyncio.sleep(1)
-                print("Dialog dismissed")
+                logger.info("Dialog dismissed")
             
     except Exception as e:
         pass
@@ -136,7 +139,7 @@ async def ensure_logged_in(page, context):
     await handle_concurrent_login_dialog(page)
     
     if await page.is_visible("text='Login'", timeout=2000):
-        print("Logging in...")
+        logger.info("Logging in...")
         await page.click("text='Login'")
         await page.wait_for_selector("#LoginDialog", state="visible")
         await page.fill("#Branding_LblLoginEmail", USERNAME)
@@ -147,13 +150,13 @@ async def ensure_logged_in(page, context):
         await handle_concurrent_login_dialog(page)
         
         await context.storage_state(path=AUTH_FILE)
-        print("Logged in successfully.")
+        logger.info("Logged in successfully.")
     else:
-        print("Already logged in.")
+        logger.info("Already logged in.")
 
 async def main():
     async with async_playwright() as p:
-        print("Launching browser...")
+        logger.info("Launching browser...")
         browser = await p.chromium.launch(headless=False)
         context_options = {"storage_state": AUTH_FILE} if os.path.exists(AUTH_FILE) else {}
         context = await browser.new_context(**context_options)
@@ -164,7 +167,7 @@ async def main():
         tickers = ["ART"] 
         
         for ticker in tickers:
-            print(f"\n>>> Fetching {ticker}...")
+            logger.info("\n>>> Fetching %s...", ticker)
             target_url = f"{BASE_URL}/Results.aspx?c={ticker}&x=JSE"
             
             await page.goto(target_url, wait_until="domcontentloaded")
@@ -172,7 +175,7 @@ async def main():
             await handle_concurrent_login_dialog(page)
             
             if "Home.aspx" in page.url:
-                print(f"FAILED: Redirected to Home.")
+                logger.error("FAILED: Redirected to Home.")
             else:
                 await ensure_comprehensive_data(page)
                 # Wait a bit for the DOM to update after unchecking highlights
@@ -182,7 +185,7 @@ async def main():
             
             await asyncio.sleep(1)
 
-        print("\nScraping Complete.")
+        logger.info("\nScraping Complete.")
         await browser.close()
 
 if __name__ == "__main__":

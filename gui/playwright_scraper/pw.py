@@ -3,6 +3,7 @@ import os
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+import logging
 
 # Load credentials from .env file
 load_dotenv()
@@ -10,7 +11,7 @@ USERNAME = os.getenv("STOCK_USERNAME")
 PASSWORD = os.getenv("STOCK_PASSWORD")
 
 if not USERNAME or not PASSWORD:
-    print("Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file")
+    logging.error("Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file")
     exit()
 
 AUTH_FILE = os.path.join(os.path.dirname(__file__), "auth.json")
@@ -63,8 +64,8 @@ async def ensure_comprehensive_data(page):
                 await checkbox.uncheck()
                 # Brief pause to allow table rows to expand
                 await asyncio.sleep(1) 
-    except Exception as e:
-        print(f"   [View] Error toggling highlights: {e}")
+    except Exception:
+        logging.exception("Error toggling highlights in view")
 
 async def extract_current_tables(page):
     """Extracts the HTML of the financial tables currently visible on the page."""
@@ -113,7 +114,7 @@ async def scrape_ticker_fundamentals(ticker: str):
             try:
                 await page.wait_for_selector("table[id^='fin_']", state="visible", timeout=10000)
             except:
-                print(f"Warning: Financial tables not found for {clean_ticker}")
+                logging.warning("Financial tables not found for %s", clean_ticker)
                 await browser.close()
                 return None
 
@@ -153,8 +154,6 @@ async def scrape_ticker_fundamentals(ticker: str):
             
             return results_sets if results_sets else None
             
-    except Exception as e:
-        print(f"Error scraping {ticker}: {e}")
-        import traceback
-        traceback.print_exc()
+    except Exception:
+        logging.exception("Error scraping %s", ticker)
         return None

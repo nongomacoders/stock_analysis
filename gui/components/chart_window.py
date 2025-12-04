@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import TOP, X, BOTH, NONE, W, E, VERTICAL, LEFT, RIGHT, Y, END
 import matplotlib.pyplot as plt
+import logging
 
 # --- NEW IMPORT ---
 from modules.data.market import get_historical_prices
@@ -27,7 +28,7 @@ class ChartWindow(ttk.Toplevel):
 
     def update_ticker(self, ticker):
         """Update the window with a new ticker"""
-        print(f"\n[ChartWindow] Updating to ticker: {ticker}")
+        logging.getLogger(__name__).info("\n[ChartWindow] Updating to ticker: %s", ticker)
         self.ticker = ticker
         self.title(f"{ticker} - Price Charts")
         
@@ -40,7 +41,7 @@ class ChartWindow(ttk.Toplevel):
                          break
         
         # Reload data for the new ticker
-        print("[ChartWindow] Triggering chart load.")
+        logging.getLogger(__name__).debug("[ChartWindow] Triggering chart load.")
         self.load_charts()
 
     def create_widgets(self):
@@ -126,7 +127,7 @@ class ChartWindow(ttk.Toplevel):
 
     def load_charts(self):
         """Load and display all charts"""
-        print("[ChartWindow] load_charts called.")
+        logging.getLogger(__name__).debug("[ChartWindow] load_charts called.")
         periods = {"3M": 90, "6M": 180, "1Y": 365, "5Y": 1825}
 
         # --- Try to load saved horizontal-line prices from the watchlist table ---
@@ -155,19 +156,29 @@ class ChartWindow(ttk.Toplevel):
                     price_r = float(raw_target) / 100.0
                     saved_levels.append((price_r, "green", f"Target: R{price_r:.2f}"))
         except Exception as ex:
-            print(f"[ChartWindow]   -> Failed to load saved horizontal line levels: {ex}")
+            logging.getLogger(__name__).warning(
+                "[ChartWindow]   -> Failed to load saved horizontal line levels: %s", ex
+            )
             saved_levels = []
 
         for period_key, days in periods.items():
-            print(f"[ChartWindow] Fetching data for {period_key} ({days} days)...")
+            logging.getLogger(__name__).debug(
+                "[ChartWindow] Fetching data for %s (%d days)...", period_key, days
+            )
             data = self.async_run(get_historical_prices(self.ticker, days))
             if data:
-                print(f"[ChartWindow]   -> Fetched {len(data)} rows for {period_key}.")
+                logging.getLogger(__name__).debug(
+                    "[ChartWindow]   -> Fetched %d rows for %s.", len(data), period_key
+                )
             else:
-                print(f"[ChartWindow]   -> No data fetched for {period_key}.")
+                logging.getLogger(__name__).debug(
+                    "[ChartWindow]   -> No data fetched for %s.", period_key
+                )
             chart = self.charts.get(period_key)
             if chart:
-                print(f"[ChartWindow]   -> Plotting {period_key} chart.")
+                logging.getLogger(__name__).debug(
+                    "[ChartWindow]   -> Plotting %s chart.", period_key
+                )
                 # Apply any saved horizontal-line levels to the chart before plotting
                 if saved_levels:
                     try:

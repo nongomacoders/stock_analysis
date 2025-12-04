@@ -1,4 +1,7 @@
 from core.db.engine import DBEngine
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 async def insert_valuation(data: dict):
@@ -29,8 +32,8 @@ async def insert_valuation(data: dict):
             data.get("peg_ratio"),
         )
         return True
-    except Exception as e:
-        print(f"Error inserting valuation: {e}")
+    except Exception:
+        logger.exception("Error inserting valuation")
         return False
 
 
@@ -60,6 +63,6 @@ async def upsert_raw_fundamentals(ticker: str, periods: list):
                 p.get("quick_ratio"),
             )
         return True
-    except Exception as e:
-        print(f"Error upserting raw fundamentals: {e}")
+    except Exception:
+        logger.exception("Error upserting raw fundamentals")
         return False
