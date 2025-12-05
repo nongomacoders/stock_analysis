@@ -40,37 +40,43 @@ def get_proximity_status(price, entry, stop, target, is_long: bool = True, proxi
             # For long positions, price falling near/at stop is dangerous
             if p <= s * (1 + proximity):
                 diff = ((p - s) / s) * 100
-                return f"Hitting Stop ({diff:.1f}%)", "danger"
+                # Use concise 'Stop' wording
+                return f"Stop ({abs(diff):.1f}%)", "danger"
         else:
             # For short positions, price rising near/at stop is dangerous
             if p >= s * (1 - proximity):
                 diff = ((s - p) / s) * 100
-                return f"Hitting Stop ({abs(diff):.1f}%)", "danger"
+                # Use concise 'Stop' wording
+                return f"Stop ({abs(diff):.1f}%)", "danger"
 
     # --- Action Zone (entry) ---
     if e is not None and e != 0:
         if is_long:
             if p >= e and p <= e * (1 + proximity):
                 diff = ((p - e) / e) * 100
-                return f"Near Entry (+{diff:.1f}%)", "success"
+                # Use concise 'Entry' wording for action zone
+                return f"Entry ({abs(diff):.1f}%)", "success"
         else:
             # For short, entry zone is when price has moved down into the entry level
-            if p <= e and p >= e * (1 - proximity):
+            # Use strict bounds so the exact boundary value (== e*(1-proximity)) is
+            # treated as the default 'Entry in' message rather than the action zone.
+            if p < e and p > e * (1 - proximity):
                 diff = ((e - p) / e) * 100
-                return f"Near Entry (-{diff:.1f}%)", "success"
+                # Use concise 'Entry' wording for action zone (short)
+                return f"Entry ({abs(diff):.1f}%)", "success"
 
     # --- Target Zone ---
     # Only label 'Near Target' when price is within 'proximity' fraction of the target
+    pct_to_target = None # Initialize to None
     if t is not None and t != 0:
         try:
             pct_to_target = abs(p - t) / t
         except Exception:
             pct_to_target = None
-
-        if pct_to_target is not None and pct_to_target <= proximity:
-            # Report diff relative to target so the percent is intuitive (how far from target)
-            diff = ((t - p) / t) * 100 if t != 0 else 0
-            return f"Near Target ({diff:.1f}%)", "info"
+    if pct_to_target is not None and pct_to_target <= proximity:
+        # Report diff relative to target so the percent is intuitive (how far from target)
+        diff = ((t - p) / t) * 100 if t != 0 else 0
+        return f"Target ({abs(diff):.1f}%)", "info"
 
     # --- Default / distance to entry ---
     if e is not None and e != 0:
@@ -86,6 +92,7 @@ def get_proximity_status(price, entry, stop, target, is_long: bool = True, proxi
                 dist = ((p - e) / e) * 100
 
             if pct <= proximity:
+                # Show 'Entry in' with positive percentage (no sign)
                 return f"Entry in {abs(dist):.1f}%", "secondary"
             # Outside proximity window -> return blank to keep UI clean
             return "", "secondary"

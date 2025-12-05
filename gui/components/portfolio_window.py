@@ -28,7 +28,7 @@ class PortfolioWindow(ttk.Toplevel):
         super().__init__(parent)
         self.title("Portfolio Manager")
         # Larger default size - more space for holdings
-        self.geometry("1200x700")
+        self.geometry("1600x700")
         self.async_run = async_run
         self.async_run_bg = async_run_bg
 

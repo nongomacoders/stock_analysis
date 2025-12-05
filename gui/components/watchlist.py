@@ -121,7 +121,7 @@ class WatchlistWidget(ttk.Frame):
         ).pack(side=LEFT, padx=(6, 0))
 
         # --- COLUMNS ---
-        cols = ("Ticker", "Name", "Price", "Proximity", "Event", "RR", "Strategy")
+        cols = ("Ticker", "Name", "Price", "Proximity", "BTE", "Event", "RR", "Strategy")
         self.tree = ttk.Treeview(parent_frame, columns=cols, show="headings")
 
         self.tree.heading("Ticker", text="Ticker")
@@ -133,7 +133,9 @@ class WatchlistWidget(ttk.Frame):
         self.tree.heading(
             "Event", text="Event", command=lambda: self.sort_column("Event", False)
         )
-        self.tree.heading("RR", text="RR")
+        # Make BTE and RR clickable headings to sort by those columns
+        self.tree.heading("BTE", text="BTE", command=lambda: self.sort_column("BTE", False))
+        self.tree.heading("RR", text="RR", command=lambda: self.sort_column("RR", False))
         self.tree.heading("Strategy", text="Strategy")
 
         # --- OPTIMIZED WIDTHS ---
@@ -142,6 +144,8 @@ class WatchlistWidget(ttk.Frame):
         self.tree.column("Price", width=70, anchor=E, stretch=False)
         self.tree.column("Proximity", width=130, anchor=W, stretch=False)
         self.tree.column("Event", width=50, anchor=CENTER, stretch=False)
+        # BTE (Better Than Entry) - percentage improvement relative to entry
+        self.tree.column("BTE", width=90, anchor=CENTER, stretch=False)
         # Add RR column and increase strategy width (doubled from 400 -> 800)
         self.tree.column("RR", width=80, anchor=CENTER, stretch=False)
         self.tree.column("Strategy", width=800, anchor=W, stretch=True)
@@ -209,6 +213,28 @@ class WatchlistWidget(ttk.Frame):
                 price_val = row["close_price"]
                 price_str = f"{int(price_val)}" if price_val is not None else "-"
 
+                # 5. BTE (Better Than Entry): how much current price is better than entry
+                entry_price = row.get("entry_price")
+                is_long = row.get("is_long", True)
+                if entry_price is None or price_val is None:
+                    bte_str = "-"
+                else:
+                    try:
+                        # BTE (Better Than Entry) should be positive when the current
+                        # price is 'better' relative to entry for the trade direction.
+                        # - For long positions: price < entry is better -> diff = entry - price
+                        # - For short positions: price > entry is better -> diff = price - entry
+                        if is_long:
+                            diff = entry_price - price_val
+                        else:
+                            diff = price_val - entry_price
+
+                        pct = (diff / entry_price) * 100 if entry_price != 0 else 0
+                        sign = "+" if pct >= 0 else "-"
+                        bte_str = f"{sign}{abs(pct):.2f}%"
+                    except Exception:
+                        bte_str = "-"
+
                 # Format RR (reward_risk_ratio) coming from DB (numeric/Decimal)
                 rr_val = row.get("reward_risk_ratio")
                 if rr_val is None:
@@ -227,6 +253,7 @@ class WatchlistWidget(ttk.Frame):
                         short_name,
                         price_str,
                         prox_text,
+                        bte_str,
                         days_str,
                         rr_str,
                         strategy_text,
@@ -273,6 +300,33 @@ class WatchlistWidget(ttk.Frame):
         elif col == "Name":
             # Ensure the value is coerced to string before calling lower()
             l.sort(key=lambda t: str(t[0]).lower(), reverse=reverse)
+        elif col == "RR":
+            # Numeric sort for RR (reward-risk). Treat missing values ("-", "", None)
+            # as very large so they appear at the end when sorting ascending.
+            def rr_key(item):
+                val = item[0]
+                if val is None or val == "" or str(val).strip() == "-":
+                    return float("inf")
+                try:
+                    return float(str(val))
+                except Exception:
+                    return float("inf")
+
+            l.sort(key=rr_key, reverse=reverse)
+        elif col == "BTE":
+            # Numeric sort for BTE percentage. Values are strings like '+5.00%' or '-' for missing
+            def bte_key(item):
+                val = item[0]
+                if val is None or val == "" or str(val).strip() == "-":
+                    return float("-inf") if reverse else float("inf")
+                try:
+                    # Remove trailing '%' and parse sign
+                    s = str(val).strip().replace('%', '')
+                    return float(s)
+                except Exception:
+                    return float("-inf") if reverse else float("inf")
+
+            l.sort(key=bte_key, reverse=reverse)
         else:
             l.sort(reverse=reverse)
 
