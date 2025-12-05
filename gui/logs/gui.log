@@ -1,0 +1,79 @@
+2025-12-05 11:35:27,613 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-05 11:35:27,627 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-05 11:35:50,271 __main__ INFO: Selected: PAN.JO
+2025-12-05 11:36:15,204 components.technical_analysis_window INFO: [TechAnalysis] Stop price set to R21.05
+2025-12-05 11:36:16,723 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=24.0, Target=30.0, Stop=21.05, IsLong=True
+2025-12-05 11:36:18,344 __main__ INFO: Selected: KIO.JO
+2025-12-05 11:36:18,344 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: KIO.JO
+2025-12-05 11:36:20,925 __main__ INFO: Selected: PAN.JO
+2025-12-05 11:36:20,925 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: PAN.JO
+2025-12-05 11:36:34,151 __main__ INFO: Selected: GLN.JO
+2025-12-05 11:36:34,151 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GLN.JO
+2025-12-05 11:41:23,388 __main__ INFO: Selected: PPH.JO
+2025-12-05 11:41:23,388 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: PPH.JO
+2025-12-05 11:41:44,721 components.research_tab INFO: Generating research for PPH.JO...
+2025-12-05 11:41:44,727 modules.analysis.engine INFO: AI: Generating Research Summary for PPH.JO...
+2025-12-05 11:42:00,579 components.base_text_tab INFO: _safe_save called on ResearchTab ticker=PPH.JO
+2025-12-05 11:42:00,584 modules.data.research INFO: Saved research for PPH.JO
+2025-12-05 11:42:11,784 __main__ INFO: Selected: PPH.JO
+2025-12-05 11:42:11,784 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: PPH.JO
+2025-12-05 11:42:29,877 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=27.39, Target=30.0, Stop=26.42, IsLong=True
+2025-12-05 11:43:32,222 __main__ INFO: Selected: TBS.JO
+2025-12-05 11:43:32,222 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: TBS.JO
+2025-12-05 11:45:39,951 __main__ INFO: Selected: RBO.JO
+2025-12-05 11:45:39,951 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RBO.JO
+2025-12-05 11:49:04,925 components.technical_analysis_window INFO: [TechAnalysis] Stop price set to R23.78
+2025-12-05 11:49:05,309 components.technical_analysis_window INFO: [TechAnalysis] Target price set to R23.78
+2025-12-05 11:49:05,518 components.technical_analysis_window INFO: [TechAnalysis] Entry price set to R23.78
+2025-12-05 11:49:14,300 components.research_tab INFO: Generating research for RBO.JO...
+2025-12-05 11:49:14,308 modules.analysis.engine INFO: AI: Generating Research Summary for RBO.JO...
+2025-12-05 11:49:28,792 components.base_text_tab INFO: _safe_save called on ResearchTab ticker=RBO.JO
+2025-12-05 11:49:28,799 modules.data.research INFO: Saved research for RBO.JO
+2025-12-05 11:50:40,353 __main__ INFO: Selected: RBX.JO
+2025-12-05 11:50:40,353 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RBX.JO
+2025-12-05 11:51:14,757 __main__ INFO: Selected: PPE.JO
+2025-12-05 11:51:14,757 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: PPE.JO
+2025-12-05 11:51:33,384 __main__ INFO: Selected: NTC.JO
+2025-12-05 11:51:33,385 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: NTC.JO
+2025-12-05 11:55:24,068 components.research_tab INFO: Generating research for NTC.JO...
+2025-12-05 11:55:24,078 modules.analysis.engine INFO: AI: Generating Research Summary for NTC.JO...
+2025-12-05 11:55:36,614 components.base_text_tab INFO: _safe_save called on ResearchTab ticker=NTC.JO
+2025-12-05 11:55:36,626 modules.data.research INFO: Saved research for NTC.JO
+2025-12-05 11:55:41,042 __main__ INFO: Selected: NTC.JO
+2025-12-05 11:55:41,047 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: NTC.JO
+2025-12-05 11:55:57,148 components.technical_analysis_window INFO: [TechAnalysis] Target price set to R16.34
+2025-12-05 11:56:06,434 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=14.65, Target=16.34, Stop=14.31, IsLong=True
+2025-12-05 11:56:37,845 __main__ INFO: Selected: ABG.JO
+2025-12-05 11:56:37,845 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ABG.JO
+2025-12-05 11:57:43,657 __main__ INFO: Selected: RLO.JO
+2025-12-05 11:57:43,657 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RLO.JO
+2025-12-05 12:01:03,009 components.research_tab INFO: Generating research for RLO.JO...
+2025-12-05 12:01:03,020 modules.analysis.engine INFO: AI: Generating Research Summary for RLO.JO...
+2025-12-05 12:01:14,203 components.base_text_tab INFO: _safe_save called on ResearchTab ticker=RLO.JO
+2025-12-05 12:01:14,207 modules.data.research INFO: Saved research for RLO.JO
+2025-12-05 12:01:17,900 __main__ INFO: Selected: RLO.JO
+2025-12-05 12:01:17,900 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RLO.JO
+2025-12-05 12:01:30,895 components.technical_analysis_window INFO: [TechAnalysis] Stop price set to R56.78
+2025-12-05 12:01:37,389 components.technical_analysis_window INFO: [TechAnalysis] Entry price set to R70.00
+2025-12-05 12:01:47,207 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=70.0, Target=10.0, Stop=56.78, IsLong=False
+2025-12-05 12:01:56,991 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=70.0, Target=100.0, Stop=56.78, IsLong=True
+2025-12-05 12:07:54,136 __main__ INFO: Selected: SCD.JO
+2025-12-05 12:07:54,136 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: SCD.JO
+2025-12-05 12:10:13,331 __main__ INFO: Selected: SCD.JO
+2025-12-05 12:10:13,331 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: SCD.JO

@@ -431,3 +431,69 @@
 2025-12-05 11:27:13,940 yfinance ERROR: ['EXP.JO', 'SLG.JO', 'AOO.JO', 'ANI.JO', 'GTC.JO', 'CVW.JO', 'EPS.JO', 'BAW.JO', 'TLM.JO', 'SAR.JO', 'RTO.JO', 'MMP.JO', 'PWR.JO', 'UPL.JO', 'RHB.JO', 'HET.JO', 'WEZ.JO', 'OAS.JO', 'NRL.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
 2025-12-05 11:27:14,176 modules.market_agent.prices INFO: Checking for Price Triggers...
 2025-12-05 11:27:14,323 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 11:35:28,628 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-05 11:35:28,799 modules.market_agent.sens INFO: 
+[11:35] --- Running SENS Check ---
+2025-12-05 11:35:29,494 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 11:35:29,494 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 11:35:29,523 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 11:35:43,776 yfinance ERROR: 
+20 Failed downloads:
+2025-12-05 11:35:43,776 yfinance ERROR: ['BAW.JO', 'UPL.JO', 'EPS.JO', 'SAR.JO', 'WEZ.JO', 'MMP.JO', 'HET.JO', 'OAS.JO', 'PWR.JO', 'AOO.JO', 'CVW.JO', 'ANI.JO', 'TLM.JO', 'NRL.JO', 'GTC.JO', 'RTO.JO', 'CAC.JO', 'RHB.JO', 'SLG.JO', 'EXP.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 11:35:43,926 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 11:35:44,063 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-05 11:35:44,071 modules.market_agent.fundamentals INFO: No tickers found needing updates
+2025-12-05 11:35:44,073 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-05 11:35:44,073 modules.market_agent.fundamentals INFO: No tickers need fundamentals updates today.
+2025-12-05 11:35:44,073 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 11:50:43,996 modules.market_agent.sens INFO: 
+[11:50] --- Running SENS Check ---
+2025-12-05 11:50:45,270 modules.market_agent.sens INFO:   -> NEW SENS: LAB @ 2025-12-05 11:43:00
+2025-12-05 11:50:45,779 modules.market_agent.sens INFO:   -> NEW SENS: TGA @ 2025-12-05 11:30:00
+2025-12-05 11:50:45,788 modules.analysis.engine INFO: AI: Analyzing SENS for LAB.JO...
+2025-12-05 11:50:45,788 modules.analysis.engine WARNING: AI: No context found for LAB.JO
+2025-12-05 11:50:45,788 modules.analysis.engine INFO: AI: Analyzing SENS for TGA.JO...
+2025-12-05 11:50:45,788 modules.analysis.engine WARNING: AI: No context found for TGA.JO
+2025-12-05 11:50:45,788 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 11:50:45,816 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 11:50:55,500 yfinance ERROR: 
+20 Failed downloads:
+2025-12-05 11:50:55,500 yfinance ERROR: ['BAW.JO', 'UPL.JO', 'EPS.JO', 'SAR.JO', 'WEZ.JO', 'MMP.JO', 'OAS.JO', 'HET.JO', 'PWR.JO', 'AOO.JO', 'CVW.JO', 'ANI.JO', 'TLM.JO', 'NRL.JO', 'GTC.JO', 'RTO.JO', 'CAC.JO', 'RHB.JO', 'SLG.JO', 'EXP.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 11:50:55,685 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 11:50:55,924 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 12:05:55,872 modules.market_agent.sens INFO: 
+[12:05] --- Running SENS Check ---
+2025-12-05 12:05:57,090 modules.market_agent.sens INFO:   -> NEW SENS: TRL @ 2025-12-05 12:00:00
+2025-12-05 12:05:57,098 modules.analysis.engine INFO: AI: Analyzing SENS for TRL.JO...
+2025-12-05 12:05:57,100 modules.analysis.engine WARNING: AI: No context found for TRL.JO
+2025-12-05 12:05:57,101 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 12:05:57,125 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 12:06:08,923 yfinance ERROR: 
+20 Failed downloads:
+2025-12-05 12:06:08,923 yfinance ERROR: ['BAW.JO', 'UPL.JO', 'EPS.JO', 'SAR.JO', 'WEZ.JO', 'MMP.JO', 'OAS.JO', 'HET.JO', 'PWR.JO', 'AOO.JO', 'CVW.JO', 'ANI.JO', 'TLM.JO', 'NRL.JO', 'GTC.JO', 'RTO.JO', 'CAC.JO', 'RHB.JO', 'SLG.JO', 'EXP.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 12:06:09,089 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 12:06:09,226 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 12:21:09,189 modules.market_agent.sens INFO: 
+[12:21] --- Running SENS Check ---
+2025-12-05 12:21:09,888 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 12:21:09,889 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 12:21:09,915 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 12:21:23,113 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 12:21:23,113 yfinance ERROR: ['BAW.JO', 'UPL.JO', 'EPS.JO', 'SAR.JO', 'WEZ.JO', 'MMP.JO', 'HET.JO', 'OAS.JO', 'PWR.JO', 'AOO.JO', 'CVW.JO', 'ANI.JO', 'TLM.JO', 'NRL.JO', 'GTC.JO', 'RTO.JO', 'CAC.JO', 'RHB.JO', 'SLG.JO', 'EXP.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 12:21:23,113 yfinance ERROR: ['SKA.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10009 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-05 12:21:23,308 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 12:21:23,546 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 12:36:23,514 modules.market_agent.sens INFO: 
+[12:36] --- Running SENS Check ---
+2025-12-05 12:36:24,997 modules.market_agent.sens INFO:   -> NEW SENS: MMP @ 2025-12-05 12:30:00
+2025-12-05 12:36:25,007 modules.analysis.engine INFO: AI: Analyzing SENS for MMP.JO...
+2025-12-05 12:36:25,011 modules.analysis.engine WARNING: AI: No context found for MMP.JO
+2025-12-05 12:36:25,012 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 12:36:25,035 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 12:36:34,994 yfinance ERROR: 
+20 Failed downloads:
+2025-12-05 12:36:34,994 yfinance ERROR: ['BAW.JO', 'UPL.JO', 'EPS.JO', 'SAR.JO', 'WEZ.JO', 'MMP.JO', 'HET.JO', 'OAS.JO', 'PWR.JO', 'AOO.JO', 'CVW.JO', 'ANI.JO', 'TLM.JO', 'NRL.JO', 'GTC.JO', 'RTO.JO', 'CAC.JO', 'RHB.JO', 'SLG.JO', 'EXP.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 12:36:35,249 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 12:36:35,499 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
