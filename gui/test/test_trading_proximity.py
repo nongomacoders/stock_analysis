@@ -44,13 +44,13 @@ def test_target_not_near_when_out_of_range():
 
 
 def test_entry_percentage_is_positive_and_relative_to_entry():
-    # long: price within 2% of entry should show Entry in
+    # long: price within 2% of entry should show Entry
     text, style = get_proximity_status(2450, 2500, 2000, 3000, is_long=True)
-    assert "Entry in" in text and text.count("-") == 0
+    assert "Entry" in text and text.count("-") == 0
 
-    # short: price within 2% of entry should show Entry in
+    # short: price within 2% of entry should show Entry
     text, style = get_proximity_status(2450, 2500, 2800, 2000, is_long=False)
-    assert "Entry in" in text and text.count("-") == 0
+    assert "Entry" in text and text.count("-") == 0
 
     # when much further than 2% the status should be blank
     text, style = get_proximity_status(2350, 2720, 2000, 3000, is_long=True)

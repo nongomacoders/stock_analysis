@@ -92,8 +92,8 @@ def get_proximity_status(price, entry, stop, target, is_long: bool = True, proxi
                 dist = ((p - e) / e) * 100
 
             if pct <= proximity:
-                # Show 'Entry in' with positive percentage (no sign)
-                return f"Entry in {abs(dist):.1f}%", "secondary"
+                # Show concise 'Entry' with positive percentage (no sign)
+                return f"Entry ({abs(dist):.1f}%)", "secondary"
             # Outside proximity window -> return blank to keep UI clean
             return "", "secondary"
         except Exception:
