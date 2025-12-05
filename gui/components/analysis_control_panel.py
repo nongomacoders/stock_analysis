@@ -48,6 +48,9 @@ class AnalysisControlPanel(ttk.Frame):
         ttk.Label(self, text="Strategy / Notes:", font=("Helvetica", 9, "bold")).pack(anchor=W, pady=(0, 5))
         self.strategy_text = ScrolledText(self, height=5, font=("Helvetica", 9))
         self.strategy_text.pack(fill=BOTH, expand=True, pady=(0, 10))
+
+        # No persistent focus flag required; we'll determine focus on-demand
+        # using the active widget so we accurately detect any input focus.
         
         # Save Button
         self.save_btn = ttk.Button(
@@ -108,3 +111,20 @@ class AnalysisControlPanel(ttk.Frame):
                     Messagebox.error("Save failed", "An error occurred saving analysis. See logs for details.")
                 except Exception:
                     pass
+
+        def has_strategy_focus(self) -> bool:
+            """Return True if the strategy text area currently has input focus."""
+            try:
+                focused = self.focus_get()
+                return focused is not None and (focused == self.strategy_text or str(focused).startswith(str(self.strategy_text)))
+            except Exception:
+                return False
+
+        def has_any_input_focus(self) -> bool:
+            """Return True if any of the form inputs (entry/target/stop/strategy) currently has focus."""
+            try:
+                focused = self.focus_get()
+                widgets = [self.entry_entry, self.target_entry, self.stop_entry, self.strategy_text]
+                return focused is not None and any(focused == w or str(focused).startswith(str(w)) for w in widgets)
+            except Exception:
+                return False

@@ -56,6 +56,18 @@ class BaseChart(ttk.Frame):
         # Current cursor y position (float) when inside axes
         self.current_cursor_y: Optional[float] = None
 
+        # Track whether the chart was clicked / has focus for keyboard actions
+        self._has_focus: bool = False
+
+        # Bind click events so we know when the chart should accept keypresses
+        self.canvas.mpl_connect("button_press_event", self.on_mouse_click)
+        # Also ensure the underlying tk widget propagates focus changes
+        try:
+            tk_widget = self.canvas.get_tk_widget()
+            tk_widget.bind("<FocusOut>", lambda e: setattr(self, "_has_focus", False))
+        except Exception:
+            pass
+
         # Bind mouse events to update cursor position and show details
         self.canvas.mpl_connect("motion_notify_event", self.on_mouse_move)
 
@@ -249,6 +261,25 @@ class BaseChart(ttk.Frame):
         except Exception:
             # Be tolerant to mapping errors
             pass
+
+    def on_mouse_click(self, event):
+        """Called when the chart canvas is clicked. Marks the chart as having focus
+        and sets the underlying tk widget focus so keyboard handlers will be active.
+        """
+        if event.inaxes is not self.ax:
+            return
+
+        # Mark focus and attempt to focus the tk widget
+        self._has_focus = True
+        try:
+            tk_widget = self.canvas.get_tk_widget()
+            tk_widget.focus_set()
+        except Exception:
+            pass
+
+    def has_focus(self) -> bool:
+        """Return True when the chart has been clicked and accepts keypresses."""
+        return bool(getattr(self, "_has_focus", False))
 
     # -------------------------------------------------------------------------
     # Horizontal-line management API

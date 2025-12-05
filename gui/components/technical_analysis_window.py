@@ -126,6 +126,23 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
     def on_key_press(self, event):
         """Handle keypress events to draw horizontal lines."""
+        # Only accept keypresses for drawing lines if the chart has focus (i.e. was clicked)
+        # and no input field has focus. This avoids accidental price changes while typing.
+        try:
+            # if analysis panel reports any input focused -> ignore keypresses
+            if hasattr(self, "analysis_panel") and callable(getattr(self.analysis_panel, "has_any_input_focus", None)) and self.analysis_panel.has_any_input_focus():
+                return
+        except Exception:
+            pass
+
+        # Chart must be clicked/focused for keypress actions to be handled
+        try:
+            if not hasattr(self, "chart") or not callable(getattr(self.chart, "has_focus", None)) or not self.chart.has_focus():
+                return
+        except Exception:
+            # Be defensive: if chart focus check fails, skip handling
+            return
+
         key = event.char.lower()
 
         if key not in ['e', 'l', 't']:
