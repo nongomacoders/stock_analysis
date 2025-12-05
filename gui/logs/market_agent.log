@@ -186,3 +186,248 @@
 2025-12-04 21:33:31,520 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
 2025-12-04 21:34:07,907 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
 2025-12-04 21:34:08,070 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
+2025-12-05 07:03:24,036 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-05 07:03:24,108 modules.market_agent.sens INFO: 
+[07:03] --- Running SENS Check ---
+2025-12-05 07:03:26,506 modules.market_agent.sens INFO:   -> NEW SENS: CLH @ 2025-12-04 17:34:00
+2025-12-05 07:03:27,918 modules.market_agent.sens INFO:   -> NEW SENS: RTO @ 2025-12-04 17:30:00
+2025-12-05 07:03:29,356 modules.market_agent.sens INFO:   -> NEW SENS: IOC @ 2025-12-04 17:30:00
+2025-12-05 07:03:30,129 modules.market_agent.sens INFO:   -> NEW SENS: SSS @ 2025-12-04 17:25:00
+2025-12-05 07:03:30,145 modules.analysis.engine INFO: AI: Analyzing SENS for CLH.JO...
+2025-12-05 07:03:50,216 modules.analysis.engine INFO: AI: SENS analysis saved for CLH.JO.
+2025-12-05 07:03:50,216 modules.analysis.engine INFO: AI: Analyzing SENS for RTO.JO...
+2025-12-05 07:03:50,216 modules.analysis.engine WARNING: AI: No context found for RTO.JO
+2025-12-05 07:03:50,216 modules.analysis.engine INFO: AI: Analyzing SENS for IOC.JO...
+2025-12-05 07:03:50,216 modules.analysis.engine WARNING: AI: No context found for IOC.JO
+2025-12-05 07:03:50,216 modules.analysis.engine INFO: AI: Analyzing SENS for SSS.JO...
+2025-12-05 07:03:50,216 modules.analysis.engine WARNING: AI: No context found for SSS.JO
+2025-12-05 07:03:50,216 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 07:03:50,252 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 07:04:27,088 yfinance ERROR: 
+4 Failed downloads:
+2025-12-05 07:04:27,088 yfinance ERROR: ['LTE.JO']: Timeout('Failed to perform, curl: (28) Operation timed out after 10014 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-05 07:04:27,088 yfinance ERROR: ['S32.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10013 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-05 07:04:27,088 yfinance ERROR: ['SSW.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10004 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-05 07:04:27,088 yfinance ERROR: ['PPC.JO']: Timeout('Failed to perform, curl: (28) Operation timed out after 10008 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-05 07:04:27,398 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 07:04:27,557 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-05 07:04:27,557 modules.market_agent.fundamentals INFO: No tickers found needing updates
+2025-12-05 07:04:27,557 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-05 07:04:27,557 modules.market_agent.fundamentals INFO: No tickers need fundamentals updates today.
+2025-12-05 07:04:27,557 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 07:19:27,567 modules.market_agent.sens INFO: 
+[07:19] --- Running SENS Check ---
+2025-12-05 07:19:28,797 modules.market_agent.sens INFO:   -> NEW SENS: AEG @ 2025-12-05 07:05:00
+2025-12-05 07:19:29,299 modules.market_agent.sens INFO:   -> NEW SENS: DCP @ 2025-12-05 07:05:00
+2025-12-05 07:19:29,299 modules.analysis.engine INFO: AI: Analyzing SENS for AEG.JO...
+2025-12-05 07:19:29,310 modules.analysis.engine WARNING: AI: No context found for AEG.JO
+2025-12-05 07:19:29,310 modules.analysis.engine INFO: AI: Analyzing SENS for DCP.JO...
+2025-12-05 07:19:29,310 modules.analysis.engine WARNING: AI: No context found for DCP.JO
+2025-12-05 07:19:29,311 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 07:19:29,445 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 07:19:39,306 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 07:19:39,441 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 07:34:39,260 modules.market_agent.sens INFO: 
+[07:34] --- Running SENS Check ---
+2025-12-05 07:34:40,048 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 07:34:40,048 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 07:34:40,075 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 07:34:49,871 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 07:34:50,074 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 07:49:49,930 modules.market_agent.sens INFO: 
+[07:49] --- Running SENS Check ---
+2025-12-05 07:49:50,706 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 07:49:50,706 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 07:49:50,742 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 07:50:02,170 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 07:50:02,291 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 08:05:02,199 modules.market_agent.sens INFO: 
+[08:05] --- Running SENS Check ---
+2025-12-05 08:05:03,583 modules.market_agent.sens INFO:   -> NEW SENS: S32 @ 2025-12-05 07:55:00
+2025-12-05 08:05:03,583 modules.analysis.engine INFO: AI: Analyzing SENS for S32.JO...
+2025-12-05 08:05:03,596 modules.analysis.engine WARNING: AI: No context found for S32.JO
+2025-12-05 08:05:03,597 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 08:05:03,621 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 08:05:17,200 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 08:05:17,330 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 08:26:17,514 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-05 08:26:17,576 modules.market_agent.sens INFO: 
+[08:26] --- Running SENS Check ---
+2025-12-05 08:26:18,734 modules.market_agent.sens INFO:   -> NEW SENS: SSS @ 2025-12-05 08:00:00
+2025-12-05 08:26:19,254 modules.market_agent.sens INFO:   -> NEW SENS: RMH @ 2025-12-05 08:00:00
+2025-12-05 08:26:19,756 modules.market_agent.sens INFO:   -> NEW SENS: ARL @ 2025-12-05 08:00:00
+2025-12-05 08:26:19,767 modules.analysis.engine INFO: AI: Analyzing SENS for SSS.JO...
+2025-12-05 08:26:19,767 modules.analysis.engine WARNING: AI: No context found for SSS.JO
+2025-12-05 08:26:19,769 modules.analysis.engine INFO: AI: Analyzing SENS for RMH.JO...
+2025-12-05 08:26:19,769 modules.analysis.engine WARNING: AI: No context found for RMH.JO
+2025-12-05 08:26:19,769 modules.analysis.engine INFO: AI: Analyzing SENS for ARL.JO...
+2025-12-05 08:26:35,805 modules.analysis.engine INFO: AI: SENS analysis saved for ARL.JO.
+2025-12-05 08:26:35,805 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 08:26:35,839 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 08:26:47,517 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 08:26:47,654 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-05 08:26:47,664 modules.market_agent.fundamentals INFO: No tickers found needing updates
+2025-12-05 08:26:47,665 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-05 08:26:47,665 modules.market_agent.fundamentals INFO: No tickers need fundamentals updates today.
+2025-12-05 08:26:47,665 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 08:47:12,126 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-05 08:47:12,288 modules.market_agent.sens INFO: 
+[08:47] --- Running SENS Check ---
+2025-12-05 08:47:13,689 modules.market_agent.sens INFO:   -> NEW SENS: BHG @ 2025-12-05 08:30:00
+2025-12-05 08:47:13,704 modules.analysis.engine INFO: AI: Analyzing SENS for BHG.JO...
+2025-12-05 08:47:13,704 modules.analysis.engine WARNING: AI: No context found for BHG.JO
+2025-12-05 08:47:13,704 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 08:47:13,730 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 08:47:26,685 yfinance ERROR: 
+2 Failed downloads:
+2025-12-05 08:47:26,685 yfinance ERROR: ['SYG.JO', 'NVS.JO']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-12-05 08:47:26,877 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 08:47:27,003 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-05 08:47:27,015 modules.market_agent.fundamentals INFO: No tickers found needing updates
+2025-12-05 08:47:27,015 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-05 08:47:27,015 modules.market_agent.fundamentals INFO: No tickers need fundamentals updates today.
+2025-12-05 08:47:27,015 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 09:01:28,500 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-05 09:01:28,561 modules.market_agent.sens INFO: 
+[09:01] --- Running SENS Check ---
+2025-12-05 09:01:29,281 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 09:01:29,281 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 09:01:29,306 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 09:01:39,683 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 09:01:39,683 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'TLM.JO', 'UPL.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 09:01:39,809 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 09:01:39,959 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-05 09:01:39,968 modules.market_agent.fundamentals INFO: No tickers found needing updates
+2025-12-05 09:01:39,968 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-05 09:01:39,968 modules.market_agent.fundamentals INFO: No tickers need fundamentals updates today.
+2025-12-05 09:01:39,968 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 09:16:39,953 modules.market_agent.sens INFO: 
+[09:16] --- Running SENS Check ---
+2025-12-05 09:16:41,232 modules.market_agent.sens INFO:   -> NEW SENS: SPG @ 2025-12-05 09:10:00
+2025-12-05 09:16:41,876 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2025-12-05 09:05:00
+2025-12-05 09:16:42,395 modules.market_agent.sens INFO:   -> NEW SENS: N91 @ 2025-12-05 09:00:00
+2025-12-05 09:16:42,895 modules.market_agent.sens INFO:   -> NEW SENS: NY1 @ 2025-12-05 09:00:00
+2025-12-05 09:16:43,445 modules.market_agent.sens INFO:   -> NEW SENS: GML @ 2025-12-05 09:00:00
+2025-12-05 09:16:44,022 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2025-12-05 09:00:00
+2025-12-05 09:16:44,028 modules.analysis.engine INFO: AI: Analyzing SENS for SPG.JO...
+2025-12-05 09:16:44,030 modules.analysis.engine WARNING: AI: No context found for SPG.JO
+2025-12-05 09:16:44,030 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2025-12-05 09:16:44,030 modules.analysis.engine WARNING: AI: No context found for BTI.JO
+2025-12-05 09:16:44,030 modules.analysis.engine INFO: AI: Analyzing SENS for N91.JO...
+2025-12-05 09:16:44,030 modules.analysis.engine WARNING: AI: No context found for N91.JO
+2025-12-05 09:16:44,030 modules.analysis.engine INFO: AI: Analyzing SENS for NY1.JO...
+2025-12-05 09:16:44,030 modules.analysis.engine WARNING: AI: No context found for NY1.JO
+2025-12-05 09:16:44,030 modules.analysis.engine INFO: AI: Analyzing SENS for GML.JO...
+2025-12-05 09:16:44,030 modules.analysis.engine WARNING: AI: No context found for GML.JO
+2025-12-05 09:16:44,030 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2025-12-05 09:16:44,030 modules.analysis.engine WARNING: AI: No context found for BTI.JO
+2025-12-05 09:16:44,030 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 09:16:44,057 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 09:16:58,387 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 09:16:58,387 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'TLM.JO', 'UPL.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 09:16:58,573 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 09:16:58,719 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 09:31:58,713 modules.market_agent.sens INFO: 
+[09:31] --- Running SENS Check ---
+2025-12-05 09:31:59,513 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 09:31:59,515 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 09:31:59,541 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 09:32:12,822 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 09:32:12,822 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'TLM.JO', 'UPL.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 09:32:13,071 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 09:32:13,211 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 09:47:13,211 modules.market_agent.sens INFO: 
+[09:47] --- Running SENS Check ---
+2025-12-05 09:47:13,847 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 09:47:13,848 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 09:47:13,871 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 09:47:27,142 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 09:47:27,142 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'UPL.JO', 'TLM.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 09:47:27,460 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 09:47:27,601 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 10:02:27,601 modules.market_agent.sens INFO: 
+[10:02] --- Running SENS Check ---
+2025-12-05 10:02:29,221 modules.market_agent.sens INFO:   -> NEW SENS: ABG @ 2025-12-05 09:53:00
+2025-12-05 10:02:29,231 modules.analysis.engine INFO: AI: Analyzing SENS for ABG.JO...
+2025-12-05 10:02:55,497 modules.analysis.engine INFO: AI: SENS analysis saved for ABG.JO.
+2025-12-05 10:02:55,499 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 10:02:55,527 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 10:03:08,806 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 10:03:08,806 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'TLM.JO', 'UPL.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 10:03:09,001 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 10:03:09,142 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 10:18:09,138 modules.market_agent.sens INFO: 
+[10:18] --- Running SENS Check ---
+2025-12-05 10:18:09,883 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 10:18:09,884 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 10:18:09,910 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 10:18:19,769 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 10:18:19,769 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'BAW.JO', 'HET.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'UPL.JO', 'TLM.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 10:18:19,948 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 10:18:20,084 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 10:33:20,090 modules.market_agent.sens INFO: 
+[10:33] --- Running SENS Check ---
+2025-12-05 10:33:20,806 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 10:33:20,808 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 10:33:20,946 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 10:33:30,573 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 10:33:30,573 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'TLM.JO', 'UPL.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 10:33:30,831 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 10:33:30,970 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 10:48:30,964 modules.market_agent.sens INFO: 
+[10:48] --- Running SENS Check ---
+2025-12-05 10:48:31,804 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 10:48:31,806 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 10:48:31,830 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 10:48:41,538 yfinance ERROR: 
+21 Failed downloads:
+2025-12-05 10:48:41,538 yfinance ERROR: ['PWR.JO', 'ISB.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'TLM.JO', 'UPL.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 10:48:41,775 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 10:48:41,956 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 11:03:41,952 modules.market_agent.sens INFO: 
+[11:03] --- Running SENS Check ---
+2025-12-05 11:03:43,013 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 11:03:43,014 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 11:03:43,038 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 11:03:52,697 yfinance ERROR: 
+20 Failed downloads:
+2025-12-05 11:03:52,697 yfinance ERROR: ['PWR.JO', 'ANI.JO', 'HET.JO', 'BAW.JO', 'OAS.JO', 'EXP.JO', 'NRL.JO', 'EPS.JO', 'SLG.JO', 'MMP.JO', 'CVW.JO', 'RTO.JO', 'TLM.JO', 'UPL.JO', 'GTC.JO', 'WEZ.JO', 'SAR.JO', 'RHB.JO', 'AOO.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 11:03:52,944 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 11:03:53,078 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 11:11:48,347 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-05 11:11:48,407 modules.market_agent.sens INFO: 
+[11:11] --- Running SENS Check ---
+2025-12-05 11:11:49,092 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 11:11:49,092 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 11:11:49,119 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 11:12:00,449 yfinance ERROR: 
+20 Failed downloads:
+2025-12-05 11:12:00,449 yfinance ERROR: ['EXP.JO', 'SLG.JO', 'AOO.JO', 'ANI.JO', 'GTC.JO', 'CVW.JO', 'EPS.JO', 'TLM.JO', 'BAW.JO', 'SAR.JO', 'RTO.JO', 'PWR.JO', 'MMP.JO', 'UPL.JO', 'RHB.JO', 'HET.JO', 'WEZ.JO', 'NRL.JO', 'OAS.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 11:12:00,606 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 11:12:00,744 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-05 11:12:00,747 modules.market_agent.fundamentals INFO: No tickers found needing updates
+2025-12-05 11:12:00,752 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-05 11:12:00,752 modules.market_agent.fundamentals INFO: No tickers need fundamentals updates today.
+2025-12-05 11:12:00,752 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-05 11:27:00,765 modules.market_agent.sens INFO: 
+[11:27] --- Running SENS Check ---
+2025-12-05 11:27:01,452 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-05 11:27:01,453 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-05 11:27:01,478 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-05 11:27:13,940 yfinance ERROR: 
+20 Failed downloads:
+2025-12-05 11:27:13,940 yfinance ERROR: ['EXP.JO', 'SLG.JO', 'AOO.JO', 'ANI.JO', 'GTC.JO', 'CVW.JO', 'EPS.JO', 'BAW.JO', 'TLM.JO', 'SAR.JO', 'RTO.JO', 'MMP.JO', 'PWR.JO', 'UPL.JO', 'RHB.JO', 'HET.JO', 'WEZ.JO', 'OAS.JO', 'NRL.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-05 11:27:14,176 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-05 11:27:14,323 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...

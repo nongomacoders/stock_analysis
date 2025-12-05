@@ -112,8 +112,16 @@ class WatchlistWidget(ttk.Frame):
             bootstyle="secondary-outline",
         ).pack(side=LEFT, padx=(6, 0))
 
+        # --- Refresh Button ---
+        ttk.Button(
+            toolbar,
+            text="Refresh",
+            command=self.refresh,
+            bootstyle="success-outline",
+        ).pack(side=LEFT, padx=(6, 0))
+
         # --- COLUMNS ---
-        cols = ("Ticker", "Name", "Price", "Proximity", "Event", "Strategy", "News")
+        cols = ("Ticker", "Name", "Price", "Proximity", "Event", "RR", "Strategy")
         self.tree = ttk.Treeview(parent_frame, columns=cols, show="headings")
 
         self.tree.heading("Ticker", text="Ticker")
@@ -125,8 +133,8 @@ class WatchlistWidget(ttk.Frame):
         self.tree.heading(
             "Event", text="Event", command=lambda: self.sort_column("Event", False)
         )
+        self.tree.heading("RR", text="RR")
         self.tree.heading("Strategy", text="Strategy")
-        self.tree.heading("News", text="News")
 
         # --- OPTIMIZED WIDTHS ---
         self.tree.column("Ticker", width=60, anchor=W, stretch=False)
@@ -134,8 +142,9 @@ class WatchlistWidget(ttk.Frame):
         self.tree.column("Price", width=70, anchor=E, stretch=False)
         self.tree.column("Proximity", width=130, anchor=W, stretch=False)
         self.tree.column("Event", width=50, anchor=CENTER, stretch=False)
-        self.tree.column("Strategy", width=400, anchor=W, stretch=True)
-        self.tree.column("News", width=400, anchor=W, stretch=True)
+        # Add RR column and increase strategy width (doubled from 400 -> 800)
+        self.tree.column("RR", width=80, anchor=CENTER, stretch=False)
+        self.tree.column("Strategy", width=800, anchor=W, stretch=True)
 
         # Scrollbar
         scrolly = ttk.Scrollbar(parent_frame, orient=VERTICAL, command=self.tree.yview)
@@ -193,15 +202,22 @@ class WatchlistWidget(ttk.Frame):
                 if len(strategy_text) > 100:
                     strategy_text = strategy_text[:100] + "..."
 
-                news_text = str(row.get("latest_news", "") or "").replace("\n", " ")
-                if len(news_text) > 100:
-                    news_text = news_text[:100] + "..."
 
                 full_name = row["full_name"] if row["full_name"] else ""
                 short_name = full_name[:10]
 
                 price_val = row["close_price"]
                 price_str = f"{int(price_val)}" if price_val is not None else "-"
+
+                # Format RR (reward_risk_ratio) coming from DB (numeric/Decimal)
+                rr_val = row.get("reward_risk_ratio")
+                if rr_val is None:
+                    rr_str = "-"
+                else:
+                    try:
+                        rr_str = f"{float(rr_val):.2f}"
+                    except Exception:
+                        rr_str = str(rr_val)
 
                 self.tree.insert(
                     "",
@@ -212,8 +228,8 @@ class WatchlistWidget(ttk.Frame):
                         price_str,
                         prox_text,
                         days_str,
+                        rr_str,
                         strategy_text,
-                        news_text,
                     ),
                     tags=(row_tag,),
                 )
@@ -255,7 +271,8 @@ class WatchlistWidget(ttk.Frame):
 
             l.sort(key=event_key, reverse=reverse)
         elif col == "Name":
-            l.sort(key=lambda t: t[0].lower(), reverse=reverse)
+            # Ensure the value is coerced to string before calling lower()
+            l.sort(key=lambda t: str(t[0]).lower(), reverse=reverse)
         else:
             l.sort(reverse=reverse)
 

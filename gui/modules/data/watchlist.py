@@ -13,6 +13,7 @@ async def fetch_watchlist_data():
             w.ticker, sd.full_name, sd.priority, w.status,
             w.entry_price, w.stop_loss, w.target_price as target, w.is_long,
             p.close_price,
+            w.reward_risk_ratio,
             sa.strategy,
             (SELECT trigger_content FROM action_log a 
                 WHERE a.ticker = w.ticker AND a.trigger_type = 'SENS' AND a.is_read = false
