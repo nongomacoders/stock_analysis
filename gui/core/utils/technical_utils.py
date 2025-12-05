@@ -60,11 +60,9 @@ async def update_analysis_db(ticker: str, entry_c: Optional[int], stop_c: Option
         except Exception:
             updated = 0
 
-    if updated > 0:
-        return
-
-    # nothing updated - insert row instead
-    await DBEngine.execute(
+    # If nothing updated insert a new watchlist row
+    if updated == 0:
+        await DBEngine.execute(
         "INSERT INTO watchlist (ticker, entry_price, stop_loss, target_price, is_long) VALUES ($1, $2, $3, $4, $5)",
         ticker,
         entry_c,
@@ -72,7 +70,7 @@ async def update_analysis_db(ticker: str, entry_c: Optional[int], stop_c: Option
         target_c,
         is_long,
     )
-
+    # Upsert the strategy into stock_analysis whether we updated or inserted the watchlist
     query_sa = """
         INSERT INTO stock_analysis (ticker, strategy)
         VALUES ($1, $2)
