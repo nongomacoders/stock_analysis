@@ -1,0 +1,208 @@
+Extract run: 2025-12-07T06:18:31.702780Z
+Search pattern: USD (substring match)
+
+--- Ticker: PAN.JO  (excerpts: 3)
+[lines 31-37] matched at line 34
+   31: Geopolitical Fracture: The weaponization of financial sanctions has incentivized nations to hold reserves that are outside the traditional banking system. Gold is the only globally recognized reserve asset that carries no counterparty risk. The persistence of conflicts in Eastern Europe and the Middle East continues to drive a safe-haven premium.
+   32: 
+   33: 2.2 The "Rand Hedge" Dynamic
+   34: For a South African producer like Pan African Resources, the interplay between the US Dollar gold price and the South African Rand (ZAR) is the critical determinant of margins. Typically, a rising gold price supports the ZAR (as gold is a key export), which dampens the benefit for miners. However, structural economic challenges in South Africa—logistics bottlenecks, power instability, and fiscal deterioration—have kept the ZAR relatively weak against the USD (trading around 17.50–18.50).
+   35: 
+   36: This creates a "double leverage" scenario for Pan African:
+   37: 
+
+[lines 35-41] matched at line 38
+   35: 
+   36: This creates a "double leverage" scenario for Pan African:
+   37: 
+   38: Revenue Side: Gold is sold in USD at record highs ($4,100+).
+   39: 
+   40: Cost Side: Roughly 85-90% of costs (labor, electricity, consumables) are denominated in ZAR.
+   41: 
+
+[lines 301-307] matched at line 304
+  301: 10.2 Financial Risks
+  302: Gold Price Correction: The thesis is heavily levered to the gold price remaining >$3,500/oz. A crash back to $2,000/oz would evaporate the "super margins" and likely force a suspension of dividends to service debt.
+  303: 
+  304: Currency Strength: If the ZAR strengthens significantly against the USD (e.g., to R15.00/$), PAN's margin expansion would be severely curtailed, as they would receive fewer Rands for their gold while their Rand-based costs remain sticky.
+  305: 
+  306: 10.3 Country Risks
+  307: South Africa: Political instability, social unrest, or aggressive changes to the mining charter (BEE requirements) remain perennial risks. The "Windfall Tax" debate  is a specific threat; governments often try to capture the upside of commodity super-cycles through special levies.   
+
+--- Ticker: RBO.JO  (excerpts: 4)
+[lines 186-192] matched at line 189
+  186: 
+  187: A Cyclical Business: Exposure to Commodity and Currency Volatility
+  188: 
+  189: RBO is fundamentally a cyclical commodity business. Feed inputs account for approximately 70% of broiler production costs.4 These inputs, primarily maize and soyabean meal, are priced in US Dollars and subject to volatile global commodity markets and the $ZAR:USD$ exchange rate.4
+  190: As noted, the FY2025 bull case was significantly aided by "lower commodity input costs".4 The market recognizes this as a temporary tailwind, not a structural change. The CEO's outlook confirms this, stating, "Commodity prices will remain volatile, placing continued pressure on consumers".4
+  191: This renders RBO's earnings highly unpredictable, or of "low quality." The market pays low multiples for such volatile earnings. The 6.86x $P/E$ ratio is a standard market discount for a cyclical business that has just posted what is perceived to be peak-of-cycle earnings.
+  192: 
+
+[lines 212-218] matched at line 215
+  212: Water & Power Scarcity
+  213: Requires significant, non-productive capital expenditure on generators/reservoirs 4, dragging down ROIC.4 "Water resilience" is a "key focus".4
+  214: Commodity Risk
+  215: Maize, Soya, & $ZAR:USD$
+  216: Feed is ~70% of cost and USD-priced.4 FY25 results were boosted by "lower commodity costs".4 This is seen as a temporary, cyclical benefit.
+  217: Trade & Regulatory
+  218: Import Dumping / AGOA
+
+[lines 213-219] matched at line 216
+  213: Requires significant, non-productive capital expenditure on generators/reservoirs 4, dragging down ROIC.4 "Water resilience" is a "key focus".4
+  214: Commodity Risk
+  215: Maize, Soya, & $ZAR:USD$
+  216: Feed is ~70% of cost and USD-priced.4 FY25 results were boosted by "lower commodity costs".4 This is seen as a temporary, cyclical benefit.
+  217: Trade & Regulatory
+  218: Import Dumping / AGOA
+  219: "Ongoing threat" 4 of cheap imports and US trade pressure 4 caps domestic pricing power, squeezing margins.
+
+[lines 229-235] matched at line 232
+  229: The market's valuation is based on three primary conclusions:
+  230: Earnings Have Peaked: The FY2025 performance was a "perfect storm" of positive events: the successful internal turnaround 4, combined with the temporary absence of major external costs like HPAI and high commodity prices.4 The market views this as a cyclical peak, not a new baseline.
+  231: The Next Crisis is Already Here: The most significant price suppressor is the current, active, and unresolved HPAI H5N1 outbreak that began in June 2025.5 The market is logically assuming the R202.6 million financial impact seen in FY2024 4 will recur in FY2026. When RBO's earnings are "normalized" for this endemic risk, the "E" in the $P/E$ ratio is substantially lower, and the 450c price appears fair, not cheap.
+  232: The Discount is Structural: RBO is permanently discounted for risks its management cannot control. These include a structurally high-cost environment due to failing South African infrastructure 4 and the earnings volatility from USD-priced commodity inputs.4 Furthermore, as a turnaround story with a history of underperformance 11, RBO has not yet earned the premium 15.3x $P/E$ valuation afforded to its proven competitor, Astral Foods.10
+  233: In conclusion, the 450c price is the market's verdict. It acknowledges the brilliant one-year operational execution but has concluded that the endemic biological, cyclical commodity, and structural infrastructure risks are so great that the FY2025 earnings are neither sustainable nor predictable. The stock is, therefore, "cheap" for a compelling set of reasons.
+  234: Works cited
+  235: QUICKSHARE - RBO - SHARENET - Your Key To Investing on The JSE Securities Exchange - South Africa, accessed November 13, 2025, https://www.sharenet.co.za/v3/quickshare.php?scode=RBO
+
+--- Ticker: NPN.JO  (excerpts: 2)
+[lines 151-157] matched at line 154
+  151: 
+  152: 7.2 South African Macro
+  153: 
+  154: While Naspers is a global business, its primary listing is in Johannesburg. The formation of the Government of National Unity (GNU) in South Africa has stabilized political sentiment, strengthening the Rand. A stronger Rand is typically a headwind for Naspers (as it reduces the ZAR value of its USD assets). However, increased foreign inflows into the JSE generally lift all large-cap stocks. The potential for South African interest rate cuts in 2026 would also support consumer spending, benefiting domestic assets like Takealot and Media24.
+  155: 
+  156: 7.3 Interest Rates and Tech Valuations
+  157: 
+
+[lines 161-167] matched at line 164
+  161: 
+  162: High Risk - Concentration:
+  163: Tencent Dependence: Despite the "pivot," Tencent still constitutes ~75% of the NAV. A collapse in Tencent’s share price (e.g., due to a Taiwan conflict or new gaming restrictions) would be catastrophic for Naspers.
+  164: Currency Risk: Significant strengthening of the ZAR against the USD would erode the reported ZAR share price.
+  165: Execution Risk: Integrating JET is complex. Failure to turn around its operations could result in significant write-downs and a loss of credibility for the "operator" strategy.
+  166: Tax Leakage: Any changes to Dutch or South African tax laws regarding capital gains or dividends could widen the structural discount.
+  167: 
+
+--- Ticker: PPC.JO  (excerpts: 1)
+[lines 239-245] matched at line 242
+  239: B. Sovereign and Currency Risk (Zimbabwe)
+  240: 
+  241: Risk: Zimbabwe continues to present significant regulatory uncertainty, heightened by the introduction of the ZiG currency and the persistent risk that high-margin cash flows could become trapped or subject to adverse exchange controls.1
+  242: Mitigation: PPC has established robust financial defenses against sovereign risk. The operation effectively functions as a hard-currency business, holding 96% of its R253 million unrestricted cash in hard currencies (USD).1 The recent consistency and scale of dividend repatriation (US$20 million declared in H1 FY26) materially reduces the perceived risk of "blocked funds". Furthermore, the SA obligor group’s debt is ring-fenced, meaning the South African balance sheet is insulated from Zimbabwean financial obligations or regulatory changes.1
+  243: 
+  244: C. Project Execution and Accounting Risk (RK3)
+  245: 
+
+--- Ticker: S32.JO  (excerpts: 6)
+[lines 4-10] matched at line 7
+    4: Report target price: 4090c
+    5: Analyst / market target price: N/A - not provided
+    6: Positive risks (upside): Successful ramp-up of Hermosa Taylor project Continued recovery in Australia Manganese volumes Higher copper and zinc prices due to supply deficits Successful divestment of Cerro Matoso
+    7: Negative risks (downside): Stronger ZAR against the USD reducing earnings translation Mozal Aluminium electricity supply expiry in March 2026 Project execution risks at Hermosa Lower average metal grades at Cannington
+    8: Company overview South32 is a globally diversified mining and metals company. The company has a primary listing on the ASX and a secondary listing on the JSE. Operations span Australia, Southern Africa, and the Americas. Key commodities include aluminium, alumina, copper, zinc, lead, silver, and manganese. The portfolio is actively transitioning toward base metals critical for the energy transition. The company recently divested Illawarra Metallurgical Coal.
+    9: Investment thesis South32 offers an attractive portfolio transformation story toward copper and zinc. The balance sheet is strong with a net cash position of USD 123 million. Australia Manganese has executed its recovery plan following Cyclone Megan. However, the recent strengthening of the ZAR to 17.00 creates a short-term valuation headwind for local investors. The valuation remains supported by the growth pipeline at Hermosa. Capital allocation remains disciplined with ongoing share buybacks.
+   10: Key financials and assumptions Revenue and earnings trend FY25 Underlying EBITDA increased 7 percent to USD 1.9 billion. Profit after tax swung to a USD 213 million profit from a prior loss. Aluminium and copper production volumes have shown growth. Guidance for FY26 production remains unchanged across all operations.
+
+[lines 6-12] matched at line 9
+    6: Positive risks (upside): Successful ramp-up of Hermosa Taylor project Continued recovery in Australia Manganese volumes Higher copper and zinc prices due to supply deficits Successful divestment of Cerro Matoso
+    7: Negative risks (downside): Stronger ZAR against the USD reducing earnings translation Mozal Aluminium electricity supply expiry in March 2026 Project execution risks at Hermosa Lower average metal grades at Cannington
+    8: Company overview South32 is a globally diversified mining and metals company. The company has a primary listing on the ASX and a secondary listing on the JSE. Operations span Australia, Southern Africa, and the Americas. Key commodities include aluminium, alumina, copper, zinc, lead, silver, and manganese. The portfolio is actively transitioning toward base metals critical for the energy transition. The company recently divested Illawarra Metallurgical Coal.
+    9: Investment thesis South32 offers an attractive portfolio transformation story toward copper and zinc. The balance sheet is strong with a net cash position of USD 123 million. Australia Manganese has executed its recovery plan following Cyclone Megan. However, the recent strengthening of the ZAR to 17.00 creates a short-term valuation headwind for local investors. The valuation remains supported by the growth pipeline at Hermosa. Capital allocation remains disciplined with ongoing share buybacks.
+   10: Key financials and assumptions Revenue and earnings trend FY25 Underlying EBITDA increased 7 percent to USD 1.9 billion. Profit after tax swung to a USD 213 million profit from a prior loss. Aluminium and copper production volumes have shown growth. Guidance for FY26 production remains unchanged across all operations.
+   11: Margins and cash flow Operating margins improved to 26 percent in FY25. Free cash flow remains positive despite high capex. Cost base declined by 10 percent following the Illawarra Coal sale. Operating unit costs are stabilising but inflation remains a factor.
+   12: Balance sheet The company ended the period with a net cash position of USD 123 million. Liquidity remains strong with approximately USD 1.8 billion in cash. Undrawn revolving credit facility of USD 1.4 billion is available. Investment grade credit ratings were reaffirmed by S&P and Moody's.
+
+[lines 7-13] matched at line 10
+    7: Negative risks (downside): Stronger ZAR against the USD reducing earnings translation Mozal Aluminium electricity supply expiry in March 2026 Project execution risks at Hermosa Lower average metal grades at Cannington
+    8: Company overview South32 is a globally diversified mining and metals company. The company has a primary listing on the ASX and a secondary listing on the JSE. Operations span Australia, Southern Africa, and the Americas. Key commodities include aluminium, alumina, copper, zinc, lead, silver, and manganese. The portfolio is actively transitioning toward base metals critical for the energy transition. The company recently divested Illawarra Metallurgical Coal.
+    9: Investment thesis South32 offers an attractive portfolio transformation story toward copper and zinc. The balance sheet is strong with a net cash position of USD 123 million. Australia Manganese has executed its recovery plan following Cyclone Megan. However, the recent strengthening of the ZAR to 17.00 creates a short-term valuation headwind for local investors. The valuation remains supported by the growth pipeline at Hermosa. Capital allocation remains disciplined with ongoing share buybacks.
+   10: Key financials and assumptions Revenue and earnings trend FY25 Underlying EBITDA increased 7 percent to USD 1.9 billion. Profit after tax swung to a USD 213 million profit from a prior loss. Aluminium and copper production volumes have shown growth. Guidance for FY26 production remains unchanged across all operations.
+   11: Margins and cash flow Operating margins improved to 26 percent in FY25. Free cash flow remains positive despite high capex. Cost base declined by 10 percent following the Illawarra Coal sale. Operating unit costs are stabilising but inflation remains a factor.
+   12: Balance sheet The company ended the period with a net cash position of USD 123 million. Liquidity remains strong with approximately USD 1.8 billion in cash. Undrawn revolving credit facility of USD 1.4 billion is available. Investment grade credit ratings were reaffirmed by S&P and Moody's.
+   13: Valuation Methods used Valuation is based on an EV/EBITDA multiple approach. Earnings estimates are derived from proportional consolidation of operations.
+
+[lines 9-15] matched at line 12
+    9: Investment thesis South32 offers an attractive portfolio transformation story toward copper and zinc. The balance sheet is strong with a net cash position of USD 123 million. Australia Manganese has executed its recovery plan following Cyclone Megan. However, the recent strengthening of the ZAR to 17.00 creates a short-term valuation headwind for local investors. The valuation remains supported by the growth pipeline at Hermosa. Capital allocation remains disciplined with ongoing share buybacks.
+   10: Key financials and assumptions Revenue and earnings trend FY25 Underlying EBITDA increased 7 percent to USD 1.9 billion. Profit after tax swung to a USD 213 million profit from a prior loss. Aluminium and copper production volumes have shown growth. Guidance for FY26 production remains unchanged across all operations.
+   11: Margins and cash flow Operating margins improved to 26 percent in FY25. Free cash flow remains positive despite high capex. Cost base declined by 10 percent following the Illawarra Coal sale. Operating unit costs are stabilising but inflation remains a factor.
+   12: Balance sheet The company ended the period with a net cash position of USD 123 million. Liquidity remains strong with approximately USD 1.8 billion in cash. Undrawn revolving credit facility of USD 1.4 billion is available. Investment grade credit ratings were reaffirmed by S&P and Moody's.
+   13: Valuation Methods used Valuation is based on an EV/EBITDA multiple approach. Earnings estimates are derived from proportional consolidation of operations.
+   14: Key assumptions Forward EBITDA estimated at USD 2.1 billion for FY26. Applied an EV/EBITDA multiple of 5.2x. USD/ZAR exchange rate assumption adjusted to 17.00. Shares outstanding adjusted for recent buybacks.
+   15: Your 12-month target price and implied upside/downside vs current price 12-month target price is 4090c. This implies an upside of approximately 5.4 percent from the current price of 3880c. The reduction in target price is driven primarily by the translation effect of the stronger Rand (17.00 vs 18.50 previously).
+
+[lines 11-17] matched at line 14
+   11: Margins and cash flow Operating margins improved to 26 percent in FY25. Free cash flow remains positive despite high capex. Cost base declined by 10 percent following the Illawarra Coal sale. Operating unit costs are stabilising but inflation remains a factor.
+   12: Balance sheet The company ended the period with a net cash position of USD 123 million. Liquidity remains strong with approximately USD 1.8 billion in cash. Undrawn revolving credit facility of USD 1.4 billion is available. Investment grade credit ratings were reaffirmed by S&P and Moody's.
+   13: Valuation Methods used Valuation is based on an EV/EBITDA multiple approach. Earnings estimates are derived from proportional consolidation of operations.
+   14: Key assumptions Forward EBITDA estimated at USD 2.1 billion for FY26. Applied an EV/EBITDA multiple of 5.2x. USD/ZAR exchange rate assumption adjusted to 17.00. Shares outstanding adjusted for recent buybacks.
+   15: Your 12-month target price and implied upside/downside vs current price 12-month target price is 4090c. This implies an upside of approximately 5.4 percent from the current price of 3880c. The reduction in target price is driven primarily by the translation effect of the stronger Rand (17.00 vs 18.50 previously).
+   16: Positive risks / upside catalysts Faster than expected development at the Hermosa Taylor deposit. Extension of the GEMCO mine life in Australia. Resolution of Mozal energy supply securing long-term viability. Additional capital returns if commodity prices spike.
+   17: Negative risks / key uncertainties Failure to secure affordable electricity for Mozal beyond March 2026. This could lead to the smelter being placed on care and maintenance. Cost overruns or delays in the Hermosa development. Continued grade decline at the Cannington mine impacting zinc output. Further strengthening of the ZAR impacting JSE-listed returns.
+
+[lines 15-18] matched at line 18
+   15: Your 12-month target price and implied upside/downside vs current price 12-month target price is 4090c. This implies an upside of approximately 5.4 percent from the current price of 3880c. The reduction in target price is driven primarily by the translation effect of the stronger Rand (17.00 vs 18.50 previously).
+   16: Positive risks / upside catalysts Faster than expected development at the Hermosa Taylor deposit. Extension of the GEMCO mine life in Australia. Resolution of Mozal energy supply securing long-term viability. Additional capital returns if commodity prices spike.
+   17: Negative risks / key uncertainties Failure to secure affordable electricity for Mozal beyond March 2026. This could lead to the smelter being placed on care and maintenance. Cost overruns or delays in the Hermosa development. Continued grade decline at the Cannington mine impacting zinc output. Further strengthening of the ZAR impacting JSE-listed returns.
+   18: Conclusion We rate South32 as a Hold. While the company's fundamentals and strategic pivot to critical metals remain sound, the revised USD/ZAR assumption of 17.00 limits near-term upside for South African investors. The valuation is full at current levels given the currency headwinds and the binary risk associated with the Mozal power expiry in 2026. We would look for a pullback or a weaker Rand before accumulating further.
+
+--- Ticker: SSK.JO  (excerpts: 1)
+[lines 14-20] matched at line 17
+   14: Termination of Restructuring Plan & New R850m Facility (Standard Bank) – Stefanutti has effectively refinanced its debt and exited its 3-year restructuring plan with lenders. As reported, the Group’s prior lender consortium had extended the tenure of the existing loan to June 2026. However, in October 2025, Stefanutti’s main operating subsidiary concluded a new five-year term loan facility of R850 million with The Standard Bank of South Africa (Corporate and Investment Banking division). On 31 October 2025, the proceeds of this new facility were used to settle the entire remaining “current” loan from the old lender group, thereby terminating the historic Restructuring Plan ahead of schedule. This is a pivotal change: the previous short-term debt (which was classified as current liabilities of R849 million at 31 Aug 2025) has been replaced with a longer-term capital structure. The Standard Bank facility will be repaid in 19 equal quarterly instalments beginning February 2026 through August 2030. Aside from an interest-only payment due in Nov 2025, principal repayment of roughly R45 million per quarter will commence, spreading the debt burden over 4.5 years. The interest rate on this facility is JIBAR (3-month Johannesburg Interbank Average Rate) +3.50%, payable quarterly. The loan is secured by guarantees and a security package, with typical covenants for a facility of this nature. The effect of this refinancing is that, going forward, a significant portion of Stefanutti’s debt will be classified as long-term (non-current liabilities) rather than all due within 12 months, greatly relieving short-term liquidity pressure. Indeed, by the next balance sheet date (Feb 2026), we expect the R850m facility to be split into current and non-current portions (approximately R45m current, ~R785m non-current, before the Eskom prepayment). Importantly, management has committed to use the Eskom claim proceeds to prepay at least 80% of this facility by Feb 2026. That implies roughly R464 million of the R580 million will go toward debt reduction, substantially deleveraging the group. After such a prepayment, the outstanding loan could drop to ~R386 million. This new facility, combined with the incoming Eskom funds, essentially resets Stefanutti’s capital structure: from a technically insolvent position (current liabilities exceeded current assets by over R1.2 billion at 31 Aug 2025) to a more sustainable footing with extended debt maturities and improved solvency. We view this refinancing as critical to the going concern status – the previous restructuring plan’s expiry in 2026 had cast uncertainty, but now the debt has a clear, staggered repayment schedule aligned with the Group’s multi-year projects. However, we also note that the facility introduces quarterly debt service obligations from 2026 onward, which will require consistent operating cash flows or further asset sales to meet. Our valuation incorporates the interest cost savings from the Eskom-driven debt cut (~R40+ million annual saving by our estimates) and the extended repayment timeline when forecasting cash flows. In essence, the refinanced R850m facility reduces immediate financial distress risk but still leaves Stefanutti with significant leverage that must be repaid out of future project cash flows.
+   15: 
+   16: 
+   17: Disposal of Non-Core Businesses (Mozambique & Construction) – Another aspect of Stefanutti’s restructuring is the sale of certain non-core foreign operations. As announced in July 2025, the Group entered agreements with East Africa Enterprises SPV (FZCO) to sell its investments in two subsidiaries: (1) Stefanutti Stocks Construction Pty Ltd (SS Construction) – 100% shareholding to be sold for US$700,000; and (2) Stefanutti Stocks Moçambique Limitada (SS Mozambique) – combined 100% interest (held via two holding companies) for US$2,560,000 + US$640,000 (total US$3.2 million). These disposals are aimed at exiting operations in Mozambique and have been in process for some time (SS Mozambique has been classified as held-for-sale since August 2020). According to the interim results, the transactions are progressing as per the announcement, with payment due by 31 December 2025. In addition to the sale proceeds, the purchaser agreed to advance US$6.1 million to settle a trade payable that SS Mozambique owed to the Group (essentially to clear inter-company or supplier debts). By the reporting date, Stefanutti had already received US$2.5 million (on 28 Aug 2025) and a further US$3.0 million (on 3 Oct 2025) from the purchaser as part of this advance. These payments (total US$5.5m) are reflected in the accounts – the first $2.5m is included as a deferred proceeds asset and cash in continuing operations at 31 Aug 2025. The remaining ~$0.6m of the US$6.1m advance, along with the actual sale consideration (~US$3.9m combined for the shares), are expected by year-end 2025. Stefanutti also disclosed that the purchaser provided a US$3.5 million working capital loan to support SS Mozambique’s operations during the interim (this loan is carried in the “liabilities of disposal group”). The discontinued Mozambique operations continued to incur losses up to the sale: a H1 FY2026 loss of R29 million (versus R48 million loss in H1 FY2025), including fair-value write-downs of R12 million and forex losses of R9 million. We view the disposal progress positively – it has already yielded cash inflows in H2 2025 and will remove a loss-making unit from the Group. The total anticipated cash from the sale (including the debt advance) is roughly R180+ million (at ~R18.5/USD), which management indicated will be used (net of costs) to prepay the new Standard Bank facility along with the Kusile claim proceeds. Our valuation assumes the Mozambique/Construction sale completes on schedule, contributing additional cash to debt reduction (beyond the Eskom 80%). Should there be delays or issues in closing this sale, Stefanutti’s net debt would remain higher, representing a downside risk.
+   18: 
+   19: 
+   20: In summary, these post-period developments (Eskom settlement and debt refinancing, plus asset disposals) substantially improve Stefanutti’s financial stability. They address the two biggest prior concerns: (a) the uncertainty of realizing the large Kusile claim, and (b) the short-term maturity and rigidity of the debt structure. By early 2026, Stefanutti should receive ~R580m from Eskom and ~R70m+ (sale) + R113m (debt clearance advance) from the asset sale, and in turn, pay down roughly R500+ million of debt. We expect net debt to drop significantly (potentially from ~R513m at Aug 2025 to under R200m by Feb 2026, pro-forma our estimates), and the bulk of remaining debt to be term-funded over 4+ years. This dramatically strengthens the balance sheet and is a cornerstone of our valuation assumptions. However, it also effectively swaps one-off claim revenue and asset sale for reduction of liabilities – meaning that beyond the immediate accounting profit boost in FY2026, the ongoing value must come from core operations. We now turn to the financial condition and outlook for those core operations.
+
+--- Ticker: THA.JO  (excerpts: 4)
+[lines 210-216] matched at line 213
+  210: Net Cash: We use the latest reported cash of $173.0 million (as of Sept 30, 2025) 8 and estimate debt at $121.5 million (based on Q3 2025 trends 11), for a net cash position of ~$51.5 million.
+  211: Equity Value Target: $800 million (EV) + $51.5 million (Net Cash) = ~$851.5 million.
+  212: Shares Outstanding: We use the 295.2 million shares eligible for dividends.4
+  213: Price Target (USD): $851.5 million / 295.2 million shares = $2.88 per share.
+  214: 
+  215: Price Target Formulation (JSE: THA)
+  216: 
+
+[lines 214-220] matched at line 217
+  214: 
+  215: Price Target Formulation (JSE: THA)
+  216: 
+  217: Exchange Rate: We use a ZAR/USD assumption of 18.40 (near the average H1 2025 rate of 18.2 4).
+  218: Price Target (ZAR): $2.88 $\times$ 18.40 = ZAR 53.00, or 5,300 cents.
+  219: 
+  220: Price Target Formulation (LSE: THS)
+
+[lines 219-225] matched at line 222
+  219: 
+  220: Price Target Formulation (LSE: THS)
+  221: 
+  222: Exchange Rate: We use a GBP/USD assumption of 0.80.
+  223: Price Target (GBX): $2.88 $\times$ 0.80 = GBP 2.30, or 230 pence.
+  224: 
+  225: Valuation Approach 2: SOTP (Sanity Check)
+
+[lines 236-242] matched at line 239
+  236: Component
+  237: Valuation Methodology
+  238: Value (US$m)
+  239: Value per Share (USD)
+  240: 1. Core Tharisa Mine (OpCo)
+  241: 4.5x FY2026E EBITDA ($178m)
+  242: $800.0
+
+--- Ticker: ART.JO  (excerpts: 1)
+[lines 33-39] matched at line 36
+   33: 
+   34: 1.2 The Currency Hedge Argument
+   35: 
+   36: Argent functions effectively as a "self-managed" Rand hedge. While the reporting currency is ZAR, the underlying cash flows of the growth engines are denominated in GBP and USD.
+   37: Mechanism: When the Rand weakens, the translation of foreign earnings inflates the reported Group results.
+   38: Nuance: Crucially, the September 2025 interim results showed a 12.4% revenue increase 1 during a period where the Rand was relatively stable against major crosses. This indicates that the growth is organic (volume and price driven) rather than merely a cosmetic effect of currency translation. This distinguishes Argent from "passive" Rand hedges whose fortunes are entirely tethered to forex volatility.
+   39: 
+
+
+Total excerpts: 22

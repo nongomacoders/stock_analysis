@@ -1,0 +1,492 @@
+1. Mining & Commodities
+ACL.JO - ArcelorMittal South Africa Ltd.
+
+AGL.JO - Anglo American plc
+
+ANG.JO - AngloGold Ashanti plc
+
+APH.JO - Alphamin Resources Corp.
+
+ARI.JO - African Rainbow Minerals Ltd.
+
+BHG.JO - BHP Group Ltd.
+
+DRD.JO - DRDGOLD Ltd.
+
+EPS.JO - Eastern Platinum Ltd.
+
+EUZ.JO - Europa Metals Ltd.
+
+EXX.JO - Exxaro Resources Ltd.
+
+GFI.JO - Gold Fields Ltd.
+
+GLN.JO - Glencore plc
+
+GML.JO - Gemfields Group Ltd.
+
+HAR.JO - Harmony Gold Mining Company Ltd.
+
+IMP.JO - Impala Platinum Holdings Ltd.
+
+JBL.JO - JUBILEE METALS GROUP PLC
+
+KIO.JO - Kumba Iron Ore Ltd.
+
+KP2.JO - Kore Potash plc
+
+MCZ.JO - MC Mining Ltd.
+
+MKR.JO - Montauk Renewables Inc.
+
+MNP.JO - Mondi plc
+
+MRF.JO - Merafe Resources Ltd.
+
+NPH.JO - Northam Platinum Holdings Ltd.
+
+OAO.JO - Oando plc
+
+ORN.JO - Orion Minerals Ltd.
+
+PAN.JO - Pan African Resources plc
+
+S32.JO - South32 Ltd.
+
+SAP.JO - Sappi Ltd.
+
+SDL.JO - Southern Palladium Ltd.
+
+SKA.JO - Shuka Minerals plc
+
+SLG.JO - Salungano Group Ltd.
+
+SOL.JO - Sasol Ltd.
+
+SSW.JO - Sibanye Stillwater Ltd.
+
+TGA.JO - Thungela Resources Ltd.
+
+THA.JO - Tharisa plc
+
+VAL.JO - Valterra Platinum Ltd.
+
+WEZ.JO - Wesizwe Platinum Ltd.
+
+2. General Retail
+BOX.JO - Boxer Retail Ltd.
+
+CFR.JO - Compagnie Financière Richemont SA
+
+CHP.JO - Choppies Enterprises Ltd.
+
+CLS.JO - Clicks Group Ltd.
+
+CMH.JO - Combined Motor Holdings Ltd.
+
+CSB.JO - Cashbuild Ltd.
+
+DCP.JO - Dis-Chem Pharmacies Ltd.
+
+ITE.JO - Italtile Ltd.
+
+LEW.JO - Lewis Group Ltd.
+
+MRP.JO - Mr Price Group Ltd.
+
+MTH.JO - Motus Holdings Ltd.
+
+PIK.JO - Pick n Pay Stores Ltd.
+
+PPH.JO - Pepkor Holdings Ltd.
+
+SHP.JO - Shoprite Holdings Ltd.
+
+SPP.JO - The SPAR Group Ltd.
+
+TFG.JO - The Foschini Group Ltd.
+
+TRU.JO - Truworths International Ltd.
+
+WBC.JO - We Buy Cars Holdings Ltd.
+
+WHL.JO - Woolworths Holdings Ltd.
+
+3. Banks & Financial Services
+ABG.JO - Absa Group Ltd.
+
+AFH.JO - Alexander Forbes Group Holdings Ltd.
+
+CML.JO - Coronation Fund Managers Ltd.
+
+CPI.JO - Capitec Bank Holdings Ltd.
+
+FGL.JO - Finbond Group Ltd.
+
+FSR.JO - FirstRand Ltd.
+
+INL.JO - Investec Ltd.
+
+INP.JO - Investec plc
+
+JSE.JO - JSE Ltd.
+
+KST.JO - PSG Financial Services Ltd.
+
+LSK.JO - Lesaka Technologies Inc.
+
+N91.JO - Ninety One plc
+
+NED.JO - Nedbank Group Ltd.
+
+NTU.JO - NUTUN LIMITED
+
+NY1.JO - Ninety One Ltd.
+
+PPE.JO - Purple Group Ltd.
+
+QLT.JO - Quilter plc
+
+SBK.JO - Standard Bank Group Ltd.
+
+SBPP.JO - STANDARD BANK GROUP LIMITED (Pref)
+
+SYG.JO - Sygnia Ltd.
+
+VUN.JO - Vunani Ltd.
+
+WVR.JO - Weaver Fintech Ltd.
+
+4. Property / REITs
+ANI.JO - Afine Investments Ltd.
+
+APF.JO - Accelerate Property Fund Ltd.
+
+ATT.JO - Attacq Ltd.
+
+BTN.JO - Burstone Group Ltd.
+
+CPP.JO - Collins Property Group Ltd.
+
+CVW.JO - Castleview Property Fund Ltd.
+
+DLT.JO - Delta Property Fund Ltd.
+
+EMI.JO - Emira Property Fund Ltd.
+
+EQU.JO - Equites Property Fund Ltd.
+
+EXP.JO - Exemplar REITail Ltd.
+
+FFB.JO - Fortress Real Estate Investments Ltd.
+
+FTA.JO - Fairvest Ltd.
+
+FTB.JO - FAIRVEST LIMITED (B)
+
+GRT.JO - Growthpoint Properties Ltd.
+
+GTC.JO - Globe Trade Centre SA
+
+HET.JO - Heriot REIT Ltd.
+
+HMN.JO - Hammerson plc
+
+HYP.JO - Hyprop Investments Ltd.
+
+LTE.JO - Lighthouse Properties plc
+
+MSP.JO - MAS plc
+
+NRL.JO - Newpark REIT Ltd.
+
+NRP.JO - NEPI Rockcastle NV
+
+OAS.JO - Oasis Crescent Property Fund
+
+OCT.JO - OCTODEC INVESTMENTS LIMITED
+
+PHP.JO - Primary Health Properties plc
+
+PPR.JO - Putprop Ltd.
+
+RDF.JO - Redefine Properties Ltd.
+
+RES.JO - Resilient REIT Ltd.
+
+SAC.JO - SA Corporate Real Estate Ltd.
+
+SAR.JO - Safari Investments RSA Ltd.
+
+SEA.JO - Spear REIT Ltd.
+
+SHC.JO - Shaftesbury Capital plc
+
+SRE.JO - Sirius Real Estate Ltd.
+
+SRI.JO - Supermarket Income REIT plc
+
+SSS.JO - Stor-Age Property REIT Ltd.
+
+TEX.JO - Texton Property Fund Ltd.
+
+VIS.JO - Visual International Holdings Ltd.
+
+VKE.JO - Vukile Property Fund Ltd.
+
+5. Investment Holding Companies
+AOO.JO - African and Overseas Enterprises Ltd.
+
+ARA.JO - Astoria Investment Ltd.
+
+BAT.JO - Brait plc
+
+BRT.JO - Brimstone Investment Corporation Ltd.
+
+DNB.JO - Deneb Investments Ltd.
+
+EPE.JO - EPE Capital Partners Ltd.
+
+GPL.JO - Grand Parade Investments Ltd.
+
+GRSP.JO - Goldrush Holdings Ltd.
+
+HCI.JO - Hosken Consolidated Investments Ltd.
+
+MTNZF.JO - MTN Zakhele Futhi (RF) Ltd.
+
+NPN.JO - Naspers Ltd.
+
+PRX.JO - Prosus NV
+
+REM.JO - Remgro Ltd.
+
+RMH.JO - RMB Holdings Ltd.
+
+RNI.JO - Reinet Investments SCA
+
+SBP.JO - Sabvest Capital Ltd.
+
+SZK.JO - SAB Zenzele Kabili Holdings (RF) Ltd.
+
+UPL.JO - Universal Partners Ltd.
+
+ZED.JO - Zeder Investments Ltd.
+
+6. Telecommunications
+BLU.JO - Blu Label Unlimited Group Ltd.
+
+MTN.JO - MTN Group Ltd.
+
+TKG.JO - Telkom SA SOC Ltd.
+
+VOD.JO - Vodacom Group Ltd.
+
+7. Insurance (Life & General)
+CLI.JO - Clientèle Ltd.
+
+DSY.JO - Discovery Ltd.
+
+MTM.JO - Momentum Group Ltd.
+
+OMU.JO - Old Mutual Ltd.
+
+OUT.JO - OUTsurance Group Ltd.
+
+SLM.JO - Sanlam Ltd.
+
+SNT.JO - Santam Ltd.
+
+8. Logistics & Transport
+BAW.JO - Barloworld Ltd.
+
+GND.JO - Grindrod Ltd.
+
+GNDP.JO - GRINDROD LIMITED (Pref)
+
+MMP.JO - Marshall Monteagle plc
+
+PWR.JO - Powerfleet Inc.
+
+SNV.JO - Santova Ltd.
+
+SPG.JO - Super Group Ltd.
+
+ZZD.JO - Zeda Ltd.
+
+9. Construction & Materials
+AEG.JO - Aveng Ltd.
+
+AFT.JO - Afrimat Ltd.
+
+CAC.JO - CAFCA Ltd.
+
+CGR.JO - Calgro M3 Holdings Ltd.
+
+MDI.JO - Master Drilling Group Ltd.
+
+PPC.JO - PPC Ltd.
+
+RBX.JO - Raubex Group Ltd.
+
+SEP.JO - Sephaku Holdings Ltd.
+
+SSK.JO - Stefanutti Stocks Holdings Ltd.
+
+TRL.JO - Trellidor Holdings Ltd.
+
+WBO.JO - Wilson Bayly Holmes - Ovcon Ltd.
+
+10. Small/Mid-Cap Industrials
+ADH.JO - ADvTECH Ltd.
+
+ADR.JO - Adcorp Holdings Ltd.
+
+AEL.JO - Altron Ltd.
+
+AFE.JO - AECI Ltd.
+
+ANH.JO - Anheuser-Busch InBev SA/NV
+
+ART.JO - Argent Industrial Ltd.
+
+AVI.JO - AVI Ltd.
+
+BCF.JO - Bowler Metcalf Ltd.
+
+BEL.JO - Bell Equipment Ltd.
+
+BID.JO - Bid Corporation Ltd.
+
+BTI.JO - British American Tobacco plc
+
+BVT.JO - The Bidvest Group Ltd.
+
+BYI.JO - Bytes Technology Group plc
+
+CAA.JO - CA Sales Holdings Ltd.
+
+CAT.JO - Caxton and CTP Publishers and Printers Ltd.
+
+CLH.JO - City Lodge Hotels Ltd.
+
+COH.JO - Curro Holdings Ltd.
+
+DTC.JO - Datatec Ltd.
+
+ENX.JO - enX Group Ltd.
+
+FBR.JO - Famous Brands Ltd.
+
+HDC.JO - Hudaco Industries Ltd.
+
+HLM.JO - Hulamin Ltd.
+
+IOC.JO - iOCO Ltd.
+
+ISB.JO - Insimbi Industrial Holdings Ltd.
+
+IVT.JO - Invicta Holdings Ltd.
+
+KAP.JO - KAP Ltd.
+
+KRO.JO - Karooooo Ltd.
+
+LBR.JO - Libstar Holdings Ltd.
+
+MFL.JO - Metrofile Holdings Ltd.
+
+MPT.JO - Mpact Ltd.
+
+MST.JO - Mustek Ltd.
+
+MTA.JO - Metair Investments Ltd.
+
+NPK.JO - Nampak Ltd.
+
+NVS.JO - Novus Holdings Ltd.
+
+NWL.JO - Nu-World Holdings Ltd.
+
+OMN.JO - Omnia Holdings Ltd.
+
+OPA.JO - OPTASIA
+
+PBT.JO - PBT Holdings Ltd
+
+PMR.JO - Premier Group Ltd.
+
+PMV.JO - Primeserv Group Ltd.
+
+RFG.JO - RFG Holdings Ltd.
+
+RLO.JO - Reunert Ltd.
+
+RTO.JO - Rex Trueform Group Ltd.
+
+SDO.JO - Stadio Holdings Ltd.
+
+SOH.JO - South Ocean Holdings Ltd.
+
+SSU.JO - Southern Sun Ltd.
+
+SUI.JO - Sun International Ltd.
+
+SUR.JO - Spur Corporation Ltd.
+
+TBS.JO - Tiger Brands Ltd.
+
+TPC.JO - Transpaco Ltd.
+
+TSG.JO - Tsogo Sun Ltd.
+
+11. Healthcare & Hospitals
+ACT.JO - AfroCentric Investment Corporation Ltd.
+
+APN.JO - Aspen Pharmacare Holdings Ltd.
+
+LHC.JO - Life Healthcare Group Holdings Ltd.
+
+NTC.JO - NETCARE LIMITED
+
+RHB.JO - RH Bophelo Ltd.
+
+12. Agriculture & Poultry
+ARL.JO - Astral Foods Ltd.
+
+CKS.JO - Crookes Brothers Ltd.
+
+KAL.JO - KAL GROUP LIMITED
+
+OCE.JO - Oceana Group Ltd.
+
+QFH.JO - Quantum Foods Holdings Ltd.
+
+RBO.JO - Rainbow Chicken Ltd.
+
+RCL.JO - RCL Foods Ltd.
+
+SHG.JO - Sea Harvest Group Ltd.
+
+YRK.JO - York Timber Holdings Ltd.
+
+13. AltX / Speculative / Penny Stocks
+4SI.JO - 4Sight Holdings Ltd.
+
+AXX.JO - Araxi Ltd.
+
+CCC.JO - Cilo Cybin Holdings Ltd.
+
+ISA.JO - ISA Holdings Ltd.
+
+LAB.JO - Labat Africa Ltd.
+
+MTU.JO - Mantengu Ltd.
+
+REN.JO - Renergen Ltd.
+
+RNG.JO - Randgold & Exploration Co Ltd.
+
+TLM.JO - TeleMasters Holdings Ltd.
+
+XII.JO - Numeral Ltd.

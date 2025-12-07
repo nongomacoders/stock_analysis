@@ -2,7 +2,16 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import TOP, X, BOTH
 
 # --- NEW IMPORT ---
-from modules.data.research import get_research_data, get_sens_for_ticker, save_strategy_data, save_research_data, save_deep_research_data, get_action_logs, mark_log_read
+from modules.data.research import (
+    get_research_data,
+    get_sens_for_ticker,
+    save_strategy_data,
+    save_research_data,
+    save_deep_research_data,
+    get_action_logs,
+    mark_log_read,
+    get_stock_category,
+)
 from modules.analysis.engine import generate_master_research
 from components.deep_research_tab import DeepResearchTab
 from components.strategy_tab import StrategyTab
@@ -39,13 +48,24 @@ class ResearchWindow(ttk.Toplevel):
         self.ticker = ticker
         self.title(f"{ticker} - Research & Action Log")
         
-        # Update title label
-        for widget in self.winfo_children():
-             if isinstance(widget, ttk.Frame) and str(widget).endswith("frame"): # Find title frame
-                 for child in widget.winfo_children():
-                     if isinstance(child, ttk.Label):
-                         child.configure(text=f"{self.ticker} - Research & Analysis")
-                         break
+        # Update title label if present
+        if hasattr(self, 'title_label'):
+            try:
+                category = self.async_run(get_stock_category(ticker))
+            except Exception:
+                category = None
+            if category:
+                self.title_label.configure(text=f"{ticker} — {category} — Research & Analysis")
+            else:
+                self.title_label.configure(text=f"{ticker} - Research & Analysis")
+        else:
+            # fallback: search existing label
+            for widget in self.winfo_children():
+                if isinstance(widget, ttk.Frame) and str(widget).endswith("frame"):
+                    for child in widget.winfo_children():
+                        if isinstance(child, ttk.Label):
+                            child.configure(text=f"{self.ticker} - Research & Analysis")
+                            break
         
         # Update ticker on all child tabs
         self.deep_research_tab.ticker = ticker
@@ -59,11 +79,13 @@ class ResearchWindow(ttk.Toplevel):
         # Title
         title_frame = ttk.Frame(self, bootstyle="secondary")
         title_frame.pack(side=TOP, fill=X, padx=10, pady=10)
-        ttk.Label(
+        # store a reference to the label so we can update the category later
+        self.title_label = ttk.Label(
             title_frame,
             text=f"{self.ticker} - Research & Analysis",
             font=("Helvetica", 16, "bold"),
-        ).pack()
+        )
+        self.title_label.pack()
 
         # Notebook
         self.notebook = ttk.Notebook(self, bootstyle="primary")
@@ -93,6 +115,15 @@ class ResearchWindow(ttk.Toplevel):
     def load_research(self):
         # CHANGED: Call module functions
         data = self.async_run(get_research_data(self.ticker))
+        # fetch category name (if any) and show in heading
+        try:
+            category = self.async_run(get_stock_category(self.ticker))
+        except Exception:
+            category = None
+        if category:
+            self.title_label.configure(text=f"{self.ticker} — {category} — Research & Analysis")
+        else:
+            self.title_label.configure(text=f"{self.ticker} - Research & Analysis")
         sens_data = self.async_run(get_sens_for_ticker(self.ticker))
         
         # Delegate loading to child tabs

@@ -139,6 +139,19 @@ CREATE TABLE IF NOT EXISTS public.raw_stock_valuations
 COMMENT ON TABLE public.raw_stock_valuations
     IS 'Historical fundamental data for multiple periods per ticker, scraped from ShareData';
 
+-- Lookup table for normalized stock categories (recommended)
+CREATE TABLE IF NOT EXISTS public.stock_categories
+(
+    category_id serial NOT NULL,
+    name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    description text COLLATE pg_catalog."default",
+    CONSTRAINT stock_categories_pkey PRIMARY KEY (category_id),
+    CONSTRAINT uq_stock_categories_name UNIQUE (name)
+);
+
+COMMENT ON TABLE public.stock_categories IS 'Normalized list of stock categories (e.g., Banks, Mining, Retail)';
+
+
 COMMENT ON COLUMN public.raw_stock_valuations.results_period_end
     IS 'End date of the financial period (e.g., 2025-03-31 for Mar 2025)';
 
@@ -334,5 +347,19 @@ ALTER TABLE IF EXISTS public.watchlist
     ON DELETE CASCADE;
 CREATE INDEX IF NOT EXISTS watchlist_ticker_idx
     ON public.watchlist(ticker);
+
+-- Add normalized category FK on stock_details
+ALTER TABLE IF EXISTS public.stock_details
+    ADD COLUMN IF NOT EXISTS stock_category_id integer;
+
+CREATE INDEX IF NOT EXISTS idx_stock_details_stock_category_id
+    ON public.stock_details(stock_category_id);
+
+ALTER TABLE IF EXISTS public.stock_details
+    ADD CONSTRAINT fk_stock_details_stock_category
+    FOREIGN KEY (stock_category_id)
+    REFERENCES public.stock_categories (category_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE SET NULL;
 
 END;

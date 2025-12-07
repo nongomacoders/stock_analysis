@@ -121,7 +121,7 @@ class WatchlistWidget(ttk.Frame):
         ).pack(side=LEFT, padx=(6, 0))
 
         # --- COLUMNS ---
-        cols = ("Ticker", "Name", "Price", "Proximity", "BTE", "Event", "RR", "Strategy")
+        cols = ("Ticker", "Name", "Price", "Proximity", "BTE", "Event", "RR", "Upside", "Strategy")
         self.tree = ttk.Treeview(parent_frame, columns=cols, show="headings")
 
         self.tree.heading("Ticker", text="Ticker")
@@ -133,9 +133,10 @@ class WatchlistWidget(ttk.Frame):
         self.tree.heading(
             "Event", text="Event", command=lambda: self.sort_column("Event", False)
         )
-        # Make BTE and RR clickable headings to sort by those columns
+        # Make BTE, RR and Upside clickable headings to sort by those columns
         self.tree.heading("BTE", text="BTE", command=lambda: self.sort_column("BTE", False))
         self.tree.heading("RR", text="RR", command=lambda: self.sort_column("RR", False))
+        self.tree.heading("Upside", text="Upside", command=lambda: self.sort_column("Upside", False))
         self.tree.heading("Strategy", text="Strategy")
 
         # --- OPTIMIZED WIDTHS ---
@@ -146,8 +147,10 @@ class WatchlistWidget(ttk.Frame):
         self.tree.column("Event", width=50, anchor=CENTER, stretch=False)
         # BTE (Better Than Entry) - percentage improvement relative to entry
         self.tree.column("BTE", width=90, anchor=CENTER, stretch=False)
-        # Add RR column and increase strategy width (doubled from 400 -> 800)
+        # Add RR and Upside columns and increase strategy width (doubled from 400 -> 800)
         self.tree.column("RR", width=80, anchor=CENTER, stretch=False)
+        # Upside: percent return if target reached (numeric)
+        self.tree.column("Upside", width=90, anchor=CENTER, stretch=False)
         self.tree.column("Strategy", width=800, anchor=W, stretch=True)
 
         # Scrollbar
@@ -245,6 +248,23 @@ class WatchlistWidget(ttk.Frame):
                     except Exception:
                         rr_str = str(rr_val)
 
+                # 6. Upside: expected percent return if target is reached
+                target_val = row.get("target")
+                try:
+                    # Upside should be the percent return from current price -> target
+                    # For long: (target - current) / current
+                    # For short: (current - target) / current
+                    if price_val is None or target_val is None or price_val == 0:
+                        upside_str = "-"
+                    else:
+                        if is_long:
+                            gain = (target_val - price_val) / price_val * 100
+                        else:
+                            gain = (price_val - target_val) / price_val * 100
+                        upside_str = f"{abs(float(gain)):.2f}%"
+                except Exception:
+                    upside_str = "-"
+
                 self.tree.insert(
                     "",
                     "end",
@@ -256,6 +276,7 @@ class WatchlistWidget(ttk.Frame):
                         bte_str,
                         days_str,
                         rr_str,
+                        upside_str,
                         strategy_text,
                     ),
                     tags=(row_tag,),
@@ -327,6 +348,19 @@ class WatchlistWidget(ttk.Frame):
                     return float("-inf") if reverse else float("inf")
 
             l.sort(key=bte_key, reverse=reverse)
+        elif col == "Upside":
+            # Numeric sort for Upside percentage strings like '5.00%' or '-' for missing
+            def upside_key(item):
+                val = item[0]
+                if val is None or val == "" or str(val).strip() == "-":
+                    return float("inf")
+                try:
+                    s = str(val).strip().replace('%', '')
+                    return float(s)
+                except Exception:
+                    return float("inf")
+
+            l.sort(key=upside_key, reverse=reverse)
         else:
             l.sort(reverse=reverse)
 

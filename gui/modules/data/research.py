@@ -56,6 +56,21 @@ async def get_sens_for_ticker(ticker: str, limit=50):
     return [dict(row) for row in rows]
 
 
+async def get_stock_category(ticker: str):
+    """Return the category name for a given ticker (or None)."""
+    query = """
+        SELECT sc.name as category
+        FROM stock_details sd
+        LEFT JOIN stock_categories sc ON sd.stock_category_id = sc.category_id
+        WHERE sd.ticker = $1
+        LIMIT 1
+    """
+    rows = await DBEngine.fetch(query, ticker)
+    if rows:
+        return rows[0].get('category')
+    return None
+
+
 async def save_strategy_data(ticker: str, content: str):
     """Upsert the strategy value for a ticker.
 

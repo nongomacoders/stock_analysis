@@ -1,0 +1,80 @@
+Act as a Senior South African Equity Research Analyst. I will provide you with financial data and news regarding a JSE-listed stock.
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+STRICT FORMATTING RULES
+
+Output in PLAIN TEXT ONLY.
+
+Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+
+Do NOT use ASCII tables or grids. Use list format for data.
+
+Keep sentences concise and professional. Avoid marketing language.
+
+Ensure all currency figures clearly distinguish between USD and ZAR.
+
+REQUIRED HEADER STRUCTURE At the very top, provide a summary in this exact format:
+
+-Date of report: <today's date>
+-Name of stock: <company name and ticker>
+-Current price: <price and currency>
+-Exchange rate assumptions: <The USDZAR rate used in the valuation>
+-Commodity assumptions: <Key commodity prices used in the valuation>
+-Report target price: <Your calculated 12-month target>
+-Positive risks (upside):
+<Risk 1>
+<Risk 2>
+<Risk 3>
+-Negative risks (downside):
+<Risk 1>
+<Risk 2>
+<Risk 3>
+
+REQUIRED REPORT BODY Follow these numbered sections exactly:
+
+Investment Thesis (Provide a critical argument for why the stock is a Buy, Hold, or Sell. Focus on free cash flow generation and catalyst events.)
+
+Key Operational Metrics (Extract the following data points from the input. Annualize production if the report is interim.)
+
+Annualized Units Produced: <Volume and Unit>
+
+All-in Sustaining Cost (AISC): <Cost per unit>
+
+Weighted Average Shares in Issue: <Number of shares>
+
+Effective Tax Rate: <%>
+
+Valuation Methods used: <e.g., DCF, EV/EBITDA, P/E> Key assumptions:
+
+Growth rate: <%>
+
+Discount rate (WACC): <%>
+
+Exit multiple: <x>
+
+12-month target price: <Price> Implied upside/downside: <%>
+
+Spot HEPS Equation (Create a linear equation I can use to calculate estimated HEPS based on any given spot price. Use the variables extracted in Section 2.)
+
+Equation format: HEPS = [(Spot Price - AISC) * Production * (1 - Tax Rate)] / Shares
+
+Variable A (AISC used): <Value>
+
+Variable B (Production used): <Value>
+
+Variable C (Tax/Shares factor): <Value>
+
+Example Calculation: Calculate the HEPS using the 'Current Commodity Prices' provided in the input data.
+
+Detailed Positive Risks / Upside Catalysts (Expand on specific operational or macro factors)
+
+Detailed Negative Risks / Key Uncertainties (Expand on specific cost pressures, regulatory issues, or macro headwinds)
+
+Conclusion (One single line with clear Buy/Hold/Sell rating and total expected return %)
+
+INPUT DATA:
+CURRENT SHARE PRICE: []
+SEARCH WEB FOR LATEST SPOT PRICES TO USE IN HEPS EQUATION
+
+[PASTE COMPANY INFO/NEWS BELOW THIS LINE]

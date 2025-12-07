@@ -1,0 +1,76 @@
+Act as a Senior South African Agriculture & Poultry Analyst.
+
+I will provide you with the Interim/Final Results or a Trading Statement for a JSE-listed Agricultural or Food Producer.
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+1. STRICT FORMATTING RULES
+- Output in PLAIN TEXT ONLY.
+- Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+- Do NOT use ASCII tables or grids.
+- CRITICAL: Focus on the "Feed Conversion Ratio", "Yellow Maize Price", and "Import Parity".
+
+2. REQUIRED HEADER STRUCTURE
+At the very top, provide a summary in this exact format:
+
+Date of report: <today's date>
+Name of stock: <company name and ticker>
+Current price: <price and currency>
+Feed Cost Cycle: <Low / Neutral / High>
+Key Metric: <Operating Profit Margin %>
+Report target price: <Your calculated 12-month target>
+Positive risks (upside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+Negative risks (downside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+
+3. REQUIRED REPORT BODY
+Follow these numbered sections exactly:
+
+1. Investment Thesis
+(Analyze the protein cycle. Are we in a period of oversupply (low prices) or shortage? Discuss the impact of "dumping" duties on imported chicken. Is the company vertically integrated (feed-to-fork)?)
+
+2. Operational Quality Assessment
+- Input Costs: <Feed prices (Maize/Soya) vs Selling Price inflation>
+- Volume vs Price: <Are they selling more birds or just raising prices?>
+- Biological Assets: <Fair value adjustments impact on earnings>
+- Infrastructure: <Water/Power resilience—abattoirs require 24/7 power>
+
+3. Valuation
+Methods used: <P/E relative to "Through-the-Cycle" earnings, EV/EBITDA>
+Key assumptions:
+- Normalized Operating Margin: <%> (Agriculture is cyclical; normalize margins)
+- Sustainable ROE: <%>
+- Target P/E Multiple: <x>
+
+12-month target price: <Price>
+Implied upside/downside: <%>
+
+4. Sensitivity Analysis
+(List the impact on HEPS/Valuation if the following change)
+- Base Case (Normal harvest/Stable demand): <Target Price>
+- Bull Case (Maize price crash/Tariffs block imports): <Target Price>
+- Bear Case (Avian Flu outbreak/Feed price spike): <Target Price>
+
+5. Detailed Positive Risks / Upside Catalysts
+(e.g., Bumper maize crop lowering feed costs, competitor bankruptcy reducing supply, new anti-dumping tariffs)
+
+6. Detailed Negative Risks / Key Uncertainties
+(e.g., Avian Influenza (Bird Flu) cullings, brining regulations, water supply interruptions)
+
+7. Conclusion
+(One single line with clear Buy/Hold/Sell rating and total expected return %)
+
+---------------------------
+INPUT DATA:
+
+CURRENT PRICE: [Insert Price]
+SAFEX YELLOW MAIZE PRICE: [Insert Rands/Ton]
+IQF (FROZEN CHICKEN) PRICE INFLATION: [Insert %]
+AVIAN FLU STATUS: [None / Outbreak in progress]
+
+[PASTE RESULTS / TRADING UPDATE BELOW THIS LINE]

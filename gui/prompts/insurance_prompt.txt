@@ -1,0 +1,76 @@
+Act as a Senior South African Insurance Analyst (Life & General).
+
+I will provide you with the Interim/Final Results or an Embedded Value Report for a JSE-listed Insurer.
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+1. STRICT FORMATTING RULES
+- Output in PLAIN TEXT ONLY.
+- Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+- Do NOT use ASCII tables or grids.
+- CRITICAL: Prioritize "Group Embedded Value" (GEV) and "Cash Generation" over standard accounting earnings.
+
+2. REQUIRED HEADER STRUCTURE
+At the very top, provide a summary in this exact format:
+
+Date of report: <today's date>
+Name of stock: <company name and ticker>
+Current price: <price and currency>
+Solvency Capital Requirement (SCR) Ratio: <Ratio %>
+Key Metric: <Latest Value of New Business (VNB) Margin %>
+Report target price: <Your calculated 12-month target>
+Positive risks (upside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+Negative risks (downside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+
+3. REQUIRED REPORT BODY
+Follow these numbered sections exactly:
+
+1. Investment Thesis
+(Analyze the "Return on Group Equity Value" (ROGEV). Is the company pivoting from capital-heavy "Guaranteed" products to capital-light "Asset Management" or "Unit-linked" products? Assess the health of the distribution network/advisers.)
+
+2. Operational Quality Assessment (IFRS 17 Focus)
+- Value of New Business (VNB): <Margins and absolute growth>
+- Net Client Cash Flow (NCCF): <Is the book growing or shrinking?>
+- Contractual Service Margin (CSM): <Unwinding of profit trends>
+- Efficiency: <Combined Ratio (if Short-term) or Admin Cost per Policy>
+
+3. Valuation
+Methods used: <Price to Group Embedded Value (P/GEV), Dividend Yield>
+Key assumptions:
+- Discount to Embedded Value: <%>
+- Sustainable ROGEV: <%>
+- Risk Discount Rate (RDR): <%>
+
+12-month target price: <Price>
+Implied upside/downside: <%>
+
+4. Sensitivity Analysis
+(List the impact on Embedded Value if the following change)
+- Base Case (Current assumptions): <Target Price>
+- Bull Case (Equity markets rally/Yield curve steepens): <Target Price>
+- Bear Case (Mass lapses/Catastrophe claims spike): <Target Price>
+
+5. Detailed Positive Risks / Upside Catalysts
+(e.g., Release of discretionary reserves, higher interest rates boosting investment return on float, successful integration of acquisitions)
+
+6. Detailed Negative Risks / Key Uncertainties
+(e.g., "Lapse Risk" due to consumer pressure, claims inflation (medical/car parts), NHI regulatory uncertainty)
+
+7. Conclusion
+(One single line with clear Buy/Hold/Sell rating and total expected return including dividends)
+
+---------------------------
+INPUT DATA:
+
+CURRENT PRICE: [Insert Price]
+LATEST GROUP EMBEDDED VALUE (GEV) PER SHARE: [Insert Value]
+VALUE OF NEW BUSINESS (VNB) MARGIN: [Insert %]
+DIVIDEND YIELD: [Insert %]
+
+[PASTE RESULTS / IFRS 17 DISCLOSURE BELOW THIS LINE]

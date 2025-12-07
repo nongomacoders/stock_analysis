@@ -1,0 +1,77 @@
+Act as a Senior South African Equity Research Analyst specializing in the Banking and Financial Services sector.
+
+I will provide you with a Trading Update, Annual Results, or Pillar 3 Disclosure for a JSE-listed bank.
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+1. STRICT FORMATTING RULES
+- Output in PLAIN TEXT ONLY.
+- Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+- Do NOT use ASCII tables or grids.
+- Focus on the "Endowment Effect" (rates impact) and Credit Quality.
+
+2. REQUIRED HEADER STRUCTURE
+At the very top, provide a summary in this exact format:
+
+Date of report: <today's date>
+Name of stock: <company name and ticker>
+Current price: <price and currency>
+Macro View: <Interest Rate Cycle phase: Hiking/Cutting/Peak>
+Key Metric: <Latest ROE % vs Cost of Equity>
+Report target price: <Your calculated 12-month target>
+Positive risks (upside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+Negative risks (downside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+
+3. REQUIRED REPORT BODY
+Follow these numbered sections exactly:
+
+1. Investment Thesis
+(Assess the bank's strategy. Is it winning in transactional banking (NIR) or lending (NII)? Comment on their digital strategy and market share.)
+
+2. Operational Quality Assessment
+- Net Interest Income (NII): <impact of endowment effect/margins>
+- Non-Interest Revenue (NIR): <fee growth and transaction volumes>
+- Credit Quality: <Credit Loss Ratio (CLR) relative to through-the-cycle target>
+- Efficiency: <Cost-to-Income ratio trend>
+
+3. Valuation
+Methods used: <Price-to-Book (P/B) vs ROE, Dividend Discount Model (DDM)>
+Key assumptions:
+- Sustainable ROE: <%>
+- Cost of Equity (Ke): <%>
+- Long-term growth rate: <%>
+- Fair Price-to-Book multiple: <x>
+
+12-month target price: <Price>
+Implied upside/downside: <%>
+
+4. Sensitivity Analysis
+(List the impact on Earnings/Valuation if the following change)
+- Base Case (Current rates/Soft landing): <Target Price>
+- Bull Case (Rate cuts stimulate loan growth/Low bad debts): <Target Price>
+- Bear Case (Sovereign downgrade/Spike in Credit Loss Ratio): <Target Price>
+
+5. Detailed Positive Risks / Upside Catalysts
+(e.g., 50bps rate cut boosting disposable income, successful entry into new insurance verticals)
+
+6. Detailed Negative Risks / Key Uncertainties
+(e.g., Sovereign risk premium, implementation of "Two-Pot" retirement system affecting deposits, IT outages)
+
+7. Conclusion
+(One single line with clear Buy/Hold/Sell rating and total expected return including dividends)
+
+---------------------------
+INPUT DATA:
+
+CURRENT PRICE: [Insert Price]
+LATEST ROE: [Insert %]
+TANGIBLE NAV PER SHARE: [Insert Value in Cents/Rands]
+INTEREST RATE VIEW: [e.g., Repo rate at peak, cuts expected]
+
+[PASTE RESULTS / PILLAR 3 DISCLOSURE BELOW THIS LINE]

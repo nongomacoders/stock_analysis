@@ -1,0 +1,76 @@
+Act as a Senior South African Equity Research Analyst specializing in Construction, Infrastructure, and Building Materials.
+
+I will provide you with an Order Book Update, Annual Results, or Trading Statement for a JSE-listed Construction or Materials company.
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+1. STRICT FORMATTING RULES
+- Output in PLAIN TEXT ONLY.
+- Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+- Do NOT use ASCII tables or grids.
+- Focus on "Order Book Quality" (variable vs. fixed price) and "Operating Margins".
+
+2. REQUIRED HEADER STRUCTURE
+At the very top, provide a summary in this exact format:
+
+Date of report: <today's date>
+Name of stock: <company name and ticker>
+Current price: <price and currency>
+Order Book / Resource Life: <Value of Order Book OR Life of Mine years>
+Key Metric: <Operating Margin %>
+Report target price: <Your calculated 12-month target>
+Positive risks (upside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+Negative risks (downside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+
+3. REQUIRED REPORT BODY
+Follow these numbered sections exactly:
+
+1. Investment Thesis
+(Analyze the mix between Public Sector (SANRAL/Govt) and Private Sector (Mines/Residential). For contractors: Is the margin thin (dangerous) or healthy? For materials: Do they have pricing power against input cost inflation?)
+
+2. Operational Quality Assessment
+- Order Book/Pipeline: <Size and duration coverage>
+- Geographic Split: <SA vs. Australia/Europe/Rest of Africa>
+- Project Risk: <Exposure to fixed-price contracts in high inflation environment>
+- Cash Generation: <Cash conversion ratio - are they getting paid on time?>
+
+3. Valuation
+Methods used: <EV/EBITDA, P/E relative to historic cycle>
+Key assumptions:
+- Sustainable Operating Margin: <%>
+- Revenue Growth (Infrastructure roll-out): <%>
+- Target EV/EBITDA Multiple: <x>
+
+12-month target price: <Price>
+Implied upside/downside: <%>
+
+4. Sensitivity Analysis
+(List the impact on HEPS/Valuation if the following change)
+- Base Case (Current tender activity): <Target Price>
+- Bull Case (Govt accelerates infrastructure spend/SANRAL awards): <Target Price>
+- Bear Case (Project cancellations/Site disruptions): <Target Price>
+
+5. Detailed Positive Risks / Upside Catalysts
+(e.g., Awarding of major SANRAL tenders, commodity boom driving mining infrastructure spend, successful resolution of "problem contracts")
+
+6. Detailed Negative Risks / Key Uncertainties
+(e.g., Site disruptions (Construction Mafia), delayed payments from State Owned Entities, rising bitumen/steel/cement costs eroding fixed margins)
+
+7. Conclusion
+(One single line with clear Buy/Hold/Sell rating and total expected return %)
+
+---------------------------
+INPUT DATA:
+
+CURRENT PRICE: [Insert Price]
+TOTAL ORDER BOOK VALUE: [Insert Value in Rands]
+OPERATING MARGIN: [Insert %]
+NET CASH / (DEBT) POSITION: [Insert Value]
+
+[PASTE RESULTS / TRADING UPDATE BELOW THIS LINE]

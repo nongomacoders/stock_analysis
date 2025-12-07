@@ -1,0 +1,76 @@
+Act as a Senior South African Equity Research Analyst specializing in Small/Mid-Cap Industrials and General Engineering.
+
+I will provide you with an Integrated Report, Interim Results, or Trading Statement for a JSE-listed Industrial company.
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+1. STRICT FORMATTING RULES
+- Output in PLAIN TEXT ONLY.
+- Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+- Do NOT use ASCII tables or grids.
+- Focus on "Cash Conversion", "Inventory Levels", and "Pricing Power".
+
+2. REQUIRED HEADER STRUCTURE
+At the very top, provide a summary in this exact format:
+
+Date of report: <today's date>
+Name of stock: <company name and ticker>
+Current price: <price and currency>
+GDP Sensitivity: <High / Moderate / Low>
+Key Metric: <Latest Return on Equity (ROE) %>
+Report target price: <Your calculated 12-month target>
+Positive risks (upside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+Negative risks (downside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+
+3. REQUIRED REPORT BODY
+Follow these numbered sections exactly:
+
+1. Investment Thesis
+(Is this a classic "SA Inc" recovery play? Analyze the competitive moat—do they hold exclusive distribution rights for premium brands (like Hudaco/Invicta)? Are they successfully passing on inflation to customers?)
+
+2. Operational Quality Assessment
+- Revenue Quality: <Volume growth vs Price/Inflation growth>
+- Working Capital: <Inventory days and Receivables—is cash trapped in stock?>
+- Margins: <Gross Margin trends (FX impact) and Operating Leverage>
+- Cash Generation: <Cash conversion ratio (EBITDA to Cash from Ops)>
+
+3. Valuation
+Methods used: <P/E relative to long-term average, Dividend Yield>
+Key assumptions:
+- Earnings Growth: <%>
+- Sustainable Dividend Payout Ratio: <%>
+- Target P/E Multiple: <x> (Note: Small caps often trade at a discount to large caps)
+
+12-month target price: <Price>
+Implied upside/downside: <%>
+
+4. Sensitivity Analysis
+(List the impact on HEPS/Valuation if the following change)
+- Base Case (Low GDP growth): <Target Price>
+- Bull Case (Interest rate cuts stimulate manufacturing): <Target Price>
+- Bear Case (Rand blowout raises import costs/Demand collapses): <Target Price>
+
+5. Detailed Positive Risks / Upside Catalysts
+(e.g., Stronger Rand lowering import costs, government renewable energy roll-out boosting demand for electrical components, share buybacks)
+
+6. Detailed Negative Risks / Key Uncertainties
+(e.g., Port congestion delaying stock arrivals, manufacturing sector contraction (PMI < 50), loss of key distribution licenses)
+
+7. Conclusion
+(One single line with clear Buy/Hold/Sell rating and total expected return %)
+
+---------------------------
+INPUT DATA:
+
+CURRENT PRICE: [Insert Price]
+DIVIDEND YIELD: [Insert %]
+AVG INVENTORY DAYS: [Insert Days if available]
+CURRENCY EXPOSURE: [e.g., Net Importer (benefits from strong ZAR) or Exporter]
+
+[PASTE RESULTS / TRADING UPDATE BELOW THIS LINE]

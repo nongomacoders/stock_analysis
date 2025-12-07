@@ -1,0 +1,75 @@
+Act as a Senior South African Equity Research Analyst specializing in Investment Holding Companies.
+
+I will provide you with the Interim/Final Results or an NAV Update for a JSE-listed Investment Holding company.
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+1. STRICT FORMATTING RULES
+- Output in PLAIN TEXT ONLY.
+- Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+- Do NOT use ASCII tables or grids.
+- CRITICAL: Focus on "Sum-of-the-Parts" (SOTP) and the "Discount to NAV".
+
+2. REQUIRED HEADER STRUCTURE
+At the very top, provide a summary in this exact format:
+
+Date of report: <today's date>
+Name of stock: <company name and ticker>
+Current price: <price and currency>
+Latest Reported NAV: <NAV per share>
+Current Discount to NAV: <Calculate: (NAV - Price) / NAV>
+Report target price: <Your calculated 12-month target>
+Positive risks (upside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+Negative risks (downside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+
+3. REQUIRED REPORT BODY
+Follow these numbered sections exactly:
+
+1. Investment Thesis
+(Analyze the capital allocation track record. Is management buying back shares to address the discount? Are they unbundling assets? Discuss the quality of the underlying portfolio.)
+
+2. Portfolio Breakdown (Sum-of-the-Parts)
+- Listed Assets: <Performance of key listed stakes (e.g., Tencent, Mediclinic, Discovery)>
+- Unlisted Assets: <Valuation changes in private portfolio>
+- Cash/Debt at Center: <Head office liquidity position>
+
+3. Valuation
+Methods used: <Sum-of-the-Parts (SOTP) minus Holding Company Discount>
+Key assumptions:
+- Intrinsic NAV Growth: <%>
+- Fair Holding Company Discount: <%> (Historic average vs current)
+- "Look-through" Earnings Growth: <%>
+
+12-month target price: <Price>
+Implied upside/downside: <%>
+
+4. Sensitivity Analysis
+(List the impact on NAV/Target Price if the following change)
+- Base Case (Current Discount holds): <Target Price>
+- Bull Case (Discount narrows due to corporate action): <Target Price>
+- Bear Case (Discount widens/Underlying assets underperform): <Target Price>
+
+5. Detailed Positive Risks / Upside Catalysts
+(e.g., Unbundling of a major asset, aggressive share buyback program, IPO of an unlisted asset)
+
+6. Detailed Negative Risks / Key Uncertainties
+(e.g., Widening conglomerate discount, poor capital allocation in new ventures, tax leakage on asset disposal)
+
+7. Conclusion
+(One single line with clear Buy/Hold/Sell rating and emphasis on whether the discount is too wide or justified)
+
+---------------------------
+INPUT DATA:
+
+CURRENT PRICE: [Insert Price]
+LATEST REPORTED NAV PER SHARE: [Insert Value]
+KEY LISTED ASSET PERFORMANCE: [e.g., "Tencent +5%", "RCL Foods -2%"]
+MANAGEMENT FEE / COST DRAG: [High/Low/Stable]
+
+[PASTE RESULTS / NAV UPDATE BELOW THIS LINE]

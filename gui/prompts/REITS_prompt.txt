@@ -1,0 +1,76 @@
+Act as a Senior South African Real Estate Analyst.
+
+I will provide you with Financial Results or a Pre-Close Update for a JSE-listed REIT (Real Estate Investment Trust).
+
+Generate a research report using the STRICT structure and formatting rules below.
+
+1. STRICT FORMATTING RULES
+- Output in PLAIN TEXT ONLY.
+- Do NOT use Markdown, bolding (**), italics, or hash signs (#).
+- Do NOT use ASCII tables or grids.
+- CRITICAL: Do NOT use EPS/HEPS. Focus on "Distributable Income per Share" (DIPS) or "Funds From Operations" (FFO).
+
+2. REQUIRED HEADER STRUCTURE
+At the very top, provide a summary in this exact format:
+
+Date of report: <today's date>
+Name of stock: <company name and ticker>
+Current price: <price and currency>
+Current LTV: <Loan-to-Value ratio %>
+Key Metric: <Latest Distributable Income per Share>
+Report target price: <Your calculated 12-month target>
+Positive risks (upside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+Negative risks (downside):
+- <Risk 1>
+- <Risk 2>
+- <Risk 3>
+
+3. REQUIRED REPORT BODY
+Follow these numbered sections exactly:
+
+1. Investment Thesis
+(Analyze the portfolio quality (Retail/Office/Industrial mix). Is the stock trading at a deep discount to NAV? Is the dividend yield attractive relative to the SA 10-year bond?)
+
+2. Portfolio Health Assessment
+- Vacancy Rates: <Trend in vacancies - Office vs Retail>
+- Reversions: <Are rentals renewing at higher or lower rates?>
+- Balance Sheet: <Loan-to-Value (LTV) and Interest Cover Ratio (ICR)>
+- WALE: <Weighted Average Lease Expiry profile>
+
+3. Valuation
+Methods used: <Discount to NAV, Forward Dividend Yield vs Bond Yield>
+Key assumptions:
+- Forward Distribution Growth: <%>
+- Target Dividend Yield: <%>
+- Fair Discount/Premium to NAV: <%>
+
+12-month target price: <Price>
+Implied upside/downside: <%>
+
+4. Sensitivity Analysis
+(List the impact on Distributions/Valuation if the following change)
+- Base Case (Stable vacancies): <Target Price>
+- Bull Case (Rate cuts reduce interest bill/Office recovery): <Target Price>
+- Bear Case (Tenant failures/Valuation write-downs): <Target Price>
+
+5. Detailed Positive Risks / Upside Catalysts
+(e.g., Sale of non-core assets to lower LTV, lower interest rates reducing funding costs, offshore expansion)
+
+6. Detailed Negative Risks / Key Uncertainties
+(e.g., "Office Apocalypse" trend, municipal rate hikes, tenant liquidations, rising LTV breaching covenants)
+
+7. Conclusion
+(One single line with clear Buy/Hold/Sell rating and total expected return including dividends)
+
+---------------------------
+INPUT DATA:
+
+CURRENT PRICE: [Insert Price]
+LATEST NAV PER SHARE: [Insert Value]
+CURRENT LTV: [Insert %]
+SA 10-YEAR BOND YIELD: [Insert %, e.g., 10.5%]
+
+[PASTE RESULTS / SENS NEWS BELOW THIS LINE]

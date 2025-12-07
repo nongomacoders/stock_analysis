@@ -1,0 +1,5 @@
+Extract run: 2025-12-07T06:15:45.582016Z
+Search pattern: USDZAR / USD ZAR
+
+
+Total excerpts: 0
