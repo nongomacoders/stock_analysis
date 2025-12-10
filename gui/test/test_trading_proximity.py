@@ -1,4 +1,4 @@
-from core.utils.trading import get_proximity_status
+from gui.core.utils.trading import get_proximity_status
 
 
 def test_long_proximity():

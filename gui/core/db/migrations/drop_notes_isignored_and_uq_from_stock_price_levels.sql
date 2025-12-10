@@ -26,17 +26,26 @@ UPDATE public.stock_price_levels SET price_level = NULL;
 INSERT INTO public.stock_price_levels (ticker, price_level, level_type, date_added, is_long)
 SELECT w.ticker, w.entry_price, 'entry', COALESCE(w.date_added, CURRENT_DATE), w.is_long
 FROM public.watchlist w
-WHERE w.entry_price IS NOT NULL;
+WHERE w.entry_price IS NOT NULL
+    AND NOT EXISTS (
+        SELECT 1 FROM public.stock_price_levels sp WHERE sp.ticker = w.ticker AND sp.level_type = 'entry'
+    );
 
 INSERT INTO public.stock_price_levels (ticker, price_level, level_type, date_added, is_long)
 SELECT w.ticker, w.target_price, 'target', COALESCE(w.date_added, CURRENT_DATE), w.is_long
 FROM public.watchlist w
-WHERE w.target_price IS NOT NULL;
+WHERE w.target_price IS NOT NULL
+    AND NOT EXISTS (
+        SELECT 1 FROM public.stock_price_levels sp WHERE sp.ticker = w.ticker AND sp.level_type = 'target'
+    );
 
 INSERT INTO public.stock_price_levels (ticker, price_level, level_type, date_added, is_long)
 SELECT w.ticker, w.stop_loss, 'stop_loss', COALESCE(w.date_added, CURRENT_DATE), w.is_long
 FROM public.watchlist w
-WHERE w.stop_loss IS NOT NULL;
+WHERE w.stop_loss IS NOT NULL
+    AND NOT EXISTS (
+        SELECT 1 FROM public.stock_price_levels sp WHERE sp.ticker = w.ticker AND sp.level_type = 'stop_loss'
+    );
 
 -- Remove duplicates for types which should be unique per ticker (keep the lowest level_id)
 DELETE FROM public.stock_price_levels a

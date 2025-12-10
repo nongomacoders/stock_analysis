@@ -5,39 +5,39 @@ import unittest
 class ImportTests(unittest.TestCase):
     def test_components_imports(self):
         # Ensure core components can be imported cleanly
-        mod_taw = importlib.import_module("components.technical_analysis_window")
+        mod_taw = importlib.import_module("gui.components.technical_analysis_window")
         self.assertTrue(hasattr(mod_taw, "TechnicalAnalysisWindow"))
 
-        mod_bc = importlib.import_module("components.base_chart")
+        mod_bc = importlib.import_module("gui.components.base_chart")
         self.assertTrue(hasattr(mod_bc, "BaseChart"))
 
-        mod_cw = importlib.import_module("components.chart_window")
+        mod_cw = importlib.import_module("gui.components.chart_window")
         self.assertTrue(hasattr(mod_cw, "ChartWindow"))
 
-        mod_pw = importlib.import_module("components.portfolio_window")
+        mod_pw = importlib.import_module("gui.components.portfolio_window")
         self.assertTrue(hasattr(mod_pw, "PortfolioWindow"))
 
-        mod_ws = importlib.import_module("components.watchlist_sorting")
+        mod_ws = importlib.import_module("gui.components.watchlist_sorting")
         self.assertTrue(hasattr(mod_ws, "sort_watchlist_records"))
         self.assertTrue(hasattr(mod_ws, "sort_treeview_column"))
 
     def test_core_utils_no_add_axhline(self):
         # The top-level package should NOT expose add_axhline
-        core_utils = importlib.import_module("core.utils")
+        core_utils = importlib.import_module("gui.core.utils")
         self.assertFalse(hasattr(core_utils, "add_axhline"), "core.utils should not export add_axhline")
 
         # The chart_drawing_utils module should no longer expose add_axhline
-        cdu = importlib.import_module("core.utils.chart_drawing_utils")
+        cdu = importlib.import_module("gui.core.utils.chart_drawing_utils")
         self.assertFalse(hasattr(cdu, "add_axhline"), "add_axhline should not exist in chart_drawing_utils anymore")
 
     def test_core_utils_helpers_present(self):
-        cdu = importlib.import_module("core.utils.chart_drawing_utils")
+        cdu = importlib.import_module("gui.core.utils.chart_drawing_utils")
         self.assertTrue(hasattr(cdu, "prepare_mpf_hlines"))
         self.assertTrue(hasattr(cdu, "add_legend_for_hlines"))
 
     def test_watchlist_fetch_includes_peg(self):
         import inspect
-        mod = importlib.import_module('modules.data.watchlist')
+        mod = importlib.import_module('gui.modules.data.watchlist')
         src = inspect.getsource(mod.fetch_watchlist_data)
         self.assertIn('lv.peg_ratio_historical as peg_ratio', src)
         # Confirm the sorting helper supports 'PEG' column

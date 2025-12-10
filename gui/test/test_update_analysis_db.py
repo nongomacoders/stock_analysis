@@ -5,7 +5,7 @@ import asyncio
 # Ensure 'gui' is on sys.path so tests import the project package layout reliably
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from core.utils.technical_utils import update_analysis_db
+from gui.core.utils.technical_utils import update_analysis_db
 
 
 def test_update_analysis_db_upserts_strategy_on_update(monkeypatch):

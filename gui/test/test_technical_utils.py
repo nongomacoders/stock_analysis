@@ -1,5 +1,5 @@
 from decimal import Decimal
-from core.utils.technical_utils import price_from_db, build_saved_levels_from_row
+from gui.core.utils.technical_utils import price_from_db, build_saved_levels_from_row
 
 
 def test_price_from_db_none():
