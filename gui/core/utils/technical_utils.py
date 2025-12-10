@@ -26,6 +26,8 @@ def build_saved_levels_from_row(row: Dict[str, Any]) -> List[Tuple[float, str, s
     entry = price_from_db(row.get("entry_price"))
     stop = price_from_db(row.get("stop_loss"))
     target = price_from_db(row.get("target_price"))
+    support = price_from_db(row.get("support_price"))
+    resistance = price_from_db(row.get("resistance_price"))
 
     if entry is not None:
         out.append((entry, "blue", f"Entry: R{entry:.2f}"))
@@ -33,11 +35,15 @@ def build_saved_levels_from_row(row: Dict[str, Any]) -> List[Tuple[float, str, s
         out.append((stop, "red", f"Stop Loss: R{stop:.2f}"))
     if target is not None:
         out.append((target, "green", f"Target: R{target:.2f}"))
+    if support is not None:
+        out.append((support, "green", f"Support: R{support:.2f}"))
+    if resistance is not None:
+        out.append((resistance, "red", f"Resistance: R{resistance:.2f}"))
 
     return out
 
 
-async def update_analysis_db(ticker: str, entry_c: Optional[int], stop_c: Optional[int], target_c: Optional[int], is_long: bool, strategy: str) -> None:
+async def update_analysis_db(ticker: str, entry_c: Optional[int], stop_c: Optional[int], target_c: Optional[int], is_long: bool, strategy: str, support_cs: Optional[List[int]] = None, resistance_cs: Optional[List[int]] = None) -> None:
     """Persist analysis values to DB (watchlist + stock_analysis) in an async function.
 
     This mirrors logic previously embedded in TechnicalAnalysisWindow.save_analysis.
@@ -78,3 +84,59 @@ async def update_analysis_db(ticker: str, entry_c: Optional[int], stop_c: Option
         DO UPDATE SET strategy = EXCLUDED.strategy
     """
     await DBEngine.execute(query_sa, ticker, strategy)
+
+    # Helper: upsert into stock_price_levels for any price level
+    async def _upsert_stock_price_level(level_type: str, price_c: Optional[int]):
+        if price_c is None:
+            return
+        # If a list of prices provided, iterate and call recursively
+        if isinstance(price_c, (list, tuple)):
+            for p in price_c:
+                await _upsert_stock_price_level(level_type, p)
+            return
+        # For support and resistance we intentionally create new price level rows
+        # every time (don't overwrite old levels), because multiple support/res
+        # levels are allowed for the same ticker. For 'entry', 'target' and
+        # 'stop_loss' we update the most recent row else insert.
+        if level_type in ('support', 'resistance'):
+            await DBEngine.execute(
+                "INSERT INTO public.stock_price_levels (ticker, price_level, level_type, date_added, is_long) VALUES ($1, $2, $3, CURRENT_DATE, $4)",
+                ticker,
+                price_c,
+                level_type,
+                is_long,
+            )
+            return
+
+        # Try to update the most recent matching row for entry/target/stop_loss
+        res = await DBEngine.execute(
+            "UPDATE public.stock_price_levels SET price_level = $1, date_added = CURRENT_DATE, is_long = $4 WHERE level_id = (SELECT level_id FROM public.stock_price_levels WHERE ticker = $2 AND level_type = $3 ORDER BY date_added DESC LIMIT 1)",
+            price_c,
+            ticker,
+            level_type,
+            is_long,
+        )
+        updated = 0
+        if isinstance(res, str) and res.split()[0].upper() == 'UPDATE':
+            try:
+                updated = int(res.split()[1]) if len(res.split()) > 1 else 0
+            except Exception:
+                updated = 0
+
+        if updated == 0:
+            # Insert a new row if update didn't touch anything
+            await DBEngine.execute(
+                "INSERT INTO public.stock_price_levels (ticker, price_level, level_type, date_added, is_long) VALUES ($1, $2, $3, CURRENT_DATE, $4)",
+                ticker,
+                price_c,
+                level_type,
+                is_long,
+            )
+
+    # Ensure watchlist values are also reflected into stock_price_levels for legacy compatibility
+    await _upsert_stock_price_level('entry', entry_c)
+    await _upsert_stock_price_level('target', target_c)
+    await _upsert_stock_price_level('stop_loss', stop_c)
+    # Support & Resistance: stored in stock_price_levels only (per request)
+    await _upsert_stock_price_level('support', support_cs)
+    await _upsert_stock_price_level('resistance', resistance_cs)

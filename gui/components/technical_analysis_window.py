@@ -35,6 +35,9 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.entry_price = None
         self.stop_loss = None
         self.target_price = None
+        # Support and resistance lists: list of tuples (level_id or None, price)
+        self.support_levels = []
+        self.resistance_levels = []
         # Horizontal-line storage handled by BaseChart.horizontal_lines
 
         self.create_widgets()
@@ -70,7 +73,18 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.chart.pack(fill=BOTH, expand=True)
 
         # Bottom Control Panel
-        self.analysis_panel = AnalysisControlPanel(self, self.save_analysis)
+        self.analysis_panel = AnalysisControlPanel(
+            self,
+            self.save_analysis,
+            on_delete_support_callback=self._on_delete_support,
+            on_delete_resistance_callback=self._on_delete_resistance,
+        )
+        # Reduce the analysis panel height in the window so chart has more vertical room
+        try:
+            self.analysis_panel.configure(height=220)
+            self.analysis_panel.pack_propagate(False)
+        except Exception:
+            pass
         # Status widget lets the user change the watchlist status for this ticker
         self.status_widget = StatusWidget(control_frame, lambda: self.ticker, self.async_run_bg, on_saved=self._on_status_saved)
         self.status_widget.pack(side=RIGHT, padx=(6,0))
@@ -145,7 +159,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
         key = event.char.lower()
 
-        if key not in ['e', 'l', 't']:
+        if key not in ['e', 'l', 't', 'f', 'r']:
             return
 
         # Be defensive: older instances or mismatch could raise AttributeError
@@ -164,23 +178,58 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             'e': ('entry_price', 'blue', 'entry'),
             'l': ('stop_loss', 'red', 'stop'),
             't': ('target_price', 'green', 'target'),
+            'f': ('support', 'green', 'support'),
+            'r': ('resistance', 'red', 'resistance'),
         }
 
         attr_name, color, panel_field = key_map[key]
         price = round(cursor_y, 2)
-        setattr(self, attr_name, price)
+        # For support/res we append to the list; for others we set scalar attributes
+        if attr_name in ('support', 'resistance'):
+            pass
+        else:
+            setattr(self, attr_name, price)
         label = f"{panel_field.capitalize()}: R{price:.2f}" if panel_field != 'entry' else f"Entry: R{price:.2f}"
         logging.getLogger(__name__).info(
             "[TechAnalysis] %s price set to R%.2f", panel_field.capitalize(), price
         )
 
-        # Use BaseChart API to add a horizontal line — we expect this to exist
-        # and prefer centralized behavior (no direct ax manipulation here).
-        self.chart.add_horizontal_line(price, color, label)
+        # Update our in-memory levels (entry/target/stop as scalars, support/res as lists)
 
         # Update UI panel
-        kwargs = {panel_field: price}
-        self.analysis_panel.set_values(**kwargs)
+        # Update the analysis panel. The panel accepts entry/target/stop values
+        # via set_values(), and support/resistance via set_levels(). Only pass
+        # valid kwargs so older panel versions won't break.
+        if panel_field in ('support', 'resistance'):
+            # Use the dedicated set_levels() method for support and resistance
+            try:
+                if panel_field == 'support':
+                    self.support_levels.append((None, price))
+                else:
+                    self.resistance_levels.append((None, price))
+                self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
+                # Rebuild chart lines from current state
+                try:
+                    self._draw_all_levels()
+                except Exception:
+                    logging.getLogger(__name__).exception('Failed redrawing levels after keypress')
+            except Exception:
+                try:
+                    # Fallback: older panels may not have set_levels
+                    self.analysis_panel.set_values(**{panel_field: price})
+                except Exception:
+                    pass
+        else:
+            kwargs = {panel_field: price}
+            try:
+                self.analysis_panel.set_values(**kwargs)
+            except Exception:
+                pass
+            # Rebuild chart lines from current state for scalar changes
+            try:
+                self._draw_all_levels()
+            except Exception:
+                logging.getLogger(__name__).exception('Failed redrawing levels after scalar change')
 
         # (UI updated in each branch)
 
@@ -200,6 +249,13 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         entry_c  = int(self.entry_price * 100)   if self.entry_price  is not None else None
         target_c = int(self.target_price * 100)  if self.target_price is not None else None
         stop_c   = int(self.stop_loss * 100)     if self.stop_loss    is not None else None
+        # Persist the support/res lists (in cents) - send None if empty
+        support_cs = None
+        resistance_cs = None
+        if getattr(self, 'support_levels', None):
+            support_cs = [int(p * 100) for (_id, p) in self.support_levels if p is not None]
+        if getattr(self, 'resistance_levels', None):
+            resistance_cs = [int(p * 100) for (_id, p) in self.resistance_levels if p is not None]
 
         # --- 3) Clear existing lines on the chart ---
         clearer = getattr(self.chart, "clear_horizontal_lines", None)
@@ -225,6 +281,12 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             self.chart.add_horizontal_line(
                 self.target_price, 'green', f'Target: R{self.target_price:.2f}'
             )
+        for (_id, p) in getattr(self, 'support_levels', []) or []:
+            if p is not None:
+                self.chart.add_horizontal_line(p, 'green', f'Support: R{p:.2f}')
+        for (_id, p) in getattr(self, 'resistance_levels', []) or []:
+            if p is not None:
+                self.chart.add_horizontal_line(p, 'red', f'Resistance: R{p:.2f}')
 
         # --- 5) Direction flag ---
         is_long = True
@@ -242,11 +304,18 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         # --- 6) Persist to DB in CENTS ---
         # offload DB updates to helper that performs the same async operations
         async def update_db_wrapper():
-            await update_analysis_db(self.ticker, entry_c, stop_c, target_c, is_long, strategy)
+            await update_analysis_db(self.ticker, entry_c, stop_c, target_c, is_long, strategy, support_cs, resistance_cs)
+
+        def _on_saved(_res=None):
+            # reload to refresh persisted levels with their assigned IDs
+            try:
+                self.load_existing_data()
+            except Exception:
+                logging.getLogger(__name__).exception('Failed reloading data after save')
 
         try:
             # Disable the save button while DB update runs
-            run_bg_with_button(self.analysis_panel.save_btn, self.async_run_bg, update_db_wrapper())
+            run_bg_with_button(self.analysis_panel.save_btn, self.async_run_bg, update_db_wrapper(), callback=_on_saved)
         except Exception:
             # fallback
             self.async_run_bg(update_db_wrapper())
@@ -270,14 +339,151 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             pass
     
 
+    def _on_delete_support(self, level_id, price):
+        """Called by AnalysisControlPanel when the user requests deletion of a support level.
+
+        If level_id is None the item is unsaved, and we remove it locally; otherwise delete from DB.
+        """
+        try:
+            if level_id is None:
+                # Remove the first unsaved entry matching the price
+                for i, (lid, p) in enumerate(self.support_levels):
+                    if lid is None and p == price:
+                        self.support_levels.pop(i)
+                        break
+                # Update panel
+                try:
+                    self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
+                except Exception:
+                    pass
+                try:
+                    self._draw_all_levels()
+                except Exception:
+                    logging.getLogger(__name__).exception('Failed redrawing after support deletion')
+                return
+
+            # Delete persisted level from DB
+            async def delete_task():
+                await DBEngine.execute("DELETE FROM public.stock_price_levels WHERE level_id = $1", level_id)
+                # No-op: leave for context (ensures we still call delete).
+            # Optimistically remove it from our in-memory list + UI so chart updates immediately
+            try:
+                for i, (lid, p) in enumerate(self.support_levels):
+                    if lid == level_id:
+                        self.support_levels.pop(i)
+                        break
+                try:
+                    self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
+                except Exception:
+                    pass
+                try:
+                    self._draw_all_levels()
+                except Exception:
+                    logging.getLogger(__name__).exception('Failed optimistic redraw after support delete')
+            except Exception:
+                pass
+
+            def on_deleted(_res=None):
+                # refresh to reflect deleted row
+                try:
+                    self.load_existing_data()
+                except Exception:
+                    logging.getLogger(__name__).exception('Failed to refresh after deleting support level')
+
+            self.async_run_bg(delete_task(), callback=on_deleted)
+        except Exception:
+            logging.getLogger(__name__).exception('Failed processing delete support request')
+
+    def _on_delete_resistance(self, level_id, price):
+        """Called by AnalysisControlPanel when the user requests deletion of a resistance level.
+
+        If level_id is None the item is unsaved and we remove it locally; otherwise delete from DB.
+        """
+        try:
+            if level_id is None:
+                for i, (lid, p) in enumerate(self.resistance_levels):
+                    if lid is None and p == price:
+                        self.resistance_levels.pop(i)
+                        break
+                try:
+                    self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
+                except Exception:
+                    pass
+                try:
+                    self._draw_all_levels()
+                except Exception:
+                    logging.getLogger(__name__).exception('Failed redrawing after resistance deletion')
+                return
+
+            async def delete_task():
+                await DBEngine.execute("DELETE FROM public.stock_price_levels WHERE level_id = $1", level_id)
+
+            # Optimistically remove persisted level from our in-memory list + UI and redraw
+            try:
+                for i, (lid, p) in enumerate(self.resistance_levels):
+                    if lid == level_id:
+                        self.resistance_levels.pop(i)
+                        break
+                try:
+                    self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
+                except Exception:
+                    pass
+                try:
+                    self._draw_all_levels()
+                except Exception:
+                    logging.getLogger(__name__).exception('Failed optimistic redraw after resistance delete')
+            except Exception:
+                pass
+
+            def on_deleted(_res=None):
+                try:
+                    self.load_existing_data()
+                except Exception:
+                    logging.getLogger(__name__).exception('Failed to refresh after deleting resistance level')
+
+            self.async_run_bg(delete_task(), callback=on_deleted)
+        except Exception:
+            logging.getLogger(__name__).exception('Failed processing delete resistance request')
+
+    def _draw_all_levels(self):
+        """Rebuild the chart horizontal lines from the in-memory levels and entry/target/stop."""
+        lines = []
+        try:
+            if getattr(self, 'entry_price', None) is not None:
+                lines.append((self.entry_price, 'blue', f'Entry: R{self.entry_price:.2f}'))
+            if getattr(self, 'stop_loss', None) is not None:
+                lines.append((self.stop_loss, 'red', f'Stop Loss: R{self.stop_loss:.2f}'))
+            if getattr(self, 'target_price', None) is not None:
+                lines.append((self.target_price, 'green', f'Target: R{self.target_price:.2f}'))
+            for (_id, p) in getattr(self, 'support_levels', []) or []:
+                if p is not None:
+                    lines.append((p, 'green', f'Support: R{p:.2f}'))
+            for (_id, p) in getattr(self, 'resistance_levels', []) or []:
+                if p is not None:
+                    lines.append((p, 'red', f'Resistance: R{p:.2f}'))
+        except Exception:
+            logging.getLogger(__name__).exception('Failed building levels to draw')
+        setter = getattr(self.chart, 'set_horizontal_lines', None)
+        if callable(setter):
+            try:
+                setter(lines)
+            except Exception:
+                logging.getLogger(__name__).exception('Failed calling set_horizontal_lines')
+
 
     def load_existing_data(self):
         """Fetch existing analysis data from DB."""
         async def fetch_data():
+            # Fetch entry/target/stop from watchlist and strategy from stock_analysis.
+            # Also fetch latest support/resistance price_level values from stock_price_levels.
             query = """
                 SELECT 
                     w.entry_price, w.target_price, w.stop_loss, w.status,
-                    sa.strategy
+                    sa.strategy,
+                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') AS support_ids,
+                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') AS support_prices,
+                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') AS resistance_ids,
+                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') AS resistance_prices
                 FROM watchlist w
                 LEFT JOIN stock_analysis sa ON w.ticker = sa.ticker
                 WHERE w.ticker = $1
@@ -285,6 +491,20 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             rows = await DBEngine.fetch(query, self.ticker)
             if rows:
                 return dict(rows[0])
+            # Fallback: if no watchlist row exists, fetch support/resistance from stock_price_levels
+            fallback_query = """
+                SELECT
+                    sa.strategy,
+                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'support') AS support_ids,
+                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'support') AS support_prices,
+                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'resistance') AS resistance_ids,
+                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'resistance') AS resistance_prices
+                FROM stock_analysis sa
+                WHERE sa.ticker = $1
+            """
+            rows2 = await DBEngine.fetch(fallback_query, self.ticker)
+            if rows2:
+                return dict(rows2[0])
             return None
 
         def on_loaded(data):
@@ -293,10 +513,27 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 raw_entry = data.get("entry_price")
                 raw_target = data.get("target_price")
                 raw_stop = data.get("stop_loss")
+                raw_support_ids = data.get("support_ids") or []
+                raw_support_prices = data.get("support_prices") or []
+                raw_res_ids = data.get("resistance_ids") or []
+                raw_res_prices = data.get("resistance_prices") or []
 
                 self.entry_price = price_from_db(raw_entry)
                 self.target_price = price_from_db(raw_target)
                 self.stop_loss = price_from_db(raw_stop)
+                # Build lists of persisted (id, price) tuples
+                try:
+                    self.support_levels = []
+                    for _id, p in zip(raw_support_ids, raw_support_prices):
+                        self.support_levels.append((int(_id) if _id is not None else None, price_from_db(p)))
+                except Exception:
+                    self.support_levels = []
+                try:
+                    self.resistance_levels = []
+                    for _id, p in zip(raw_res_ids, raw_res_prices):
+                        self.resistance_levels.append((int(_id) if _id is not None else None, price_from_db(p)))
+                except Exception:
+                    self.resistance_levels = []
                 strategy = data.get("strategy")
                 status = data.get("status")
 
@@ -307,6 +544,12 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     stop=self.stop_loss,
                     strategy=strategy
                 )
+                # Update support/res labels in the analysis panel if present
+                try:
+                    if getattr(self.analysis_panel, 'set_levels', None):
+                        self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
+                except Exception:
+                    pass
 
                 # Update status widget if available
                 try:
@@ -319,14 +562,27 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
                 # Pass the prices to BaseChart so it can draw them after the plot
                 to_store = build_saved_levels_from_row(data)
+                # We'll build a full final lines list below including support/resistance
 
+                # Build the full set of lines from DB and in-memory levels
+                try:
+                    # to_store includes entry/target/stop from DB via build_saved_levels_from_row
+                    if getattr(self, 'support_levels', None):
+                        for (_id, p) in self.support_levels:
+                            if p is not None:
+                                to_store.append((p, 'green', f'Support: R{p:.2f}'))
+                except Exception:
+                    pass
+                try:
+                    if getattr(self, 'resistance_levels', None):
+                        for (_id, p) in self.resistance_levels:
+                            if p is not None:
+                                to_store.append((p, 'red', f'Resistance: R{p:.2f}'))
+                except Exception:
+                    pass
                 if to_store:
                     setter = getattr(self.chart, "set_horizontal_lines", None)
-                    redrawer = getattr(self.chart, "redraw_horizontal_lines", None)
-                    # use BaseChart API where supported
                     if callable(setter):
                         setter(to_store)
-                    if callable(redrawer):
-                        redrawer()
 
         self.async_run_bg(fetch_data(), callback=on_loaded)

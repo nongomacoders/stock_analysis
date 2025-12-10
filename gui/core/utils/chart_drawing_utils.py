@@ -18,11 +18,24 @@ def prepare_mpf_hlines(
     """
     prices: List[float] = []
     colors: List[str] = []
+    linestyles: List[str] = []
+    linewidths: List[float] = []
 
     # 1) From stored horizontal lines
     for price, color, label in stored_hlines or []:
         prices.append(price)
         colors.append(color)
+        # Default style
+        lstyle = "--"
+        lw = 1.5
+        if label:
+            lab = str(label).lower()
+            if lab.startswith("support") or lab.startswith("resistance"):
+                # Support & resistance use solid thicker lines
+                lstyle = "-"
+                lw = 2.6
+        linestyles.append(lstyle)
+        linewidths.append(lw)
 
     # 2) Merge any extra 'lines' argument from callers (if still used anywhere)
     if extra_lines is not None:
@@ -60,11 +73,25 @@ def prepare_mpf_hlines(
     else:
         colors_for_mpf = "r"
 
+    # Build per-line style arrays to pass to mplfinance
+    lstyles = []
+    lwids = []
+    for i, _ in enumerate(safe_prices):
+        # If we have a per-line value use it else use default
+        if i < len(linestyles):
+            lstyles.append(linestyles[i])
+        else:
+            lstyles.append("--")
+        if i < len(linewidths):
+            lwids.append(linewidths[i])
+        else:
+            lwids.append(1.5)
+
     return {
         "hlines": safe_prices,
         "colors": colors_for_mpf,
-        "linestyle": "--",
-        "linewidths": 1.5,
+        "linestyle": lstyles,
+        "linewidths": lwids,
         "alpha": 0.7,
     }
 
@@ -88,13 +115,22 @@ def add_legend_for_hlines(ax: Axes, stored_hlines: List[Tuple[float, str, str]])
     for price, color, label in stored_hlines:
         if not label:
             continue
+        linestyle = "--"
+        linewidth = 1.5
+        try:
+            lab = str(label).lower()
+            if lab.startswith("support") or lab.startswith("resistance"):
+                linestyle = "-"
+                linewidth = 2.6
+        except Exception:
+            pass
         handles.append(
             Line2D(
                 [0],
                 [0],
                 color=color,
-                linestyle="--",
-                linewidth=1.5,
+                linestyle=linestyle,
+                linewidth=linewidth,
                 label=label,
             )
         )

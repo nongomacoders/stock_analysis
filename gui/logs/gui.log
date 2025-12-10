@@ -1,3 +1,7 @@
-2025-12-10 10:17:41,349 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-10 10:17:41,961 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-10 10:18:37,818 __main__ INFO: Selected: BID.JO
+2025-12-10 15:59:11,207 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-10 15:59:11,279 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-10 15:59:15,208 __main__ INFO: Selected: PAN.JO
+2025-12-10 15:59:38,915 components.technical_analysis_window INFO: [TechAnalysis] Support price set to R23.11
+2025-12-10 16:00:00,709 __main__ INFO: Closing application...
+2025-12-10 16:00:00,753 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-10 16:00:00,753 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
