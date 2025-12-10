@@ -1,0 +1,3 @@
+2025-12-10 10:17:41,349 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-10 10:17:41,961 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-10 10:18:37,818 __main__ INFO: Selected: BID.JO

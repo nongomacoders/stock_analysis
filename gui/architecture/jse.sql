@@ -219,12 +219,17 @@ CREATE TABLE IF NOT EXISTS public.stock_price_levels
     ticker character varying(20) COLLATE pg_catalog."default" NOT NULL,
     price_level numeric(12, 2),
     level_type character varying(50) COLLATE pg_catalog."default",
-    notes text COLLATE pg_catalog."default",
     date_added date DEFAULT CURRENT_DATE,
-    is_ignored_on_scan boolean DEFAULT false,
-    CONSTRAINT stock_price_levels_pkey PRIMARY KEY (level_id),
-    CONSTRAINT uq_ticker_price UNIQUE (ticker, price_level)
+    is_long boolean DEFAULT true,
+    CONSTRAINT stock_price_levels_level_type_check CHECK (level_type IN ('entry','target','stop_loss','support','resistance')),
+    CONSTRAINT stock_price_levels_pkey PRIMARY KEY (level_id)
+    -- No unique constraint to allow multiple price levels even if equal
 );
+
+-- Unique indexes for 'entry', 'target', 'stop_loss' to enforce one of each per ticker
+CREATE UNIQUE INDEX IF NOT EXISTS stock_price_levels_unique_entry ON public.stock_price_levels (ticker) WHERE level_type = 'entry';
+CREATE UNIQUE INDEX IF NOT EXISTS stock_price_levels_unique_target ON public.stock_price_levels (ticker) WHERE level_type = 'target';
+CREATE UNIQUE INDEX IF NOT EXISTS stock_price_levels_unique_stoploss ON public.stock_price_levels (ticker) WHERE level_type = 'stop_loss';
 
 CREATE TABLE IF NOT EXISTS public.watchlist
 (

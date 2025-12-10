@@ -15,6 +15,7 @@ async def fetch_watchlist_data():
             p.close_price,
             w.reward_risk_ratio,
             sa.strategy,
+            lv.peg_ratio_historical as peg_ratio,
             (SELECT trigger_content FROM action_log a 
                 WHERE a.ticker = w.ticker AND a.trigger_type = 'SENS' AND a.is_read = false
                 ORDER BY a.log_timestamp DESC LIMIT 1) as latest_news,
@@ -30,6 +31,7 @@ async def fetch_watchlist_data():
         FROM watchlist w
         JOIN stock_details sd ON w.ticker = sd.ticker
         LEFT JOIN stock_analysis sa ON w.ticker = sa.ticker
+        LEFT JOIN v_live_valuations lv ON lv.ticker = w.ticker
         LEFT JOIN LATERAL (
             SELECT close_price FROM daily_stock_data 
             WHERE ticker = w.ticker ORDER BY trade_date DESC LIMIT 1

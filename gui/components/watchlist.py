@@ -8,39 +8,15 @@ from core.utils.trading import get_proximity_status
 
 # 2. Data fetching moved to modules
 from modules.data.watchlist import fetch_watchlist_data
+from components.watchlist_sorting import sort_watchlist_records, sort_treeview_column
 
 # 3. Child windows (Note: These will need refactoring next)
 from components.chart_window import ChartWindow
 from components.research_window import ResearchWindow
 from components.technical_analysis_window import TechnicalAnalysisWindow
 from components.todo_widget import TodoWidget
-def sort_watchlist_records(rows, today=None):
-    """Return rows sorted by status priority and days to next event.
-
-    Priority order is: Active-Trade, Pre-Trade, WL-Active. Rows with missing
-    next_event_date are placed last within their status group.
-    """
-    if today is None:
-        today = date.today()
-
-    def _status_priority(s):
-        order = {"Active-Trade": 0, "Pre-Trade": 1, "WL-Active": 2}
-        return order.get(s, 3)
-
-    def _days_to_event(row):
-        next_date = row.get("next_event_date")
-        if not next_date:
-            return 999999
-        try:
-            return (next_date - today).days
-        except Exception:
-            try:
-                # Support string dates in ISO format as fallback
-                return (datetime.strptime(next_date, "%Y-%m-%d").date() - today).days
-            except Exception:
-                return 999999
-
-    return sorted(rows, key=lambda r: (_status_priority(r.get("status")), _days_to_event(r)))
+# Sorting logic is implemented in `components.watchlist_sorting` to reduce the
+# size of this module and make sorting reusable across the project.
 
 from components.portfolio_window import PortfolioWindow
 
@@ -121,7 +97,7 @@ class WatchlistWidget(ttk.Frame):
         ).pack(side=LEFT, padx=(6, 0))
 
         # --- COLUMNS ---
-        cols = ("Ticker", "Name", "Price", "Proximity", "BTE", "Event", "RR", "Upside", "Strategy")
+        cols = ("Ticker", "Name", "Price", "Proximity", "BTE", "Event", "RR", "PEG", "Upside", "Strategy")
         self.tree = ttk.Treeview(parent_frame, columns=cols, show="headings")
 
         self.tree.heading("Ticker", text="Ticker")
@@ -136,6 +112,7 @@ class WatchlistWidget(ttk.Frame):
         # Make BTE, RR and Upside clickable headings to sort by those columns
         self.tree.heading("BTE", text="BTE", command=lambda: self.sort_column("BTE", False))
         self.tree.heading("RR", text="RR", command=lambda: self.sort_column("RR", False))
+        self.tree.heading("PEG", text="PEG", command=lambda: self.sort_column("PEG", False))
         self.tree.heading("Upside", text="Upside", command=lambda: self.sort_column("Upside", False))
         self.tree.heading("Strategy", text="Strategy")
 
@@ -149,6 +126,7 @@ class WatchlistWidget(ttk.Frame):
         self.tree.column("BTE", width=90, anchor=CENTER, stretch=False)
         # Add RR and Upside columns and increase strategy width (doubled from 400 -> 800)
         self.tree.column("RR", width=80, anchor=CENTER, stretch=False)
+        self.tree.column("PEG", width=70, anchor=CENTER, stretch=False)
         # Upside: percent return if target reached (numeric)
         self.tree.column("Upside", width=90, anchor=CENTER, stretch=False)
         self.tree.column("Strategy", width=800, anchor=W, stretch=True)
@@ -248,6 +226,16 @@ class WatchlistWidget(ttk.Frame):
                     except Exception:
                         rr_str = str(rr_val)
 
+                    # PEG: use peg_ratio returned from fetch_watchlist_data if present
+                    peg_val = row.get("peg_ratio") or row.get("peg_ratio_historical")
+                    if peg_val is None:
+                        peg_str = "-"
+                    else:
+                        try:
+                            peg_str = f"{float(peg_val):.2f}"
+                        except Exception:
+                            peg_str = str(peg_val)
+
                 # 6. Upside: expected percent return if target is reached
                 target_val = row.get("target")
                 try:
@@ -276,6 +264,7 @@ class WatchlistWidget(ttk.Frame):
                         bte_str,
                         days_str,
                         rr_str,
+                        peg_str,
                         upside_str,
                         strategy_text,
                     ),
@@ -304,70 +293,9 @@ class WatchlistWidget(ttk.Frame):
             self.on_select(ticker)
 
     def sort_column(self, col, reverse):
-        l = [(self.tree.set(k, col), k) for k in self.tree.get_children("")]
-
-        if col == "Event":
-
-            def event_key(item):
-                val = item[0]
-                if val == "-":
-                    return 999999
-                try:
-                    return int(val.replace("d", ""))
-                except ValueError:
-                    return 999999
-
-            l.sort(key=event_key, reverse=reverse)
-        elif col == "Name":
-            # Ensure the value is coerced to string before calling lower()
-            l.sort(key=lambda t: str(t[0]).lower(), reverse=reverse)
-        elif col == "RR":
-            # Numeric sort for RR (reward-risk). Treat missing values ("-", "", None)
-            # as very large so they appear at the end when sorting ascending.
-            def rr_key(item):
-                val = item[0]
-                if val is None or val == "" or str(val).strip() == "-":
-                    return float("inf")
-                try:
-                    return float(str(val))
-                except Exception:
-                    return float("inf")
-
-            l.sort(key=rr_key, reverse=reverse)
-        elif col == "BTE":
-            # Numeric sort for BTE percentage. Values are strings like '+5.00%' or '-' for missing
-            def bte_key(item):
-                val = item[0]
-                if val is None or val == "" or str(val).strip() == "-":
-                    return float("-inf") if reverse else float("inf")
-                try:
-                    # Remove trailing '%' and parse sign
-                    s = str(val).strip().replace('%', '')
-                    return float(s)
-                except Exception:
-                    return float("-inf") if reverse else float("inf")
-
-            l.sort(key=bte_key, reverse=reverse)
-        elif col == "Upside":
-            # Numeric sort for Upside percentage strings like '5.00%' or '-' for missing
-            def upside_key(item):
-                val = item[0]
-                if val is None or val == "" or str(val).strip() == "-":
-                    return float("inf")
-                try:
-                    s = str(val).strip().replace('%', '')
-                    return float(s)
-                except Exception:
-                    return float("inf")
-
-            l.sort(key=upside_key, reverse=reverse)
-        else:
-            l.sort(reverse=reverse)
-
-        for index, (val, k) in enumerate(l):
-            self.tree.move(k, "", index)
-
-        self.tree.heading(col, command=lambda: self.sort_column(col, not reverse))
+        # Delegate the sorting to the centralized utility so this file remains
+        # small and the logic can be reused / tested separately.
+        sort_treeview_column(self.tree, col, reverse)
 
     def open_technical_analysis(self):
         """Open the Technical Analysis window for the selected ticker."""

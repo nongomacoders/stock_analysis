@@ -879,3 +879,137 @@
 2025-12-07 10:09:51,068 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
 2025-12-07 11:12:51,467 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
 2025-12-07 11:12:51,528 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
+2025-12-08 15:20:49,906 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-08 15:20:50,473 modules.market_agent.sens INFO: 
+[15:20] --- Running SENS Check ---
+2025-12-08 15:20:56,194 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-08 15:20:56,195 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-08 15:20:56,409 modules.market_agent.prices INFO: Downloading for 242 tickers...
+2025-12-08 15:21:55,551 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-08 15:21:56,295 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-08 15:21:56,429 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-08
+2025-12-08 15:21:56,429 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 15:21:56,429 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-08 15:21:56,429 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-08 15:21:56,429 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 15:21:56,429 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-08 15:21:56,429 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-08
+2025-12-08 15:21:56,430 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO:     Days Since Last:   164
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-08 >= 2025-12-06 = True
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO:     Check 2: 164 >= 150 = True
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): RMH.JO
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-08 15:21:56,431 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-08 15:21:56,432 modules.market_agent.fundamentals INFO: Processing 1 tickers: RMH.JO
+2025-12-08 15:21:56,432 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-08 15:21:56,432 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-08 15:21:56,564 root ERROR: Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file
+2025-12-08 16:34:53,563 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-08 16:34:54,047 modules.market_agent.sens INFO: 
+[16:34] --- Running SENS Check ---
+2025-12-08 16:35:02,507 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-08 16:35:02,508 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-08 16:35:02,858 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-08 16:36:33,550 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-08 16:36:35,272 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-08 16:36:35,673 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-08
+2025-12-08 16:36:35,674 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 16:36:35,674 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-08 16:36:35,674 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-08 16:36:35,674 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 16:36:35,674 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-08 16:36:35,674 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-08 16:36:35,675 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-08 16:36:35,675 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-08 16:36:35,675 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-08 16:36:35,675 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-08 16:36:35,675 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-08 16:36:35,675 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-08 16:36:35,675 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-08
+2025-12-08 16:36:35,676 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-08 16:36:35,676 modules.market_agent.fundamentals INFO:     Days Since Last:   164
+2025-12-08 16:36:35,676 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-08 >= 2025-12-06 = True
+2025-12-08 16:36:35,676 modules.market_agent.fundamentals INFO:     Check 2: 164 >= 150 = True
+2025-12-08 16:36:35,676 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-08 16:36:35,676 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): RMH.JO
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: Processing 1 tickers: RMH.JO
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-08 16:36:35,677 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-08 16:36:35,786 root ERROR: Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file
+2025-12-08 16:55:51,257 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-08 16:55:52,024 modules.market_agent.sens INFO: 
+[16:55] --- Running SENS Check ---
+2025-12-08 16:55:57,216 modules.market_agent.sens INFO:   -> NEW SENS: BVT @ 2025-12-08 16:40:00
+2025-12-08 16:56:02,011 modules.analysis.engine INFO: AI: Analyzing SENS for BVT.JO...
+2025-12-08 16:56:02,145 modules.analysis.engine WARNING: AI: No context found for BVT.JO
+2025-12-08 16:56:02,147 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-08 16:56:02,439 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-08 16:58:23,732 modules.market_agent.prices INFO: Checking for Price Triggers...
+2025-12-08 16:58:25,819 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-08 16:58:26,227 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-08
+2025-12-08 16:58:26,228 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 16:58:26,228 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-08 16:58:26,228 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-08 16:58:26,228 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 16:58:26,228 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-08 16:58:26,229 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-08 16:58:26,229 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-08 16:58:26,229 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-08 16:58:26,229 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-08 16:58:26,229 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-08 16:58:26,229 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-08 16:58:26,229 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-08 16:58:26,230 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-08
+2025-12-08 16:58:26,230 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-08 16:58:26,230 modules.market_agent.fundamentals INFO:     Days Since Last:   164
+2025-12-08 16:58:26,230 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-08 >= 2025-12-06 = True
+2025-12-08 16:58:26,230 modules.market_agent.fundamentals INFO:     Check 2: 164 >= 150 = True
+2025-12-08 16:58:26,230 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-08 16:58:26,230 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): RMH.JO
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: Processing 1 tickers: RMH.JO
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-08 16:58:26,231 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-08 16:58:26,277 root ERROR: Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file

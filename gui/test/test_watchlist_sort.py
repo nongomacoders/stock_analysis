@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from components.watchlist import sort_watchlist_records
+from components.watchlist_sorting import sort_watchlist_records
 
 
 def test_sort_watchlist_records_status_and_days():
