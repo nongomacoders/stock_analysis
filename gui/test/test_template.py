@@ -2,9 +2,6 @@
 
 import os
 import sys
-# Make sure gui package is importable from tests run from repo root
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from gui.core.utils.technical_utils import price_from_db
 
 

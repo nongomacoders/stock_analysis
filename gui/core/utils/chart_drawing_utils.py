@@ -145,6 +145,40 @@ def add_legend_for_hlines(ax: Axes, stored_hlines: List[Tuple[float, str, str]])
         pass
 
 
+def build_lines_from_state(
+    entry_price: Optional[float],
+    stop_loss: Optional[float],
+    target_price: Optional[float],
+    support_levels: Optional[List[tuple]] = None,
+    resistance_levels: Optional[List[tuple]] = None,
+):
+    """Build a list of (price, color, label) tuples from the provided state.
+
+    `support_levels` and `resistance_levels` are expected to be lists of
+    (id_or_None, price) tuples.
+    """
+    lines = []
+    try:
+        if entry_price is not None:
+            lines.append((entry_price, "blue", f"Entry: R{entry_price:.2f}"))
+        if stop_loss is not None:
+            lines.append((stop_loss, "red", f"Stop Loss: R{stop_loss:.2f}"))
+        if target_price is not None:
+            lines.append((target_price, "green", f"Target: R{target_price:.2f}"))
+        if support_levels:
+            for (_id, p) in support_levels:
+                if p is not None:
+                    lines.append((p, "green", f"Support: R{p:.2f}"))
+        if resistance_levels:
+            for (_id, p) in resistance_levels:
+                if p is not None:
+                    lines.append((p, "red", f"Resistance: R{p:.2f}"))
+    except Exception:
+        # Be robust: return what we have even on partial failures
+        pass
+    return lines
+
+
 # Public chart drawing helpers for the application
 
 

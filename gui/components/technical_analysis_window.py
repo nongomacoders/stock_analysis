@@ -12,6 +12,8 @@ from core.utils.technical_utils import (
     price_from_db,
     update_analysis_db,
 )
+from core.utils.chart_drawing_utils import build_lines_from_state
+from components.analysis_service import fetch_analysis, delete_price_level
 from components.analysis_control_panel import AnalysisControlPanel
 from components.status_widget import StatusWidget
 from components.button_utils import run_bg_with_button
@@ -44,7 +46,8 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.load_chart("1 Year") # Default to 1 Year
         self.load_existing_data()
 
-        # Bind keypress events
+        # Bind keypress events to the key handler
+        # We'll wire the key handler during widget creation (below)
         self.bind_all("<KeyPress>", self.on_key_press)
 
     def create_widgets(self):
@@ -64,6 +67,17 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         )
         self.period_combo.pack(side=LEFT)
         self.period_combo.bind("<<ComboboxSelected>>", self.on_period_change)
+        # Navigation arrows (prev/next) to cycle watchlist order
+        self.prev_btn = ttk.Button(control_frame, text="◀ Prev", bootstyle="secondary", command=self._on_prev_ticker)
+        self.prev_btn.pack(side=LEFT, padx=(6, 0))
+        self.next_btn = ttk.Button(control_frame, text="Next ▶", bootstyle="secondary", command=self._on_next_ticker)
+        self.next_btn.pack(side=LEFT, padx=(6, 0))
+        # Default navigation state is disabled until we can evaluate parent watchlist
+        try:
+            self.prev_btn.configure(state='disabled')
+            self.next_btn.configure(state='disabled')
+        except Exception:
+            pass
 
         # Chart Area
         self.chart_frame = ttk.Frame(self, padding=10)
@@ -89,12 +103,131 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.status_widget = StatusWidget(control_frame, lambda: self.ticker, self.async_run_bg, on_saved=self._on_status_saved)
         self.status_widget.pack(side=RIGHT, padx=(6,0))
         self.analysis_panel.pack(fill=X, side=BOTTOM)
+        # Analysis drawer for redrawing the chart from state
+        try:
+            from components.analysis_drawer import AnalysisDrawer
+            from components.analysis_keyhandler import AnalysisKeyHandler
+            self.analysis_drawer = AnalysisDrawer(self.chart)
+            self.key_handler = AnalysisKeyHandler(self, self.analysis_drawer)
+        except Exception:
+            self.analysis_drawer = None
+            self.key_handler = None
 
         # BaseChart already tracks cursor position and manages mouse events
+        try:
+            self._update_navigation_state()
+        except Exception:
+            pass
 
     def on_period_change(self, event):
         period_label = self.period_var.get()
         self.load_chart(period_label)
+
+    def update_ticker(self, ticker):
+        """Update the window with a new ticker"""
+        try:
+            logging.getLogger(__name__).info("\n[TechAnalysis] Updating to ticker: %s", ticker)
+            self.ticker = ticker
+            self.title(f"{ticker} - Technical Analysis")
+            # Update status widget if present
+            try:
+                if hasattr(self, "status_widget") and self.status_widget is not None:
+                    # status_widget displays the current ticker via a lambda; no additional setup required
+                    pass
+            except Exception:
+                pass
+            # reload data & charts for new ticker
+            try:
+                self.load_chart(self.period_var.get())
+            except Exception:
+                pass
+            try:
+                self.load_existing_data()
+            except Exception:
+                logging.getLogger(__name__).exception('Failed reloading data after update_ticker')
+        except Exception:
+            logging.getLogger(__name__).exception('Failed updating ticker')
+        # Update arrow enablement
+        try:
+            self._update_navigation_state()
+        except Exception:
+            pass
+
+    def _update_navigation_state(self):
+        try:
+            # Find a watchlist-like object with get_ordered_tickers
+            parent = getattr(self, 'master', None)
+            watchlist_obj = None
+            if parent and hasattr(parent, 'get_ordered_tickers'):
+                watchlist_obj = parent
+            elif parent and hasattr(parent, 'watchlist'):
+                watchlist_obj = getattr(parent, 'watchlist')
+            else:
+                # Walk up the master chain looking for a watchlist-like object
+                cur = parent
+                while cur is not None:
+                    try:
+                        if hasattr(cur, 'get_ordered_tickers'):
+                            watchlist_obj = cur
+                            break
+                    except Exception:
+                        pass
+                    cur = getattr(cur, 'master', None)
+
+            # If we found a watchlist, evaluate size and enable/disable accordingly
+            if watchlist_obj is not None and callable(getattr(watchlist_obj, 'get_ordered_tickers', None)):
+                try:
+                    t = watchlist_obj.get_ordered_tickers() or []
+                except Exception:
+                    t = []
+                if not t or len(t) <= 1:
+                    try:
+                        self.prev_btn.configure(state='disabled')
+                        self.next_btn.configure(state='disabled')
+                    except Exception:
+                        pass
+                    return
+                else:
+                    try:
+                        self.prev_btn.configure(state='normal')
+                        self.next_btn.configure(state='normal')
+                    except Exception:
+                        pass
+            else:
+                # No watchlist identified — keep navigation disabled
+                try:
+                    self.prev_btn.configure(state='disabled')
+                    self.next_btn.configure(state='disabled')
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+    def _find_watchlist_widget(self):
+        """Try to find a WatchlistWidget instance in the parent chain or 'master'.
+
+        Returns the widget if found, else None.
+        """
+        try:
+            parent = getattr(self, 'master', None)
+            # 1. If parent itself is a watchlist
+            if parent and hasattr(parent, 'get_adjacent_ticker') and hasattr(parent, 'get_ordered_tickers'):
+                return parent
+            # 2. If parent is command center that has .watchlist attribute
+            if parent and hasattr(parent, 'watchlist'):
+                return getattr(parent, 'watchlist')
+            # 3. Walk up the master chain looking for object with 'get_adjacent_ticker'
+            cur = parent
+            while cur is not None:
+                try:
+                    if hasattr(cur, 'get_adjacent_ticker') and hasattr(cur, 'get_ordered_tickers'):
+                        return cur
+                except Exception:
+                    pass
+                cur = getattr(cur, 'master', None)
+        except Exception:
+            pass
+        return None
 
     def load_chart(self, period_label):
         # Map period labels to days
@@ -139,97 +272,14 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
     # cursor y is now retrieved from self.chart.get_cursor_y()
 
     def on_key_press(self, event):
-        """Handle keypress events to draw horizontal lines."""
-        # Only accept keypresses for drawing lines if the chart has focus (i.e. was clicked)
-        # and no input field has focus. This avoids accidental price changes while typing.
+        """Handle keypress events and delegate to the key handler (if present)."""
         try:
-            # if analysis panel reports any input focused -> ignore keypresses
-            if hasattr(self, "analysis_panel") and callable(getattr(self.analysis_panel, "has_any_input_focus", None)) and self.analysis_panel.has_any_input_focus():
-                return
+            if hasattr(self, 'key_handler') and self.key_handler:
+                handled = self.key_handler.handle_key(event)
+                if handled:
+                    return
         except Exception:
-            pass
-
-        # Chart must be clicked/focused for keypress actions to be handled
-        try:
-            if not hasattr(self, "chart") or not callable(getattr(self.chart, "has_focus", None)) or not self.chart.has_focus():
-                return
-        except Exception:
-            # Be defensive: if chart focus check fails, skip handling
-            return
-
-        key = event.char.lower()
-
-        if key not in ['e', 'l', 't', 'f', 'r']:
-            return
-
-        # Be defensive: older instances or mismatch could raise AttributeError
-        cursor_y = None
-        getter = getattr(self.chart, "get_cursor_y", None)
-        if callable(getter):
-            cursor_y = getter()
-        if cursor_y is None or not isinstance(cursor_y, (int, float)):
-            logging.getLogger(__name__).warning(
-                "[TechAnalysis] No cursor position available"
-            )
-            return
-
-        # Map keys to attributes / colors / panel updates so we can handle in one place
-        key_map = {
-            'e': ('entry_price', 'blue', 'entry'),
-            'l': ('stop_loss', 'red', 'stop'),
-            't': ('target_price', 'green', 'target'),
-            'f': ('support', 'green', 'support'),
-            'r': ('resistance', 'red', 'resistance'),
-        }
-
-        attr_name, color, panel_field = key_map[key]
-        price = round(cursor_y, 2)
-        # For support/res we append to the list; for others we set scalar attributes
-        if attr_name in ('support', 'resistance'):
-            pass
-        else:
-            setattr(self, attr_name, price)
-        label = f"{panel_field.capitalize()}: R{price:.2f}" if panel_field != 'entry' else f"Entry: R{price:.2f}"
-        logging.getLogger(__name__).info(
-            "[TechAnalysis] %s price set to R%.2f", panel_field.capitalize(), price
-        )
-
-        # Update our in-memory levels (entry/target/stop as scalars, support/res as lists)
-
-        # Update UI panel
-        # Update the analysis panel. The panel accepts entry/target/stop values
-        # via set_values(), and support/resistance via set_levels(). Only pass
-        # valid kwargs so older panel versions won't break.
-        if panel_field in ('support', 'resistance'):
-            # Use the dedicated set_levels() method for support and resistance
-            try:
-                if panel_field == 'support':
-                    self.support_levels.append((None, price))
-                else:
-                    self.resistance_levels.append((None, price))
-                self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
-                # Rebuild chart lines from current state
-                try:
-                    self._draw_all_levels()
-                except Exception:
-                    logging.getLogger(__name__).exception('Failed redrawing levels after keypress')
-            except Exception:
-                try:
-                    # Fallback: older panels may not have set_levels
-                    self.analysis_panel.set_values(**{panel_field: price})
-                except Exception:
-                    pass
-        else:
-            kwargs = {panel_field: price}
-            try:
-                self.analysis_panel.set_values(**kwargs)
-            except Exception:
-                pass
-            # Rebuild chart lines from current state for scalar changes
-            try:
-                self._draw_all_levels()
-            except Exception:
-                logging.getLogger(__name__).exception('Failed redrawing levels after scalar change')
+            logging.getLogger(__name__).exception('Key handler failed')
 
         # (UI updated in each branch)
 
@@ -364,7 +414,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
             # Delete persisted level from DB
             async def delete_task():
-                await DBEngine.execute("DELETE FROM public.stock_price_levels WHERE level_id = $1", level_id)
+                await delete_price_level(level_id)
                 # No-op: leave for context (ensures we still call delete).
             # Optimistically remove it from our in-memory list + UI so chart updates immediately
             try:
@@ -416,7 +466,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 return
 
             async def delete_task():
-                await DBEngine.execute("DELETE FROM public.stock_price_levels WHERE level_id = $1", level_id)
+                await delete_price_level(level_id)
 
             # Optimistically remove persisted level from our in-memory list + UI and redraw
             try:
@@ -447,24 +497,19 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
     def _draw_all_levels(self):
         """Rebuild the chart horizontal lines from the in-memory levels and entry/target/stop."""
-        lines = []
         try:
-            if getattr(self, 'entry_price', None) is not None:
-                lines.append((self.entry_price, 'blue', f'Entry: R{self.entry_price:.2f}'))
-            if getattr(self, 'stop_loss', None) is not None:
-                lines.append((self.stop_loss, 'red', f'Stop Loss: R{self.stop_loss:.2f}'))
-            if getattr(self, 'target_price', None) is not None:
-                lines.append((self.target_price, 'green', f'Target: R{self.target_price:.2f}'))
-            for (_id, p) in getattr(self, 'support_levels', []) or []:
-                if p is not None:
-                    lines.append((p, 'green', f'Support: R{p:.2f}'))
-            for (_id, p) in getattr(self, 'resistance_levels', []) or []:
-                if p is not None:
-                    lines.append((p, 'red', f'Resistance: R{p:.2f}'))
+            lines = build_lines_from_state(
+                getattr(self, 'entry_price', None),
+                getattr(self, 'stop_loss', None),
+                getattr(self, 'target_price', None),
+                getattr(self, 'support_levels', None),
+                getattr(self, 'resistance_levels', None),
+            )
         except Exception:
             logging.getLogger(__name__).exception('Failed building levels to draw')
+            lines = []
         setter = getattr(self.chart, 'set_horizontal_lines', None)
-        if callable(setter):
+        if callable(setter) and lines:
             try:
                 setter(lines)
             except Exception:
@@ -488,24 +533,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 LEFT JOIN stock_analysis sa ON w.ticker = sa.ticker
                 WHERE w.ticker = $1
             """
-            rows = await DBEngine.fetch(query, self.ticker)
-            if rows:
-                return dict(rows[0])
-            # Fallback: if no watchlist row exists, fetch support/resistance from stock_price_levels
-            fallback_query = """
-                SELECT
-                    sa.strategy,
-                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'support') AS support_ids,
-                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'support') AS support_prices,
-                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'resistance') AS resistance_ids,
-                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = $1 AND spl.level_type = 'resistance') AS resistance_prices
-                FROM stock_analysis sa
-                WHERE sa.ticker = $1
-            """
-            rows2 = await DBEngine.fetch(fallback_query, self.ticker)
-            if rows2:
-                return dict(rows2[0])
-            return None
+            return await fetch_analysis(self.ticker)
 
         def on_loaded(data):
             if data:
@@ -584,5 +612,43 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     setter = getattr(self.chart, "set_horizontal_lines", None)
                     if callable(setter):
                         setter(to_store)
+                # Update navigation state in case parent watchlist changed
+                try:
+                    self._update_navigation_state()
+                except Exception:
+                    pass
 
         self.async_run_bg(fetch_data(), callback=on_loaded)
+    
+    # -------------------------------------------------------------------------
+    # Navigation helpers: cycle through watchlist order
+    # -------------------------------------------------------------------------
+    def _on_prev_ticker(self):
+        try:
+            w = self._find_watchlist_widget()
+            if w and hasattr(w, 'get_adjacent_ticker'):
+                prev_t = w.get_adjacent_ticker(self.ticker, direction=-1)
+                if prev_t:
+                    try:
+                        if callable(getattr(w, 'on_select', None)):
+                            w.on_select(prev_t)
+                    except Exception:
+                        pass
+                    self.update_ticker(prev_t)
+        except Exception:
+            logging.getLogger(__name__).exception('Failed moving to previous ticker')
+
+    def _on_next_ticker(self):
+        try:
+            w = self._find_watchlist_widget()
+            if w and hasattr(w, 'get_adjacent_ticker'):
+                nxt = w.get_adjacent_ticker(self.ticker, direction=1)
+                if nxt:
+                    try:
+                        if callable(getattr(w, 'on_select', None)):
+                            w.on_select(nxt)
+                    except Exception:
+                        pass
+                    self.update_ticker(nxt)
+        except Exception:
+            logging.getLogger(__name__).exception('Failed moving to next ticker')

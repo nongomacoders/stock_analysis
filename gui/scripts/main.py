@@ -86,7 +86,7 @@ class CommandCenter(ttk.Window):
         self.async_run(DBEngine.get_pool())
 
         # 3. Start Background Services
-        #self.start_market_agent()
+        self.start_market_agent()
         
         # 4. Initialize Database Notifier
         self.notifier = DBNotifier()

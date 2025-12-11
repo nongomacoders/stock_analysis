@@ -146,16 +146,32 @@ class WatchlistWidget(ttk.Frame):
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
         self.tree.bind("<Double-Button-1>", self._on_double_click)
 
+    def get_ordered_tickers(self):
+        """Return the list of tickers in the tree, in display order."""
+        try:
+            return [self.tree.item(i)["values"][0] for i in self.tree.get_children("")]
+        except Exception:
+            return []
+
+    def get_adjacent_ticker(self, current_ticker: str, direction: int = 1):
+        """Return the next/previous ticker around current_ticker (wraps around)."""
+        try:
+            return get_adjacent_ticker_from_list(current_ticker, self.get_ordered_tickers(), direction)
+        except Exception:
+            return None
+
+
+
     def refresh_watchlist(self):
         """Refresh watchlist data (non-blocking)."""
         def on_data_loaded(data):
             if not data:
                 return
-                
+
             # Clear existing items
             for item in self.tree.get_children():
                 self.tree.delete(item)
-            
+
             today = date.today()
 
             # Sort incoming data so Treeview shows the most important status groups in the desired order
@@ -311,3 +327,17 @@ class WatchlistWidget(ttk.Frame):
     def open_portfolio_manager(self):
         # Open the portfolio manager window
         PortfolioWindow(self, self.async_run, self.async_run_bg)
+
+
+def get_adjacent_ticker_from_list(current_ticker: str, tickers: list, direction: int = 1):
+    """Helper: return next/previous ticker in the list or None if not possible."""
+    if not tickers:
+        return None
+    if current_ticker not in tickers:
+        return None
+    try:
+        idx = tickers.index(current_ticker)
+        next_idx = (idx + direction) % len(tickers)
+        return tickers[next_idx]
+    except Exception:
+        return None
