@@ -13,40 +13,52 @@ sys.path.append(project_root)
 # --- IMPORTS ---
 from core.db.engine import DBEngine
 from modules.data.loader import RawFundamentalsLoader
+from playwright_scraper.pw import logout_sharedata
 
 logger = logging.getLogger(__name__)
 
 
 async def main():
-    logger.info("%s", '=' * 60)
-    logger.info("POPULATING RAW STOCK VALUATIONS TABLE")
-    logger.info("%s", '=' * 60)
+    result = None
+    try:
+        logger.info("%s", '=' * 60)
+        logger.info("POPULATING RAW STOCK VALUATIONS TABLE")
+        logger.info("%s", '=' * 60)
 
-    # 1. Initialize DB Pool
-    logger.info("Initializing Database Connection...")
-    await DBEngine.get_pool()
+        # 1. Initialize DB Pool
+        logger.info("Initializing Database Connection...")
+        await DBEngine.get_pool()
 
-    # 2. Run Loader
-    logger.info("Running Fundamentals Loader...")
-    loader = RawFundamentalsLoader(log_callback=logger.info)
+        # 2. Run Loader
+        logger.info("Running Fundamentals Loader...")
+        loader = RawFundamentalsLoader(log_callback=logger.info)
 
-    # Run the update (tickers=None means "do all tickers in DB")
-    result = await loader.run_fundamentals_update(tickers=['NPN.JO'])
+        # Run the update (tickers=None means "do all tickers in DB")
+        result = await loader.run_fundamentals_update(tickers=['NPN.JO'])
 
-    logger.info("%s", '\n' + ('=' * 60))
-    logger.info("SUMMARY")
-    logger.info("%s", '=' * 60)
-    logger.info("Succeeded: %s tickers", result['succeeded'])
-    logger.info("Failed: %s tickers", result['failed'])
-    logger.info("Total periods inserted: %s", result['total_periods'])
+        logger.info("%s", '\n' + ('=' * 60))
+        logger.info("SUMMARY")
+        logger.info("%s", '=' * 60)
+        logger.info("Succeeded: %s tickers", result['succeeded'])
+        logger.info("Failed: %s tickers", result['failed'])
+        logger.info("Total periods inserted: %s", result['total_periods'])
 
-    # 3. Close Pool
-    await DBEngine.close()
+        if result["succeeded"] > 0:
+            logger.info("[SUCCESS] Process complete.")
+        else:
+            logger.warning("[WARNING] No tickers processed successfully.")
+    finally:
+        # 3. Close Pool
+        try:
+            await DBEngine.close()
+        except Exception:
+            logger.exception("Error closing DB")
 
-    if result["succeeded"] > 0:
-        logger.info("[SUCCESS] Process complete.")
-    else:
-        logger.warning("[WARNING] No tickers processed successfully.")
+        # 4. Logout from ShareData to avoid concurrent-login lockouts next run
+        try:
+            await logout_sharedata(headless=True)
+        except Exception:
+            logger.exception("Error logging out of ShareData")
 
 
 if __name__ == "__main__":
