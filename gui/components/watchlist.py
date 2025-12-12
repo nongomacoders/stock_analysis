@@ -142,6 +142,7 @@ class WatchlistWidget(ttk.Frame):
         self.tree.tag_configure("holding", background="#d1e7dd", foreground="black")
         self.tree.tag_configure("pretrade", background="#E6E6FA", foreground="black")
         self.tree.tag_configure("unread", background="#ffcccc", foreground="black")
+        self.tree.tag_configure("no_research", background="#EDF16E", foreground="black")  # Light pink for missing deep research
 
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
         self.tree.bind("<Double-Button-1>", self._on_double_click)
@@ -192,6 +193,8 @@ class WatchlistWidget(ttk.Frame):
                     row_tag = "holding"
                 elif row["status"] == "Pre-Trade":
                     row_tag = "pretrade"
+                elif not row.get("deepresearch"):
+                    row_tag = "no_research"
 
                 # 3. Proximity Text
                 prox_text, _ = get_proximity_status(
@@ -242,15 +245,15 @@ class WatchlistWidget(ttk.Frame):
                     except Exception:
                         rr_str = str(rr_val)
 
-                    # PEG: use peg_ratio returned from fetch_watchlist_data if present
-                    peg_val = row.get("peg_ratio") or row.get("peg_ratio_historical")
-                    if peg_val is None:
-                        peg_str = "-"
-                    else:
-                        try:
-                            peg_str = f"{float(peg_val):.2f}"
-                        except Exception:
-                            peg_str = str(peg_val)
+                # PEG: use peg_ratio returned from fetch_watchlist_data if present
+                peg_val = row.get("peg_ratio") or row.get("peg_ratio_historical")
+                if peg_val is None:
+                    peg_str = "-"
+                else:
+                    try:
+                        peg_str = f"{float(peg_val):.2f}"
+                    except Exception:
+                        peg_str = str(peg_val)
 
                 # 6. Upside: expected percent return if target is reached
                 target_val = row.get("target")

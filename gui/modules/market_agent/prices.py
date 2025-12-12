@@ -4,9 +4,6 @@ from datetime import date, timedelta
 from decimal import Decimal
 from core.db.engine import DBEngine
 from core.utils.math import convert_yf_price_to_cents
-
-# CHANGED: Import the new AI Engine module
-import modules.analysis.engine as ai_engine
 import logging
 
 logger = logging.getLogger(__name__)
@@ -146,55 +143,168 @@ async def _process_and_save(data, all_tickers):
 async def _check_price_triggers(check_date):
     logger.info("Checking for Price Triggers...")
 
-    # Logic: Get Latest Price AND Previous Price for every stock
+    # Prices in daily_stock_data are stored in cents (see convert_yf_price_to_cents).
+    # Price levels are now stored in public.stock_price_levels (also cents).
+    # We check crossings for the latest close vs previous close PER ticker.
     query = """
-        WITH RecentPrices AS (
-            SELECT ticker, close_price, 
-                   LAG(close_price) OVER(PARTITION BY ticker ORDER BY trade_date) as prev_price,
-                   trade_date
+        WITH latest_prices AS (
+            SELECT
+                ticker,
+                close_price,
+                LAG(close_price) OVER (PARTITION BY ticker ORDER BY trade_date) AS prev_price,
+                trade_date,
+                ROW_NUMBER() OVER (PARTITION BY ticker ORDER BY trade_date DESC) AS rn
             FROM daily_stock_data
         ),
-        Latest AS (
-            SELECT * FROM RecentPrices WHERE trade_date = (SELECT MAX(trade_date) FROM daily_stock_data)
+        latest AS (
+            SELECT ticker, close_price, prev_price
+            FROM latest_prices
+            WHERE rn = 1 AND prev_price IS NOT NULL
+        ),
+        sr_levels AS (
+            -- Support/resistance: keep all levels
+            SELECT spl.ticker, spl.level_id, spl.level_type, spl.price_level
+            FROM public.stock_price_levels spl
+            WHERE spl.level_type IN ('support', 'resistance')
+        ),
+        ets_levels AS (
+            -- Entry/target/stop_loss: take the latest level per type
+            SELECT DISTINCT ON (spl.ticker, spl.level_type)
+                spl.ticker,
+                spl.level_id,
+                spl.level_type,
+                spl.price_level
+            FROM public.stock_price_levels spl
+            WHERE spl.level_type IN ('entry', 'target', 'stop_loss')
+            ORDER BY spl.ticker, spl.level_type, spl.date_added DESC, spl.level_id DESC
+        ),
+        level_rows AS (
+            SELECT * FROM sr_levels
+            UNION ALL
+            SELECT * FROM ets_levels
         )
-        SELECT l.ticker, l.close_price, l.prev_price, sa.price_levels
-        FROM Latest l
-        JOIN stock_analysis sa ON l.ticker = sa.ticker
-        WHERE sa.price_levels IS NOT NULL AND l.prev_price IS NOT NULL
+        SELECT
+            l.ticker,
+            l.close_price,
+            l.prev_price,
+            lr.level_id,
+            lr.level_type,
+            lr.price_level
+        FROM latest l
+        JOIN level_rows lr ON lr.ticker = l.ticker
     """
 
     rows = await DBEngine.fetch(query)
 
     for row in rows:
         ticker = row["ticker"]
-        curr = float(row["close_price"])
-        prev = float(row["prev_price"])
-        levels = row["price_levels"]  # This is a list from DB
 
-        if not levels:
+        # cents
+        try:
+            curr = int(row["close_price"])
+        except Exception:
+            curr = int(float(row["close_price"]))
+        try:
+            prev = int(row["prev_price"])
+        except Exception:
+            prev = int(float(row["prev_price"]))
+
+        level_id = row.get("level_id")
+        level_type = row.get("level_type")
+        lvl = row.get("price_level")
+        if lvl is None:
             continue
 
-        for lvl in levels:
-            lvl_val = float(lvl)
-            # Check for Cross (Up or Down)
-            crossed_up = prev < lvl_val <= curr
-            crossed_down = prev > lvl_val >= curr
+        # normalize to integer cents
+        try:
+            lvl_val = int(lvl)
+        except Exception:
+            try:
+                lvl_val = int(Decimal(str(lvl)))
+            except Exception:
+                lvl_val = int(float(lvl))
 
-            if crossed_up or crossed_down:
-                # Check if we already logged this hit today
+        # Check for Cross (Up or Down)
+        crossed_up = prev < lvl_val <= curr
+        crossed_down = prev > lvl_val >= curr
+
+        if crossed_up or crossed_down:
+            # Prefer a level_id based dedupe (more precise than numeric price).
+            # Fall back to ticker+price_level if level_id isn't available.
+            if level_id is not None:
                 log_check_q = """
-                    SELECT 1 FROM price_hit_log 
+                    SELECT 1 FROM price_hit_log
+                    WHERE ticker = $1 AND level_id = $2 AND hit_timestamp::date = $3
+                """
+                try:
+                    exists = await DBEngine.fetch(log_check_q, ticker, level_id, check_date)
+                except Exception:
+                    # Backward-compatible fallback if DB hasn't been migrated yet.
+                    exists = None
+            else:
+                log_check_q = """
+                    SELECT 1 FROM price_hit_log
                     WHERE ticker = $1 AND price_level = $2 AND hit_timestamp::date = $3
                 """
                 exists = await DBEngine.fetch(log_check_q, ticker, lvl_val, check_date)
 
-                if not exists:
-                    logger.info("  [TRIGGER] %s crossed %s", ticker, lvl_val)
-                    # 1. Log the hit
-                    await DBEngine.execute(
-                        "INSERT INTO price_hit_log (ticker, price_level) VALUES ($1, $2)",
+            if level_id is not None and exists is None:
+                log_check_q = """
+                    SELECT 1 FROM price_hit_log
+                    WHERE ticker = $1 AND price_level = $2 AND hit_timestamp::date = $3
+                """
+                exists = await DBEngine.fetch(log_check_q, ticker, lvl_val, check_date)
+
+            if not exists:
+                logger.info(
+                    "  [TRIGGER] %s crossed %s (%s id=%s)",
+                    ticker,
+                    lvl_val,
+                    level_type,
+                    level_id,
+                )
+
+                # 1. Log the hit. Prefer the new schema (level_type + level_id).
+                inserted = False
+                try:
+                    status = await DBEngine.execute(
+                        "INSERT INTO price_hit_log (ticker, price_level, level_type, level_id) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING",
+                        ticker,
+                        lvl_val,
+                        level_type,
+                        level_id,
+                    )
+                    if isinstance(status, str):
+                        parts = status.split()
+                        if parts and parts[-1].isdigit():
+                            inserted = int(parts[-1]) > 0
+                except Exception:
+                    # Backward-compatible fallback if DB hasn't been migrated yet.
+                    status = await DBEngine.execute(
+                        "INSERT INTO price_hit_log (ticker, price_level) VALUES ($1, $2) ON CONFLICT DO NOTHING",
                         ticker,
                         lvl_val,
                     )
-                    # 2. Trigger AI (Async call replaces Threading)
-                    await ai_engine.analyze_price_change(ticker, curr, lvl_val)
+                    if isinstance(status, str):
+                        parts = status.split()
+                        if parts and parts[-1].isdigit():
+                            inserted = int(parts[-1]) > 0
+
+                # Also write to action_log (no AI) so existing UI listeners refresh.
+                # This preserves the previous behavior where a new action log entry
+                # causes watchlist/research windows to update via action_log_changes.
+                if inserted:
+                    try:
+                        trigger_content = (
+                            f"Price crossed {lvl_val}c ({level_type}, level_id={level_id}), "
+                            f"closing at {curr}c."
+                        )
+                        await DBEngine.execute(
+                            "INSERT INTO action_log (ticker, trigger_type, trigger_content, ai_analysis) VALUES ($1, $2, $3, $4)",
+                            ticker,
+                            "Price Level",
+                            trigger_content,
+                            None,
+                        )
+                    except Exception:
+                        logger.exception("Failed to write action_log for %s", ticker)

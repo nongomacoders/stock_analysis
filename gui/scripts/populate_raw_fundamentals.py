@@ -31,7 +31,7 @@ async def main():
     loader = RawFundamentalsLoader(log_callback=logger.info)
 
     # Run the update (tickers=None means "do all tickers in DB")
-    result = await loader.run_fundamentals_update(tickers=None)
+    result = await loader.run_fundamentals_update(tickers=['NPN.JO'])
 
     logger.info("%s", '\n' + ('=' * 60))
     logger.info("SUMMARY")

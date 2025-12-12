@@ -100,7 +100,9 @@ async def update_analysis_db(ticker: str, entry_c: Optional[int], stop_c: Option
         # 'stop_loss' we update the most recent row else insert.
         if level_type in ('support', 'resistance'):
             await DBEngine.execute(
-                "INSERT INTO public.stock_price_levels (ticker, price_level, level_type, date_added, is_long) VALUES ($1, $2, $3, CURRENT_DATE, $4)",
+                """INSERT INTO public.stock_price_levels (ticker, price_level, level_type, date_added, is_long) 
+                   VALUES ($1, $2, $3, CURRENT_DATE, $4)
+                   ON CONFLICT (ticker, price_level, level_type) DO NOTHING""",
                 ticker,
                 price_c,
                 level_type,

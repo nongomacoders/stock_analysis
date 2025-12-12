@@ -104,7 +104,14 @@ async def save_research_data(ticker: str, content: str):
 
 
 async def save_deep_research_data(ticker: str, content: str):
-    """Upsert deepresearch for a ticker (insert or update)."""
+    """Upsert deepresearch for a ticker (insert or update).
+    
+    Raises ValueError if content is empty or just placeholder text.
+    """
+    # Prevent saving blank content or placeholder text
+    if not content or content.strip() == "" or content == "No data available.":
+        raise ValueError(f"Cannot save empty deep research content for {ticker}")
+    
     query = """
         INSERT INTO stock_analysis (ticker, deepresearch)
         VALUES ($1, $2)

@@ -1,6 +1,6 @@
 import tkinter as tk
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import X, W, BOTH, E, END, LEFT
+from ttkbootstrap.constants import X, W, BOTH, E, END, LEFT, BOTTOM
 from ttkbootstrap.scrolled import ScrolledText
 import logging
 from ttkbootstrap.dialogs import Messagebox
@@ -34,6 +34,15 @@ class AnalysisControlPanel(ttk.Frame):
         self.create_widgets()
         
     def create_widgets(self):
+        # Save Button - pack first at bottom to ensure it's always visible
+        self.save_btn = ttk.Button(
+            self, 
+            text="Save Analysis", 
+            command=self._on_save, 
+            bootstyle="success"
+        )
+        self.save_btn.pack(side=BOTTOM, anchor=E, pady=(6, 0))
+        
         # We split the panel into 4 columns (entry/target/stop, support, resistance, strategy)
         panel_inner = ttk.Frame(self)
         panel_inner.pack(fill=BOTH, expand=True)
@@ -95,7 +104,7 @@ class AnalysisControlPanel(ttk.Frame):
         ttk.Label(support_frame, text='Support Levels', font=(None, 9, 'bold')).pack(anchor=W)
         list_frame_sup = ttk.Frame(support_frame)
         list_frame_sup.pack(fill=BOTH, pady=(2, 4))
-        self.support_listbox = tk.Listbox(list_frame_sup, height=7, exportselection=False)
+        self.support_listbox = tk.Listbox(list_frame_sup, height=4, exportselection=False)
         self.support_listbox.pack(side=LEFT, fill=BOTH, expand=True)
         self.support_scroll = ttk.Scrollbar(list_frame_sup, orient='vertical', command=self.support_listbox.yview)
         self.support_scroll.pack(side=LEFT, fill='y')
@@ -109,7 +118,7 @@ class AnalysisControlPanel(ttk.Frame):
         ttk.Label(col2, text='Resistance Levels', font=(None, 9, 'bold')).pack(anchor=W)
         list_frame_res = ttk.Frame(col2)
         list_frame_res.pack(fill=BOTH, pady=(2, 4))
-        self.resistance_listbox = tk.Listbox(list_frame_res, height=7, exportselection=False)
+        self.resistance_listbox = tk.Listbox(list_frame_res, height=4, exportselection=False)
         self.resistance_listbox.pack(side=LEFT, fill=BOTH, expand=True)
         self.resistance_scroll = ttk.Scrollbar(list_frame_res, orient='vertical', command=self.resistance_listbox.yview)
         self.resistance_scroll.pack(side=LEFT, fill='y')
@@ -126,15 +135,6 @@ class AnalysisControlPanel(ttk.Frame):
 
         # No persistent focus flag required; we'll determine focus on-demand
         # using the active widget so we accurately detect any input focus.
-        
-        # Save Button
-        self.save_btn = ttk.Button(
-            self, 
-            text="Save Analysis", 
-            command=self._on_save, 
-            bootstyle="success"
-        )
-        self.save_btn.pack(anchor=E)
 
         # Ensure the value labels update whenever the entry boxes change
         try:

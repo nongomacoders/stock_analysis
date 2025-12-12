@@ -45,6 +45,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.create_widgets()
         self.load_chart("1 Year") # Default to 1 Year
         self.load_existing_data()
+        self._update_ticker_name()
 
         # Bind keypress events to the key handler
         # We'll wire the key handler during widget creation (below)
@@ -72,6 +73,23 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.prev_btn.pack(side=LEFT, padx=(6, 0))
         self.next_btn = ttk.Button(control_frame, text="Next ▶", bootstyle="secondary", command=self._on_next_ticker)
         self.next_btn.pack(side=LEFT, padx=(6, 0))
+        
+        # Upside label (pack BEFORE the long name so it doesn't get squeezed off-screen)
+        self.upside_label = ttk.Label(control_frame, text="", font=("Helvetica", 12, "bold"), foreground="#4CAF50")
+        self.upside_label.pack(side=LEFT, padx=(10, 0))
+
+        # Ticker full name label
+        # Use wraplength so long names don't hide other controls.
+        self.ticker_name_label = ttk.Label(
+            control_frame,
+            text="",
+            font=("Helvetica", 14, "bold"),
+            foreground="#2196F3",
+            wraplength=520,
+            justify=LEFT,
+        )
+        self.ticker_name_label.pack(side=LEFT, padx=(10, 0))
+        
         # Default navigation state is disabled until we can evaluate parent watchlist
         try:
             self.prev_btn.configure(state='disabled')
@@ -129,6 +147,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             logging.getLogger(__name__).info("\n[TechAnalysis] Updating to ticker: %s", ticker)
             self.ticker = ticker
             self.title(f"{ticker} - Technical Analysis")
+            self._update_ticker_name()
             # Update status widget if present
             try:
                 if hasattr(self, "status_widget") and self.status_widget is not None:
@@ -150,6 +169,11 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         # Update arrow enablement
         try:
             self._update_navigation_state()
+        except Exception:
+            pass
+        # Update upside display for new ticker
+        try:
+            self._update_upside_display()
         except Exception:
             pass
 
@@ -266,6 +290,11 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             logging.getLogger(__name__).debug(
                 "[TechAnalysis] BaseChart.plot() completed - candles rendered"
             )
+            # Ensure window stays on top after chart loads
+            try:
+                self.lift()
+            except Exception:
+                pass
 
         self.async_run_bg(get_historical_prices(self.ticker, days), callback=on_data_loaded)
 
@@ -380,9 +409,10 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             logging.getLogger(__name__).exception("Failed to refresh existing analysis data after status change")
         # Notify parent that status changed so external UI (eg. watchlist) can refresh
         try:
-            if callable(getattr(self, 'on_status_saved_callback', None)):
+            cb = getattr(self, 'on_status_saved_callback', None)
+            if callable(cb):
                 try:
-                    self.on_status_saved_callback()
+                    cb()
                 except Exception:
                     logging.getLogger(__name__).exception('on_status_saved_callback failed')
         except Exception:
@@ -617,8 +647,89 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     self._update_navigation_state()
                 except Exception:
                     pass
+                # Update upside display
+                try:
+                    self._update_upside_display()
+                except Exception:
+                    pass
+                # Ensure window stays on top after data loads
+                try:
+                    self.lift()
+                except Exception:
+                    pass
 
         self.async_run_bg(fetch_data(), callback=on_loaded)
+    
+    def _update_ticker_name(self):
+        """Fetch and display the full name for the current ticker."""
+        async def fetch_name():
+            query = "SELECT full_name FROM stock_details WHERE ticker = $1"
+            rows = await DBEngine.fetch(query, self.ticker)
+            return rows[0]['full_name'] if rows and rows[0].get('full_name') else ""
+        
+        def on_name_loaded(full_name):
+            if full_name:
+                self.ticker_name_label.config(text=full_name)
+            else:
+                self.ticker_name_label.config(text="")
+        
+        self.async_run_bg(fetch_name(), callback=on_name_loaded)
+    
+    def _update_upside_display(self):
+        """Calculate and display the upside potential based on current price, target, and position direction."""
+        try:
+            # Get current price from database
+            async def get_current_price():
+                query = "SELECT close_price FROM daily_stock_data WHERE ticker = $1 ORDER BY trade_date DESC LIMIT 1"
+                rows = await DBEngine.fetch(query, self.ticker)
+                return rows[0]['close_price'] if rows else None
+            
+            def on_price_loaded(current_price):
+                try:
+                    # Normalize price units.
+                    # In this app, watchlist prices are stored in cents, while UI values are rands.
+                    # Detect cents by comparing to the target (rand) and downscale when needed.
+                    cp = None
+                    try:
+                        cp = float(current_price) if current_price is not None else None
+                    except Exception:
+                        cp = None
+
+                    if cp is not None and self.target_price is not None:
+                        try:
+                            if cp > (float(self.target_price) * 10.0):
+                                cp = cp / 100.0
+                        except Exception:
+                            pass
+
+                    # Calculate upside if we have the required data
+                    if (cp is not None and self.target_price is not None and cp > 0):
+                        
+                        # Determine if it's a long position (default assumption)
+                        is_long = True
+                        if hasattr(self, 'entry_price') and self.entry_price is not None:
+                            is_long = self.target_price > self.entry_price
+                        
+                        # Calculate upside
+                        if is_long:
+                            gain = (self.target_price - cp) / cp * 100
+                        else:
+                            gain = (cp - self.target_price) / cp * 100
+                        
+                        upside_str = f"Upside: {abs(float(gain)):.1f}%"
+                        self.upside_label.config(text=upside_str)
+                    else:
+                        self.upside_label.config(text="")
+                        
+                except Exception as e:
+                    logging.getLogger(__name__).warning(f"Failed to calculate upside: {e}")
+                    self.upside_label.config(text="")
+            
+            self.async_run_bg(get_current_price(), callback=on_price_loaded)
+                
+        except Exception as e:
+            logging.getLogger(__name__).warning(f"Failed to start upside calculation: {e}")
+            self.upside_label.config(text="")
     
     # -------------------------------------------------------------------------
     # Navigation helpers: cycle through watchlist order
@@ -635,6 +746,8 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     except Exception:
                         pass
                     self.update_ticker(prev_t)
+                    # Bring this window to the front after other windows reload
+                    self.after(100, self.lift)
         except Exception:
             logging.getLogger(__name__).exception('Failed moving to previous ticker')
 
@@ -650,5 +763,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     except Exception:
                         pass
                     self.update_ticker(nxt)
+                    # Bring this window to the front after other windows reload
+                    self.after(100, self.lift)
         except Exception:
             logging.getLogger(__name__).exception('Failed moving to next ticker')

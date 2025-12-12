@@ -1,13 +1,40 @@
-2025-12-10 23:41:11,591 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-10 23:41:11,658 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-10 23:41:14,404 __main__ INFO: Selected: PAN.JO
-2025-12-10 23:41:20,310 __main__ INFO: Selected: GLN.JO
-2025-12-10 23:41:20,311 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: GLN.JO
-2025-12-10 23:41:21,337 components.technical_analysis_window INFO: 
-[TechAnalysis] Updating to ticker: GLN.JO
-2025-12-10 23:41:28,567 __main__ INFO: Selected: SSW.JO
-2025-12-10 23:41:28,567 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: SSW.JO
-2025-12-10 23:41:31,359 components.technical_analysis_window INFO: 
-[TechAnalysis] Updating to ticker: SSW.JO
+2025-12-12 13:09:49,443 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-12 13:09:49,453 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-12 13:09:51,034 __main__ INFO: Selected: APF.JO
+2025-12-12 13:09:51,298 components.deep_research_tab INFO: [DeepResearch] load_content called for APF.JO, setting loading=True
+2025-12-12 13:09:51,298 components.deep_research_tab INFO: [DeepResearch] load_content complete for APF.JO, setting loading=False
+2025-12-12 13:10:17,259 __main__ INFO: Selected: PAN.JO
+2025-12-12 13:10:17,259 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: PAN.JO
+2025-12-12 13:10:17,424 components.deep_research_tab INFO: [DeepResearch] load_content called for PAN.JO, setting loading=True
+2025-12-12 13:10:17,424 components.deep_research_tab INFO: [DeepResearch] load_content complete for PAN.JO, setting loading=False
+2025-12-12 13:10:36,964 __main__ INFO: Selected: TBS.JO
+2025-12-12 13:10:36,964 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: TBS.JO
+2025-12-12 13:10:37,123 components.deep_research_tab INFO: [DeepResearch] load_content called for TBS.JO, setting loading=True
+2025-12-12 13:10:37,123 components.deep_research_tab INFO: [DeepResearch] load_content complete for TBS.JO, setting loading=False
+2025-12-12 13:10:53,070 __main__ INFO: Selected: TGA.JO
+2025-12-12 13:10:53,070 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: TGA.JO
+2025-12-12 13:10:53,234 components.deep_research_tab INFO: [DeepResearch] load_content called for TGA.JO, setting loading=True
+2025-12-12 13:10:53,234 components.deep_research_tab INFO: [DeepResearch] load_content complete for TGA.JO, setting loading=False
+2025-12-12 13:10:54,473 __main__ INFO: Selected: KAL.JO
+2025-12-12 13:10:54,473 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: KAL.JO
+2025-12-12 13:10:54,617 components.deep_research_tab INFO: [DeepResearch] load_content called for KAL.JO, setting loading=True
+2025-12-12 13:10:54,620 components.deep_research_tab INFO: [DeepResearch] load_content complete for KAL.JO, setting loading=False
+2025-12-12 13:11:05,923 __main__ INFO: Selected: TBS.JO
+2025-12-12 13:11:05,923 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: TBS.JO
+2025-12-12 13:11:06,075 components.deep_research_tab INFO: [DeepResearch] load_content called for TBS.JO, setting loading=True
+2025-12-12 13:11:06,075 components.deep_research_tab INFO: [DeepResearch] load_content complete for TBS.JO, setting loading=False
+2025-12-12 13:11:12,362 __main__ INFO: Selected: GFI.JO
+2025-12-12 13:11:12,362 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GFI.JO
+2025-12-12 13:11:12,572 components.deep_research_tab INFO: [DeepResearch] load_content called for GFI.JO, setting loading=True
+2025-12-12 13:11:12,572 components.deep_research_tab INFO: [DeepResearch] load_content complete for GFI.JO, setting loading=False
+2025-12-12 13:13:01,269 __main__ INFO: Closing application...
+2025-12-12 13:13:01,277 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-12 13:13:01,277 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
+2025-12-12 13:13:01,277 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-12 13:13:01,277 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'

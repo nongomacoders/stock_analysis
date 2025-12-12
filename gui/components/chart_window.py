@@ -2,6 +2,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import TOP, X, BOTH, NONE, W, E, VERTICAL, LEFT, RIGHT, Y, END
 import matplotlib.pyplot as plt
 import logging
+from datetime import date
 
 # --- NEW IMPORT ---
 from modules.data.market import get_historical_prices
@@ -97,13 +98,18 @@ class ChartWindow(ttk.Toplevel):
         center_container = ttk.Frame(frame)
         center_container.pack(expand=True, fill=NONE, padx=10, pady=10)
         
+        # Configure style for larger font
+        style = ttk.Style()
+        style.configure("Metrics.Treeview", font=("Helvetica", 14), rowheight=30)
+        style.configure("Metrics.Treeview.Heading", font=("Helvetica", 15, "bold"))
+        
         # Create Treeview
         columns = ("metric", "value")
         self.metrics_tree = ttk.Treeview(
             center_container, 
             columns=columns, 
             show="headings", 
-            bootstyle="primary",
+            style="Metrics.Treeview",
             height=10  # Set a reasonable height
         )
         
@@ -114,6 +120,9 @@ class ChartWindow(ttk.Toplevel):
         # Define columns with fixed widths
         self.metrics_tree.column("metric", width=200, anchor=W)
         self.metrics_tree.column("value", width=150, anchor=E)
+
+        # Highlight tags
+        self.metrics_tree.tag_configure("soon_release", foreground="red")
         
         # Add scrollbar
         scrollbar = ttk.Scrollbar(center_container, orient=VERTICAL, command=self.metrics_tree.yview)
@@ -211,9 +220,12 @@ class ChartWindow(ttk.Toplevel):
             return
         
         # Helper to format and insert
-        def add_row(label, value, fmt="{}"):
+        def add_row(label, value, fmt="{}", tags=None):
             display_val = fmt.format(value) if value is not None else "N/A"
-            self.metrics_tree.insert("", END, values=(label, display_val))
+            if tags:
+                self.metrics_tree.insert("", END, values=(label, display_val), tags=tags)
+            else:
+                self.metrics_tree.insert("", END, values=(label, display_val))
 
         # Current Price
         price = metrics.get('current_price')
@@ -240,3 +252,38 @@ class ChartWindow(ttk.Toplevel):
         
         # Financials Date
         add_row("Financials Date", metrics.get('financials_date'), "{}")
+
+        # Next results release date (estimated): same logic as fetch_watchlist_data
+        # Uses the 2nd most recent results_release_date + 1 year.
+        try:
+            next_release_q = """
+                SELECT (results_release_date + interval '1 year')::date AS next_event_date
+                FROM raw_stock_valuations
+                WHERE ticker = $1
+                ORDER BY results_release_date DESC
+                LIMIT 1 OFFSET 1
+            """
+            rows = self.async_run(DBEngine.fetch(next_release_q, self.ticker))
+            next_event_date = None
+            if rows:
+                next_event_date = rows[0].get("next_event_date")
+
+            soon_tags = None
+            try:
+                if next_event_date is not None:
+                    # DB typically returns datetime.date here
+                    next_d = next_event_date
+                    if hasattr(next_event_date, "date"):
+                        next_d = next_event_date.date()
+                    days_to = (next_d - date.today()).days
+                    if 0 <= days_to < 30:
+                        soon_tags = ("soon_release",)
+            except Exception:
+                soon_tags = None
+
+            add_row("Next Release Date", next_event_date, "{}", tags=soon_tags)
+        except Exception:
+            logging.getLogger(__name__).exception(
+                "[ChartWindow] Failed to load next release date for %s", self.ticker
+            )
+            add_row("Next Release Date", None, "{}")
