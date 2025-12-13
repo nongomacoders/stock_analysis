@@ -1,0 +1,1879 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20250902_S509928.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [MTH]
+
+
+Summarised consolidated results and cash dividend declaration for the year ended 30 June 2025
+
+
+MOTUS HOLDINGS LIMITED
+
+
+(Incorporated in the Republic of South Africa)
+
+
+Registration number: 2017/451730/06
+
+
+Share code: MTH  ISIN: ZAE000261913
+
+
+("Motus" or "the Company" or "the Group")
+
+
+Summarised consolidated results and cash dividend declaration
+
+
+for the year ended 30 June 2025
+
+
+Financial highlights
+
+
+ -   Revenue1 down 1%, to R112 598 million (2024: R113 764 million)
+
+
+ -   Operating profit1,2 in line with prior year, to R5 476 million (2024: R5 503 million)
+
+
+ -   Net finance costs down 13%, to R1 908 million (2024: R2 189 million)
+
+
+ -   Profit before tax up 4%, to R3 336 million (2024: R3 218 million)
+
+
+ -   Attributable profit up 1%, to R2 451 million (2024: R2 436 million)
+
+
+ -   Net asset value per share up 11%, to 11 305 cents per share (2024: 10 203 cents per share)
+
+
+ -   Earnings per share up 1%, to 1 468 cents per share (2024: 1 450 cents per share)
+
+
+ -   Headline earnings per share up 5%, to 1 548 cents per share (2024: 1 479 cents per share)
+
+
+ -   Total dividend per ordinary share up 6%, to 550 cents per share (2024: 520 cents per share) (paid
+
+
+     interim dividend of 240 cents per share)
+
+
+ -   Cash flows from operating activities up 60% to R5 669 million (2024: R3 533 million)
+
+
+ -   Return on invested capital3 increased to 10,9% (2024: 10,8%)
+
+
+ -   Weighted average cost of capital3 decreased to 9,8% (2024: 10,1%)
+
+
+ -   Equity to net debt structure of 66%:34% (2024: 57%:43%)
+
+
+ -   Net debt to EBITDA4 (debt covenant) 1,5 times (Required to be less than 3 times) (2024: 1,9 times)
+
+
+ -   EBITDA to net interest4 (debt covenant) 4,2 times (Required to be greater than 3 times)
+
+
+     (2024: 3,7 times)
+
+
+     1 The disposal group's performance in relation to the Group's results is disclosed in note 10 ? Acquisitions and disposals
+
+
+       during the financial year, as included in the summarised consolidated results and cash dividend declaration for the year
+
+
+       ended 30 June 2025.
+
+
+     2 Operating profit before capital items and net foreign exchange movements.
+
+
+     3 The return on invested capital and weighted average cost of capital are prepared on a 12-month rolling basis.
+
+
+     4 Calculated by applying the funders' covenant methodology.
+
+
+Business overview
+
+
+Motus is a multi-national provider of automotive mobility solutions and vehicle products and services,
+
+
+delivering over 75 years of steady growth and reliable value creation. Our leading market presence in
+
+
+South Africa (SA) is enhanced by selected international offerings in the United Kingdom (UK), Australia,
+
+
+Asia and Southern and East Africa.
+
+
+Motus employs over 20 000 people globally and is a diversified (non-manufacturing) business in the
+
+
+automotive sector. Motus is SA's leading automotive group, with unrivalled scale and scope across the
+
+
+automotive value chain.
+
+
+Motus offers a differentiated value proposition to Original Equipment Manufacturers (OEMs), customers
+
+
+and business partners with a business model that integrates our four business segments: Import and
+
+
+Distribution, Retail and Rental, Mobility Solutions and Aftermarket Parts, providing multiple customer
+
+
+touchpoints that support resilience and meet customers' mobility needs across the vehicle ownership
+
+
+cycle.
+
+
+Motus has long-standing importer, distribution and retail partnerships with leading OEMs, representing
+
+
+some of the world's most recognisable brands. We provide automotive manufacturers with a highly
+
+
+effective route-to-market and a vital link between the brand and the customer throughout the vehicle's
+
+
+lifecycle. In addition, we provide accessories and aftermarket automotive parts for out-of-warranty
+
+
+vehicles and the Mobility Solutions segment sells value-added products and services (VAPS) to
+
+
+customers, including non-insurance and insurance products, consumer mobility solutions, and fleet
+
+
+services.
+
+
+Environment
+
+
+The global economic environment has become increasingly uncertain over the first half of the 2025
+
+
+calendar year (CY), with elevated but easing trade tensions (including those relating to US trade tariff
+
+
+policies), policy uncertainty, and ongoing geopolitical conflicts contributing to a constrained economic
+
+
+outlook that is dominated by intensifying downside risks and financial market adjustments.
+
+
+These factors dampened consumers' appetite for high-value purchases, making them highly cost-
+
+
+conscious when replacing vehicles - carefully considering factors such as new versus pre-owned options,
+
+
+vehicle category, brand, and timing of replacement. This is evidenced by consumers buying down or
+
+
+opting to keep their vehicles for longer.
+
+
+Global growth is projected to be 3,0%1 in CY2025 and expected to increase to 3,1%1 in CY2026, below
+
+
+the historical (CY00 ? CY19) average of 3,7%1. Global inflation is expected to decline, reaching 4,2%1 in
+
+
+CY2025 and 3,6%1 in CY2026; however, inflation expectations exceed central bank targets in most
+
+
+advanced, emerging market and developing economies1.
+
+
+South Africa
+
+
+Economic growth in SA remains subdued and economic activity over the first quarter of FY2025 was
+
+
+weak; however, easing interest rates and inflationary pressures along with improving consumer
+
+
+sentiment, have resulted in improved economic activity over the remainder of FY2025.
+
+
+The South African economy is expected to grow by 1,0%1 in CY2025 and further by 1,3%1 in CY2026.
+
+
+The automotive industry plays an instrumental role in supporting SA's longer-term economic
+
+
+sustainability, with the industry contributing 5,2% to gross domestic product (GDP) (including 2,0% from
+
+
+the retail segment and accounting for approximately 23% of the country's manufacturing output)2. The
+
+
+industry plays an instrumental role in supporting the country's longer-term economic sustainability ?
+
+
+creating jobs, facilitating trade, and moving people, goods and services in an environment where
+
+
+alternative forms of transport are scarce and under pressure.
+
+
+Inflation has declined to 3,0%3 in June 2025, from 5,1%3 in June 2024, with CY2025 inflation projected
+
+
+to be 3,8%1. The South African Reserve Bank (SARB) has shifted their target inflation range of 3% to
+
+
+6% to a preferred rate of 3%4.
+
+
+According to naamsa2, SA retailed ~549 000 new vehicles for the twelve months to 30 June 2025
+
+
+(7,2% above the prior period of ~512 000 new vehicles). At June 2025, our retail new vehicle passenger
+
+
+market share for the 12-months was ~20,1% (2024: ~21,6%). Management's forecast for new vehicle
+
+
+sales for CY2025 is between 550 000 and 570 000 new vehicles.
+
+
+The year-on-year increase was driven by growth in the passenger vehicle market stimulated by interest
+
+
+rate cuts, resilient consumer sentiment, limited selling price increases, value offerings from emerging
+
+
+brands, and new model launches from established brands (including entry-level models). Increasing
+
+
+passenger sales volumes demonstrate the continued need for mobility solutions. With affordability
+
+
+remaining a key concern, customers continue to shift away from luxury vehicles to more affordable
+
+
+brands, models and vehicle categories as well as pre-owned vehicles.
+
+
+Affordability constraints also mean that customers are electing to retain vehicles for longer, extending
+
+
+vehicle replacement cycles and resulting in increased parts and workshop activity, and increased demand
+
+
+for VAPS.
+
+
+The SA vehicle rental industry is now stable, with increasing competition on average daily rates, and
+
+
+opportunities to grow alongside the country's business travel, and domestic and international tourism
+
+
+sectors. Local demand for flexible transportation solutions (including long-term rentals and subscriptions)
+
+
+also drives rental market growth and performance.
+
+
+The aftermarket parts sector is a vital and expanding market, supported by a diverse vehicle parc and
+
+
+rising vehicle ownership. It includes a range of players from large lutions, and fleet
+
+
+services.
+
+
+Environment
+
+
+The global economic environment has become increasingly uncertain over the first half of the 2025
+
+
+calendar year (CY), with elevated but easing trade tensions (including those relating to US trade tariff
+
+
+policies), policy uncertainty, and ongoing geopolitical conflicts contributing to a constrained economic
+
+
+outlook that is dominated by intensifying downside risks and financial market adjustments.
+
+
+These factors dampened consumers' appetite for high-value purchases, making them highly cost-
+
+
+conscious when replacing vehicles - carefully considering factors such as new versus pre-owned options,
+
+
+vehicle category, brand, and timing of replacement. This is evidenced by consumers buying down or
+
+
+opting to keep their vehicles for longer.
+
+
+Global growth is projected to be 3,0%1 in CY2025 and expected to increase to 3,1%1 in CY2026, below
+
+
+the historical (CY00 ? CY19) average of 3,7%1. Global inflation is expected to decline, reaching 4,2%1 in
+
+
+CY2025 and 3,6%1 in CY2026; however, inflation expectations exceed central bank targets in most
+
+
+advanced, emerging market and developing economies1.
+
+
+South Africa
+
+
+Economic growth in SA remains subdued and economic activity over the first quarter of FY2025 was
+
+
+weak; however, easing interest rates and inflationary pressures along with improving consumer
+
+
+sentiment, have resulted in improved economic activity over the remainder of FY2025.
+
+
+The South African economy is expected to grow by 1,0%1 in CY2025 and further by 1,3%1 in CY2026.
+
+
+The automotive industry plays an instrumental role in supporting SA's longer-term economic
+
+
+sustainability, with the industry contributing 5,2% to gross domestic product (GDP) (including 2,0% from
+
+
+the retail segment and accounting for approximately 23% of the country's manufacturing output)2. The
+
+
+industry plays an instrumental role in supporting the country's longer-term economic sustainability ?
+
+
+creating jobs, facilitating trade, and moving people, goods and services in an environment where
+
+
+alternative forms of transport are scarce and under pressure.
+
+
+Inflation has declined to 3,0%3 in June 2025, from 5,1%3 in June 2024, with CY2025 inflation projected
+
+
+to be 3,8%1. The South African Reserve Bank (SARB) has shifted their target inflation range of 3% to
+
+
+6% to a preferred rate of 3%4.
+
+
+According to naamsa2, SA retailed ~549 000 new vehicles for the twelve months to 30 June 2025
+
+
+(7,2% above the prior period of ~512 000 new vehicles). At June 2025, our retail new vehicle passenger
+
+
+market share for the 12-months was ~20,1% (2024: ~21,6%). Management's forecast for new vehicle
+
+
+sales for CY2025 is between 550 000 and 570 000 new vehicles.
+
+
+The year-on-year increase was driven by growth in the passenger vehicle market stimulated by interest
+
+
+rate cuts, resilient consumer sentiment, limited selling price increases, value offerings from emerging
+
+
+brands, and new model launches from established brands (including entry-level models). Increasing
+
+
+passenger sales volumes demonstrate the continued need for mobility solutions. With affordability
+
+
+remaining a key concern, customers continue to shift away from luxury vehicles to more affordable
+
+
+brands, models and vehicle categories as well as pre-owned vehicles.
+
+
+Affordability constraints also mean that customers are electing to retain vehicles for longer, extending
+
+
+vehicle replacement cycles and resulting in increased parts and workshop activity, and increased demand
+
+
+for VAPS.
+
+
+The SA vehicle rental industry is now stable, with increasing competition on average daily rates, and
+
+
+opportunities to grow alongside the country's business travel, and domestic and international tourism
+
+
+sectors. Local demand for flexible transportation solutions (including long-term rentals and subscriptions)
+
+
+also drives rental market growth and performance.
+
+
+The aftermarket parts sector is a vital and expanding market, supported by a diverse vehicle parc and
+
+
+rising vehicle ownership. It includes a range of players from large distributors to smaller suppliers.
+
+
+United Kingdom
+
+
+The UK economy is expected to grow by 1,2%1 in CY2025 and further by 1,4%1 in CY2026. Key
+
+
+challenges to growth over the short term include the impact of trade tensions, tighter financial conditions
+
+
+and elevated uncertainty, including in relation to how global trade tariffs will impact the prices of UK
+
+
+goods. As of June 2025, inflation had fallen from a peak of 11,1%5 in 2022 to 3,6%5 with CY2025 inflation
+
+
+projected to be 3,1%1.
+
+
+The UK new vehicle market grew by 0,4% for the 12-month period to 30 June 2025, with the passenger
+
+
+market growing by 1,4%6, and the light commercial vehicles (LCVs) and the heavy commercial vehicles
+
+
+(HCVs) market contracting by 4,3%6 and 8,0%6, respectively. New vehicle sales for the 12-months to
+
+
+30 June 2025 amounted to ~2,4 million vehicles6, in line with the comparative period.
+
+
+Passenger and LCV markets have been disrupted by government's new energy vehicle (NEV) targets for
+
+
+new vehicle sales for OEMs, and declining retail sales are placing dealerships under strain. The historically
+
+
+robust HCV retail market is beginning to experience reduced demand due to weak business confidence.
+
+
+Motus' total retail market share decreased marginally over the course of the year.
+
+
+For HCVs, parts and workshop activity continue to increase due to high levels of demand and regulatory
+
+
+requirements that mandate regular servicing. For passenger vehicles, longer replacement cycles are
+
+
+impacting franchise dealership parts and workshop activity as this results in a smaller vehicle parc under
+
+
+five years old being serviced. These cycles, however, benefit the aftermarket parts sector, which is
+
+
+substantial and growing; the landscape remains competitive, with a mix of traditional wholesale and
+
+
+retail businesses, and online distribution channels. The UK's pre-owned vehicle market is undergoing a
+
+
+transition, with buyers benefiting from increased choice and more competitive pricing.
+
+
+Australia
+
+
+The Australian economy experienced modest growth over CY2024, with a moderate improvement
+
+
+anticipated for CY2025 as inflationary pressures continue to ease. Over the first half of CY2025, increases
+
+
+in household consumption and private sector wage growth were softer than anticipated and the labour
+
+
+market was still considered tight. However, as of August 2025, the Reserve Bank of Australia (RBA)
+
+
+reports higher than expected spending by households and businesses and easing labour market
+
+
+conditions. With momentum in the domestic economy improving, the risks to the economic outlook and
+
+
+inflation are currently judged as broadly balanced7. GDP growth of 1,8%1 is expected in CY2025 and
+
+
+2,2%1 in CY2026. Headline inflation continues to decline to 2,1%8 in June 2025, from 3,8%8 in
+
+
+June 2024, with CY2025 inflation projected to be 2,5%1.
+
+
+For CY2024, the Australian automotive market set another all-time record for new vehicle sales at around
+
+
+1,2 million vehicles9. The Australian new vehicle market decreased by 3,1%9 for the 12-month period to
+
+
+30 June 2025, with Motus maintaining its retail market share over the year. New vehicle sales for the
+
+
+12-month period to 30 June 2025 amounted to ~1,2 million vehicles9, compared to ~1,3 million vehicles9
+
+
+in the comparative period.
+
+
+Customers are increasingly opting for pre-owned vehicles, and during CY2024, pre-owned vehicle sales
+
+
+increased by 12% to more than two million units10. Australia's pre-owned vehicle market is experiencing
+
+
+a period of adjustment, with the market currently favouring buyers, with attractive inventory and
+
+
+declining prices offering ample opportunities for those looking to purchase.
+
+
+Motus is exposed to a number of foreign currencies in the jurisdictions in which we operate, as well as
+
+
+where we source our products. There has been currency volatility experienced over a number of years.
+
+
+1 International Monetary Fund | World Economic Outlook | April 2025 update and July 2025 update.
+
+
+2 naamsa | The Automotive Business Council | Press releases.
+
+
+3 Statistics South Africa.
+
+
+4 South African Reserve Bank | Statement of the Monetary Policy Committee | May and July 2025.
+
+
+5 Office for National Statistics.
+
+
+6 The Society of Motor Manufacturers and Traders | Press release and market data.
+
+
+7 Reserve Bank of Australia | Statement on Monetary Policy | May and August 2025.
+
+
+8 Australian Bureau of Statistics, Monthly Consumer Price Index Indicator June 2025.
+
+
+9 Federal Chamber of Automotive Industries and Electric Vehicle Council | Press release and market data.
+
+
+10 Australian Automotive Dealer Association x Autograb.
+
+
+Performance
+
+
+The 2025 financial year was a tale of two halves. The first half was marked by global economic
+
+
+uncertainty, high interest rates and intensified competition, particularly from the influx of emerging
+
+
+brands offering affordable vehicles with attractive finishes. This placed pressure on our vehicle sales
+
+
+volumes and margins, while our non-vehicle businesses were unable to provide sufficient offset.
+
+
+However, focused management actions in the second half of the year targeting sales, margin recovery,
+
+
+and operational efficiency drove a significant turnaround, resulting in a far stronger performance that
+
+
+bolstered our results for the full year.
+
+
+Motus demonstrated its resilience in the face of weak trading conditions and intensifying competition.
+
+
+Notably, in FY2025:
+
+
+-   We achieved 55% non-vehicle contribution to EBITDA, exceeding our strategic target of 50%,
+
+
+    affirming the strength of our diversified business model.
+
+
+-   We met our internationalisation target, with 35% of EBITDA generated outside SA, reflecting the
+
+
+    growing contribution of our operations in the UK, Australia, Asia, and other African markets.
+
+
+-   Despite new market entrants, Motus maintained its market leadership, selling one in five new
+
+
+    passenger vehicles in SA.
+
+
+Our    strategic    focus   on    portfolio   optimisation,   cost   containment,    innovation and
+
+
+customer-centricity continues to position us for sustainable growth. The Group reduced debt by
+
+
+R4,2 billion, improved cash flows, and delivered headline earnings per share growth of 5%.
+
+
+We remain committed to delivering long-term stakeholder value, underpinned by operational agility,
+
+
+disciplined capital allocation, and a deep understanding of the evolving mobility landscape.
+
+
+During the year, the Group concluded the disposal of the Mercedes-Benz Truck and Van division (MTV)
+
+
+in UK Retail, a strategic move to reduce portfolio complexity and sharpen our focus on growing the DAF
+
+
+business. The transaction generated proceeds of R441 million, which were used mainly to repay debt,
+
+
+against net assets of R542 million, resulting in a loss of R116 million, including R15 million in incremental
+
+
+disposal costs.
+
+
+The SA operations contributed 56% to revenue and 65% to EBITDA for the year
+
+
+(2024: 54% and 65%, respectively), with the remainder being contributed by the UK, Australia and Asia.
+
+
+In total the Group's passenger and commercial vehicle businesses, including the UK and Australia, sold
+
+
+206 010 overall vehicle units (2024: 202 623) comprising 115 910 new units (2024: 115 899) and
+
+
+90 100 pre-owned units (2024: 86 724) during the year.
+
+
+Revenue declined slightly by 1%, primarily due to the disposal of MTV. We experienced a R2,9 billion
+
+
+(3%) reduction in contributions from the Retail and Rental segment - with growth in SA partially offset
+
+
+by lower contributions from our international operations. This was mitigated by higher contributions from
+
+
+the remaining segments: Import and Distribution up R2,8 billion (14%), Aftermarket Parts up
+
+
+R885 million (6%) - with gains in both SA and international operations, and Mobility Solutions up R83
+
+
+million (3%).
+
+
+The marginal reduction in revenue of R1,2 billion (1%) was as a result of reduced new vehicle sales of
+
+
+R3,3 billion (6%) primarily in our international operations, offset by increased contributions from pre-
+
+
+owned vehicle sales of R1,5 billion (6%), parts and other goods sold of R350 million (1%), rendering of
+
+
+services of R255 million (2%) and insurance revenue of R11 million (3%).
+
+
+Operating profit broadly remained in line with prior year, only declining by R27 million to R5 476 million.
+
+
+The marginally lower operating profit is mainly as a result of margin pressure, strong competition and
+
+
+reduced demand experienced by our Importer business and the International Retail businesses (the UK
+
+
+and Australia). The decline was offset by the improved performance of our Vehicle Rental division,
+
+
+Mobility Solutions, Aftermarket Parts (SA and International) and SA Retail.
+
+
+Net finance costs decreased by R281 million (13%) to R1,9 billion mainly due to lower average net
+
+
+working capital and a focused effort to reduce net debt by R3,4 billion for the year, marginally
+
+
+complemented by reductions in interest rates in the geographies we operate in.
+
+
+Profit before tax increased by R118 million (4%) to R3 336 million.
+
+
+A total of 550 cents per ordinary share was declared as a dividend for the year (2024: 520 cents per
+
+
+share). 240 cents per ordinary share was paid as an interim dividend on 7 April 2025 and a final dividend
+
+
+of 310 cents per ordinary share will be paid on 6 October 2025.
+
+
+Net working capital decreased by R959 million (7%) to R12,1 billion.
+
+
+Equity to net debt structure of 66%:34% (2024: 57%:43%). Core interest-bearing debt decreased by
+
+
+R3,0 billion (27%) primarily due to the profit generated for the year, proceeds received on the MTV
+
+
+disposal and the reduction in net working capital. The reduction was offset by the movements in vehicles
+
+
+for hire, bolt-on acquisitions, capital expenditure and a reduction of the floorplan debt with financial
+
+
+institutions (replaced with core interest-bearing debt).
+
+
+Net debt to EBITDA is 1,5 times (2024: 1,9 times) and EBITDA to net interest is 4,2 times
+
+
+(2024: 3,7 times). Both ratios have been calculated by applying the funders' covenant methodology and
+
+
+remain well within the debt covenant levels as set by debt funders of below 3,0 times and above
+
+
+3,0 times, respectively.
+
+
+Return on invested capital increased marginally to 10,9% (2024: 10,8%). Weighted average cost of
+
+
+capital decreased to 9,8% (2024: 10,1%) mainly due to the decreased cost of both debt and equity.
+
+
+Net asset value per share increased by 11% to 11 305 cents per ordinary share (2024: 10 203 cents per
+
+
+ordinary share).
+
+
+Cash flows from operating activities amounted to R5,7 billion (2024: R3,5 billion), increasing by 60%.
+
+
+Liquidity
+
+
+The liquidity position is healthy with unutilised banking and floorplan facilities of R15,7 billion.
+
+
+During the year, the Group obtained its maiden credit rating from an independent rating agency,
+
+
+GCR Ratings:
+
+
+    -   Credit Rating: Long-Term Issuer AA-(ZA) and Stable outlook
+
+
+    -   Credit Rating: Short-Term Issuer A1+(ZA)
+
+
+In November 2024, we converted our international debt funding of GBP 150 million from a Revolving
+
+
+Credit Facility into a sustainability-linked facility. In May 2025, we refinanced our SA debt by
+
+
+extinguishing the Rand-denominated ESG banking facilities held and concluding new sustainability-linked
+
+
+financing agreements with facilities amounting to R7,0 billion.
+
+
+The sustainability performance targets for both facilities focus on:
+
+
+-   purchased electricity;
+
+
+-   own vehicle fuel consumption (in total or target consumption in relation to revenue);
+
+
+-   diversity and inclusion: female representation occupying all management levels in SA; and
+
+
+-   community development: number of resource centres established or the number of learners having
+
+
+    access to resource centres managed by the DP World and Motus Community Trust.
+
+
+Dividend
+
+
+A total of 550 cents per ordinary share was declared as a dividend for the year. 240 cents per ordinary
+
+
+share was paid as an interim dividend on 7 April 2025 and a final dividend of 310 cents per ordinary
+
+
+share will be paid on 6 October 2025.
+
+
+Board changes
+
+
+Motus is led by a diverse board of directors with extensive commercial knowledge, experience, and
+
+
+expertise. The Board provides ethical and strategic direction to the Group, ensuring that value is created
+
+
+and protected for stakeholders.
+
+
+The Board's commitment to and custodianship of good corporate governance ensures that Motus adheres
+
+
+to the highest standards of accountability, fairness and ethics ? all of which are essential in building and
+
+
+maintaining credibility, sustainability and trust, and delivering value.
+
+
+During the reporting period, the following Board and sub-committee changes occurred:
+
+
+-   Mr. OS Arbee, who reached retirement age, retired as Chief Executive Officer (CEO) and from the
+
+
+    Board and its sub-committees with effect from 31 October 2024.
+
+
+-   Mr. OJ Janse van Rensburg was appointed as CEO with effect from 1 November 2024 and remains
+
+
+    an executive director on the Board. On 5 November 2024, he was appointed as a member of the
+
+
+    Social, Ethics and Sustainability Committee.
+
+
+-   Ms. B Baijnath was appointed as Chief Financial Officer (CFO) designate with effect from
+
+
+    1 August 2024, and as CFO and to the Board as an executive director with effect from
+
+
+    1 November 2024.
+
+
+Strategy
+
+
+Our aim is to grow and deepen our participation across all aspects of the automotive value chain, offering
+
+
+competitive products and services that maximise our share of a customer's vehicle investment and
+
+
+engender loyalty.
+
+
+Prospects
+
+
+The improved momentum from HY2 provides a solid platform for financial year 2026. However, the
+
+
+outlook remains subject to consumer demand and the challenging macroeconomic and geopolitical
+
+
+environments in which we operate, which continue to reflect constrained conditions.
+
+
+Looking ahead to the six-month period ending 31 December 2025:
+
+
+We anticipate an improved financial performance compared to the six-month period ended
+
+
+31 December 2024:
+
+
+   -   Operating profit is expected to grow.
+
+
+   -   Net finance costs are projected to decline.
+
+
+   -   Headline earnings per share is expected to increase.
+
+
+We remain optimistic that our debt covenants will stay within the targeted range of 1,5 times to
+
+
+1,7 times, supported by strong cash generation and prudent working capital management with vehicles
+
+
+for hire and inventory expected to be slightly higher due to our up-fleeting cycle to meet seasonal
+
+
+demand.
+
+
+Despite these positive indicators, the Group remains exposed to external factors that could impact
+
+
+performance, including: geopolitical tensions, inflationary pressures, currency volatility and
+
+
+non-controllable legislative changes.
+
+
+Nonetheless, the Group is well-positioned to leverage opportunities and deliver on its strategic priorities.
+
+
+Appreciation
+
+
+We would like to thank all employees, customers, suppliers, funders, stakeholders and the Board for
+
+
+their support during the year.
+
+
+OJ Janse van Rensburg
+
+
+Chief Executive Officer
+
+
+B Baijnath
+
+
+Chief Financial Officer
+
+
+1 September 2025
+
+
+The forecast and prospects information herein has not been audited or reported on by Motus' auditors.
+
+
+Declaration of final ordinary dividend
+
+
+for the year ended 30 June 2025
+
+
+Notice is hereby given that a gross final ordinary dividend in the amount of 310 cents per ordinary share
+
+
+has been declared by the Board, payable to the holders of the 179 463 447 ordinary shares. The dividend
+
+
+will be paid out of income reserves.
+
+
+The ordinary dividend will be subject to a local dividend tax rate of 20%. The net ordinary dividend, to
+
+
+those shareholders who are not exempt from paying dividend tax, is therefore 248 cents per ordinary
+
+
+share.
+
+
+The Company has determined the following salient dates for the payment of the ordinary dividend:
+
+
+                                                                                                   2025
+
+
+Last day for ordinary shares to trade cum ordinary dividend                       Tuesday, 30 September
+
+
+Ordinary shares commence trading ex-ordinary dividend                              Wednesday, 1 October
+
+
+Record date                                                                           distributors to smaller suppliers.
+
+
+United Kingdom
+
+
+The UK economy is expected to grow by 1,2%1 in CY2025 and further by 1,4%1 in CY2026. Key
+
+
+challenges to growth over the short term include the impact of trade tensions, tighter financial conditions
+
+
+and elevated uncertainty, including in relation to how global trade tariffs will impact the prices of UK
+
+
+goods. As of June 2025, inflation had fallen from a peak of 11,1%5 in 2022 to 3,6%5 with CY2025 inflation
+
+
+projected to be 3,1%1.
+
+
+The UK new vehicle market grew by 0,4% for the 12-month period to 30 June 2025, with the passenger
+
+
+market growing by 1,4%6, and the light commercial vehicles (LCVs) and the heavy commercial vehicles
+
+
+(HCVs) market contracting by 4,3%6 and 8,0%6, respectively. New vehicle sales for the 12-months to
+
+
+30 June 2025 amounted to ~2,4 million vehicles6, in line with the comparative period.
+
+
+Passenger and LCV markets have been disrupted by government's new energy vehicle (NEV) targets for
+
+
+new vehicle sales for OEMs, and declining retail sales are placing dealerships under strain. The historically
+
+
+robust HCV retail market is beginning to experience reduced demand due to weak business confidence.
+
+
+Motus' total retail market share decreased marginally over the course of the year.
+
+
+For HCVs, parts and workshop activity continue to increase due to high levels of demand and regulatory
+
+
+requirements that mandate regular servicing. For passenger vehicles, longer replacement cycles are
+
+
+impacting franchise dealership parts and workshop activity as this results in a smaller vehicle parc under
+
+
+five years old being serviced. These cycles, however, benefit the aftermarket parts sector, which is
+
+
+substantial and growing; the landscape remains competitive, with a mix of traditional wholesale and
+
+
+retail businesses, and online distribution channels. The UK's pre-owned vehicle market is undergoing a
+
+
+transition, with buyers benefiting from increased choice and more competitive pricing.
+
+
+Australia
+
+
+The Australian economy experienced modest growth over CY2024, with a moderate improvement
+
+
+anticipated for CY2025 as inflationary pressures continue to ease. Over the first half of CY2025, increases
+
+
+in household consumption and private sector wage growth were softer than anticipated and the labour
+
+
+market was still considered tight. However, as of August 2025, the Reserve Bank of Australia (RBA)
+
+
+reports higher than expected spending by households and businesses and easing labour market
+
+
+conditions. With momentum in the domestic economy improving, the risks to the economic outlook and
+
+
+inflation are currently judged as broadly balanced7. GDP growth of 1,8%1 is expected in CY2025 and
+
+
+2,2%1 in CY2026. Headline inflation continues to decline to 2,1%8 in June 2025, from 3,8%8 in
+
+
+June 2024, with CY2025 inflation projected to be 2,5%1.
+
+
+For CY2024, the Australian automotive market set another all-time record for new vehicle sales at around
+
+
+1,2 million vehicles9. The Australian new vehicle market decreased by 3,1%9 for the 12-month period to
+
+
+30 June 2025, with Motus maintaining its retail market share over the year. New vehicle sales for the
+
+
+12-month period to 30 June 2025 amounted to ~1,2 million vehicles9, compared to ~1,3 million vehicles9
+
+
+in the comparative period.
+
+
+Customers are increasingly opting for pre-owned vehicles, and during CY2024, pre-owned vehicle sales
+
+
+increased by 12% to more than two million units10. Australia's pre-owned vehicle market is experiencing
+
+
+a period of adjustment, with the market currently favouring buyers, with attractive inventory and
+
+
+declining prices offering ample opportunities for those looking to purchase.
+
+
+Motus is exposed to a number of foreign currencies in the jurisdictions in which we operate, as well as
+
+
+where we source our products. There has been currency volatility experienced over a number of years.
+
+
+1 International Monetary Fund | World Economic Outlook | April 2025 update and July 2025 update.
+
+
+2 naamsa | The Automotive Business Council | Press releases.
+
+
+3 Statistics South Africa.
+
+
+4 South African Reserve Bank | Statement of the Monetary Policy Committee | May and July 2025.
+
+
+5 Office for National Statistics.
+
+
+6 The Society of Motor Manufacturers and Traders | Press release and market data.
+
+
+7 Reserve Bank of Australia | Statement on Monetary Policy | May and August 2025.
+
+
+8 Australian Bureau of Statistics, Monthly Consumer Price Index Indicator June 2025.
+
+
+9 Federal Chamber of Automotive Industries and Electric Vehicle Council | Press release and market data.
+
+
+10 Australian Automotive Dealer Association x Autograb.
+
+
+Performance
+
+
+The 2025 financial year was a tale of two halves. The first half was marked by global economic
+
+
+uncertainty, high interest rates and intensified competition, particularly from the influx of emerging
+
+
+brands offering affordable vehicles with attractive finishes. This placed pressure on our vehicle sales
+
+
+volumes and margins, while our non-vehicle businesses were unable to provide sufficient offset.
+
+
+However, focused management actions in the second half of the year targeting sales, margin recovery,
+
+
+and operational efficiency drove a significant turnaround, resulting in a far stronger performance that
+
+
+bolstered our results for the full year.
+
+
+Motus demonstrated its resilience in the face of weak trading conditions and intensifying competition.
+
+
+Notably, in FY2025:
+
+
+-   We achieved 55% non-vehicle contribution to EBITDA, exceeding our strategic target of 50%,
+
+
+    affirming the strength of our diversified business model.
+
+
+-   We met our internationalisation target, with 35% of EBITDA generated outside SA, reflecting the
+
+
+    growing contribution of our operations in the UK, Australia, Asia, and other African markets.
+
+
+-   Despite new market entrants, Motus maintained its market leadership, selling one in five new
+
+
+    passenger vehicles in SA.
+
+
+Our    strategic    focus   on    portfolio   optimisation,   cost   containment,    innovation and
+
+
+customer-centricity continues to position us for sustainable growth. The Group reduced debt by
+
+
+R4,2 billion, improved cash flows, and delivered headline earnings per share growth of 5%.
+
+
+We remain committed to delivering long-term stakeholder value, underpinned by operational agility,
+
+
+disciplined capital allocation, and a deep understanding of the evolving mobility landscape.
+
+
+During the year, the Group concluded the disposal of the Mercedes-Benz Truck and Van division (MTV)
+
+
+in UK Retail, a strategic move to reduce portfolio complexity and sharpen our focus on growing the DAF
+
+
+business. The transaction generated proceeds of R441 million, which were used mainly to repay debt,
+
+
+against net assets of R542 million, resulting in a loss of R116 million, including R15 million in incremental
+
+
+disposal costs.
+
+
+The SA operations contributed 56% to revenue and 65% to EBITDA for the year
+
+
+(2024: 54% and 65%, respectively), with the remainder being contributed by the UK, Australia and Asia.
+
+
+In total the Group's passenger and commercial vehicle businesses, including the UK and Australia, sold
+
+
+206 010 overall vehicle units (2024: 202 623) comprising 115 910 new units (2024: 115 899) and
+
+
+90 100 pre-owned units (2024: 86 724) during the year.
+
+
+Revenue declined slightly by 1%, primarily due to the disposal of MTV. We experienced a R2,9 billion
+
+
+(3%) reduction in contributions from the Retail and Rental segment - with growth in SA partially offset
+
+
+by lower contributions from our international operations. This was mitigated by higher contributions from
+
+
+the remaining segments: Import and Distribution up R2,8 billion (14%), Aftermarket Parts up
+
+
+R885 million (6%) - with gains in both SA and international operations, and Mobility Solutions up R83
+
+
+million (3%).
+
+
+The marginal reduction in revenue of R1,2 billion (1%) was as a result of reduced new vehicle sales of
+
+
+R3,3 billion (6%) primarily in our international operations, offset by increased contributions from pre-
+
+
+owned vehicle sales of R1,5 billion (6%), parts and other goods sold of R350 million (1%), rendering of
+
+
+services of R255 million (2%) and insurance revenue of R11 million (3%).
+
+
+Operating profit broadly remained in line with prior year, only declining by R27 million to R5 476 million.
+
+
+The marginally lower operating profit is mainly as a result of margin pressure, strong competition and
+
+
+reduced demand experienced by our Importer business and the International Retail businesses (the UK
+
+
+and Australia). The decline was offset by the improved performance of our Vehicle Rental division,
+
+
+Mobility Solutions, Aftermarket Parts (SA and International) and SA Retail.
+
+
+Net finance costs decreased by R281 million (13%) to R1,9 billion mainly due to lower average net
+
+
+working capital and a focused effort to reduce net debt by R3,4 billion for the year, marginally
+
+
+complemented by reductions in interest rates in the geographies we operate in.
+
+
+Profit before tax increased by R118 million (4%) to R3 336 million.
+
+
+A total of 550 cents per ordinary share was declared as a dividend for the year (2024: 520 cents per
+
+
+share). 240 cents per ordinary share was paid as an interim dividend on 7 April 2025 and a final dividend
+
+
+of 310 cents per ordinary share will be paid on 6 October 2025.
+
+
+Net working capital decreased by R959 million (7%) to R12,1 billion.
+
+
+Equity to net debt structure of 66%:34% (2024: 57%:43%). Core interest-bearing debt decreased by
+
+
+R3,0 billion (27%) primarily due to the profit generated for the year, proceeds received on the MTV
+
+
+disposal and the reduction in net working capital. The reduction was offset by the movements in vehicles
+
+
+for hire, bolt-on acquisitions, capital expenditure and a reduction of the floorplan debt with financial
+
+
+institutions (replaced with core interest-bearing debt).
+
+
+Net debt to EBITDA is 1,5 times (2024: 1,9 times) and EBITDA to net interest is 4,2 times
+
+
+(2024: 3,7 times). Both ratios have been calculated by applying the funders' covenant methodology and
+
+
+remain well within the debt covenant levels as set by debt funders of below 3,0 times and above
+
+
+3,0 times, respectively.
+
+
+Return on invested capital increased marginally to 10,9% (2024: 10,8%). Weighted average cost of
+
+
+capital decreased to 9,8% (2024: 10,1%) mainly due to the decreased cost of both debt and equity.
+
+
+Net asset value per share increased by 11% to 11 305 cents per ordinary share (2024: 10 203 cents per
+
+
+ordinary share).
+
+
+Cash flows from operating activities amounted to R5,7 billion (2024: R3,5 billion), increasing by 60%.
+
+
+Liquidity
+
+
+The liquidity position is healthy with unutilised banking and floorplan facilities of R15,7 billion.
+
+
+During the year, the Group obtained its maiden credit rating from an independent rating agency,
+
+
+GCR Ratings:
+
+
+    -   Credit Rating: Long-Term Issuer AA-(ZA) and Stable outlook
+
+
+    -   Credit Rating: Short-Term Issuer A1+(ZA)
+
+
+In November 2024, we converted our international debt funding of GBP 150 million from a Revolving
+
+
+Credit Facility into a sustainability-linked facility. In May 2025, we refinanced our SA debt by
+
+
+extinguishing the Rand-denominated ESG banking facilities held and concluding new sustainability-linked
+
+
+financing agreements with facilities amounting to R7,0 billion.
+
+
+The sustainability performance targets for both facilities focus on:
+
+
+-   purchased electricity;
+
+
+-   own vehicle fuel consumption (in total or target consumption in relation to revenue);
+
+
+-   diversity and inclusion: female representation occupying all management levels in SA; and
+
+
+-   community development: number of resource centres established or the number of learners having
+
+
+    access to resource centres managed by the DP World and Motus Community Trust.
+
+
+Dividend
+
+
+A total of 550 cents per ordinary share was declared as a dividend for the year. 240 cents per ordinary
+
+
+share was paid as an interim dividend on 7 April 2025 and a final dividend of 310 cents per ordinary
+
+
+share will be paid on 6 October 2025.
+
+
+Board changes
+
+
+Motus is led by a diverse board of directors with extensive commercial knowledge, experience, and
+
+
+expertise. The Board provides ethical and strategic direction to the Group, ensuring that value is created
+
+
+and protected for stakeholders.
+
+
+The Board's commitment to and custodianship of good corporate governance ensures that Motus adheres
+
+
+to the highest standards of accountability, fairness and ethics ? all of which are essential in building and
+
+
+maintaining credibility, sustainability and trust, and delivering value.
+
+
+During the reporting period, the following Board and sub-committee changes occurred:
+
+
+-   Mr. OS Arbee, who reached retirement age, retired as Chief Executive Officer (CEO) and from the
+
+
+    Board and its sub-committees with effect from 31 October 2024.
+
+
+-   Mr. OJ Janse van Rensburg was appointed as CEO with effect from 1 November 2024 and remains
+
+
+    an executive director on the Board. On 5 November 2024, he was appointed as a member of the
+
+
+    Social, Ethics and Sustainability Committee.
+
+
+-   Ms. B Baijnath was appointed as Chief Financial Officer (CFO) designate with effect from
+
+
+    1 August 2024, and as CFO and to the Board as an executive director with effect from
+
+
+    1 November 2024.
+
+
+Strategy
+
+
+Our aim is to grow and deepen our participation across all aspects of the automotive value chain, offering
+
+
+competitive products and services that maximise our share of a customer's vehicle investment and
+
+
+engender loyalty.
+
+
+Prospects
+
+
+The improved momentum from HY2 provides a solid platform for financial year 2026. However, the
+
+
+outlook remains subject to consumer demand and the challenging macroeconomic and geopolitical
+
+
+environments in which we operate, which continue to reflect constrained conditions.
+
+
+Looking ahead to the six-month period ending 31 December 2025:
+
+
+We anticipate an improved financial performance compared to the six-month period ended
+
+
+31 December 2024:
+
+
+   -   Operating profit is expected to grow.
+
+
+   -   Net finance costs are projected to decline.
+
+
+   -   Headline earnings per share is expected to increase.
+
+
+We remain optimistic that our debt covenants will stay within the targeted range of 1,5 times to
+
+
+1,7 times, supported by strong cash generation and prudent working capital management with vehicles
+
+
+for hire and inventory expected to be slightly higher due to our up-fleeting cycle to meet seasonal
+
+
+demand.
+
+
+Despite these positive indicators, the Group remains exposed to external factors that could impact
+
+
+performance, including: geopolitical tensions, inflationary pressures, currency volatility and
+
+
+non-controllable legislative changes.
+
+
+Nonetheless, the Group is well-positioned to leverage opportunities and deliver on its strategic priorities.
+
+
+Appreciation
+
+
+We would like to thank all employees, customers, suppliers, funders, stakeholders and the Board for
+
+
+their support during the year.
+
+
+OJ Janse van Rensburg
+
+
+Chief Executive Officer
+
+
+B Baijnath
+
+
+Chief Financial Officer
+
+
+1 September 2025
+
+
+The forecast and prospects information herein has not been audited or reported on by Motus' auditors.
+
+
+Declaration of final ordinary dividend
+
+
+for the year ended 30 June 2025
+
+
+Notice is hereby given that a gross final ordinary dividend in the amount of 310 cents per ordinary share
+
+
+has been declared by the Board, payable to the holders of the 179 463 447 ordinary shares. The dividend
+
+
+will be paid out of income reserves.
+
+
+The ordinary dividend will be subject to a local dividend tax rate of 20%. The net ordinary dividend, to
+
+
+those shareholders who are not exempt from paying dividend tax, is therefore 248 cents per ordinary
+
+
+share.
+
+
+The Company has determined the following salient dates for the payment of the ordinary dividend:
+
+
+                                                                                                   2025
+
+
+Last day for ordinary shares to trade cum ordinary dividend                       Tuesday, 30 September
+
+
+Ordinary shares commence trading ex-ordinary dividend                              Wednesday, 1 October
+
+
+Record date                                                                           Friday, 3 October
+
+
+Payment date                                                                          Monday, 6 October
+
+
+The Company's income tax number is 983 671 2167.
+
+
+Share certificates may not be dematerialised/rematerialised between Wednesday, 1 October 2025 and
+
+
+Friday, 3 October 2025, both days inclusive.
+
+
+On Monday, 6 October 2025, amounts due in respect of the ordinary dividend will be electronically
+
+
+transferred to the bank accounts of certificated shareholders. Shareholders who have dematerialised
+
+
+their shares will also have their accounts, held at their central securities depository participant (CSDP)
+
+
+or broker, credited on Monday, 6 October 2025.
+
+
+On behalf of the Board
+
+
+NE Simelane
+
+
+Company Secretary
+
+
+1 September 2025
+
+
+Corporate information
+
+
+Motus Holdings Limited
+
+
+Incorporated in the Republic of South Africa
+
+
+Registration number: 2017/451730/06
+
+
+ISIN: ZAE000261913
+
+
+Share code: MTH
+
+
+("Motus" or "the Company" or "the Group")
+
+
+Directors
+
+
+MJN Njeke (Chairman)*
+
+
+A Tugendhaft (Deputy Chairman)**
+
+
+OJ Janse van Rensburg (CEO)#
+
+
+B Baijnath (CFO)#
+
+
+KA Cassel#
+
+
+S Mayet*
+
+
+JN Potgieter*
+
+
+F Roji-Nodolo*
+
+
+LJ Sennelo*
+
+
+R van Wyk*
+
+
+*Independent non-executive
+
+
+**Non-executive
+
+
+#Executive
+
+
+Company Secretary
+
+
+NE Simelane
+
+
+[email protected]
+
+
+Group Investor Relations Manager
+
+
+J Oosthuizen
+
+
+[email protected]
+
+
+Business address and registered office1
+
+
+79 Boeing Road East
+
+
+Jeppe Quondam
+
+
+Bedfordview
+
+
+2007
+
+
+(PO Box 1719, Edenvale, 1610)
+
+
+Share transfer secretaries
+
+
+Computershare Investor Services Proprietary Limited
+
+
+1st Floor Rosebank Towers
+
+
+15 Biermann Avenue, Rosebank, Johannesburg, 2196
+
+
+Auditor
+
+
+PricewaterhouseCoopers Inc.
+
+
+4 Lisbon Lane
+
+
+Waterfall City
+
+
+Jukskei View
+
+
+2090
+
+
+Sponsor
+
+
+Merchantec Capital
+
+
+13th Floor, Illovo Point
+
+
+68 Melville Road
+
+
+Illovo, Sandton, 2196
+
+
+(PO Box 41480, Craighall, 2024)
+
+
+The results announcement is available on the Motus website: www.motus.co.za
+
+
+1 Effective 1 July 2025.
+
+
+Release date 2 September 2025
+
+
+Results announcement
+
+
+The content of this results announcement is the responsibility of the directors of Motus. This results
+
+
+announcement does not include full or complete details of the audited consolidated and separate annual
+
+
+financial statements for the year end 30 June 2025 (2025 AFS).
+
+
+Any investment decisions by investors should be based on the consideration of the 2025 AFS released
+
+
+on SENS on 2 September 2025.
+
+
+None of the information in this results announcement has been reviewed or reported on by the
+
+
+Company's auditors.
+
+
+The 2025 AFS have been audited by the Company's external auditors, PricewaterhouseCoopers Inc. who
+
+
+expressed an unmodified audit opinion thereon. The audit opinion, which is included in the 2025 AFS is
+
+
+available on Motus' website at:
+
+
+https://www.motus.co.za/investors/integrated-reports/    and     on    the     JSE's    cloudlink  at
+
+
+https://senspdf.jse.co.za/documents/2025/jse/isse/mthe/AFS25.pdf.
+
+
+The summarised consolidated results and cash dividend declaration are available on Motus' website at
+
+
+https://www.motus.co.za/investors/results/year-end-results/.
+
+
+Date: 02-09-2025 07:05:00

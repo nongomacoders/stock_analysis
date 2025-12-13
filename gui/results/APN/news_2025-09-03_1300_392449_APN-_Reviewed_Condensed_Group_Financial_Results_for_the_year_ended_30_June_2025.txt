@@ -1,0 +1,931 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20250903_S510017.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [APN]
+
+
+Reviewed Condensed Group Financial Results for the year ended 30 June 2025 and Cash Dividend Declaration
+
+
+ASPEN PHARMACARE HOLDINGS LIMITED AND ITS SUBSIDIARIES
+
+
+Incorporated in the Republic of South Africa
+
+
+Registration number: 1985/002935/06
+
+
+Share code: APN
+
+
+ISIN: ZAE000066692
+
+
+("Aspen" or "the Group" or "the Company")
+
+
+REVIEWED CONDENSED GROUP FINANCIAL RESULTS FOR THE YEAR ENDED 30 JUNE 2025 AND CASH
+
+
+DIVIDEND DECLARATION
+
+
+The Group has had a challenging financial year. Notable events over the reporting period ("FY 2025"):
+
+
+    -   Commercial Pharmaceuticals, Aspen's core business segment comprising more than 70% of
+
+
+        the Group's revenue, has delivered revenue and normalised EBITDA growth of 10% in constant
+
+
+        exchange rate ("CER") underpinned by organic revenue growth in all three segments
+
+
+        (Injectables, OTC and Prescription). This has been supplemented by the launch and rollout of
+
+
+        Mounjaro® in South Africa, while also benefiting from the acquired product portfolio in Latin
+
+
+        America. Reported performance has been diluted by the strength of the ZAR average exchange
+
+
+        rates against Aspen's major trading currencies;
+
+
+    -   Considerable progress has been made in executing the Group's generic semaglutide GLP-1
+
+
+        strategy;
+
+
+    -   The restructure of Aspen China and its integration with the acquired Sandoz business has been
+
+
+        completed. Consequently, significant restructuring costs of circa R0,5 billion were incurred in
+
+
+        H2 2025 as well as one-off inventory rationalisation and write-offs of R0,3 billion. These diluted
+
+
+        the Group's Injectables gross profit margin percentage in FY 2025. This is expected to revert to
+
+
+        normal levels in FY 2026. The restructured China business, supported by higher EBITDA
+
+
+        margins, is now well positioned to contribute positively towards earnings growth in FY 2026;
+
+
+    -   Manufacturing performance and intangible asset impairments have been negatively impacted
+
+
+        by the material contractual dispute ("Dispute") announced on SENS on 22 April 2025, whereby
+
+
+        shareholders were advised that normalised EBITDA from the Manufacturing business for FY
+
+
+        2025 in CER would potentially be R2 billion lower than last guided in March 2025. The Dispute,
+
+
+        the details of which are subject to contractual confidentiality, relates to a manufacturing and
+
+
+        technology agreement with a contract manufacturing customer for mRNA products. As a
+
+
+        consequence of the Dispute and related risks, normalised EBITDA from the Manufacturing
+
+
+        business for FY 2025 of R0,7 billion in CER was 38% of that reported in FY 2024. The Dispute is
+
+
+        now the subject of a contractually prescribed adjudication process;
+
+
+    -   Aspen is pleased to report that the validation stage of the insulin contract has been
+
+
+        successfully completed in our South African sterile facility. In anticipation of regulatory
+
+
+        approvals being received shortly, commercial production has already been initiated;
+
+
+    -   The retrospective implementation of global minimum tax legislation in South Africa coupled
+
+
+        with the announcement by the Mauritian government of a Qualified Domestic Minimum Top
+
+
+        Up Tax ("QDMTT") of 15%, effective from FY 2025, has negatively impacted both Commercial
+
+
+        Pharmaceuticals intangible asset valuations and Group effective tax rates. As guided
+
+
+        previously, higher Group effective tax rates are expected to be sustained. The QDMTT has
+
+
+        materially increased the tax rate used for Commercial Pharmaceuticals brand related
+
+
+        intangible asset valuations increasing impairments by R1,7 billion. These intangible assets are
+
+
+        only impaired if the individual brand asset value is below carrying amount and are not revalued
+
+
+        above cost where their individual brand value exceeds carrying amount. Despite the negative
+
+
+        impact of the QDMTT, total brand related intangible assets still have a valuation of more than
+
+
+        50% greater than their carrying amount;
+
+
+    -   The abovementioned intangible asset impairments totalling R4,1 billion, which comprises the
+
+
+        QDMTT related impact of R1,7 billion, the mRNA asset impairment of R0,8 billion and regional
+
+
+        performance related impairments of R1,6 billion, have resulted in the Group incurring a loss
+
+
+        for the year. These impairments and the increased restructuring costs have adversely impacted
+
+
+        Aspen's earnings per share ("EPS") and headline earnings per share ("HEPS") as compared to
+
+
+        the Group's primary measure of performance being normalised headline earnings per share
+
+
+        ("NHEPS");
+
+
+    -   Operating cash conversion rate of 147% well exceeded the Group's target of 100%. The
+
+
+        leverage ratio ended at 3.2x. Net debt of R31,2 billion was marginally higher than the R30,0
+
+
+        billion in H1 2025, negatively affected by the weaker ZAR year-end closing rates partly offset
+
+
+        by the stronger second half CER operating cash flows and lower inventory levels; and
+
+
+    -   Finance costs benefited from interest rate cuts across the Group's EUR, ZAR and AUD debt
+
+
+        pools in the second half of the year. Despite this, year-on-year finance costs have risen,
+
+
+        influenced by higher net debt levels and increased foreign exchange losses driven by US tariff-
+
+
+        led global volatility in exchange rates.
+
+
+GROUP PERFORMANCE
+
+
+KEY PERFORMANCE INDICATORS(1)
+
+
+                                                  Reported          Reported           Change        Change
+
+
+                                                 June 2025         June 2024               at     at CER(2)
+
+
+                                                                                     reported
+
+
+                                                                                        rates
+
+
+                                                  R'million        R'million                %             %
+
+
+    Revenue                                          43 363           44 706               (3)            1
+
+
+    Gross profit                                     19 129           19 454               (2)            4
+
+
+    Operating profit                                  1 437            6 998              (79)         (77)
+
+
+    Normalised EBITDA(3)                              9 591           11 255              (15)          (8)
+
+
+    Headline earnings per share (cents)               792.1          1 356.6              (42)         (35)
+
+
+    Normalised headline earnings per                1 055.8          1 492.1              (29)         (22)
+
+
+    share (cents)(4)
+
+
+    (Loss)/earnings per share (cents)               (243.9)            991.4            >(100)       >(100)
+
+
+    Dividend per share (cents)(5)                       211              359              (41)
+
+
+    (1)  The Group assesses its operational performance using constant exchange rates ("CER"). The table above compares performance to the
+
+
+         prior comparable period at reported exchange rates and at CER.
+
+
+    (2)  The CER % change is based upon the performance for the year ended 30 June 2024 recalculated using the average exchange rates for the
+
+
+         year ended 30 June 2025.
+
+
+    (3)  Operating profit before depreciation and amortisation adjusted for specific non-trading items as defined in the Group's accounting policy.
+
+
+    (4)  Normalised headline earnings per share ("NHEPS") is headline earnings per share ("HEPS") adjusted for specific non-trading items as
+
+
+         defined in the Group's accounting policy.
+
+
+    (5)  Dividend declared on 3 September 2025, to be paid on 6 October 2025 (2024: Declared on 3 September 2024 and paid 23 September
+
+
+         2024).
+
+
+SEGMENTAL PERFORMANCE
+
+
+Commercial Pharmaceuticals
+
+
+Commercial Pharmaceuticals delivered solid revenue growth of 5% (rand value exceeds carrying amount. Despite the negative
+
+
+        impact of the QDMTT, total brand related intangible assets still have a valuation of more than
+
+
+        50% greater than their carrying amount;
+
+
+    -   The abovementioned intangible asset impairments totalling R4,1 billion, which comprises the
+
+
+        QDMTT related impact of R1,7 billion, the mRNA asset impairment of R0,8 billion and regional
+
+
+        performance related impairments of R1,6 billion, have resulted in the Group incurring a loss
+
+
+        for the year. These impairments and the increased restructuring costs have adversely impacted
+
+
+        Aspen's earnings per share ("EPS") and headline earnings per share ("HEPS") as compared to
+
+
+        the Group's primary measure of performance being normalised headline earnings per share
+
+
+        ("NHEPS");
+
+
+    -   Operating cash conversion rate of 147% well exceeded the Group's target of 100%. The
+
+
+        leverage ratio ended at 3.2x. Net debt of R31,2 billion was marginally higher than the R30,0
+
+
+        billion in H1 2025, negatively affected by the weaker ZAR year-end closing rates partly offset
+
+
+        by the stronger second half CER operating cash flows and lower inventory levels; and
+
+
+    -   Finance costs benefited from interest rate cuts across the Group's EUR, ZAR and AUD debt
+
+
+        pools in the second half of the year. Despite this, year-on-year finance costs have risen,
+
+
+        influenced by higher net debt levels and increased foreign exchange losses driven by US tariff-
+
+
+        led global volatility in exchange rates.
+
+
+GROUP PERFORMANCE
+
+
+KEY PERFORMANCE INDICATORS(1)
+
+
+                                                  Reported          Reported           Change        Change
+
+
+                                                 June 2025         June 2024               at     at CER(2)
+
+
+                                                                                     reported
+
+
+                                                                                        rates
+
+
+                                                  R'million        R'million                %             %
+
+
+    Revenue                                          43 363           44 706               (3)            1
+
+
+    Gross profit                                     19 129           19 454               (2)            4
+
+
+    Operating profit                                  1 437            6 998              (79)         (77)
+
+
+    Normalised EBITDA(3)                              9 591           11 255              (15)          (8)
+
+
+    Headline earnings per share (cents)               792.1          1 356.6              (42)         (35)
+
+
+    Normalised headline earnings per                1 055.8          1 492.1              (29)         (22)
+
+
+    share (cents)(4)
+
+
+    (Loss)/earnings per share (cents)               (243.9)            991.4            >(100)       >(100)
+
+
+    Dividend per share (cents)(5)                       211              359              (41)
+
+
+    (1)  The Group assesses its operational performance using constant exchange rates ("CER"). The table above compares performance to the
+
+
+         prior comparable period at reported exchange rates and at CER.
+
+
+    (2)  The CER % change is based upon the performance for the year ended 30 June 2024 recalculated using the average exchange rates for the
+
+
+         year ended 30 June 2025.
+
+
+    (3)  Operating profit before depreciation and amortisation adjusted for specific non-trading items as defined in the Group's accounting policy.
+
+
+    (4)  Normalised headline earnings per share ("NHEPS") is headline earnings per share ("HEPS") adjusted for specific non-trading items as
+
+
+         defined in the Group's accounting policy.
+
+
+    (5)  Dividend declared on 3 September 2025, to be paid on 6 October 2025 (2024: Declared on 3 September 2024 and paid 23 September
+
+
+         2024).
+
+
+SEGMENTAL PERFORMANCE
+
+
+Commercial Pharmaceuticals
+
+
+Commercial Pharmaceuticals delivered solid revenue growth of 5% (10% CER) to R32 216 million and
+
+
+normalised EBITDA growth of 1% (10% CER) with CER EBITDA growth well aligned to CER revenue
+
+
+growth despite absorbing proportionately higher operating expenses in the business acquired from
+
+
+Sandoz in China. Organic revenue growth of 7% CER was achieved when excluding the portfolio
+
+
+acquired in Latin America. Gross profit margins of 58,1% (FY 2024: 59,4%) were diluted by lower
+
+
+Injectables gross profit margins and the relative strength of the average ZAR exchange rates against
+
+
+Aspen's major trading currencies.
+
+
+Prescription
+
+
+Prescription Brands reported growth of 10% (16% CER), with revenue of R12 519 million. Americas led
+
+
+the growth, benefitting from the full year addition of the portfolio acquired in Latin America which
+
+
+enjoyed double digit growth on a comparable basis in H2 2025. Africa Middle East, the largest region
+
+
+within this segment, grew 8% with solid organic growth of 6% augmented by the Lilly franchise. Gross
+
+
+profit percentage of 61,8% (FY 2024: 60,9%) was supported by a favourable sales mix from Americas.
+
+
+OTC
+
+
+OTC revenue grew by 1% (5% CER) to R9 812 million buoyed by an expected stronger second half
+
+
+performance from Africa Middle East which recorded full year growth of 5% (6% CER). The Australasia
+
+
+OTC portfolio revenue, which grew 5% in CER, now exceeds the region's Prescription segment and is
+
+
+well positioned for future growth. Gross profit percentage of 58,3% was closely aligned to the prior
+
+
+period (FY 2024: 58,7%).
+
+
+Injectables
+
+
+The Injectables portfolio returned to growth in FY 2025 rising 4% (10% CER) to R9 885 million. Africa
+
+
+Middle East growth of 45% was boosted by the successful launch and rollout of Mounjaro® in South
+
+
+Africa. The product swop transaction with Sandoz impacted Asia positively and Europe negatively.
+
+
+Gross profit percentage declined to 53,2% (FY 2024: 58,2%) influenced by the impact of national
+
+
+volume-based procurement and related one-off inventory write-offs in China.
+
+
+Manufacturing
+
+
+Manufacturing revenue of R11 147 million ended 21% lower (-19% CER). Reduced revenue from
+
+
+Heparin was the main cause of this decline as the business benefitted from high once-off sales in the
+
+
+prior year due to the transition to a working capital light toll model. Normalised EBITDA of R668 million
+
+
+in CER ended 62% lower than the prior year impacted mainly by the Dispute within the Finished Dose
+
+
+Form ("FDF") segment.
+
+
+PROSPECTS
+
+
+Aspen is focused on optimisation strategies for its Manufacturing business and building on the gains
+
+
+made in Commercial Pharmaceuticals.
+
+
+For FY 2026, Commercial Pharmaceuticals is expected to record mid-single digit organic revenue and
+
+
+stronger EBITDA growth in CER. This will be supported by a higher profit contribution from the
+
+
+reshaped business in China and further incremental growth from Mounjaro® in South Africa following
+
+
+the recent regulatory approval of the Kwikpen® delivery system indicated for type 2 diabetes
+
+
+management and pending approval of the chronic weight management indication. Aspen has also
+
+
+recently concluded a long-term distribution and promotional agreement with Boehringer Ingelheim
+
+
+for its product portfolio in South Africa, effective from 1 September 2025.
+
+
+Considerable progress has been made in executing on Aspen's generic semaglutide GLP-1 strategy
+
+
+(sterile injectable products for the treatment of type 2 diabetes and obesity). This has required
+
+
+extensive investment in both intellectual property("IP") and infrastructure. To give the Group every
+
+
+chance of success, Aspen has followed a strategy of both developing its own IP and
+
+
+licensing/partnering on IP with licensors. It is anticipated that the first revenue from this initiative
+
+
+could be as early as the latter part of FY 2026. No such revenue has been included in the Commercial
+
+
+Pharmaceuticals guidance detailed above.
+
+
+The FDF segment of the Manufacturing business is working to recover lost profitability by FY 2027. Key
+
+
+to achieving this objective is:
+
+
+    -   Commercialising the insulin 10% CER) to R32 216 million and
+
+
+normalised EBITDA growth of 1% (10% CER) with CER EBITDA growth well aligned to CER revenue
+
+
+growth despite absorbing proportionately higher operating expenses in the business acquired from
+
+
+Sandoz in China. Organic revenue growth of 7% CER was achieved when excluding the portfolio
+
+
+acquired in Latin America. Gross profit margins of 58,1% (FY 2024: 59,4%) were diluted by lower
+
+
+Injectables gross profit margins and the relative strength of the average ZAR exchange rates against
+
+
+Aspen's major trading currencies.
+
+
+Prescription
+
+
+Prescription Brands reported growth of 10% (16% CER), with revenue of R12 519 million. Americas led
+
+
+the growth, benefitting from the full year addition of the portfolio acquired in Latin America which
+
+
+enjoyed double digit growth on a comparable basis in H2 2025. Africa Middle East, the largest region
+
+
+within this segment, grew 8% with solid organic growth of 6% augmented by the Lilly franchise. Gross
+
+
+profit percentage of 61,8% (FY 2024: 60,9%) was supported by a favourable sales mix from Americas.
+
+
+OTC
+
+
+OTC revenue grew by 1% (5% CER) to R9 812 million buoyed by an expected stronger second half
+
+
+performance from Africa Middle East which recorded full year growth of 5% (6% CER). The Australasia
+
+
+OTC portfolio revenue, which grew 5% in CER, now exceeds the region's Prescription segment and is
+
+
+well positioned for future growth. Gross profit percentage of 58,3% was closely aligned to the prior
+
+
+period (FY 2024: 58,7%).
+
+
+Injectables
+
+
+The Injectables portfolio returned to growth in FY 2025 rising 4% (10% CER) to R9 885 million. Africa
+
+
+Middle East growth of 45% was boosted by the successful launch and rollout of Mounjaro® in South
+
+
+Africa. The product swop transaction with Sandoz impacted Asia positively and Europe negatively.
+
+
+Gross profit percentage declined to 53,2% (FY 2024: 58,2%) influenced by the impact of national
+
+
+volume-based procurement and related one-off inventory write-offs in China.
+
+
+Manufacturing
+
+
+Manufacturing revenue of R11 147 million ended 21% lower (-19% CER). Reduced revenue from
+
+
+Heparin was the main cause of this decline as the business benefitted from high once-off sales in the
+
+
+prior year due to the transition to a working capital light toll model. Normalised EBITDA of R668 million
+
+
+in CER ended 62% lower than the prior year impacted mainly by the Dispute within the Finished Dose
+
+
+Form ("FDF") segment.
+
+
+PROSPECTS
+
+
+Aspen is focused on optimisation strategies for its Manufacturing business and building on the gains
+
+
+made in Commercial Pharmaceuticals.
+
+
+For FY 2026, Commercial Pharmaceuticals is expected to record mid-single digit organic revenue and
+
+
+stronger EBITDA growth in CER. This will be supported by a higher profit contribution from the
+
+
+reshaped business in China and further incremental growth from Mounjaro® in South Africa following
+
+
+the recent regulatory approval of the Kwikpen® delivery system indicated for type 2 diabetes
+
+
+management and pending approval of the chronic weight management indication. Aspen has also
+
+
+recently concluded a long-term distribution and promotional agreement with Boehringer Ingelheim
+
+
+for its product portfolio in South Africa, effective from 1 September 2025.
+
+
+Considerable progress has been made in executing on Aspen's generic semaglutide GLP-1 strategy
+
+
+(sterile injectable products for the treatment of type 2 diabetes and obesity). This has required
+
+
+extensive investment in both intellectual property("IP") and infrastructure. To give the Group every
+
+
+chance of success, Aspen has followed a strategy of both developing its own IP and
+
+
+licensing/partnering on IP with licensors. It is anticipated that the first revenue from this initiative
+
+
+could be as early as the latter part of FY 2026. No such revenue has been included in the Commercial
+
+
+Pharmaceuticals guidance detailed above.
+
+
+The FDF segment of the Manufacturing business is working to recover lost profitability by FY 2027. Key
+
+
+to achieving this objective is:
+
+
+    -   Commercialising the insulin contract, following an intensive technical transfer process. This is
+
+
+        an exciting opportunity for both Aspen and patients. Resultant revenue of R0,3 billion is
+
+
+        forecast for FY 2026, ramping up to more than R1 billion for FY 2027; and
+
+
+    -   Reshaping both Aspen's French and South African sterile facilities to match resources with the
+
+
+        existing contracts on hand. It is intended that most of the restructuring will be addressed in
+
+
+        this calendar year.
+
+
+The benefits of both increased revenue and cost reductions will positively impact H2 2026 and are
+
+
+expected to be fully realised in FY 2027.
+
+
+Aspen is well positioned to execute on its strategic opportunities that will further enhance
+
+
+Manufacturing profitability which include, inter alia:
+
+
+    -   Procuring regulatory approval from SAHPRA and WHO for the Serum paediatric vaccines, to
+
+
+        be followed by commercialisation with potential sales in calendar year 2026 and increased
+
+
+        volumes thereafter;
+
+
+    -   On-boarding GLP-1 injectable production volumes at both the French and South African sterile
+
+
+        facilities following the operationalisation of Aspen's generic semaglutide strategy; and
+
+
+    -   Securing further contracts in the South African and French sterile facilities.
+
+
+The Group anticipates double digit CER growth in normalised headline earnings in FY 2026.
+
+
+Manufacturing normalised EBITDA was positively impacted by the contribution from the mRNA
+
+
+contract in H1 2025 but negatively impacted by the reversal of a portion of this contribution in H2 2025
+
+
+following the onset of the Dispute. Consequently, the relative CER normalised headline earnings are
+
+
+expected to be lower in H1 2026 followed by stronger double-digit growth in H2 2026.
+
+
+The continued focus on working capital, enhanced Manufacturing efficiencies and expected lower
+
+
+investment in capital expenditure (following higher GLP-1 and sterile related investments in FY 2025)
+
+
+should assist the Group in reducing net debt levels and achieving an operating cash conversion rate
+
+
+target of greater than 100% in FY 2026. The Group expects to achieve a leverage ratio of less than 3.0x
+
+
+at the end of FY 2026.
+
+
+Any forecast information in the above-mentioned paragraphs has not been reviewed or reported on
+
+
+by the Group's auditors and is the responsibility of the directors.
+
+
+REGULATORY REQUIREMENTS
+
+
+The contents of the short form announcement are the responsibility of the Board of directors of
+
+
+Aspen. The information in the short form announcement is a summary of the full announcement
+
+
+available on the Company's website at https://www.aspenpharma.com/investor-relations/#financial-
+
+
+results-and-presentations on 03 September 2025 and accordingly does not contain full or complete
+
+
+details. The full announcement can also be accessed online at
+
+
+https://senspdf.jse.co.za/documents/2025/jse/isse/APN/YEresults.pdf
+
+
+REVIEW BY INDEPENDENT AUDITOR
+
+
+These condensed Group Financial Results for the year ended 30 June 2025 have been reviewed by
+
+
+independent external auditors, Ernst & Young Inc. and their unmodified review report is included in
+
+
+the full announcement. The review was performed in accordance with ISRE 2410 'Review of Annual
+
+
+Financial Information Performed by the Independent Auditor of the Entity'. Any reference to future
+
+
+financial performance included in this announcement has not been reviewed or reported on by the
+
+
+Group's external auditors. The auditor's review report does not necessarily report on all of the
+
+
+information contained in this announcement/financial results. Shareholders are therefore advised
+
+
+that in order to obtain a full understanding of the nature of the auditor's engagement, they should
+
+
+refer to the full announcement. Any investment decisions by shareholders/investors should be based
+
+
+on the full announcement.
+
+
+DECLARATION OF DIVIDEND
+
+
+The Board has declared a gross dividend of 211 cents per ordinary share (2024: 359 cents per share)
+
+
+(or 168,8 cents net of a 20% dividend withholding tax, where this maximum rate of tax applies)
+
+
+which is 20% of normalised headline earnings per share and aligned to the Group's capital allocation
+
+
+framework. The dividend will be paid from income reserves.
+
+
+Shareholders should seek their own advice on the tax consequences associated with the dividend
+
+
+and are particularly encouraged to ensure their records are up to date with Aspen so that the correct
+
+
+withholding tax rate is applied to their dividend. The Company income tax number is 9325178714.
+
+
+The issued share capital of the Company is 446 252 332 ordinary shares. Future distributions will
+
+
+continue to be decided on a year-to-year basis. In compliance with IAS 10 - Events After the
+
+
+Reporting Period, the dividend will be accounted for in the financial statements in the year ended 30
+
+
+June 2026.
+
+
+Last day to trade cum dividend                                  Tuesday, 30 September 2025
+
+
+Shares commence trading ex-dividend                              Wednesday, 1 October 2025
+
+
+Record date                                                         Friday, 3 October 2025
+
+
+Payment date                                                        Monday, 6 October 2025
+
+
+Share certificates may not be dematerialised or rematerialised between Wednesday, 1 October 2025
+
+
+and Friday, 3 October 2025.
+
+
+Registered office
+
+
+Building 8
+
+
+Healthcare Park
+
+
+Woodlands Drive
+
+
+Woodmead
+
+
+Sandton
+
+
+3 September 2025
+
+
+Sponsor:
+
+
+Investec Bank Limited
+
+
+Date: 03-09-2025 01:00:00

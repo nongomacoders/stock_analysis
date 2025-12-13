@@ -1,0 +1,693 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251103_S512736.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [AEL]
+
+
+Unaudited Consolidated Results for the six months ended 31 August 2025 and Cash Dividend Declaration
+
+
+Altron Limited
+
+
+Registration number 1947/024583/06
+
+
+(Incorporated in the Republic of South Africa)
+
+
+Share code: AEL
+
+
+ISIN: ZAE000191342
+
+
+("Altron" or "Group" or "the Company")
+
+
+Unaudited consolidated results for the six months ended 31 August 2025 ("H1 FY26") and cash dividend declaration
+
+
+SALIENT FEATURES
+
+
+-   Continuing operations(1) revenue of R4.8 billion, down 1%. Group revenue down 4% to R4.9 billion.
+
+
+-   Continuing operations(1) earnings before interest, tax, depreciation and amortisation ("EBITDA") of
+
+
+    R938 million, up 4%. Group EBITDA up 2% to R905 million.
+
+
+-   Continuing operations(1) operating profit of R549 million, up 15%, positively impacted by the change in
+
+
+    depreciation policy in Netstar. Group operating profit up 11% to R516 million.
+
+
+-   Continuing operations(1) headline earnings per share ("HEPS") of 96 cents, up 22%. Group HEPS up 18%
+
+
+    to 87 cents.
+
+
+-   Continuing operations(1) earnings per share ("EPS") of 84 cents, up 12%. Group EPS down 6% to 66 cents,
+
+
+    impacted by the Altron Nexus loss.
+
+
+-   Interim dividend of 48 cents, an increase of 20%.
+
+
+                             CONTINUING OPERATIONS(1)                                  GROUP
+
+
+                                                                        (including discontinued operations(2)
+
+
+R million                 H1 FY26      H1 FY25      % change(3)            H1 FY26      H1 FY25   % change(4)
+
+
+Revenue                     4 825        4 868             (1%)              4 914        5 104          (4%)
+
+
+EBITDA(3)                     938          905             +4%                 905          891          +2%
+
+
+Operating profit(3)           549          477            +15%                 516          463         +11%
+
+
+Net profit after tax          330          298            +11%                 258          276          (7%)
+
+
+HEPS                     96 cents     79 cents            +22%            87 cents     74 cents         +18%
+
+
+EPS                      84 cents     75 cents            +12%            66 cents     70 cents          (6%)
+
+
+Dividend                                                                  48 cents     40 cents         +20%
+
+
+Notes
+
+
+1. Continuing operations include Netstar, Altron FinTech, Altron HealthTech, Altron Digital Business, Altron Security,
+
+
+   Altron Document Solutions, Altron Arrow and excludes Altron Nexus.
+
+
+2. Discontinued operations includes Altron Nexus which was sold on 1 August 2025.
+
+
+3. Capital Items excluded from EBITDA and operating profit, comprise loss and costs on disposals, impairments, capital
+
+
+   rental devices written off, and lease modifications and terminations where applicable.
+
+
+4. All growth rates quoted are year-on-year and refer to the six months ended 31 August 2025 compared to the six months
+
+
+   ended 31 August 2024, unless stated otherwise.
+
+
+KEY BUSINESS DEVELOPMENTS
+
+
+-   Netstar continued its growth trajectory with subscribers growing by 11% to 2.1 million. The South Africa
+
+
+    business delivered strong results, with the turnaround in Australia expected to return that business to
+
+
+    profitability and make a positive contribution in the second half and for the full year of FY26. EBITDA
+
+
+    increased by 10% and operating profit by 54%, positively impacted by the change in depreciation policy to
+
+
+    more closely align with the new proven useful lives of capital rental assets and industry standards.
+
+
+-   Altron FinTech continued its strong performance, growing revenue 24%, EBITDA by 18% and operating
+
+
+    profit by 20%. This was mainly driven by ongoing success in attracting new small and medium-sized
+
+
+    enterprises ("SME") customers to its collections and payment platform, supported by strong growth in sales
+
+
+    and rentals of point-of-sale ("POS") devices, and the related transaction throughput.
+
+
+-   Altron Digital Business has had a challenging half-year in a muted IT investment environment. It has
+
+
+    implemented a profit improvement strategy and remains focused on executing current mandates and
+
+
+    growing market share.
+
+
+-   Altron continues to invest in growth with R342 million growth capital expenditure in the period, focused
+
+
+    primarily on Netstar, Altron FinTech, and systems and platforms.
+
+
+-   Altron recently launched its AI Factory, providing South African companies with enterprise-level AI
+
+
+    infrastructure and services, enabling them to build cutting-edge AI solutions and innovate at a competitive
+
+
+    price on an as-a-service basis.
+
+
+Commenting on the results CEO Werner Kapp said, "I am pleased with this period's strong financial
+
+
+performance in the challenging economic environment. I am particularly encouraged by the growth and returns
+
+
+in our Platforms segment, which we continue to invest behind to support Altron's strategy. Our strong financial
+
+
+position and cash flow generation have allowed us to increase the interim dividend by 20%."
+
+
+DETAILED FINANCIAL OVERVIEW
+
+
+The positive momentum from the 2025 financial year carried into H1 FY26, with Altron delivering another strong
+
+
+set of results. Revenue from continuing operations declined by 1% to R4.8 billion, reflecting the challenging
+
+
+environment in the IT Services and Distribution businesses; however, this was offset by robust growth in the
+
+
+Platforms segment. Group revenue, including discontinued operations, fell by 4% due to a lower contribution
+
+
+from Altron Nexus in these results.
+
+
+EBITDA from continuing operations increased by 4% to R938 million, while Group EBITDA rose by 2% to R905
+
+
+million. At the operating profit level, continuing operations saw a 15% growth to R549 million, with Netstar, Altron
+
+
+FinTech, Altron HealthTech, and Altron Document Solutions all contributing significant double-digit growth.
+
+
+Operating profit was positively impacted by the change in Netstar's depreciation policy. The Group achieved a
+
+
+11% rise in operating profit to R516 million.
+
+
+The Group remains highly cash-generative and well-capitalised, providing a robust foundation and flexibility for
+
+
+executing its immediate strategic initiatives. Cash dividend for the period was increased by 20% to 48 cents per
+
+
+share, reflecting the strong growth in headline earnings.
+
+
+Segmental overview
+
+
+Altron organises its businesses into the following operating segments, in line with its strategy to be the leading
+
+
+platforms and IT services company in its chosen markets:
+
+
+-   Platforms: Netstar, Altron FinTech, and Altron HealthTech.
+
+
+-   IT Services: Altron Digital Business, Altron Security and Altron Document Solutions.
+
+
+-   Distribution: Altron Arrow.
+
+
+-   Other: Consolidation and other international operations
+
+
+Altron Nexus was classified as held-for-sale in discontinued operations up to the date of its disposal on 1 August
+
+
+2025.
+
+
+                                         CONTINUING(1) OPERATIONS
+
+
+R million                         H1 FY26       H1 FY25       % change(4)
+
+
+REVENUE
+
+
+Platforms                           2 179         1 943             +12%
+
+
+IT Services                         2 410         2 597              (7%)
+
+
+Distribution                          288           376             (23%)
+
+
+Other                                 (52)          (48)             (8%)
+
+
+EBITDA(3)
+
+
+Platforms                             881           776             +14%
+
+
+IT Services                            92           157             (41%)
+
+
+Distribution                           19            35             (46%)
+
+
+Other                                 (54)          (63)            +14%
+
+
+OPERATING PROFIT(3)
+
+
+Platforms                             547           415             +32%
+
+
+IT Services                            61           120             (49%)
+
+
+Distribution                           18            35             (49%)
+
+
+Other                                 (77)          (93)            +17%
+
+
+Platforms
+
+
+The Platforms segment grew revenue by 12% to R2.2 billion, with EBITDA growing 14% to R881 million and
+
+
+operating profit up 32% to R547 million.
+
+
+-   Netstar revenue rose 8% to R1.2 billion, EBITDA grew 10% to R540 million, and operating profit increased
+
+
+    54% to R225 million.
+
+
+    -  Netstar continued to grow its market share with the subscriber base growing 11% to 2.1 million.
+
+
+       248 000 gross subscribers were added during the period, with 81 000 net subscriber additions. Consumer
+
+
+       subscribers increased by 8%, while higher-margin enterprise customers grew by 16%. Churn, excluding
+
+
+       original equipment manufacturer ("OEM") partnerships, increased marginally from 17% to 18%.
+
+
+    -  Key operational metrics were maintained above target levels, with contract fulfilment rate and pre-
+
+
+       fitment conversion rate above 90% and 60% respectively.
+
+
+    -  Netstar revised its depreciation policy at the start of the financial year, increasing the depreciation period
+
+
+       for eligible capital rental devices from three to an average of five years, based on an independently
+
+
+       calculated useful life assessment. This adjustment better aligns the depreciation pattern of these assets
+
+
+       with their economic lifespan and industry norms. As a result, the depreciation expense was
+
+
+       approximately R65 million lower for the period than it would have been under the previous policy.
+
+
+       Excluding the change in depreciation policy, Netstar's operating profit increased by 10%.
+
+
+-   Altron FinTech increased its revenue by 24% to R750 million, driven by ongoing success in attracting new
+
+
+    SME customers to its collections and payment platform and expanding its customer base by over 40%, with
+
+
+    the number of debit orders reaching 20 million, and value thereof reaching R 24 billion, both increasing by
+
+
+    more than 30%. In the Integrated Transaction Solutions business, sales and rentals of POS devices saw
+
+
+    strong growth, with the related transaction throughput growing over 30%. EBITDA rose by 18% to R274 million,
+
+
+    while operating profit grew by 20% to R257 million.
+
+
+-   Altron HealthTech revenue remained flat at R201 million, while EBITDA increased by 21% to R67 million,
+
+
+    and operating profit grew by 20% to R65 million. Annuity revenue rose by 12%, supported by double-digit
+
+
+    growth in both corporate and private practice network licence revenues and stable switching volumes. This
+
+
+    was offset by a decline in project revenues. The adoption of data-driven services continues, particularly with
+
+
+    the oncology solution, as well as an encouraging pipeline in the financial services market.
+
+
+IT Services
+
+
+The IT Services segment revenue decreased 7% to R2.4 billion. EBITDA decreased by 41% to R92 million, with
+
+
+operating profit down 49% to R61 million.
+
+
+-   Altron Digital Business revenue decreased by 10% to R1.5 billion. The IT Services industry remains muted,
+
+
+    with the major corporate and public sector IT spenders delaying IT investments in this economic
+
+
+    environment. Pressure was also felt from changes to OEM partner rebate structures implemented in
+
+
+    January 2025. EBITDA decreased to a loss of R32 million from a profit of R47 million, and operating profit
+
+
+    dropped from R34 million to an operating loss of R42 million. Altron Digital Business has implemented a
+
+
+    profit improvement strategy aimed at removing R150 million from its cost base, the full impact of which will
+
+
+    be felt in FY27. Altron Digital Business remains focused on executing its current mandates and growing
+
+
+    market share. Altron Digital Business remains well-positioned for any upturn in the IT services industry.
+
+
+-   Altron Security revenue increased 2% to R252 million, with growth in software and managed services
+
+
+    revenue offset by a pullback in integration and professional services. A change in agency versus principal
+
+
+    mix reduced margins slightly, leading to EBITDA dropping 2% to R78 million. Operating profit increased 6%
+
+
+    to R70 million, benefiting from a lower depreciation charge this period.
+
+
+-   Altron Document Solutions revenue decreased 5% to R697 million, EBITDA increased 53% to R46 million,
+
+
+    and operating profit increased 65% to R33 million. The Africa business experienced top-line pressure, and
+
+
+    changes in buying patterns were observed, with customers seeking more cost-effective and digitally
+
+
+    enabled solutions. The A4 and eco-range of refurbished printers performed well, and software and digital
+
+
+    solution sales more than doubled. EBITDA margins expanded by 2%, driven by the shift in sales mix and
+
+
+    the profit improvement strategy implemented in FY2024 and FY2025.
+
+
+Distribution
+
+
+Altron Arrow reported revenue of R288 million, down 23%. As previously guided, the electronic component
+
+
+distribution industry has entered a global cyclical downturn, impacting the top line. EBITDA decreased 46% to
+
+
+R19 million, with operating profit down 49% to R18 million.
+
+
+Discontinued operations
+
+
+Altron Nexus was sold during the period, effective 1 August 2025. Altron Nexus contributed revenue of R89
+
+
+million, and an EBITDA and operating loss of R32 million for the period.
+
+
+Capital structure and working capital
+
+
+The Group continued to generate strong operating cash flows of R762 million from Continuing operations(1),
+
+
+with net cash of R324 million (excluding merchant cash R187 million) on hand at 31 August 2025, after loan
+
+
+repayments of R425 million and dividend payments of R201 million.
+
+
+The Group invested R370 million in capital expenditures, of which R342 million supported growth initiatives.
+
+
+This includes R216 million investment in Netstar's capital rental devices, R32 million in Altron FinTech capital
+
+
+rental devices, and new initiatives including the AI Factory and HealthTech Oncology solutions of R28.7 million.
+
+
+Working capital increased by R109 million to R1.5 billion, reflecting the growth in the Platforms segment and
+
+
+timing differences in IT Services.
+
+
+INTERIM DIVIDEND
+
+
+The Board approved a 20% increase in the interim dividend to 48.00 cents per share (38.40 cents net of 20%
+
+
+dividend withholding tax) for the six months ended 31 August 2025. This dividend will be payable to shareholders
+
+
+registered with the Company as of the close of business on the record date listed below.
+
+
+The Board confirmed that the solvency and liquidity test as contemplated by the Companies Act, No. 71 of 2008,
+
+
+as amended, has been duly considered, applied, and satisfied. This is a dividend as defined in the Income Tax
+
+
+Act, No. 58 of 1962 and is payable from income reserves. The income tax number of the Company is
+
+
+9725149711.
+
+
+The number of ordinary shares in issue at the date of this declaration is 412 859 653, including 30 837 778
+
+
+treasury shares.
+
+
+The key dates related to the interim dividend are as follows:
+
+
+DIVIDEND DATES                                             2025
+
+
+Last day to trade cum dividend             Tuesday, 18 November
+
+
+Commence trading ex-dividend             Wednesday, 19 November
+
+
+Record date                                 Friday, 21 November
+
+
+Interim Dividend Payment date               Monday, 24 November
+
+
+Share certificates may not be dematerialised or re-materialised between Wednesday, 19 November 2025 and
+
+
+Friday, 21 November 2025, both days inclusive.
+
+
+OUTLOOK
+
+
+Commenting on the outlook, CEO Werner Kapp said, "We anticipate ongoing challenges for IT Services in the
+
+
+near term. Our priority remains investing in our Platforms, which deliver significant value for shareholders. We're
+
+
+focused on executing our strategy, managing capital efficiently, making strategic investments, and driving
+
+
+sustainable, profitable growth to enhance long-term shareholder value."
+
+
+INTERIM RESULTS PRESENTATION
+
+
+An investor presentation will be hosted virtually via webcast at 9:30am CAT on 3 November 2025, to present
+
+
+the Group's financial results for the six months ended 31 August 2024. Registration to attend the webcast can
+
+
+be accessed via the following link: https://78449.themediaframe.com/links/altron251103.html
+
+
+SHORT FORM ANNOUNCEMENT
+
+
+The condensed results for the six month period ended 31 August 2025 are unaudited.
+
+
+This short-form announcement is the responsibility of the Board of Directors and does not contain full or
+
+
+complete details.
+
+
+Any investment decisions by investors and/or shareholders should be based as a whole on consideration of
+
+
+the Group consolidated interim financial statements which can be found on the Company's website at:
+
+
+www.altron.com and on the JSE cloudlink at: https://senspdf.jse.co.za/documents/2025/jse/isse/aele/H1FY26.pdf
+
+
+Copies of the full announcement may also be requested from
+[email protected]
+.
+
+
+FURTHER INFORMATION
+
+
+This short-form announcement may contain forward-looking statements that relate to Altron's future operations
+
+
+and performance. Such statements have not been reviewed or reported on by the Company's external auditors
+
+
+and are not intended to be interpreted as guarantees of future performance, achievements, financial or other
+
+
+results. They rely on future circumstances, some of which are beyond management's control, and the outcomes
+
+
+implied by these statements could potentially be materially different from future results. No assurance can be
+
+
+given that forward-looking statements will be accurate; thus, undue reliance should not be placed on such
+
+
+statements.
+
+
+For and on behalf of the Board.
+
+
+Mr. S van Graan                   Mr. W Kapp                      Mr. C Snyman
+
+
+Chairman                          Group Chief Executive           Chief Financial Officer
+
+
+Registered Office
+
+
+Altron Campus, 20 Woodlands Drive, Woodlands Office Park, Woodmead, Gauteng, South Africa, 2191
+
+
+JSE Equity Sponsor
+
+
+Investec Bank Limited
+
+
+Transfer Secretaries
+
+
+Computershare Investor Services Proprietary Limited, 1st Floor, Rosebank Towers, 15 Biermann Avenue,
+
+
+Rosebank, 2196
+
+
+Directors
+
+
+Mr. S van Graan (Chairman)#, Mr. W Kapp (Group Chief Executive)*, Mr. C Snyman (Chief Financial Officer)*,
+
+
+Mr. G Gelink#, Dr. P Mnganga#, Ms. S Rapeti#, Mr. G Kouteris#, Mr. H Christophers#, Ms. N Siyotula#,
+
+
+Mr. T Ngara**, Mr. A Ball**, Mr. B Dawson**
+
+
+*Executive Director
+
+
+** Non-Executive Director
+
+
+# Independent Non-Executive Director
+
+
+Group Company Secretary
+
+
+Ms. M Ngcobo
+
+
+3 November 2025
+
+
+Johannesburg
+
+
+Date: 03-11-2025 07:15:00

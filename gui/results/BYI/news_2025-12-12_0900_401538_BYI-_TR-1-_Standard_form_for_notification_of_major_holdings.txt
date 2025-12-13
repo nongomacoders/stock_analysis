@@ -1,0 +1,448 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251212_S514860.pdf]
+
+
+Symbol [BYI]
+
+
+TR-1: Standard form for notification of major holdings
+
+
+Bytes Technology Group plc
+
+
+(Incorporated in England and Wales)
+
+
+(Registered number: 12935776)
+
+
+LEI: 213800LA4DZLFBAC9O33
+
+
+Share code: BYI
+
+
+ISIN: GB00BMH18Q19
+
+
+("BTG" or the "Company")
+
+
+TR-1: Standard form for notification of major holdings
+
+
+1.   Issuer Details
+
+
+     ISIN
+
+
+     GB00BMH18Q19
+
+
+     Issuer Name
+
+
+     BYTES TECHNOLOGY GROUP PLC
+
+
+     UK or Non-UK Issuer
+
+
+     UK
+
+
+2.   Reason for Notification
+
+
+     An acquisition or disposal of voting rights
+
+
+3.   Details of person subject to the notification obligation
+
+
+     Name
+
+
+     JPMorgan Chase & Co.
+
+
+     City of registered office (if applicable)
+
+
+     Country of registered office (if applicable)
+
+
+     US
+
+
+4.   Details of the shareholder
+
+
+     Full name of shareholder(s) if different from the person(s)
+
+
+     subject to the notification obligation, above
+
+
+     City of registered office (if applicable)
+
+
+     Country of registered office (if applicable)
+
+
+5.   Date on which the threshold was crossed or reached
+
+
+     09-Dec-2025
+
+
+6.   Date on which Issuer notified
+
+
+     11-Dec-2025
+
+
+7.   Total positions of person(s) subject to the notification
+
+
+     obligation
+
+
+                                                 % of voting
+
+
+                              % of voting        rights through
+
+
+                                                                                          Total number of
+
+
+                              rights attached    financial             Total of both in
+
+
+                              to shares (total   instruments           % (8.A + 8.B)
+
+
+                                                                                          voting rights
+
+
+                                                                                          held in issuer
+
+
+                              of 8.A)            (total of 8.B 1 +
+
+
+                                                 8.B 2)
+
+
+  Resulting
+
+
+  situation on the
+
+
+                               Below              Below                 Below               Below
+
+
+  date on which
+
+
+                               Minimum            Minimum               Minimum             Minimum
+
+
+  threshold was
+
+
+                               Threshold          Threshold             Threshold           Threshold
+
+
+  crossed or
+
+
+  reached
+
+
+  Position of
+
+
+  previous
+
+
+                               0.394325           4.673114              5.067439
+
+
+  notification (if
+
+
+  applicable)
+
+
+8.   Notified details of the resulting situation on the date on which
+
+
+     the threshold was crossed or reached
+
+
+8A.  Voting rights attached to shares
+
+
+Class/Type of       Number of       Number of indirect               % of direct
+
+
+                                                                                     % of indirect voting
+
+
+shares ISIN code(if direct voting   voting rights                    voting rights
+
+
+                                                                                     rights (DTR5.2.1)
+
+
+possible)           rights (DTR5.1) (DTR5.2.1)                       (DTR5.1)
+
+
+                                             Below                                     Below
+
+
+GB00BMH18Q19                                 Minimum                                   Minimum
+
+
+                                             Threshold                                 Threshold
+
+
+                                                                       Below Minimum
+
+
+Sub Total 8.A            Below Minimum Threshold
+
+
+                                                                       Threshold
+
+
+8B1. Financial Instruments according to (DTR5.3.1R.(1) (a))
+
+
+                                                           Number of voting
+
+
+                                                           rights that may be
+
+
+Type of financial                      Exercise/conversion                     % of voting
+
+
+                       Expiration date                     acquired if the
+
+
+instrument                             period                                  rights
+
+
+                                                           instrument is
+
+
+                                                           exercised/converted
+
+
+Sub Total 8.B1
+
+
+8B2. Financial Instruments with similar economic effect
+
+
+     according to (DTR5.3.1R.(1) (b))
+
+
+Type of
+
+
+                 Expiration     Exercise/conversion Physical or cash        Number of         % of voting
+
+
+financial
+
+
+                 date           period              settlement              voting rights     rights
+
+
+instrument
+
+
+Sub Total 8.B2
+
+
+9.   Information in relation to the person subject to the
+
+
+     notification obligation
+
+
+     2. Full chain of controlled undertakings through which the voting rights
+
+
+     and/or the financial instruments are effectively held starting with the
+
+
+     ultimate controlling natural person or legal entities (please add
+
+
+     additional rows as necessary)
+
+
+                                        % of voting       % of voting rights
+
+
+                                                                                Total of both if
+
+
+                                        rights if it      through financial
+
+
+                                                                                it equals or is
+
+
+Ultimate           Name of controlled   equals or is      instruments if it
+
+
+                                                                                higher than
+
+
+controlling person undertaking          higher than the   equals or is higher
+
+
+                                                                                the notifiable
+
+
+                                        notifiable        than the notifiable
+
+
+                                                                                threshold
+
+
+                                        threshold         threshold
+
+
+  JPMorgan          J.P. Morgan
+
+
+  Chase & Co.       Securities plc
+
+
+  JPMorgan
+
+
+                    J.P. Morgan SE
+
+
+  Chase & Co.
+
+
+                    J.P. Morgan
+
+
+                    Equities South
+
+
+  JPMorgan
+
+
+                    Africa
+
+
+  Chase & Co.
+
+
+                    Proprietary
+
+
+                    Limited
+
+
+10.  In case of proxy voting
+
+
+     Name of the proxy holder
+
+
+     The number and % of voting rights held
+
+
+     The date until which the voting rights will be held
+
+
+11.  Additional Information
+
+
+ Chain of controlled undertakings:
+
+
+ JPMorgan Chase & Co.
+
+
+ JPMorgan Chase Bank, National Association (100%)
+
+
+ J.P. Morgan International Finance Limited (100%)
+
+
+ J.P. Morgan Capital Holdings Limited (100%)
+
+
+ J.P. Morgan Securities plc (100%)
+
+
+ JPMorgan Chase & Co.
+
+
+ JPMorgan Chase Bank, National Association (100%)
+
+
+ J.P. Morgan International Finance Limited (100%)
+
+
+ J.P. Morgan Capital Holdings Limited (100%)
+
+
+ J.P. Morgan Equities South Africa Proprietary Limited (100%)
+
+
+ JPMorgan Chase & Co.
+
+
+ JPMorgan Chase Bank, National Association (100%)
+
+
+     J.P. Morgan International Finance Limited (100%)
+
+
+     J.P. Morgan SE (100%)
+
+
+12.  Date of Completion
+
+
+     11-Dec-2025
+
+
+13.  Place Of Completion
+
+
+     London
+
+
+The Company has a primary listing on the Main Market of the London Stock
+
+
+Exchange and a secondary listing on the Johannesburg Stock Exchange.
+
+
+12 December 2025
+
+
+Sponsor
+
+
+Investec Bank Limited
+
+
+Date: 12-12-2025 09:00:00

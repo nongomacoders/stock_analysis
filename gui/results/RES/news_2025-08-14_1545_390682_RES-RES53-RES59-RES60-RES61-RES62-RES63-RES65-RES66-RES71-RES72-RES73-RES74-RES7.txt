@@ -1,0 +1,823 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20250814_S509074.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [RES78]
+
+
+Symbol [RES77]
+
+
+Symbol [RES74]
+
+
+Symbol [RES73]
+
+
+Symbol [RES72]
+
+
+Symbol [RES71]
+
+
+Symbol [RES66]
+
+
+Symbol [RES65]
+
+
+Symbol [RES63]
+
+
+Symbol [RES62]
+
+
+Symbol [RES61]
+
+
+Symbol [RES60]
+
+
+Symbol [RES59]
+
+
+Symbol [RES53]
+
+
+Symbol [RES]
+
+
+Unaudited financial results and declaration of interim dividend for the six months ended 30 June 2025
+
+
+RESILIENT REIT LIMITED
+
+
+Incorporated in the Republic of South Africa
+
+
+Registration number: 2002/016851/06
+
+
+JSE share code: RES
+
+
+ISIN: ZAE000209557
+
+
+Bond company code: BIRPIF
+
+
+LEI: 378900F37FF47D486C58 (Approved as a REIT by the JSE)
+
+
+("Resilient" or "the Company" or "the Group")
+
+
+www.resilient.co.za
+
+
+Unaudited financial results and declaration of interim dividend
+
+
+for the six months ended 30 June 2025
+
+
+Nature of the business
+
+
+Resilient is a retail-focused Real Estate Investment Trust ("REIT") listed on
+
+
+the JSE Limited ("JSE"). Its strategy is to invest in dominant retail centres
+
+
+with a minimum of three anchor tenants and let predominantly to national
+
+
+retailers. A core competency is its strong development skills which support
+
+
+new developments and the reconfiguration of existing shopping centres to
+
+
+adapt to structural changes in the market. Resilient also invests directly
+
+
+and indirectly in offshore property assets.
+
+
+The Company's focus is on regions with strong growth fundamentals. Resilient
+
+
+generally has the dominant offering in its target markets with strong
+
+
+grocery and flagship fashion offerings.
+
+
+Distributable earnings and dividend declared
+
+
+The Board has declared a dividend of 245,72 cents per share for the six months
+
+
+ended June 2025. This represents an increase of 12,2% compared to the
+
+
+218,97 cents per share for the six months ended June 2024.
+
+
+The South African portfolio recorded like-for-like comparable net property
+
+
+income ("NPI") growth of 8,6% for 1H2025. Resilient's energy strategy
+
+
+continues to shield against the continued rise of administered prices.
+
+
+The euro dividend from Lighthouse Properties p.l.c. ("Lighthouse") for
+
+
+1H2025 increased by 7,9%. Offshore distributable earnings further benefitted
+
+
+from contracted forward exchange rates that were 6,1% higher than in
+
+
+1H2024 (R21,92 vs R20,67).
+
+
+South African interest rates reduced from 11,75% in January 2024 to 10,50% at
+
+
+June 2025. On average, interest rates were 75 basis points lower during
+
+
+1H2025 compared to 1H2024. To the extent that borrowings were unhedged or
+
+
+hedged by way of interest rate caps, the Group benefitted from these lower
+
+
+rates. However, the rebasing of in-the-money interest rate hedges that expired
+
+
+during 2H2024 negatively impacted finance costs in 1H2025 compared to 1H2024.
+
+
+Commentary on the results
+
+
+South Africa
+
+
+Retail sales increased by 6,9% during the five months ended May 2025. Sales
+
+
+for the month of June 2025 were impacted by school holidays which fell
+
+
+predominantly in July in the current reporting period as opposed to June in
+
+
+the prior period. This resulted in an increase of 5,2% in retail sales for the
+
+
+interim period, notwithstanding tough economic conditions. Strategic vacancies
+
+
+resulting from asset management initiatives also affected retail sales during
+
+
+the period, particularly at Boardwalk Inkwazi, Galleria Mall, Secunda Mall
+
+
+and Tubatse Crossing. The sales from Mahikeng Mall were excluded from retail
+
+
+sales performance following the opening of the extension in May 2024.
+
+
+During the interim period, Resilient concluded 287 lease renewals over
+
+
+104 527m2 of gross lettable area ("GLA") at rentals on average 2,2% higher
+
+
+than expiry. Leases were concluded with 79 new tenants (17 473m2 of GLA) at
+
+
+rentals on average 19,5% higher than those of the outgoing tenants. In total,
+
+
+rentals for renewals and new leases increased on average by 4,9%. Escalations
+
+
+of 5,5% and 5,7% were agreed for renewals and new leases, respectively.
+
+
+Resilient's pro rata share of vacancies in its 1,2 million square metre
+
+
+portfolio was 2,3% at June 2025. This includes planned vacancies arising
+
+
+from asset management initiatives.
+
+
+France
+
+
+Resilient owns a 40% interest in Retail Property Investments SAS, the owner
+
+
+of four shopping centres in France, in partnership with Lighthouse.
+
+
+Sales across the French portfolio increased by 3,8% in 1H2025 and this
+
+
+portfolio was 6,4% vacant at June 2025. The euro NPI growth of the French
+
+
+portfolio was 12,0%.
+
+
+Spain
+
+
+Resilient and Lighthouse each own a 50% interest in Spanish Retail Investments
+
+
+SAS, SA, the owner of Salera Centro Comercial ("Salera"), a shopping
+
+
+centre in Castellon, Spain.
+
+
+Retail sales of Salera increased by 8,5% during 1H2025 and the shopping
+
+
+centre was 0,4% vacant at June 2025.
+
+
+Energy projects
+
+
+Resilient successfully installed an additional 5,6MWp of solar energy
+
+
+generation capacity during the interim period, with a further 4,4MWp
+
+
+scheduled for completion by the end of the financial year. Upon completion,
+
+
+this will increase total installed capacity in the South African portfolio
+
+
+to 86,5MWp. This is projected to supply approximately 39,2% of Resilient's
+
+
+total energy requirements.
+
+
+The 4MWh battery energy storage system ("BESS") at Irene Village Mall
+
+
+and the 6MWh BESS at The Grove Mall, with automated micro-grid systems,
+
+
+are fully operational. The performance to date is exceeding initial
+
+
+expectations. Installation has commenced on a 4MWh BESS at both
+
+
+Diamond Pavilion and Boardwalk Inkwazi. The Board has approved a
+
+
+further 4MWh BESS at Mahikeng Mall.
+
+
+Property valuations
+
+
+Resilient's full property portfolio is subject to an independent external
+
+
+valuation annually at year-end. The South African property portfolio was
+
+
+therefore valued by Quadrant Properties Proprietary Limited ("Quadrant")
+
+
+at December 2024. To accommodate the co-owners of Arbour Crossing,
+
+
+Galleria Mall and Tzaneen Lifestyle Centre, Quadrant valued these
+
+
+properties at June 2025. Resilient's share of the positive revaluation
+
+
+was R126,5 million (+4,8%).
+
+
+Listed portfolio
+
+
+While the investment in Lighthouse remains a core component of Resilient's
+
+
+offshore strategy, the Board took advantage of strong market conditions
+
+
+to dispose of 39,2 million Lighthouse shares for proceeds of R332,2 million
+
+
+(excluding transaction costs) to fund the development pipeline. Resilient
+
+
+currently owns 27,6% of Lighthouse.
+
+
+Financial performance
+
+
+                                   Unaudited      Restated
+
+
+                                     for the       for the
+
+
+                                  six months    six months
+
+
+                                       ended         ended
+
+
+                                    Jun 2025     June 2024    Movement
+
+
+IFRS information
+
+
+Total revenue (R'000)*             1 928 477     1 780 587     147 890
+
+
+Basic earnings per
+
+
+share (cents)*                        177,30       387,89      (210,59)
+
+
+Diluted earnings
+
+
+per share (cents)*                    176,55        387,07     (210,52)
+
+
+Headline earnings
+
+
+per share (cents)*                    226,23        192,10       34,13
+
+
+Diluted headline earnings
+
+
+per share (cents)*                    225,27        191,70       33,57
+
+
+Dividend (cents per share)            245,72        218,97       26,75
+
+
+Net asset value per share (R)          69,83         66,52        3,31
+
+
+Management accounts information
+
+
+Net asset value per share (R)          70,81         67,05        3,76
+
+
+Loan-to-value ratio (%)                 37,8          37,0         0,8
+
+
+Gross property expense
+
+
+ratio (%)                               37,5          38,2        (0,7)
+
+
+Percentage of direct and
+
+
+indirect property assets
+
+
+offshore (%)                            24,3          24,8        (0,5)
+
+
+* Represents continuing operations. The Nigerian operations, disposed of
+
+
+in FY2024, were classified as discontinued operations at 1H2024.
+
+
+Outlook
+
+
+Resilient is forecasting strong results for FY2025. The South African
+
+
+portfolio continues to serve as the core of the Group's performance enhanced
+
+
+by the benefits of the energy strategy. The retail market continues to show
+
+
+strength notwithstanding tough economic conditions. Resilient's portfolio
+
+
+is further supported from its exposure to the informal economy.
+
+
+Growth from offshore investments was weighted towards 1H2025. This is
+
+
+mainly due to the timing of accretive property acquisitions by Lighthouse
+
+
+during FY2024 and the benefit from contracted forward exchange rates
+
+
+that were in place.
+
+
+Finance costs for the remainder of the year will benefit from lower
+
+
+interest rates notwithstanding the negative impact from the rebasing of
+
+
+R1,5 billion of in-the-money interest rate hedges that expired
+
+
+during July 2025.
+
+
+The Board's proactive approach to preventative maintenance enables
+
+
+Resilient to maintain a payout ratio of 100%. The Board forecasts
+
+
+growth in distribution of at least 8% or 475,47 cents per share
+
+
+for FY2025 (FY2024: 440,25 cents per share). This guidance assumes that
+
+
+interest rates remain unchanged, no loadshedding will be implemented,
+
+
+Lighthouse achieves its guidance, no major corporate failures occur and
+
+
+that tenants will be able to absorb the rising utility costs and municipal
+
+
+rates. This guidance has not been audited, reviewed or reported on by
+
+
+Resilient's auditor.
+
+
+Payment of interim dividend
+
+
+The Board has approved and notice is hereby given of an interim
+
+
+dividend of 245,72000 cents per share for the six months ended
+
+
+30 June 2025.
+
+
+The dividend is payable to Resilient shareholders in accordance with
+
+
+the timetable set out below:
+
+
+Last date to trade cum dividend           Tuesday, 2 September 2025
+
+
+Shares trade ex dividend                  Wednesday, 3 September 2025
+
+
+Record date                               Friday, 5 September 2025
+
+
+Payment date                              Monday, 8 September 2025
+
+
+Share certificates may not be dematerialised or rematerialised between
+
+
+Wednesday, 3 September 2025 and Friday, 5 September 2025, both
+
+
+days inclusive.
+
+
+In respect of dematerialised shareholders, the dividend will be
+
+
+transferred to the Central Securities Depository Participant ("CSDP")
+
+
+accounts/broker accounts on Monday, 8 September 2025. Certificated
+
+
+shareholders' dividend payments will be posted on or about Monday,
+
+
+8 September 2025.
+
+
+This short-form announcement is the responsibility of the directors
+
+
+and is only a summary of the information in the 1H2025 results
+
+
+announcement and does not include full or complete details. The
+
+
+information regarding the tax treatment of the dividend is included
+
+
+in the 1H2025 results announcement. The 1H2025 results announcement
+
+
+has been released on SENS and is available on the JSE website at
+
+
+https://senspdf.jse.co.za/documents/2025/JSE/isse/RESE/1H2025.pdf and
+
+
+on the Company's website at https://www.resilient.co.za/financials.
+
+
+Any investment decision should be based on the 1H2025 results announcement
+
+
+available on the Company's website. The 1H2025 results announcement is
+
+
+available through a secure electronic manner at the election of the
+
+
+person requesting inspection.
+
+
+Divdend tax treatment
+
+
+In accordance with Resilient's status as a REIT, shareholders are advised
+
+
+that the dividend of 245,72000 cents per share for the six months ended
+
+
+30 June 2025 ("the dividend") meets the requirements of a "qualifying
+
+
+distribution" for the purposes of section 25BB of the Income Tax Act,
+
+
+58 of 1962 ("Income Tax Act"). The dividend will be deemed to be a dividend,
+
+
+for South African tax purposes, in terms of section 25BB of the Income Tax Act.
+
+
+The dividend received by or accrued to South African tax residents must
+
+
+be included in the gross income of such shareholders and will not be exempt
+
+
+from income tax (in terms of the exclusion to the general dividend exemption,
+
+
+contained in paragraph (aa) of section 10(1)(k)(i) of the Income Tax Act)
+
+
+because it is a dividend distributed by a REIT. This dividend is, however,
+
+
+exempt from dividend withholding tax in the hands of South African tax
+
+
+resident shareholders, provided that the South African resident shareholders
+
+
+provide the following forms to their CSDP or broker, as the case may be,
+
+
+in respect of uncertificated shares, or the Company, in respect of
+
+
+certificated shares:
+
+
+a)  a declaration that the dividend is exempt from dividends tax; and
+
+
+b)  a written undertaking to inform the CSDP, broker or the Company, as
+
+
+the case may be, should the circumstances affecting the exemption change
+
+
+or the beneficial owner ceases to be the beneficial owner, both in the
+
+
+form prescribed by the Commissioner for the South African Revenue Service.
+
+
+Shareholders are advised to contact their CSDP, broker or the Company,
+
+
+as the case may be, to arrange for the above-mentioned documents to be
+
+
+submitted prior to payment of the dividend, if such documents have not
+
+
+already been submitted.
+
+
+Dividends received by non-resident shareholders will not be taxable as
+
+
+income and instead will be treated as an ordinary dividend which is exempt
+
+
+from income tax in terms of the general dividend exemption in
+
+
+section 10(1)(k)(i) of the Income Tax Act. Any distribution received by
+
+
+a non-resident from a REIT will be subject to dividend withholding tax
+
+
+at 20%, unless the rate is reduced in terms of any applicable agreement
+
+
+for the avoidance of double taxation ("DTA") between South Africa and the
+
+
+country of residence of the shareholder. Assuming dividend withholding
+
+
+tax will be withheld at a rate of 20%, the net dividend amount due to
+
+
+non-resident shareholders is 196,57600 cents per share.
+
+
+A reduced dividend withholding rate in terms of the applicable DTA may
+
+
+only be relied on if the non-resident shareholder has provided
+
+
+the following forms to their CSDP or broker, as the case may be, in
+
+
+respect of uncertificated shares, or the Company, in respect of
+
+
+certificated shares:
+
+
+a)  a declaration that the dividend is subject to a reduced rate as a
+
+
+result of the application of a DTA; and
+
+
+b)  a written undertaking to inform their CSDP, broker or the Company,
+
+
+as the case may be, should the circumstances affecting the reduced rate
+
+
+change or the beneficial owner ceases to be the beneficial owner, both in
+
+
+the form prescribed by the Commissioner for the South African Revenue
+
+
+Service. Non-resident shareholders are advised to contact their CSDP,
+
+
+broker or the Company, as the case may be, to arrange for the above-mentioned
+
+
+documents to be submitted prior to payment of the dividend if such
+
+
+documents have not already been submitted, if applicable.
+
+
+Shares in issue at the date of declaration of this dividend: 365 204 738.
+
+
+Resilient's income tax reference number: 9579269144.
+
+
+By order of the Board
+
+
+Johann Kriek                     Monica Muller
+
+
+Chief Executive Officer          Chief Financial Officer
+
+
+Johannesburg
+
+
+14 August 2025
+
+
+Directors
+
+
+Alan Olivier (Chairman)#; Stuart Bird#; Des de Beer; Des Gordon#;
+
+
+Johann Kriek*; Sarita Martin#; Monica Muller*; Protas Phili#;
+
+
+Thando Sishuba#; Barry Stuhler; Barry van Wyk#
+
+
+*  Executive director  # Independent non-executive director
+
+
+Company Secretary
+
+
+Sue Hsieh (MBA, PGDip, LLB, Fellow member of CGISA)
+
+
+Registered address
+
+
+4th Floor, Rivonia Village, Rivonia Boulevard, Rivonia, 2191
+
+
+Transfer secretaries
+
+
+JSE Investor Services Proprietary Limited, 5th Floor,
+
+
+One Exchange Square, Gwen Lane, Sandown, 2196
+
+
+Sponsor
+
+
+Java Capital Trustees and Sponsors Proprietary Limited,
+
+
+6th Floor, 1 Park Lane, Wierda Valley, Sandton, 2196
+
+
+Debt sponsor
+
+
+Nedbank Corporate and Investment Banking,
+
+
+a division of Nedbank Limited
+
+
+Nedbank Rivonia Campus, 135 Rivonia Road, Sandown,
+
+
+Sandton, 2196
+
+
+Date: 14-08-2025 03:45:00

@@ -1,0 +1,1829 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20250911_S510383.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [FSR]
+
+
+Audited results and ordinary cash dividend declaration for the year ended 30 June 2025
+
+
+FIRSTRAND LIMITED
+
+
+(Incorporated in the Republic of South Africa)
+
+
+Registration number: 1966/010753/06
+
+
+JSE ordinary share code: FSR; ISIN code: ZAE000066304
+
+
+NSX ordinary share code: FST
+
+
+LEI: 529900XYOP8CUZU7R671
+
+
+(FirstRand or the group)
+
+
+AUDITED RESULTS AND ORDINARY CASH DIVIDEND DECLARATION FOR THE YEAR ENDED 30 JUNE 2025
+
+
+FINANCIAL HIGHLIGHTS
+
+
+                                                             Year ended 30 June
+
+
+R million                                                   2025             2024          % change
+
+
+Normalised earnings per share (cents)
+
+
+- Basic                                                    746.4             677.2                10
+
+
+- Diluted                                                  745.6             677.2                10
+
+
+Headline earnings per share (cents)
+
+
+- Basic                                                    748.8             679.0                10
+
+
+- Diluted                                                  748.0             679.0                10
+
+
+Earnings per share - IFRS (cents)
+
+
+- Basic                                                    748.7             681.4                10
+
+
+- Diluted                                                  747.9             681.4                10
+
+
+Normalised earnings                                       41 824            37 988                10
+
+
+Headline earnings                                         41 881            38 054                10
+
+
+Normalised net asset value                               217 418           195 664                11
+
+
+Normalised net asset value per share (cents)             3 884.1           3 488.1                11
+
+
+Ordinary dividend per share (cents)                          466               415                12
+
+
+ROE (%)                                                     20.2              20.1
+
+
+Net asset value per share (cents) - IFRS                 3 875.4           3 484.7                11
+
+
+Advances (net of credit impairment)                    1 748 639         1 611 541                 9
+
+
+Deposits and debt funding                              2 181 874         2 003 151                 9
+
+
+Credit loss ratio (%)                                       0.85              0.81
+
+
+FINANCIAL PERFORMANCE
+
+
+Despite ongoing macroeconomic challenges in the jurisdictions where the group operates, given the quality of the group's customer-facing franchises, the consistent
+
+
+approach to new business origination and ongoing discipline in the allocation of financial resources, FirstRand delivered a strong operational performance, with all
+
+
+of the large domestic operating businesses delivering high-quality growth in earnings and improved returns.
+
+
+This performance enabled the group to absorb the impact of a further pre-tax accounting provision of R2.7 billion relating to the previously disclosed UK motor
+
+
+commission matter. This compares to R3.0 billion raised in the prior year. In addition, a further c. R253 million (£10.8 million) (2024: R298 million; £12.7 million)
+
+
+of legal and professional fees were incurred in relation to the matter. The total pre-tax impact of these two items relating to the UK motor commission matter is
+
+
+R2.96 billion for the year under review. A detailed background and context to the motor commission provision is provided on pages 27 to 29 in the Analysis of
+
+
+financial results booklet.
+
+
+Despite this provision normalised earnings increased 10%, to R41.8 billion, and the group produced a normalised ROE of 20.2% (which remains well within the
+
+
+group's stated range of 18% to 22%). Net income after cost of capital (NIACC) grew 12% to R11.6 billion, with net asset value (NAV) increasing 11%.
+
+
+The overall credit performance is trending broadly in line with the group's through-the-cycle (TTC) expectations with the credit laging the endowment profile (the ALM strategy) is designed to optimise through-the-cycle returns to shareholders and is a cornerstone
+
+
+of the group's FRM process.
+
+
+Rather than take a passive position (i.e. overnight) with regard to the impact of the rate cycle on its endowment profile, the group actively manages the profile to
+
+
+protect and enhance earnings through the cycle, and earns the structural term premium for shareholders by investing along the yield curve over and above the
+
+
+repo rate.
+
+
+This active ALM strategy is managed by Group Treasury in line with the following underlying principles:
+
+
+-   do not add to the natural risk profile in aggregate;
+
+
+-   consistently apply the investment philosophy;
+
+
+-   be countercyclical to operating businesses;
+
+
+-   reduce the natural earnings volatility introduced by the interest rate cycle;
+
+
+-   optimise for capital allocation and risk-adjusted return; and
+
+
+-   take cognizance of accounting and regulatory requirements.
+
+
+The outcomes of this approach for shareholders should be assessed on a TTC basis. The following table shows the cumulative additional endowment NII
+
+
+of R16.3 billion (2024: R15.6 billion) earned in excess of an overnight (repo) investment profile since the 2018 financial year, when the ALM strategies
+
+
+were introduced.
+
+
+ALM STRATEGY NII OUTCOMES
+
+
+                                                                                                       Cumulative
+
+
+                                                                                                       additional
+
+
+                                                     Year ended 30 June                                 endowment
+
+
+R billion                                           2025            2024             % change              NII*
+
+
+Capital endowment                                    1.4              0.4                  >100              11.6
+
+
+Deposit endowment                                   (1.1)            (1.9)                  (42)              4.7
+
+
+Total                                                0.3             (1.5)                (>100)             16.3
+
+
+* Includes additional endowment NII from 1 July 2017 to 30 June 2025 (measured against repo).
+
+
+In the current year the strategy produced an additional R0.3 billion as compared to an opportunity cost of R1.5 billion in the prior year, which represents a
+
+
+R1.8 billion year-on-year change, thus contributing c. 2% to NII growth.
+
+
+As the interest rate environment moderates lower the underlying structural interest rate earnings of the group will begin to reduce, however, the ALM strategy,
+
+
+designed to reduce volatility introduced by the cycle, is expected to outperform the overnight rate.
+
+
+The group's net interest margin (NIM), excluding the UK operations, increased 6 bps. Margin growth was supported by selected asset growth and pricing, enhanced
+
+
+FRM, higher invested capital and structural interest rate management. This was however partially offset by lower deposit endowment given the rate-cutting cycles in
+
+
+most jurisdictions.
+
+
+Total group non-interest revenue (NIR) growth (+6%) presents a mixed underlying picture.
+
+
+FNB delivered solid NIR growth of 6%. Fee and commission income (+6%) benefited from moderate fee increases across both retail and commercial accounts,
+
+
+new customer acquisition and improved volumes. In support of the group's strategy to diversify sources of NIR, FNB's insurance activities continued to contribute
+
+
+strongly, with insurance income up 9%.
+
+
+Strong growth in assets under management (+15%) further supported an 11% growth in FNB's wealth and investment management NIR.
+
+
+FNB also benefited from strong NIR growth in value-added services sold into the core transactional base (FNB Connect, Send Money, eBucks and nav). Total
+
+
+revenue from these services grew 15% to more than R2.9 billion in retail. Approximately three million customers use these services.
+
+
+Overall the group's insurance income was up 1%. Strong growth of 11% and 51% in life and short-term, respectively, was offset by the classification of MotoVantage
+
+
+as an asset held for sale, which therefore generated no income for the year relative to the comparative period and a weak broader Africa performance due to higher
+
+
+flood claims. On a like-for-like basis, insurance income increased 10%.
+
+
+RMB's NIR increased 2% year on year. The investment banking division (IBD) business delivered 11% growth in NIR, which included an increase of 18% in
+
+
+knowledge-based fees. This growth partially offset the base effect created by a significant principal investment (PI) realisation in the previous year. Treasury and
+
+
+Trade Solutions (TTS) NIR is up 10%, driven by healthy levels of structuring and transactional activities. RMB's private equity business delivered excellent growth
+
+
+in realisation income (+84% year on year). These positive outcomes were offset by a decline in trading income of 27%, which represents a significant portion of
+
+
+RMB's total NIR.
+
+
+WesBank NIR continued to benefit from strong contributions from the Toyota Financial Services (TFS) and Volkswagen Financial Services (VWFS) joint ventures
+
+
+(JVs) and growth in rental and fleet related income. The reclassification of MotoVantage resulted in an overall decline of 8%.
+
+
+Group Treasury NIR increased R558 million, driven by foreign exchange (FX) translation benefits, favourable market movements in the investment portfolio
+
+
+backing the group's post-retirement obligation, and hedging activities related to the group share scheme.
+
+
+Total group operating expenses were tightly managed, resulting in 2% growth, which included a 6% increase in direct staff costs. Operational leverage improved
+
+
+across the operating businesses with investment spend at similar levels to the comparative year.
+
+
+Including the UK motor commission provision, the cost-to-income ratio improved year on year to 50.8% (2024: 52.6%) and, excluding the provision, improved to
+
+
+48.8% (2024: 50.3%).
+
+
+At an operating business level, FNB and RMB increased costs 7% and 6% respectively, with investment spend mainly driving cost growth above inflation.
+
+
+Operating expenses at WesBank decreased 9% year on year, with a 6% benefit from the MotoVantage restructuring.
+
+
+Total operating expenses increased 9% in the UK operations, primarily due to the UK motor commission provision charge. Excluding this, operating expenses fell
+
+
+4% year on year.
+
+
+CREDIT PERFORMANCE
+
+
+Summarised credit highlights at a glance
+
+
+R million                                                                                     Year ended 30 June              % change
+
+
+                                                                                              2025             2024
+
+
+Total gross advances                                                                     1 803 827        1 665 706                  8
+
+
+Total core lending advances                                                              1 699 002        1 597 898                  6
+
+
+- Performing core lending advances                                                       1 624 518        1 530 058                  6
+
+
+- Non-performing loans                                                                      74 484           67 840                 10
+
+
+Assets under agreements to resell                                                          104 825           67 808                 55
+
+
+NPLs as a % of core lending advances                                                          4.38             4.25
+
+
+Core lending advances (net of impairment)                                                1 643 814        1 543 733                  6
+
+
+Total impairments                                                                           55 188           54 165                  2
+
+
+Portfolio impairments                                                                       23 402           24 228                 (3)
+
+
+NPL-specific impairments                                                                    31 786          oss ratio at 85 bps remaining at
+
+
+the bottom end of its TTC range. The 4 bps increase in the credit loss ratio was driven mainly by:
+
+
+- the non-repeat of the UK notice of sums in arrears (NOSIA) credit provision releases in the comparative year of R1.08 billion (£46 million), which provided a
+
+
+  7 bps benefit at the time;
+
+
+- early emerging strain in FNB commercial in line with expectations given the macro cycle and good book growth, particularly in the small and medium-sized
+
+
+  enterprise (SME) client segment; and
+
+
+- a net increase in the group's central overlay of R350 million year on year.
+
+
+Given its high return profile, the group remained capital generative, with the Common Equity Tier 1 (CET1) ratio at 14.0% (2024: 13.5%). Taking this strong capital
+
+
+position into account, the board is comfortable to increase the total dividend 12% to 466 cents, which translates into a dividend cover of 1.6 times.
+
+
+The group's diversified portfolio played its part in delivering this operational performance. The gradual recovery in retail and the particularly strong performance
+
+
+from WesBank has mitigated to some extent the early credit strain emerging from FNB's commercial portfolio. RMB delivered healthy profit before tax (PBT)
+
+
+growth mainly emanating from its private equity and investment banking franchises.
+
+
+The broader Africa portfolio's contribution was softer, with FNB's broader Africa franchise increasing PBT 5% (8% in constant currency) and RMB's broader Africa
+
+
+PBT declining 2% (up 2% in constant currency).
+
+
+The UK operations produced 2% growth in underlying PBT (in pound terms), which normalises for the base effect of the non-repeat of the NOSIA provision
+
+
+releases, the reduced losses from the UK operations fair value hedge adjustments and the impact of the higher accounting provision for the UK motor commission
+
+
+matter, taken in the current year.
+
+
+The Centre, comprising Group Treasury and support functions, produced normalised earnings of R4.6 billion, up 29% year on year. The main contribution to this
+
+
+growth came from Group Treasury's effective approach to managing the capital and funding portfolio of the group, and reduced currency impacts in the broader
+
+
+Africa jurisdictions. In addition, active capital management strategies have mitigated the impact of reducing rates on endowment net interest income (NII). These
+
+
+strategies include Group Treasury's asset-liability management (ALM) investment activities. The ongoing strong capital generation from the business provided
+
+
+higher investment balances, which also contributed to NII.
+
+
+Sources of normalised earnings are unpacked in the table below:
+
+
+SOURCES OF NORMALISED EARNINGS
+
+
+                                                                        Year ended 30 June
+
+
+                                                                   %                             %            %
+
+
+R million                                    2025        composition           2024    composition       change
+
+
+FNB                                        23 616                 56          21 968             58             8
+
+
+- FNB South Africa                         21 909                             20 451
+
+
+- FNB broader Africa                        1 707                              1 517
+
+
+WesBank                                     2 377                  6           1 981              5            20
+
+
+RMB                                        10 723                 26           9 744             26            10
+
+
+UK operations*                              4 114                 10           4 490             12            (8)
+
+
+Centre*,**                                  4 580                 11           3 537              9            29
+
+
+Other equity instrument holders            (1 399)                (3)         (1 314)            (4)            6
+
+
+UK motor commission                        (2 187)                (6)         (2 418)            (6)          (10)
+
+
+  UK operations                            (1 067)                              (320)                        >100
+
+
+  Centre                                   (1 120)                            (2 098)                         (47)
+
+
+Normalised earnings                        41 824                100          37 988            100            10
+
+
+*  Excluding the impact of the UK motor commission matter disclosed separately.
+
+
+** Includes MotoNovo back book, FirstRand Limited (company), FirstRand Corporate Centre and Group Treasury - including capital endowment, the impact of
+
+
+   accounting mismatches, and interest rate, foreign currency and liquidity management.
+
+
+REVENUE AND COST OVERVIEW
+
+
+Overall group NII increased 6%, driven by core lending advances growth (+6%), continued customer deposit gathering (+8%) and the capital endowment benefit
+
+
+(+14%), which includes the outcomes from the ALM strategy, unpacked in more detail later.
+
+
+Absolute levels of year-on-year advances growth in the secured SA and UK retail portfolios showed a relatively mixed but overall positive picture. SA residential
+
+
+mortgages remained muted (+3%) due to continued household pressures, prevailing low property prices, and generally subdued demand. Retail vehicle asset
+
+
+finance (VAF) however continued to grow strongly (+10%). Origination in retail unsecured (+3%) remained anchored to low- and medium-risk customers. As
+
+
+expected, there was continued good growth in FNB commercial and WesBank corporate (+10% on a consolidated basis).
+
+
+With regard to the RMB core lending advances, net origination remained robust, increasing 8% year on year, although this translated into overall advances growth
+
+
+of 1% given the distribution strategy implemented during the year. This strategy aims to enhance returns and focus on velocity of capital and funding of the lower
+
+
+margin advances portfolios.
+
+
+Advances growth from the broader Africa portfolio remained healthy (+8%). Origination continues to be anchored to focused sectors showing above-cycle growth.
+
+
+The UK operations advances growth of 8% in pounds was driven by property finance (+11%) capitalising on Aldermore's specialist expertise in the
+
+
+buy-to-let segment.
+
+
+UK property advances growth also benefited from the increased operational capacity that the ongoing technology modernisation is incrementally unlocking.
+
+
+Business Finance grew 5%, underpinned by structuring expertise and focusing on underserved specialist market segments.
+
+
+FirstRand's targeted origination strategies, consistent strong growth in the deposit franchise and appropriate provisioning have resulted in a well-struck balance
+
+
+sheet. This is a direct outcome of the FRM strategy and demonstrates the group's commitment to balancing growth with returns.
+
+
+FirstRand's focus on growing liability-related NII played out strongly across all deposit franchises and remains a key underpin to its superior return profile. Year-
+
+
+on-year movements in advances and deposits are unpacked by operating business and segment in the following table.
+
+
+                                    Growth in        Growth in
+
+
+                                   advances %       deposits %
+
+
+FNB                                         5                8
+
+
+- Retail                                    3                7
+
+
+- Commercial                               11                8
+
+
+- Broader Africa                            5               11
+
+
+WesBank                                    10              n/a
+
+
+RMB*                                        1               10
+
+
+UK operations**                             8                5
+
+
+*   Advances growth for RMB is based on core advances, which exclude assets under agreements to resell, and core deposits, which exclude deposits under
+
+
+    repurchase agreement and collateral deposits.
+
+
+**  In pound terms. Growth in deposits refers to customer savings deposits.
+
+
+Total transactional NII increased 5%, driven by growth in transactional credit product volumes and retail and commercial customer deposits.
+
+
+FirstRand's approach to managing the endowment profile (the ALM strategy) is designed to optimise through-the-cycle returns to shareholders and is a cornerstone
+
+
+of the group's FRM process.
+
+
+Rather than take a passive position (i.e. overnight) with regard to the impact of the rate cycle on its endowment profile, the group actively manages the profile to
+
+
+protect and enhance earnings through the cycle, and earns the structural term premium for shareholders by investing along the yield curve over and above the
+
+
+repo rate.
+
+
+This active ALM strategy is managed by Group Treasury in line with the following underlying principles:
+
+
+-   do not add to the natural risk profile in aggregate;
+
+
+-   consistently apply the investment philosophy;
+
+
+-   be countercyclical to operating businesses;
+
+
+-   reduce the natural earnings volatility introduced by the interest rate cycle;
+
+
+-   optimise for capital allocation and risk-adjusted return; and
+
+
+-   take cognizance of accounting and regulatory requirements.
+
+
+The outcomes of this approach for shareholders should be assessed on a TTC basis. The following table shows the cumulative additional endowment NII
+
+
+of R16.3 billion (2024: R15.6 billion) earned in excess of an overnight (repo) investment profile since the 2018 financial year, when the ALM strategies
+
+
+were introduced.
+
+
+ALM STRATEGY NII OUTCOMES
+
+
+                                                                                                       Cumulative
+
+
+                                                                                                       additional
+
+
+                                                     Year ended 30 June                                 endowment
+
+
+R billion                                           2025            2024             % change              NII*
+
+
+Capital endowment                                    1.4              0.4                  >100              11.6
+
+
+Deposit endowment                                   (1.1)            (1.9)                  (42)              4.7
+
+
+Total                                                0.3             (1.5)                (>100)             16.3
+
+
+* Includes additional endowment NII from 1 July 2017 to 30 June 2025 (measured against repo).
+
+
+In the current year the strategy produced an additional R0.3 billion as compared to an opportunity cost of R1.5 billion in the prior year, which represents a
+
+
+R1.8 billion year-on-year change, thus contributing c. 2% to NII growth.
+
+
+As the interest rate environment moderates lower the underlying structural interest rate earnings of the group will begin to reduce, however, the ALM strategy,
+
+
+designed to reduce volatility introduced by the cycle, is expected to outperform the overnight rate.
+
+
+The group's net interest margin (NIM), excluding the UK operations, increased 6 bps. Margin growth was supported by selected asset growth and pricing, enhanced
+
+
+FRM, higher invested capital and structural interest rate management. This was however partially offset by lower deposit endowment given the rate-cutting cycles in
+
+
+most jurisdictions.
+
+
+Total group non-interest revenue (NIR) growth (+6%) presents a mixed underlying picture.
+
+
+FNB delivered solid NIR growth of 6%. Fee and commission income (+6%) benefited from moderate fee increases across both retail and commercial accounts,
+
+
+new customer acquisition and improved volumes. In support of the group's strategy to diversify sources of NIR, FNB's insurance activities continued to contribute
+
+
+strongly, with insurance income up 9%.
+
+
+Strong growth in assets under management (+15%) further supported an 11% growth in FNB's wealth and investment management NIR.
+
+
+FNB also benefited from strong NIR growth in value-added services sold into the core transactional base (FNB Connect, Send Money, eBucks and nav). Total
+
+
+revenue from these services grew 15% to more than R2.9 billion in retail. Approximately three million customers use these services.
+
+
+Overall the group's insurance income was up 1%. Strong growth of 11% and 51% in life and short-term, respectively, was offset by the classification of MotoVantage
+
+
+as an asset held for sale, which therefore generated no income for the year relative to the comparative period and a weak broader Africa performance due to higher
+
+
+flood claims. On a like-for-like basis, insurance income increased 10%.
+
+
+RMB's NIR increased 2% year on year. The investment banking division (IBD) business delivered 11% growth in NIR, which included an increase of 18% in
+
+
+knowledge-based fees. This growth partially offset the base effect created by a significant principal investment (PI) realisation in the previous year. Treasury and
+
+
+Trade Solutions (TTS) NIR is up 10%, driven by healthy levels of structuring and transactional activities. RMB's private equity business delivered excellent growth
+
+
+in realisation income (+84% year on year). These positive outcomes were offset by a decline in trading income of 27%, which represents a significant portion of
+
+
+RMB's total NIR.
+
+
+WesBank NIR continued to benefit from strong contributions from the Toyota Financial Services (TFS) and Volkswagen Financial Services (VWFS) joint ventures
+
+
+(JVs) and growth in rental and fleet related income. The reclassification of MotoVantage resulted in an overall decline of 8%.
+
+
+Group Treasury NIR increased R558 million, driven by foreign exchange (FX) translation benefits, favourable market movements in the investment portfolio
+
+
+backing the group's post-retirement obligation, and hedging activities related to the group share scheme.
+
+
+Total group operating expenses were tightly managed, resulting in 2% growth, which included a 6% increase in direct staff costs. Operational leverage improved
+
+
+across the operating businesses with investment spend at similar levels to the comparative year.
+
+
+Including the UK motor commission provision, the cost-to-income ratio improved year on year to 50.8% (2024: 52.6%) and, excluding the provision, improved to
+
+
+48.8% (2024: 50.3%).
+
+
+At an operating business level, FNB and RMB increased costs 7% and 6% respectively, with investment spend mainly driving cost growth above inflation.
+
+
+Operating expenses at WesBank decreased 9% year on year, with a 6% benefit from the MotoVantage restructuring.
+
+
+Total operating expenses increased 9% in the UK operations, primarily due to the UK motor commission provision charge. Excluding this, operating expenses fell
+
+
+4% year on year.
+
+
+CREDIT PERFORMANCE
+
+
+Summarised credit highlights at a glance
+
+
+R million                                                                                     Year ended 30 June              % change
+
+
+                                                                                              2025             2024
+
+
+Total gross advances                                                                     1 803 827        1 665 706                  8
+
+
+Total core lending advances                                                              1 699 002        1 597 898                  6
+
+
+- Performing core lending advances                                                       1 624 518        1 530 058                  6
+
+
+- Non-performing loans                                                                      74 484           67 840                 10
+
+
+Assets under agreements to resell                                                          104 825           67 808                 55
+
+
+NPLs as a % of core lending advances                                                          4.38             4.25
+
+
+Core lending advances (net of impairment)                                                1 643 814        1 543 733                  6
+
+
+Total impairments                                                                           55 188           54 165                  2
+
+
+Portfolio impairments                                                                       23 402           24 228                 (3)
+
+
+NPL-specific impairments                                                                    31 786           29 937                  6
+
+
+Coverage ratios
+
+
+Performing book coverage ratio (%) - core lending advances*                                   1.44             1.58
+
+
+Specific coverage ratio (%)**                                                                 42.7             44.1
+
+
+Income statement analysis
+
+
+Impairment charge                                                                           14 044           12 555                 12
+
+
+Credit loss ratio (%) - core lending advances                                                 0.85             0.81
+
+
+Impairment charge excluding UK operations                                                   13 654           12 987                  5
+
+
+Credit loss ratio excluding UK operations (%) - core lending advances                         1.08             1.09
+
+
+*  Portfolio impairments as a % of the performing core lending advances book (stage 1 and stage 2).
+
+
+** Specific impairments as a % of NPLs (stage 3).
+
+
+The group's credit loss ratio (CLR) for the year under review concluded at 85 bps, which is at the bottom of the group's TTC range of 80 bps to 110 bps. This is a
+
+
+positive outcome and in line with expectations, despite the shallow rate-cutting cycle and low system growth, and continues to reflect the benefit of the group's
+
+
+approach to origination, with new business continuing to be weighted towards the low- and medium-risk categories.
+
+
+Impairments in certain portfolios were elevated, especially in commercial and card, where new business strain is evident after periods of strong growth. Card was
+
+
+also impacted by debt counselling inflows but not out of line with expectations.
+
+
+Direct customer interventions in the year under review have resulted in slowing growth in debt counselling inflows, however they remain elevated compared to
+
+
+historical trends.
+
+
+As expected lagged impacts are emerging in the small business segment in commercial, with a resilient performance to date from medium and large corporates.
+
+
+The following table shows the underlying credit performance from the operating businesses. What is demonstrated here is that the group continues to benefit from
+
+
+portfolio diversification both segmentally and geographically.
+
+
+The origination approach in both SA and broader Africa to target better-risk customers is reflected in the NPL formation, which remains within expectations
+
+
+notwithstanding the strain emanating from commercial.
+
+
+Overall, the group believes these outcomes are testament to its approach to lending as it balances meeting customer needs with achieving targeted risk-adjusted
+
+
+returns.
+
+
+                                  Advances               CLR              NPLs          Coverage            CLR TTC
+
+
+                                     mix %                 %                 %                 %            range %
+
+
+FNB and WesBank
+
+
+June 25                                 47              1.64              6.89              5.18        1.40 - 1.80
+
+
+June 24                                 48              1.70              6.82              5.23
+
+
+Retail
+
+
+June 25                                 31              1.98              8.53              5.89        1.70 - 2.10
+
+
+June 24                                 32              2.24              8.35              5.95
+
+
+Commercial
+
+
+June 25                                 12              1.04              3.33              3.37        0.80 - 1.20
+
+
+June 24                                 12              0.61              3.07              3.15
+
+
+FNB broader Africa
+
+
+June 25                                  4              0.91              5.44              5.41        0.80 - 1.10
+
+
+June 24                                  4              0.76              6.29              6.00
+
+
+RMB
+
+
+June 25                                 29              0.21              1.35              1.62        0.30 - 0.50
+
+
+June 24                                 29              0.31              1.00              1.59
+
+
+UK operations
+
+
+June 25                                 24              0.10              3.38              1.53        0.30 - 0.50
+
+
+June 24                                 23             (0.12)             3.35              1.99
+
+
+FirstRand group
+
+
+June 25                                100              0.85              4.38              3.25        0.80 - 1.10
+
+
+June 24                                100              0.81              4.25              3.39
+
+
+FNB's credit loss ratio is trending in line with its through-the-cycle expectations given the macroeconomic environment and specific origination strategies.
+
+
+The retail CLR is moving back into its TTC range and the pressures on households experienced in the past two years have shown some signs of easing. However,
+
+
+affordability challenges remain, and debt counselling balances are persistently elevated, particularly as the level of economic recovery expected at the beginning of
+
+
+the calendar year has not yet fully materialised and house price growth remains subdued.
+
+
+Commercial's CLR has trended into the mid point of its TTC range, mainly due to front book strain resulting from new business origination in the SME
+
+
+subsegment over the past three years, which is in line with expectations. Two specific large exposure defaults in the medium corporate subsegment contributed to
+
+
+higher impairments than initially expected at this point of the cycle. Both exposures remain appropriately collateralised.
+
+
+WesBank's credit performance for retail VAF and corporate and commercial remains well within expectations.
+
+
+RMB's CLR trended lower, resulting in a credit impairment charge on the core lending advances of 21 bps (2024: 31 bps), well below the portfolio TTC range. The
+
+
+credit quality of RMB's core lending portfolio remains resilient with the overall performance better than expectations, also reflecting ongoing focused underwriting
+
+
+discipline and prudent provisioning.
+
+
+The year-on-year increase in the UK operations' CLR primarily reflects the non-repeat of last year's £40 million NOSIA-related provision releases, which
+
+
+significantly reduced the prior year's impairment figure. Excluding this one-off impact, the underlying credit performance showed signs of improvement, supported
+
+
+by easing cost-of-living pressures and improving macroeconomic conditions. The credit loss ratio rose to 10 bps (2024: -12 bps and 14 bps if adjusted for NOSIA-
+
+
+related releases), still below the UK operations TTC range.
+
+
+Whilst impairments increased across most portfolios in broader Africa, with strain evident in Namibia, Botswana and Mozambique, the overall CLR of 91 bps
+
+
+remained below the mid point of the TTC range.
+
+
+PROSPECTS
+
+
+The global macroeconomic environment remains unsettling but cyclically it is tracking broadly in line with expectations. In South Africa, global fracturing is
+
+
+expected to result in periods of volatility, however there are a number of positive signals, such as slow but steady progress on structural reforms unlocked by
+
+
+Operation Vulindlela and other initiatives, and the shift towards a lower inflation level.
+
+
+While the shift in US trade policy remains a source of global uncertainty, the direct GDP impact from higher tariffs on broader Africa is not significant given
+
+
+limited exports to the US, strong trade links with China and to date, many export commodities are exempt from tariffs. Certain countries are benefitting from
+
+
+surging precious and base metal prices and there are several country-specific factors that should remain growth-supportive.
+
+
+In the UK the macroeconomic environment will remain challenging, inflation is likely to peak some time in the first half of the financial year and consumer
+
+
+spending may moderate. However, these pressures are not expected to disrupt the continued recovery in property prices and lending markets.
+
+
+The group's guidance for the year to June 2026 is unpacked on a like-for-like basis, including the motor accounting provision. However, it is also important to note
+
+
+that looking forward, the underlying operational performance of the group is likely to be better than the year under review, manifesting across various income
+
+
+statement lines.
+
+
+Starting with NII, the group expects mid to high single-digit growth in the year ahead. Healthy advances growth is anticipated from all large lending portfolios in
+
+
+South Africa, broader Africa and the UK. In South Africa growth in retail advances is expected to exceed the year under review (particularly in the second half
+
+
+of the financial year). More constructive macros are supportive to household affordability levels given lower inflation, reducing rates and an improving trend in
+
+
+property prices. This is creating capacity for both secured and unsecured retail credit extension. In the UK retail advances are also expected to continue to show the
+
+
+strong trends demonstrated in the past six months.
+
+
+Commercial and corporate advances growth is still anchored to positive momentum in structural reforms and targeted lending to specific sectors of the economy.
+
+
+Commercial lending will grow at similar level to the year under review and corporate advances will show higher growth than in the year under review, including the
+
+
+impact of the distribution strategy, with improving margins.
+
+
+The group's large deposit franchises are expected to continue to grow at similar levels to the previous 12 months. One further rate cut is expected before the end of
+
+
+the calendar year, however the ALM strategy will continue to provide some protection to endowment.
+
+
+The group's credit loss ratio will remain at the bottom of its through-the-cycle range. Retail credit continues to improve and commercial and corporate are expected
+
+
+to remain within their respective TTC ranges, with some additional front book strain due to book growth. There will be some normalisation in the UK cost of credit
+
+
+given the strong book growth over the previous six months, and the base effect of prior year cost-of-living provision releases.
+
+
+NIR growth is anticipated to trend materially higher into the low to mid teens range. This will be driven by resilient fee and commission income growth and a
+
+
+strong insurance performance. Ongoing private equity realisations are expected, predominantly in the first half of the financial year, and trading income is expected
+
+
+to rebound off the current low base.
+
+
+Given the base effect of the provision, cost growth is expected to print slightly below inflationary growth. Excluding this base effect, costs will trend above inflation
+
+
+by 2% - 3%, which partly reflects expenses incurred by the finalisation of the HSBC transaction in the third quarter of the financial year. These costs will offset any
+
+
+early revenue benefits, however, the transaction will provide support to NII and NIR growth in the following years.
+
+
+The group's performance reflects the health and quality of its operating franchises, all of which remain well positioned to capture a higher share of any additional
+
+
+growth opportunities that emerge in the jurisdictions where it operates.
+
+
+For the 12 months to 30 June 2026, normalised earnings growth off the current year base (which includes the provision) will trend up into the high mid-teens,
+
+
+which is significantly above the group's long-term stated target range of nominal GDP + 0% to 3%. The normalised ROE is expected to improve and move closer to
+
+
+the upper end of its stated range of 18% to 22%.
+
+
+BOARD CHANGES
+
+
+Changes to the directorate are outlined below
+
+
+Name                               Position                                               Effective date
+
+
+Appointment
+
+
+PJ Makosholo                       Independent non-executive director                     1 October 2024
+
+
+Retirement
+
+
+GG Gelink                          Independent non-executive director                     29 November 2024
+
+
+DIVIDEND STRATEGY
+
+
+FirstRand's dividend strategy is to provide its shareholders with an appropriate, sustainable payout over the long term. The group's high return profile and solid
+
+
+capital position, together with sustainable FRM actions, allow for a dividend cover at the bottom end of the board-approved range of 1.6 times to 2.0 times.
+
+
+A dividend cover at 1.6 times, representing a payout ratio of 63%, leaves the group with sufficient financial resources to deliver on its growth ambitions.
+
+
+CASH DIVIDEND DECLARATIONS
+
+
+The issued share capital on the dividend declaration dates outlined below was 5 609 488 001 ordinary shares.
+
+
+The directors declared a final gross cash ordinary dividend totalling 247.0 cents per ordinary share out of income reserves for the year ended 30 June 2025.
+
+
+Ordinary shares
+
+
+                                              Year ended 30 June
+
+
+Cents per share                              2025            2024
+
+
+Interim (declared 5 March 2025)               219              200
+
+
+Final (declared 10 September 2025)            247              215
+
+
+Total dividends                               466             415
+
+
+The salient dates for the interim ordinary dividend are outlined below.
+
+
+Last day to trade cum-dividend                                      Tuesday, 7 October 2025
+
+
+Shares commence trading ex-dividend                                 Wednesday, 8 October 2025
+
+
+Record date                                                         Friday, 10 October 2025
+
+
+Payment date                                                        Monday, 13 October 2025
+
+
+Share certificates may not be dematerialised or rematerialised between Wednesday, 8 October 2025 and Friday, 10 October 2025, both days inclusive.
+
+
+For shareholders who are subject to dividend withholding tax (DWT), tax will be calculated at 20% (or such lower rate as is applicable if a double taxation
+
+
+agreement applies for foreign shareholders). FirstRand's income tax reference number is 9150/201/71/4.
+
+
+For South African shareholders who are subject to DWT, the final ordinary dividend net of 20% DWT at 49.4000 cents per share will be 197.6000 cents per share.
+
+
+JP BURGER                         C LOW                             M VILAKAZI                        M DAVIAS
+
+
+Chairman                          Company secretary                 CEO                               CFO
+
+
+10 September 2025
+
+
+OTHER INFORMATION
+
+
+This announcement covers the audited financial results of FirstRand Limited based on IFRS® Accounting Standards for the year ended 30 June 2025. The primary
+
+
+results and accompanying commentary are presented on a normalised basis as the group believes this reflects its economic performance. The group also discloses
+
+
+certain information on a constant currency basis. The normalised results and constant currency information have been derived from the IFRS Accounting
+
+
+Standards financial results. A detailed description of the difference between normalised and IFRS Accounting Standards results and the determination of the
+
+
+constant currency amounts are provided on pages 146 to 149 of the Analysis of financial results booklet. The Analysis of financial results booklet constitutes the
+
+
+group's full announcement and is available at www.firstrand.co.za/investors/integrated-reporting-hub/financial-reporting/. Commentary is based on normalised
+
+
+results, unless indicated otherwise.
+
+
+The full set of consolidated financial statements for the year ended 30 June 2025 has been audited by the group's auditors, PricewaterhouseCoopers Incorporated
+
+
+and Ernst & Young Incorporated, who expressed an unmodified opinion thereon. The group's audited consolidated financial statements for the year ended
+
+
+30 June 2025, based on IFRS Accounting Standards, are available on its website at www.firstrand.co.za/investors/integrated-reporting-hub/financial-reporting/.
+
+
+The content of this announcement is derived from audited information, but is not itself audited. The directors take responsibility for the preparation of this
+
+
+announcement.
+
+
+Any forecast financial information contained herein has not been reviewed or reported on by the group's external auditors.
+
+
+Shareholders are advised that this announcement represents a summary of the information contained  29 937                  6
+
+
+Coverage ratios
+
+
+Performing book coverage ratio (%) - core lending advances*                                   1.44             1.58
+
+
+Specific coverage ratio (%)**                                                                 42.7             44.1
+
+
+Income statement analysis
+
+
+Impairment charge                                                                           14 044           12 555                 12
+
+
+Credit loss ratio (%) - core lending advances                                                 0.85             0.81
+
+
+Impairment charge excluding UK operations                                                   13 654           12 987                  5
+
+
+Credit loss ratio excluding UK operations (%) - core lending advances                         1.08             1.09
+
+
+*  Portfolio impairments as a % of the performing core lending advances book (stage 1 and stage 2).
+
+
+** Specific impairments as a % of NPLs (stage 3).
+
+
+The group's credit loss ratio (CLR) for the year under review concluded at 85 bps, which is at the bottom of the group's TTC range of 80 bps to 110 bps. This is a
+
+
+positive outcome and in line with expectations, despite the shallow rate-cutting cycle and low system growth, and continues to reflect the benefit of the group's
+
+
+approach to origination, with new business continuing to be weighted towards the low- and medium-risk categories.
+
+
+Impairments in certain portfolios were elevated, especially in commercial and card, where new business strain is evident after periods of strong growth. Card was
+
+
+also impacted by debt counselling inflows but not out of line with expectations.
+
+
+Direct customer interventions in the year under review have resulted in slowing growth in debt counselling inflows, however they remain elevated compared to
+
+
+historical trends.
+
+
+As expected lagged impacts are emerging in the small business segment in commercial, with a resilient performance to date from medium and large corporates.
+
+
+The following table shows the underlying credit performance from the operating businesses. What is demonstrated here is that the group continues to benefit from
+
+
+portfolio diversification both segmentally and geographically.
+
+
+The origination approach in both SA and broader Africa to target better-risk customers is reflected in the NPL formation, which remains within expectations
+
+
+notwithstanding the strain emanating from commercial.
+
+
+Overall, the group believes these outcomes are testament to its approach to lending as it balances meeting customer needs with achieving targeted risk-adjusted
+
+
+returns.
+
+
+                                  Advances               CLR              NPLs          Coverage            CLR TTC
+
+
+                                     mix %                 %                 %                 %            range %
+
+
+FNB and WesBank
+
+
+June 25                                 47              1.64              6.89              5.18        1.40 - 1.80
+
+
+June 24                                 48              1.70              6.82              5.23
+
+
+Retail
+
+
+June 25                                 31              1.98              8.53              5.89        1.70 - 2.10
+
+
+June 24                                 32              2.24              8.35              5.95
+
+
+Commercial
+
+
+June 25                                 12              1.04              3.33              3.37        0.80 - 1.20
+
+
+June 24                                 12              0.61              3.07              3.15
+
+
+FNB broader Africa
+
+
+June 25                                  4              0.91              5.44              5.41        0.80 - 1.10
+
+
+June 24                                  4              0.76              6.29              6.00
+
+
+RMB
+
+
+June 25                                 29              0.21              1.35              1.62        0.30 - 0.50
+
+
+June 24                                 29              0.31              1.00              1.59
+
+
+UK operations
+
+
+June 25                                 24              0.10              3.38              1.53        0.30 - 0.50
+
+
+June 24                                 23             (0.12)             3.35              1.99
+
+
+FirstRand group
+
+
+June 25                                100              0.85              4.38              3.25        0.80 - 1.10
+
+
+June 24                                100              0.81              4.25              3.39
+
+
+FNB's credit loss ratio is trending in line with its through-the-cycle expectations given the macroeconomic environment and specific origination strategies.
+
+
+The retail CLR is moving back into its TTC range and the pressures on households experienced in the past two years have shown some signs of easing. However,
+
+
+affordability challenges remain, and debt counselling balances are persistently elevated, particularly as the level of economic recovery expected at the beginning of
+
+
+the calendar year has not yet fully materialised and house price growth remains subdued.
+
+
+Commercial's CLR has trended into the mid point of its TTC range, mainly due to front book strain resulting from new business origination in the SME
+
+
+subsegment over the past three years, which is in line with expectations. Two specific large exposure defaults in the medium corporate subsegment contributed to
+
+
+higher impairments than initially expected at this point of the cycle. Both exposures remain appropriately collateralised.
+
+
+WesBank's credit performance for retail VAF and corporate and commercial remains well within expectations.
+
+
+RMB's CLR trended lower, resulting in a credit impairment charge on the core lending advances of 21 bps (2024: 31 bps), well below the portfolio TTC range. The
+
+
+credit quality of RMB's core lending portfolio remains resilient with the overall performance better than expectations, also reflecting ongoing focused underwriting
+
+
+discipline and prudent provisioning.
+
+
+The year-on-year increase in the UK operations' CLR primarily reflects the non-repeat of last year's £40 million NOSIA-related provision releases, which
+
+
+significantly reduced the prior year's impairment figure. Excluding this one-off impact, the underlying credit performance showed signs of improvement, supported
+
+
+by easing cost-of-living pressures and improving macroeconomic conditions. The credit loss ratio rose to 10 bps (2024: -12 bps and 14 bps if adjusted for NOSIA-
+
+
+related releases), still below the UK operations TTC range.
+
+
+Whilst impairments increased across most portfolios in broader Africa, with strain evident in Namibia, Botswana and Mozambique, the overall CLR of 91 bps
+
+
+remained below the mid point of the TTC range.
+
+
+PROSPECTS
+
+
+The global macroeconomic environment remains unsettling but cyclically it is tracking broadly in line with expectations. In South Africa, global fracturing is
+
+
+expected to result in periods of volatility, however there are a number of positive signals, such as slow but steady progress on structural reforms unlocked by
+
+
+Operation Vulindlela and other initiatives, and the shift towards a lower inflation level.
+
+
+While the shift in US trade policy remains a source of global uncertainty, the direct GDP impact from higher tariffs on broader Africa is not significant given
+
+
+limited exports to the US, strong trade links with China and to date, many export commodities are exempt from tariffs. Certain countries are benefitting from
+
+
+surging precious and base metal prices and there are several country-specific factors that should remain growth-supportive.
+
+
+In the UK the macroeconomic environment will remain challenging, inflation is likely to peak some time in the first half of the financial year and consumer
+
+
+spending may moderate. However, these pressures are not expected to disrupt the continued recovery in property prices and lending markets.
+
+
+The group's guidance for the year to June 2026 is unpacked on a like-for-like basis, including the motor accounting provision. However, it is also important to note
+
+
+that looking forward, the underlying operational performance of the group is likely to be better than the year under review, manifesting across various income
+
+
+statement lines.
+
+
+Starting with NII, the group expects mid to high single-digit growth in the year ahead. Healthy advances growth is anticipated from all large lending portfolios in
+
+
+South Africa, broader Africa and the UK. In South Africa growth in retail advances is expected to exceed the year under review (particularly in the second half
+
+
+of the financial year). More constructive macros are supportive to household affordability levels given lower inflation, reducing rates and an improving trend in
+
+
+property prices. This is creating capacity for both secured and unsecured retail credit extension. In the UK retail advances are also expected to continue to show the
+
+
+strong trends demonstrated in the past six months.
+
+
+Commercial and corporate advances growth is still anchored to positive momentum in structural reforms and targeted lending to specific sectors of the economy.
+
+
+Commercial lending will grow at similar level to the year under review and corporate advances will show higher growth than in the year under review, including the
+
+
+impact of the distribution strategy, with improving margins.
+
+
+The group's large deposit franchises are expected to continue to grow at similar levels to the previous 12 months. One further rate cut is expected before the end of
+
+
+the calendar year, however the ALM strategy will continue to provide some protection to endowment.
+
+
+The group's credit loss ratio will remain at the bottom of its through-the-cycle range. Retail credit continues to improve and commercial and corporate are expected
+
+
+to remain within their respective TTC ranges, with some additional front book strain due to book growth. There will be some normalisation in the UK cost of credit
+
+
+given the strong book growth over the previous six months, and the base effect of prior year cost-of-living provision releases.
+
+
+NIR growth is anticipated to trend materially higher into the low to mid teens range. This will be driven by resilient fee and commission income growth and a
+
+
+strong insurance performance. Ongoing private equity realisations are expected, predominantly in the first half of the financial year, and trading income is expected
+
+
+to rebound off the current low base.
+
+
+Given the base effect of the provision, cost growth is expected to print slightly below inflationary growth. Excluding this base effect, costs will trend above inflation
+
+
+by 2% - 3%, which partly reflects expenses incurred by the finalisation of the HSBC transaction in the third quarter of the financial year. These costs will offset any
+
+
+early revenue benefits, however, the transaction will provide support to NII and NIR growth in the following years.
+
+
+The group's performance reflects the health and quality of its operating franchises, all of which remain well positioned to capture a higher share of any additional
+
+
+growth opportunities that emerge in the jurisdictions where it operates.
+
+
+For the 12 months to 30 June 2026, normalised earnings growth off the current year base (which includes the provision) will trend up into the high mid-teens,
+
+
+which is significantly above the group's long-term stated target range of nominal GDP + 0% to 3%. The normalised ROE is expected to improve and move closer to
+
+
+the upper end of its stated range of 18% to 22%.
+
+
+BOARD CHANGES
+
+
+Changes to the directorate are outlined below
+
+
+Name                               Position                                               Effective date
+
+
+Appointment
+
+
+PJ Makosholo                       Independent non-executive director                     1 October 2024
+
+
+Retirement
+
+
+GG Gelink                          Independent non-executive director                     29 November 2024
+
+
+DIVIDEND STRATEGY
+
+
+FirstRand's dividend strategy is to provide its shareholders with an appropriate, sustainable payout over the long term. The group's high return profile and solid
+
+
+capital position, together with sustainable FRM actions, allow for a dividend cover at the bottom end of the board-approved range of 1.6 times to 2.0 times.
+
+
+A dividend cover at 1.6 times, representing a payout ratio of 63%, leaves the group with sufficient financial resources to deliver on its growth ambitions.
+
+
+CASH DIVIDEND DECLARATIONS
+
+
+The issued share capital on the dividend declaration dates outlined below was 5 609 488 001 ordinary shares.
+
+
+The directors declared a final gross cash ordinary dividend totalling 247.0 cents per ordinary share out of income reserves for the year ended 30 June 2025.
+
+
+Ordinary shares
+
+
+                                              Year ended 30 June
+
+
+Cents per share                              2025            2024
+
+
+Interim (declared 5 March 2025)               219              200
+
+
+Final (declared 10 September 2025)            247              215
+
+
+Total dividends                               466             415
+
+
+The salient dates for the interim ordinary dividend are outlined below.
+
+
+Last day to trade cum-dividend                                      Tuesday, 7 October 2025
+
+
+Shares commence trading ex-dividend                                 Wednesday, 8 October 2025
+
+
+Record date                                                         Friday, 10 October 2025
+
+
+Payment date                                                        Monday, 13 October 2025
+
+
+Share certificates may not be dematerialised or rematerialised between Wednesday, 8 October 2025 and Friday, 10 October 2025, both days inclusive.
+
+
+For shareholders who are subject to dividend withholding tax (DWT), tax will be calculated at 20% (or such lower rate as is applicable if a double taxation
+
+
+agreement applies for foreign shareholders). FirstRand's income tax reference number is 9150/201/71/4.
+
+
+For South African shareholders who are subject to DWT, the final ordinary dividend net of 20% DWT at 49.4000 cents per share will be 197.6000 cents per share.
+
+
+JP BURGER                         C LOW                             M VILAKAZI                        M DAVIAS
+
+
+Chairman                          Company secretary                 CEO                               CFO
+
+
+10 September 2025
+
+
+OTHER INFORMATION
+
+
+This announcement covers the audited financial results of FirstRand Limited based on IFRS® Accounting Standards for the year ended 30 June 2025. The primary
+
+
+results and accompanying commentary are presented on a normalised basis as the group believes this reflects its economic performance. The group also discloses
+
+
+certain information on a constant currency basis. The normalised results and constant currency information have been derived from the IFRS Accounting
+
+
+Standards financial results. A detailed description of the difference between normalised and IFRS Accounting Standards results and the determination of the
+
+
+constant currency amounts are provided on pages 146 to 149 of the Analysis of financial results booklet. The Analysis of financial results booklet constitutes the
+
+
+group's full announcement and is available at www.firstrand.co.za/investors/integrated-reporting-hub/financial-reporting/. Commentary is based on normalised
+
+
+results, unless indicated otherwise.
+
+
+The full set of consolidated financial statements for the year ended 30 June 2025 has been audited by the group's auditors, PricewaterhouseCoopers Incorporated
+
+
+and Ernst & Young Incorporated, who expressed an unmodified opinion thereon. The group's audited consolidated financial statements for the year ended
+
+
+30 June 2025, based on IFRS Accounting Standards, are available on its website at www.firstrand.co.za/investors/integrated-reporting-hub/financial-reporting/.
+
+
+The content of this announcement is derived from audited information, but is not itself audited. The directors take responsibility for the preparation of this
+
+
+announcement.
+
+
+Any forecast financial information contained herein has not been reviewed or reported on by the group's external auditors.
+
+
+Shareholders are advised that this announcement represents a summary of the information contained in the audited annual financial statements and does not
+
+
+contain full or complete details. Any investment decisions by investors and/or shareholders should be based on consideration of the audited annual financial
+
+
+statements as a whole which is available on the group's website, together with the Analysis of financial results booklet, and on
+
+
+https://senspdf.jse.co.za/documents/2025/JSE/ISSE/FSR/FSR0625.pdf
+
+
+COMPANY INFORMATION
+
+
+Directors
+
+
+JP Burger (chairman), M Vilakazi (CEO), MG Davias (CFO), TC Isaacs, PJ Makosholo, PD Naidoo, Z Roscherr, SP Sibisi, LL von Zeuner,
+
+
+T Winterboer
+
+
+Company secretary and registered office
+
+
+C Low
+
+
+4 Merchant Place, Corner Fredman Drive and Rivonia Road
+
+
+Sandton 2196
+
+
+PO Box 650149, Benmore, 2010
+
+
+Tel: +27 11 282 1808
+
+
+Fax: +27 11 282 8088
+
+
+Website: www.firstrand.co.za
+
+
+JSE Equity sponsor
+
+
+Rand Merchant Bank (a division of FirstRand Bank Limited)
+
+
+1 Merchant Place, Corner Fredman Drive and Rivonia Road
+
+
+Sandton, 2196
+
+
+Tel: +27 11 282 8000
+
+
+Email:
+[email protected]
+
+
+Namibian sponsor
+
+
+Simonis Storm Securities (Pty) Ltd
+
+
+4 Koch Street
+
+
+Klein Windhoek
+
+
+Namibia
+
+
+Transfer secretaries - South Africa
+
+
+Computershare Investor Services (Pty) Ltd
+
+
+1st Floor, Rosebank Towers
+
+
+15 Biermann Avenue
+
+
+Rosebank, Johannesburg, 2196
+
+
+Private Bag X9000, Saxonwold, 2132
+
+
+Tel: +27 11 370 5000
+
+
+Fax: +27 11 688 5248
+
+
+Transfer secretaries - Namibia
+
+
+Transfer Secretaries (Pty) Ltd
+
+
+4 Koch Street, Klein Windhoek
+
+
+PO Box 3970, Windhoek, Namibia
+
+
+Tel: +264 612 27647
+
+
+Fax: +264 612 48531
+
+
+Auditors
+
+
+PricewaterhouseCoopers Inc.
+
+
+4 Lisbon Lane
+
+
+Waterfall City
+
+
+Jukskei View
+
+
+2090
+
+
+Ernst & Young Inc.
+
+
+102 Rivonia Road
+
+
+Sandton
+
+
+Johannesburg
+
+
+Gauteng
+
+
+South Africa
+
+
+2146
+
+
+11 September 2025
+
+
+Date: 11-09-2025 08:30:00

@@ -1,0 +1,340 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251204_S514414.pdf]
+
+
+Symbol [KP2]
+
+
+CDI Monthly Movement
+
+
+Kore Potash plc
+
+
+(Incorporated in England and Wales)
+
+
+Registration number 10933682
+
+
+ASX share code: KP2
+
+
+AIM share code: KP2
+
+
+JSE share code: KP2
+
+
+ISIN: GB00BYP2QJ94
+
+
+CDI ISIN: AU000000KP25
+
+
+("Kore Potash" or the "Company")
+
+
+4 December 2025
+
+
+                                          CDI Monthly Movement
+
+
+Kore Potash (ASX: KP2, AIM: KP2, JSE: KP2) advises the following movements in CDIs over its ordinary shares
+
+
+during November 2025:
+
+
+Balance ? 31 October 2025                             552,997,400
+
+
+Net Movement*                                          36,196,833
+
+
+Balance ? 30 November 2025                            589,194,233
+
+
+* Increase/(Decrease) in the number of CDIs quoted on ASX as a result of transfers between CDIs quoted
+
+
+on ASX and ordinary shares quoted on AIM and JSE, as required by the ASX to be reported on a minimum
+
+
+monthly basis.
+
+
+A copy of the Appendix 4A lodged with the ASX is attached below.
+
+
+                                                    ENDS
+
+
+             For further information, please visit www.korepotash.com or contact:
+
+
+Kore Potash                                                           Tel: +44 (0) 20 3963 1776
+
+
+André Baya, CEO
+
+
+Andrey Maruta, CFO
+
+
+Tavistock Communications                                              Tel: +44 (0) 20 7920 3150
+
+
+Nick Elwes
+
+
+Emily Moss
+
+
+SP Angel Corporate Finance ? Nomad and Joint Broker                   Tel: +44 (0) 20 7470 0470
+
+
+Ewan Leggat
+
+
+Charlie Bouverat
+
+
+Shore Capital ? Joint Broker                                          Tel: +44 (0) 20 7408 4050
+
+
+Toby Gibbs
+
+
+James Thomas
+
+
+Questco Corporate Advisory ? JSE Sponsor                              Tel: +27 (63) 482 3802
+
+
+Doné Hattingh
+
+
+This appendix is available as an online form
+
+
+Only use this form if the online version is not available                                                         +Rule 4.11
+
+
+                                                   Appendix 4A
+
+
+                                  Statement of CDIs on issue
+
+
+Information and documents given to ASX become ASX's property and may be made public.
+
+
+*Denotes minimum information required for first lodgement of this form.
+
+
+Part 1 ? Entity and announcement details
+
+
+ Question      Question                                  Answer
+
+
+ no
+
+
+ 1.1           *Name of entity                           KORE POTASH PLC
+
+
+               We (the entity named above) provide
+
+
+               the following information about our
+
+
+               issued capital. 1
+
+
+ 1.2           *Registration type and number             ARBN 621843614
+
+
+               Please supply your ABN, ARSN,
+
+
+               ARBN, ACN or another registration
+
+
+               type and number (if you supply
+
+
+               another registration type, please
+
+
+               specify both the type of registration
+
+
+               and the registration number).
+
+
+ 1.3           *ASX issuer code                          KP2
+
+
+ 1.4           *The announcement is                      * New announcement
+
+
+               Tick whichever is applicable.             Ad Update/amendment to previous announcement
+
+
+                                                         Ad Cancellation of previous announcement
+
+
+ 1.4a          *Reason for update                        N/A
+
+
+               Mandatory only if "Update" ticked in
+
+
+               Q1.4 above. A reason must be
+
+
+               provided for an update.
+
+
+ 1.4b          *Date of previous                         N/A
+
+
+               announcement to this update
+
+
+               Mandatory only if "Update" ticked in
+
+
+               Q1.4 above.
+
+
+ 1.4c          *Reason for cancellation                  N/A
+
+
+               Mandatory only if "Cancellation" ticked
+
+
+               in Q1.4 above.
+
+
+ 1.4d          *Date of previous                         N/A
+
+
+               announcement to this
+
+
+               cancellation
+
+
+               Mandatory only if "Cancellation" ticked
+
+
+               in Q1.4 above.
+
+
+ 1.5           *Daty whereas 1:4 means 1 CDI represents 4 underlying securities).
+
+
+3 The net difference should equal the number of underlying securities transmuted into CDIs during the month less the number of
+
+
+  CDIs transmuted into underlying securities during the month
+
+
++ See chapter 19 for defined terms
+
+
+1 December 2019
+
+
+This appendix is available as an online form                                            Appendix 4A
+
+
+                                                                          Statement of CDIs on issue
+
+
+                ASX security code:           Security description:
+
+
+                KP2AH                        OPTION EXPIRING 15-APR-2027 EX GBP 0.001
+
+
+                Total number of securities   Total number of securities   Net difference (A-B):
+
+
+                at end of statement month    at end of previous month
+
+
+                (A):                         (B):
+
+
+                35,000,000                   35,000,000                   0
+
+
+                Reason for change:
+
+
+                Not applicable.
+
+
+                ASX security code:           Security description:
+
+
+                KP2AI                        OPTION EXPIRING 09-JUN-2027 EX GBP 0.022
+
+
+                Total number of securities   Total number of securities   Net difference (A-B):
+
+
+                at end of statement month    at end of previous month
+
+
+                (A):                         (B):
+
+
+                9,000,000                    9,000,000                    0
+
+
+                Reason for change:
+
+
+                Not applicable.
+
+
+                ASX security code:           Security description:
+
+
+                KP2AJ                        OPTION EXPIRING 11-JUN-2028 EX GBP 0.0193
+
+
+                Total number of securities   Total number of securities   Net difference (A-B):
+
+
+                at end of statement month    at end of previous month
+
+
+                (A):                         (B):
+
+
+                6,000,000                    6,000,000                    0
+
+
+                Reason for change:
+
+
+                Not applicable.
+
+
+Introduced 01/12/19
+
+
++ See chapter 19 for defined terms
+
+
+1 December 2019
+
+
+Date: 04-12-2025 09:00:00

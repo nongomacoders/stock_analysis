@@ -1,0 +1,538 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251127_S511556.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [NVS]
+
+
+Unaudited interim results for the six months ended 30 September 2025
+
+
+NOVUS HOLDINGS LIMITED
+
+
+(Incorporated in the Republic of South Africa)
+
+
+(Registration number: 2008/011165/06)
+
+
+JSE share code: NVS
+
+
+ISIN: ZAE000202149
+
+
+("Novus Holdings" or "the Group")
+
+
+          UNAUDITED INTERIM RESULTS FOR THE SIX MONTHS ENDED 30 SEPTEMBER 2025
+
+
+SALIENT FEATURES
+
+
+-      Revenue up 1,0% to R2 109 million (2024: R2 088 million)
+
+
+-      Operating profit* down to R102,5 million (2024: R196,4 million)
+
+
+-      Headline earnings per share decreased to 26,57 cents per share (2024: 59,36 cents per share)
+
+
+-      Earnings per share decreased to 26,51 cents per share (2024: 59,46 cents per share)
+
+
+-      Diluted headline earnings per share** decreased to 26,57 cents per share (2024: 55,56 cents per share)
+
+
+-      Diluted earnings per share** decreased to 26,51 cents (2024: 55,65 cents per share)
+
+
+-      Net asset value per share increased to 679,08 cents (2024: 656,19 cents)
+
+
+-      Closing cash position of R741,7 million (2024: R310,0 million)
+
+
+-      No dividends have been declared for the six months ended 30 September 2025 (2024: Rnil)
+
+
+* Operating profit/(loss) excluding "other gains/(losses)".
+
+
+**Earnings per share and Headline Earnings per share have been adjusted for the after-tax dilutive effect of the future
+
+
+  conversion of the accelerated empowerment (AE) shares to ordinary shares held by the minority shareholders in Maskew
+
+
+  Miller Learning Proprietary Limited, which will result in increased earnings attributable to non-controlling interest. During the
+
+
+  interim period, diluted earnings per share have been limited to basic earnings per share as the assumed conversion of
+
+
+  potential ordinary shares would be anti-dilutive.
+
+
+PERFORMANCE OVERVIEW
+
+
+The financial results for the six months ended 30 September 2025 ("period") is down compared to the prior
+
+
+period, largely due to the lower profitability of the Education segment following delayed procurement from the
+
+
+provincial departments. This decline was partially offset by the improved profitability in the Print segment and
+
+
+the first-time inclusion within the period of Novus Media Proprietary Limited ("Novus Media"), Novus Sport
+
+
+Proprietary Limited ("Novus Sport") and On the Dot Supply Chain Management Proprietary Limited ("On the
+
+
+Dot"), reported within the Print, Publishing and Distribution segment of the Group. During the prior year, the
+
+
+results included profits from derivative instruments held in Mustek Limited ("Mustek") amounting to R59,7
+
+
+million, within the Packaging Segment, compared to equity accounted earnings of R8.6 million in Mustek being
+
+
+recognised during this period.
+
+
+Group revenue increased by R21 million (1,0%) from R2 088 million to R2 109 million. The Education and
+
+
+Packaging segments decreased by 64,9% and 6,2% respectively, while the Print Segment increased by 0,5%.
+
+
+The Education Segment experienced delayed orders during this reporting period due to the delay in the
+
+
+Department of Basic Education ("DBE") finalising the Foundation Phase Catalogue, lateness of the 2025/2026
+
+
+National Budget finalisation and overall financial constraints experienced by the provincial education
+
+
+departments. The Publishing and Distribution segment contributed 16,3% to total Group revenue during the
+
+
+period.
+
+
+Operating profit* decreased to R102,5 million (2024: R196,4 million) and gross profit margin increased to
+
+
+31,2% (2024: 30,2%), mainly driven by improved margins in the Print segment.
+
+
+Operating expenses increased since the prior year due to the first-time inclusion of the Publishing and
+
+
+Distribution segment, most significantly staff cost of R84 million and technology cost of R14 million. The
+
+
+Education segment's investment in technology of R14,3 million and the Group's acquisition-related cost of
+
+
+R9,8m resulted in the total overhead costs increasing from R435 million to R556 million for the Group.
+
+
+Retrenchment costs of R3,9 million were recognised during the period (2024: Rnil).
+
+
+Print, Publishing & Distribution
+
+
+Revenue increased by 23,2% to R1 640 million (2024: R1 331 million) and operating profit* increased to
+
+
+R153,2 million (2024: R86,3 million). Revenue increased mainly due to the Publishing & Distribution segment's
+
+
+first-time inclusion during this period. The revenue recognition of the DBE contract in the Print segment is
+
+
+higher than the prior year, with more than half of the contract recognised at 30 September 2025. The Print
+
+
+segment's overall revenue however remained almost flat with a 0,5% increase from the prior period, due to
+
+
+increased recognition of the DBE contract and increased Magazine sales with a tonnage increase of 38,1%,
+
+
+which was offset by reduced print revenue from Newspapers. Newspapers saw a tonnage drop of 44,5%, with
+
+
+overall sales tonnages decreasing with 8,9% for the Print segment.
+
+
+Improved margins due to price increases and recovering paper prices led to improved profitability in the Print
+
+
+segment. This resulted in an overall increased gross margin from 23,1% in the prior period to 31,2% in the
+
+
+current period for the Print, Publishing and Distribution segment.
+
+
+Education
+
+
+Revenue decreased by 64,9% to R156,9 million (2024: R447,2 million) due to delayed orders from the
+
+
+provincial departments, resulting in an operating loss* of R81,6 million (2024: R75,1 million operating profit).
+
+
+This includes R14,3 million (2024: R15,8 million) investment in technology and R64,3 million (2024: R64,3
+
+
+million) amortisation on acquired intangible assets.
+
+
+Packaging
+
+
+Revenue decreased by 6,2% to R345,4 million (2024: R368,0 million). ITB experienced lower revenue
+
+
+compared to the prior year, with general market pressures which have contributed to this decline.
+
+
+Gross margin is in line with the prior year of 18,2% with the segment achieving an operating profit* of R32,0
+
+
+million (2024: R35,7 million), representing a decrease of 10,4%.
+
+
+CASH GENERATION
+
+
+The Group closed the period with a cash balance of R741,7 million, a decrease of R70,4 million for the six
+
+
+months. The first half of the financial year typically sees the Group invest substantially in working capital to
+
+
+fund seasonal demand and to deliver on the DBE contract.
+
+
+The cash balance includes an amount of R309,4 million being tied up for the mandatory offer made to Mustek
+
+
+shareholders to enable the Group to fulfill its cash consideration of the offer.
+
+
+The Group was in a net cash position of R205,9 million (2024: R172 million net debt) as at 30 September 2025.
+
+
+Capital and interest repayments on the outstanding loan balance in the period amounted to R102,3 million with
+
+
+an external dividend of R174,1 million paid to Company's shareholders during the period.
+
+
+Capital expenditure amounted to R41,3 million with spend directed towards expansion projects of current plant
+
+
+and equipment of R11,5 million and R14,8 million for maintenance in the Print segment.
+
+
+Acquisition of additional shares in Mustek amounted to R26,8 million cash outflow.
+
+
+ACQUISITIONS
+
+
+During the six months period, the Group acquired an additional 2,8 million shares in Mustek Limited
+
+
+increasing its shareholding from 35,07% to 39,95% as at 30 September 2025.
+
+
+Following the Mustek mandatory offer and the offer circular which was circulated to Mustek shareholders on
+
+
+30 May 2025, the Take Over Regulation Panel ("TRP") investigation remains ongoing, which results in a
+
+
+certificate of compliance not being able to be issued. In the absence of obtaining a certificate of compliance
+
+
+from the TRP, the Group cannot implement or give effect to the mandatory offer. Notwithstanding the
+
+
+regulatory delays, the Group is committed to the mandatory offer to the shareholders of Mustek and looks
+
+
+forward to the conclusion of the regulatory process.
+
+
+OUTLOOK
+
+
+The decline in print volumes and anticipated paper price increases places pressure on future margins which
+
+
+the Group needs to manage on an ongoing basor the Group.
+
+
+Retrenchment costs of R3,9 million were recognised during the period (2024: Rnil).
+
+
+Print, Publishing & Distribution
+
+
+Revenue increased by 23,2% to R1 640 million (2024: R1 331 million) and operating profit* increased to
+
+
+R153,2 million (2024: R86,3 million). Revenue increased mainly due to the Publishing & Distribution segment's
+
+
+first-time inclusion during this period. The revenue recognition of the DBE contract in the Print segment is
+
+
+higher than the prior year, with more than half of the contract recognised at 30 September 2025. The Print
+
+
+segment's overall revenue however remained almost flat with a 0,5% increase from the prior period, due to
+
+
+increased recognition of the DBE contract and increased Magazine sales with a tonnage increase of 38,1%,
+
+
+which was offset by reduced print revenue from Newspapers. Newspapers saw a tonnage drop of 44,5%, with
+
+
+overall sales tonnages decreasing with 8,9% for the Print segment.
+
+
+Improved margins due to price increases and recovering paper prices led to improved profitability in the Print
+
+
+segment. This resulted in an overall increased gross margin from 23,1% in the prior period to 31,2% in the
+
+
+current period for the Print, Publishing and Distribution segment.
+
+
+Education
+
+
+Revenue decreased by 64,9% to R156,9 million (2024: R447,2 million) due to delayed orders from the
+
+
+provincial departments, resulting in an operating loss* of R81,6 million (2024: R75,1 million operating profit).
+
+
+This includes R14,3 million (2024: R15,8 million) investment in technology and R64,3 million (2024: R64,3
+
+
+million) amortisation on acquired intangible assets.
+
+
+Packaging
+
+
+Revenue decreased by 6,2% to R345,4 million (2024: R368,0 million). ITB experienced lower revenue
+
+
+compared to the prior year, with general market pressures which have contributed to this decline.
+
+
+Gross margin is in line with the prior year of 18,2% with the segment achieving an operating profit* of R32,0
+
+
+million (2024: R35,7 million), representing a decrease of 10,4%.
+
+
+CASH GENERATION
+
+
+The Group closed the period with a cash balance of R741,7 million, a decrease of R70,4 million for the six
+
+
+months. The first half of the financial year typically sees the Group invest substantially in working capital to
+
+
+fund seasonal demand and to deliver on the DBE contract.
+
+
+The cash balance includes an amount of R309,4 million being tied up for the mandatory offer made to Mustek
+
+
+shareholders to enable the Group to fulfill its cash consideration of the offer.
+
+
+The Group was in a net cash position of R205,9 million (2024: R172 million net debt) as at 30 September 2025.
+
+
+Capital and interest repayments on the outstanding loan balance in the period amounted to R102,3 million with
+
+
+an external dividend of R174,1 million paid to Company's shareholders during the period.
+
+
+Capital expenditure amounted to R41,3 million with spend directed towards expansion projects of current plant
+
+
+and equipment of R11,5 million and R14,8 million for maintenance in the Print segment.
+
+
+Acquisition of additional shares in Mustek amounted to R26,8 million cash outflow.
+
+
+ACQUISITIONS
+
+
+During the six months period, the Group acquired an additional 2,8 million shares in Mustek Limited
+
+
+increasing its shareholding from 35,07% to 39,95% as at 30 September 2025.
+
+
+Following the Mustek mandatory offer and the offer circular which was circulated to Mustek shareholders on
+
+
+30 May 2025, the Take Over Regulation Panel ("TRP") investigation remains ongoing, which results in a
+
+
+certificate of compliance not being able to be issued. In the absence of obtaining a certificate of compliance
+
+
+from the TRP, the Group cannot implement or give effect to the mandatory offer. Notwithstanding the
+
+
+regulatory delays, the Group is committed to the mandatory offer to the shareholders of Mustek and looks
+
+
+forward to the conclusion of the regulatory process.
+
+
+OUTLOOK
+
+
+The decline in print volumes and anticipated paper price increases places pressure on future margins which
+
+
+the Group needs to manage on an ongoing basis. Revenue growth in the Print, Publishing and Distribution
+
+
+segment requires investment in the development and support of products that meet our customers' advertising
+
+
+and promotion needs. Clients are moving to digital advertising and communicating the cost effectiveness of
+
+
+print is a priority if we want to arrest the decline in print advertising spend. We remain confident that print
+
+
+advertising is valuable and effective, but digital data and integration is required as part of our offering.
+
+
+Maskew Miller Learning ("MML") received confirmation from the DBE that the Foundation Phase catalogue is
+
+
+anticipated to be released in the 2025 calendar year with procurement taking place in the 2026 year. The
+
+
+extent of future orders for the current curriculum catalogue remains uncertain and there is no indication when
+
+
+the next phase of the curriculum update will be announced. While additional orders are expected from
+
+
+provincial education departments, aggregated annual orders are expected to be lower than the prior year due
+
+
+to budget constraints.
+
+
+MML continues to work closely with the Group's AI associate, Bytefuse, to develop our AI supported education
+
+
+tutor.
+
+
+Novus Holdings is proud to have achieved a B-BBEE Level One Contributor status for the second year and
+
+
+will continue with initiatives to transform and further enhance its status.
+
+
+RESULTS ANNOUNCEMENT
+
+
+Shareholders are advised that Novus Holdings will be hosting their results presentation at the Novus Holdings
+
+
+Offices situated at 10 Freedom Way, Montague Gardens at 10h30 (SA time) on Friday, 28 November 2025.
+
+
+For access and details of this webinar, go to the Group's website at www.novus.holdings and view the invitation
+
+
+at https://novus.holdings/wp-content/uploads/2025/11/NVS-Interims-Results-2026-Invite_vFINAL.jpg
+
+
+SHORT FORM ANNOUNCEMENT
+
+
+This short-form announcement is the responsibility of the Board and has not been reviewed or reported on by
+
+
+the Group's external auditors. It contains only a summary of the information in the full unaudited interim results
+
+
+for the six months ended 30 September 2025 ("full announcement") and does not contain full or complete
+
+
+details.
+
+
+The full announcement is available on the JSE's cloudlink at:
+
+
+https://senspdf.jse.co.za/documents/2025/jse/isse/nvse/interims26.pdf and on the Company's website at:
+
+
+https://novus.holdings/wp-content/uploads/2025/11/Interim-Results-27-November-2025.pdf
+
+
+Any investment decisions by investors and/or shareholders should be based on consideration of the full
+
+
+announcement, as a whole.
+
+
+On behalf of the Board
+
+
+Adrian Zetler
+
+
+Chairman
+
+
+Cape Town
+
+
+27 November 2025
+
+
+Sponsor
+
+
+PSG Capital
+
+
+Date: 27-11-2025 10:50:00

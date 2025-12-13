@@ -1,0 +1,1562 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251031_S512689.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [MCZ]
+
+
+Activities Report for the quarter ended 30 September 2025 (FY2026 Q1)
+
+
+MC Mining Limited
+
+
+Previously Coal of Africa Limited
+
+
+(Incorporated and registered in Australia)
+
+
+Registration number ABN 008 905 388
+
+
+ISIN AU000000MCM9
+
+
+JSE share code: MCZ
+
+
+ASX/AIM code: MCM
+
+
+ANNOUNCEMENT
+
+
+31 October 2025
+
+
+ACTIVITIES REPORT FOR THE QUARTER ENDED 30 SEPTEMBER 2025 (FY2026 Q1) FOR MC MINING LIMITED (MC Mining
+
+
+or the Company) AND ITS SUBSIDIARY COMPANIES
+
+
+HIGHLIGHTS
+
+
+Operations
+
+
+?   Health and safety performance across the group improved, with the Company having operated
+
+
+    with no lost time injuries (LTI) for the quarter. The Makhado steelmaking hard coking coal Project
+
+
+    (Makhado Project or Makhado) has now reached 911 days LTI-free, for 949,000 manhours
+
+
+    worked, whilst Uitkomst steelmaking coal Colliery (Uitkomst Colliery or Uitkomst) reached 228
+
+
+    days LTI-free;
+
+
+?   Development of the Makhado Project progressed well, with key milestones achieved despite
+
+
+    experiencing some construction delays: commissioning activities for the coal handling and
+
+
+    preparation plant (CHPP or Coal Plant) are expected to begin by December 2025; the principal
+
+
+    mining contractor has commenced with the open pit mining of the box cut; civil foundational
+
+
+    works for the Coal Plant are largely complete; and significant progress is being made towards the
+
+
+    commissioning of the 14km overhead power transmission line;
+
+
+?   The operational improvement plan for Uitkomst Colliery (Turnaround Plan) was approved and key
+
+
+    improvement initiatives are being executed accordingly. Overhead cost reductions are being
+
+
+    realised and focus has moved to increasing production via improved equipment availabilities and
+
+
+    utilisation. Improved production is expected in the last quarter of this calendar year.
+
+
+?   Run-of-mine (ROM) coal production from Uitkomst Colliery decreased by 21% on the previous
+
+
+    quarter's production, and was 8% lower than the comparative period in FY2025 at 82,588 tonnes
+
+
+    (t) (FY2025 Q1: 90,069t). The reduction in production, compared to FY2025 Q1, was due to delays
+
+
+    in the start of the turnaround plan, temporary operational challenges (geological intrusions) and
+
+
+    reduced machine availability due to intensive repair and refurbishment being carried as part of
+
+
+    turnaround plan;
+
+
+?   Uitkomst Colliery sold 47,116t of high-grade coal during the quarter (FY2025 Q1: 47,586t), a 1%
+
+
+    decrease on the prior year sales, and there was no sales of the lower grade middlings coal (FY2025
+
+
+    Q1: 8,719). Coal plant yields remained high at 73% due to operational improvement initiatives
+
+
+    over the period, which offset the lower ROM coal production;
+
+
+?   Limited activities were undertaken at the Company's Vele Aluwani semi-soft coking coal (SSCC)
+
+
+    and thermal coal (TC) Colliery (Vele Colliery or Vele), whilst the numerous coal deposits within
+
+
+    the Greater Soutpansberg Projects (GSP) were evaluated and prioritised for development; and
+
+
+?   Depressed TC prices continued with average prices of US$91/t for the three months, compared to
+
+
+    US$90/t in Q4 FY2025 and US$110/t in Q1 of FY2025. Premium steelmaking HCC prices have
+
+
+    decreased, averaging US$185/t in the quarter compared to US$212/t in FY2025 Q1.
+
+
+Corporate
+
+
+? Available cash and facilities was US$13.2 million at the period end (FY2025 Q4: US$7.4 million);
+
+
+? Kinetic Development Group Limited (KDG) made payments amounting to US$15 million for the
+
+
+    purchase of MC Mining shares, as part of the share subscription agreement, during the quarter.
+
+
+    US$5 million of the payment relates to the fourth Second Closing and US$10 million of the payment
+
+
+    relates to the fifth Second Closing as per the Share Subscription Agreement;
+
+
+? The Company made a further repayment of ZAR10 million towards the Industrial Development
+
+
+   Corporation (IDC) loan during the quarter;
+
+
+? Permanent appointment of Ms Yi (Christine) He as Managing Director and Chief Executive Officer
+
+
+   of MC Mining Limited.
+
+
+Events subsequent to the end of the quarter
+
+
+? Jianheng (Albert) Deng was appointed as a Non-Executive Director of MC Mining; and
+
+
+? Zhen (Brian) He resigned from being a Non-Executive Director of MC Mining.
+
+
+DETAILED QUARTERLY OPERATIONS REPORTS
+
+
+Makhado HCC Project ? Soutpansberg Coalfield, Limpopo Province, South Africa (67% owned)
+
+
+Project Overview. Construction of the Makhado steelmaking hard coking coal Project (Makhado
+
+
+Project or Makhado) progressed well, with commissioning activities of the Coal Plant scheduled to
+
+
+begin in December 2025, despite experiencing some construction delays. During the quarter, more
+
+
+project development milestones were successfully achieved, whilst maintaining the excellent safety,
+
+
+health, environmental and regulatory compliance performances that have become a recognizable
+
+
+feature of the venture to date. The colliery will be South Africa's largest hard coking coal (HCC)
+
+
+producer, designed to produce 800,000 tonnes a year of HCC 64 Mid Vol, once steady-state operation
+
+
+for the foundation phase is reached. The life-of-mine (LOM) for the Makhado Colliery is planned to
+
+
+be 28 years. Contiguous to the Makhado Project are the satellite Greater Soutpansberg Projects (GSP),
+
+
+that are all at granted Mining Right status, also endowed with steelmaking HCC potential, and
+
+
+scheduled to be the focus of mine planning, once the Makhado Project is commissioned.
+
+
+Health, Safety, Regulatory Compliance and Environmental Performance.          The Makhado Project
+
+
+achieved another quarter free from any LTIs (FY2025 Q4: nil), with 911 days LTI-free and 949,000
+
+
+manhours now accumulated for the project to date. Employee health initiatives focused on raising
+
+
+awareness on mental health, men's health and chronic conditions management. The workforce onsite
+
+
+now numbers 790 people of whom 312 are employed from the host communities. In line with the
+
+
+project's social and labour plan commitments and environmental management obligations, designs to
+
+
+improve the regional roads (D745 and D3672) are largely completed, and a host community business
+
+
+has been contracted to undertake the road maintenance.
+
+
+The mine continued to be built with zero reportable environmental incidents and keen emphasis being
+
+
+placed on environmental protection and management. As of the reporting date, the Department of
+
+
+Mineral and Petroleum Resources (DMPR) undertook a comprehensive and multi-discipline onsite
+
+
+health and safety, environmental, social and labour planning and regulatory compliance audit of the
+
+
+Makhado Project. The Pollution Prevention Plan and the Greenhouse Gases Emission report were
+
+
+approved by the Department of Forestry, Fisheries and the Environment, further improving the
+
+
+environmental credentials of the Makhado Project. The Company continues to promote collaborative
+
+
+and constructive relationships with regulatory authorities and host community stakeholders.
+
+
+Project Development Milestones Achieved. The Makhado Project is progressing strongly with more
+
+
+key development milestones achieved this quarter. Coal Plant commissioning activities are expected
+
+
+to start during December 2025, despite delays encountered due to inclement weather, sourcing of
+
+
+suitable construction materials and obtaining of all requisite clearances to continue with construction
+
+
+of the 14km long power transmission line. The project expenditure remains within the budgeted
+
+
+estimates. Noteworthy features of the project include:
+
+
+-   Open pit Mining: ? Open pit mining of the boxcut commenced during the quarter, with the
+
+
+    first in-pit blast being performed in early October 2025. JCI Mining (Pty) Ltd ('JCI'), the principal
+
+
+    mining contractor, now has 167 people onsite, with a mining fleet consisting of 8 backhoe
+
+
+    configured excavators, supported by a team of 33 articulated dump trucks. A further 4 trucks
+
+
+    are schedule to be mobilised during the coming quarter. Mining of overburden material is
+
+
+    progressing steadily, with 1.3 million bench cubic metres (BCM) already mined. Coal exposure
+
+
+    is anticipated by November 2025.
+
+
+-   Construction of the Coal Plant: ? Civil foundational works are largely complete, and the focus
+
+
+    has now shifted to steelwork, mechanical, and equipment installations. Despite the delays
+
+
+    experienced due to weather, sourcing of construction materials, obtaining clearances to
+
+
+    continue with powerline construction and slow deliveries of equipment procured offshore,
+
+
+    commissioning activities are scheduled to commence in December 2025. Site infrastructure
+
+
+    development is advancing steadily. Access and bulk services remain on schedule for
+
+
+    completion in time for production start-up. Mine access roads are complete and currently
+
+
+    undergoing wear course and stormwater drainage works. The CHPP will process ROM coal to
+
+
+    produce a primary product of HCC 64 Mid Vol and a secondary product of 5,500kcal API4
+
+
+    thermal coal (TC). Work is continuing on the planning of the expansion strategy once the
+
+
+    foundation phase is commissioned. Environmental and Process Technologies (Enprotec), the
+
+
+    lead contractors for building the Coal Plant, now manage 450 persons on site, across 16
+
+
+    different sub-contractors, with 140 of these employees having been recruited from the host
+
+
+    communities.
+
+
+-   Construction of permanent access bridge: - The construction of a permanent bridge crossing
+
+
+    the Mutamba River, to provide access to the mine site is continuing. The Matamba River
+
+
+    bridge is advancing, with foundation works to be completed in October 2025 and overall
+
+
+    completion expected in December 2025. A temporary access bridge, completed in FY2025 Q3
+
+
+    is currently being used to provide site access.
+
+
+-   Construction power reticulation: ?The main power supply line construction is progressing well
+
+
+    and remains on track for completion in December 2025. This power line, the Paradise
+
+
+    Overhead Line (OHL), will be a 14km long, 22kV bulk power transmission line, to deliver
+
+
+    7.5MVA of power to the site from the national grid, via the nearby Paradise Power Station.
+
+
+    This workstream is being managed by the EHL Engineering Group (EHL) on an EPC-turnkey
+
+
+    basis.
+
+
+Outlook. Construction work and operational readiness activities are ongoing, with commissioning
+
+
+activities for the Coal Plant expected to commence by December 2025.
+
+
+Uitkomst steelmaking coal Colliery ? Utrecht Coalfields, KwaZulu Natal Province, South Africa (84%
+
+
+owned)
+
+
+Colliery Overview. Intensive re-engineering and operational reviews were completed, resulting in the
+
+
+development of a performance improvement plan for the colliery (the Turnaround Plan). The plan
+
+
+will be fully implemented during the last quarter of this calendar year. With the coal preparation
+
+
+plant modifications improving yields to 73%, cost base being permanently reduced, the low-seam
+
+
+zones largely mined through, and fleet remediation underway, production is expected to improve in
+
+
+the coming quarter.
+
+
+Health, Safety and Environmental Performance. Uitkomst Colliery had a quarter free of reportable
+
+
+environmental incidents and LTIs (FY2025 Q4: nil LTI). The concerted efforts by site personnel,
+
+
+focusing on behaviour-based safety principles, realignment sessions and operational improvement
+
+
+reviews, have contributed to an improvement in health and safety performance over the period.
+
+
+Production Performance. The colliery mined 82,588t of ROM coal during the quarter, which was a
+
+
+21% decrease on the previous quarter, and 8% lower than the comparative period in FY2025 (FY2025
+
+
+Q1: 90,069t). The 8% decrease in ROM coal production compared to the same period the previous
+
+
+year was due, in part, to disruptions in production whilst reconfiguring the underground mining layout
+
+
+as part of the Turnaround Plan and due to lower coal seam mining heights than what was expected in
+
+
+some sections. Outlook is for an improvement in coal seam mining heights over the next quarter as
+
+
+the operating sections continue to move through the low seam zones. Underground mining fleet
+
+
+condition assessments and remediation plans have commenced to be implemented on-going.
+
+
+Uitkomst sold 47,116t (FY2025 Q1: 47,586t) of high-grade duff and peas coal, which is in-line with the
+
+
+sales for same period last year. The colliery sold no middlings coal during the three months (FY2025
+
+
+Q1: 8,719t). The colliery had 3,088t (FY2025 Q1: 2,343) of high-grade coal inventory at the end of
+
+
+September 2025.
+
+
+The production costs per saleable tonne were 9% higher than the comparative period in FY2025
+
+
+(FY2026 Q1: US$107/t vs. FY2025 Q1: US$97/t). The decrease in volumes resulted in the increase in
+
+
+unit production costs. This was partially offset by the improved yields.
+
+
+Outlook. Uitkomst Colliery, as of the end of the quarter, has commenced with the implementation of
+
+
+the Turnaround Plan.      The focus remains on implementing initiatives to improve equipment
+
+
+availability whilst maintaining excellent safety performance.        The Turnaround Plan is being
+
+
+implemented with the assistance of Metalla Tutum Engineering Proprietary Limited (MTE). MTE is a
+
+
+South African specialist mining engineering and consulting firm, established in 2017, with expertise in
+
+
+mine management and operational improvements.
+
+
+                                                    Quarter to             Quarter to
+
+
+                                                      end-Sep                end-Sep
+
+
+                                                         2025                   2024             %
+
+
+   Production volumes
+
+
+   Uitkomst ROM (t)                                     82,588                90,069             (8%)
+
+
+   Inventory volumes
+
+
+   High quality duff and peas (t)                        3,088                 2,343             32%
+
+
+   Sales tonnages
+
+
+   High quality duff and peas (t)                       47,116                47,586             (1%)
+
+
+   Middlings sales (t)                                        -                8,719          (100%)
+
+
+                                                   Quarter to              Quarter to
+
+
+                                                     end-Sep                 end-Sep
+
+
+                                                        2025                    2024            %
+
+
+                                                       47,116                 56,304          (16%)
+
+
+   Quarter financial metrics
+
+
+   Net revenue/t (US$)                                      75                    67            12%
+
+
+   Net revenue/t (ZAR)                                   1,327                 1,208            10%
+
+
+   Production cost/saleable tonne (US$)^                   107                    97             9%
+
+
+      ^ costs are all South African Rand (ZAR) based
+
+
+Vele Aluwani SSCC and TC Colliery ? Limpopo (Tuli) Coalfield (100% owned)
+
+
+Operations at Vele remain suspended, pending the conclusion of a re-engineered business plan. Work
+
+
+continues on investigating a commercially viable logistics solution for the coal products to come from
+
+
+the colliery. Vele recorded no LTIs (FY2025 Q4: nil) during the quarter.
+
+
+Greater Soutpansberg Projects (GSP) ? Soutpansberg Coalfield (74% owned)
+
+
+The GSP recorded no LTIs (FY2025 Q4: nil) during the quarter. The GSP are a group of mineral
+
+
+tenements, held as Mining Rights and satellite to the Makhado Project. Work has commenced on
+
+
+assessing and prioritising the various tenements, as part of developing the future pipeline of
+
+
+steelmaking HCC prospects to supplement the Makhado Colliery production. The work required to
+
+
+obtain environmental and water use licences for the Mining Rights are expected to commence during
+
+
+H1 CY2026.
+
+
+Appendix 5B ? Quarterly Cash Flow Report
+
+
+The Company's available cash balance and facilities as at 30 September 2025 was US$13.2 million. The
+
+
+aggregate amount of payments to related parties and their associates, as disclosed as item 6.1 of the
+
+
+September 2025 quarter Appendix 5B, was US$72k, comprising executive and non-executive director
+
+
+remuneration.
+
+
+This can be found here: https://senspdf.jse.co.za/documents/2025/jse/isse/mcze/Q126.pdf
+
+
+Christine He
+
+
+Managing Director and Chief Executive Officer
+
+
+This announcement has been approved by the Company's Disclosure Committee.
+
+
+All figures are in South African rand or United States dollars unless otherwise stated.
+
+
+For more information contact:
+
+
+    Bill Pavlovski                    Company                  Vision Corporate
+[email protected]
+
+
+                                      Secretary                (Pty) Ltd
+
+
+    Company advisers:
+
+
+    BSM Sponsors Proprietary Limited is the nominated JSE Sponsor
+
+
+About MC Mining Limited:
+
+
+MC Mining is an ASX/JSE-listed coal exploration, development and mining company operating in South Africa. MC
+
+
+Mining's key projects include the Uitkomst Colliery (metallurgical and thermal coal), Makhado Project (hard coking
+
+
+coal), Vele Colliery (semi-soft coking and thermal coal), and the Greater Soutpansberg Projects (coking and thermal
+
+
+coal).
+
+
+All figures are denominated in United States dollars unless otherwise stated. Safety metrics are compared to the
+
+
+preceding quarter while financial and operational metrics are measured against the comparable period in the
+
+
+previous financial year. A copy of this report is available on the Company's website, www.mcmining.co.za.
+
+
+Forward-looking statements
+
+
+This Announcement, including information included or incorporated by reference in this Announcement, may contain
+
+
+"forward-looking statements" concerning MC Mining that are subject to risks and uncertainties. Generally, the words
+
+
+"will", "may", "should", "continue", "believes", "expects", "intends", "anticipates" or similar expressions identify
+
+
+forward-looking statements. These forward-looking statements involve risks and uncertainties that could cause
+
+
+actual results to differ materially from those expressed in the forward-looking statements. Many of these risks and
+
+
+uncertainties relate to factors that are beyond MC Mining's ability to control or estimate precisely, such as future
+
+
+market conditions, changes in regulatory environment and the behaviour of other market participants. MC Mining
+
+
+cannot give any assurance that such forward-looking statements will prove to have been correct. The reader is
+
+
+cautioned not to place undue reliance on these forward-looking statements. MC Mining assumes no obligation and
+
+
+does not undertake any obligation to update or revise publicly any of the forward-looking statements set out herein,
+
+
+whether as a result of new information, future events or otherwise, except to the extent legally required.
+
+
+Statements of intention
+
+
+Statements of intention are statements of current intentions only, which may change as new information becomes
+
+
+available or circumstances change.
+
+
+Tenements held by MC Mining and its Controlled Entities
+
+
+                                                                                Change
+
+
+ Project                                                                          during
+
+
+    Name         Tenement Number                          Location   Interest    quarter
+
+
+ Chapudi         Albert 686 MS                            Limpopo~    74%
+
+
+ Project*
+
+
+                 Bergwater 712 MS                                     74%
+
+
+                 Remaining Extent and Portion 2 of                    74%
+
+
+                   Bergwater 697 MS
+
+
+                 Blackstone Edge 705 MS                               74%
+
+
+                 Remaining Extent & Portion 1 of                      74%
+
+
+                   Bluebell 480 MS
+
+
+                 Remaining Extent & Portion 1 of                      74%
+
+
+                   Bushy Rise 702 MS
+
+
+                 Castle Koppies 652 MS                                74%
+
+
+                 Chapudi 752 MS                                       74%
+
+
+                 Remaining Extent, Portions 1, 3 & 4                  74%
+
+
+                   of Coniston 699 MS
+
+
+                 Driehoek 631 MS                                      74%
+
+
+                 Remaining Extent of Dorps-rivier                     74%
+
+
+                   696 MS
+
+
+                 Enfield 512 MS (consolidation of                     74%
+
+
+                    Remaining Extent of Enfield 474
+
+
+                    MS, Brosdoorn 682 MS &
+
+
+                    Remaining Extent of Grootvlei
+
+
+                    684 MS)
+
+
+                 Remaining Extent and Portion 1 of                    74%
+
+
+                 Grootboomen 476 MS                                   74%
+
+
+                 Grootvlei 684 MS                                     74%
+
+
+                 Kalkbult 709 MS                                      74%
+
+
+                 Remaining Extent, Remaining                          74%
+
+
+                   Extent of Portion 2, Remaining
+
+
+Project                                                                 Change during
+
+
+   Name   Tenement Number                       Location   Interest     quarter
+
+
+             Extent of Portion 3, Portions 1,
+
+
+             4, 5, 6, 7 & 8 of Kliprivier 692
+
+
+             MS
+
+
+          Remaining Extent of Koodoobult                    74%
+
+
+            664 MS
+
+
+          Koschade 657 MS (Was Mapani Kop                   74%
+
+
+             656 MS)
+
+
+          Malapchani 659 MS                                 74%
+
+
+          Mapani Ridge 660 MS                               74%
+
+
+          Melrose 469 MS                                    74%
+
+
+          Middelfontein 683 MS                              74%
+
+
+          Mountain View 706 MS                              74%
+
+
+          M'tamba Vlei 654 MS                               74%
+
+
+          Remaining Extent & Portion 1 of                   74%
+
+
+            Pienaar 635 MS
+
+
+          Remaining Extent & Portion 1 of                   74%
+
+
+            Prince's Hill 704 MS
+
+
+          Qualipan 655 MS                                   74%
+
+
+          Queensdale 707 MS                                 74%
+
+
+          Remaining Extent & Portion 1 of                   74%
+
+
+            Ridge End 662 MS
+
+
+          Remaining Extent & Portion 1 of                   74%
+
+
+            Rochdale 700 MS
+
+
+          Sandilands 708 MS                                 74%
+
+
+          Portions 1 & 2 of Sandpan 687 MS                  74%
+
+
+          Sandstone Edge 658 MS                             74%
+
+
+                                                                            Change
+
+
+Project                                                                       during
+
+
+   Name      Tenement Number                      Location      Interest     quarter
+
+
+             Remaining Extent of Portions 2 & 3                   74%
+
+
+               of Sterkstroom 689 MS
+
+
+             Sutherland 693 MS                                    74%
+
+
+             Remaining Extent & Portion 1 of                      74%
+
+
+               Varkfontein 671 MS
+
+
+             Remaining Extent, Portion 2,                         74%
+
+
+               Remaining Extent of Portion 1 of
+
+
+               Vastval 477 MS
+
+
+             Vleifontein 691 MS                                   74%
+
+
+             Ptn 3, 4, 5 & 6 of Waterpoort 695                    74%
+
+
+                MS
+
+
+             Wildebeesthoek 661 MS                                74%
+
+
+             Woodlands 701 MS                                     74%
+
+
+Kanowna      M27/41                               Coolgardie^   Royalty<>
+
+
+West &
+
+
+             M27/47                                             Royalty<>
+
+
+Kalbara
+
+
+             M27/59                                             Royalty<>
+
+
+             M27/72,27/73                                       Royalty<>
+
+
+             M27/114                                            Royalty<>
+
+
+             M27/196                                            Royalty<>
+
+
+             M27/181                                             5.99%
+
+
+             M27/414,27/415                                     Royalty<>
+
+
+             P27/1826-1829                                      Royalty<>
+
+
+             P27/1830-1842                                      Royalty<>
+
+
+             P27/1887                                           Royalty<>
+
+
+Abbotshall   ML63/409,410                         Norseman^      Royalty
+
+
+Royalty
+
+
+                                                                      Change
+
+
+Project                                                                 during
+
+
+   Name    Tenement Number                      Location   Interest    quarter
+
+
+Kookynie   ML40/061                             Leonora^   Royalty
+
+
+Royalty
+
+
+           ML40/135,136                                    Royalty
+
+
+Makhado    Fripp 645 MS                         Limpopo~    67%#
+
+
+Project
+
+
+           Lukin 643 MS                                     67%#
+
+
+           Mutamba 668 MS                                   67%#
+
+
+           Salaita 188 MT                                   67%#
+
+
+           Tanga 849 MS                                     67%#
+
+
+           Daru 889 MS                                      67%#
+
+
+           Windhoek 900 MS                                  67%#
+
+
+Generaal   Beck 568 MS                          Limpopo~    74%
+
+
+Project*
+
+
+           Bekaf 650 MS                                     74%
+
+
+           Remaining Extent & Portion 1 of                  74%
+
+
+             Boas 642 MS-
+
+
+           Chase 576 MS                                     74%
+
+
+           Coen Britz 646 MS                                74%
+
+
+           Fanie 578 MS                                     74%
+
+
+           Portions 1, 2 and Remaining Extent               74%
+
+
+              of Generaal 587 MS
+
+
+           Joffre 584 MS                                    74%
+
+
+           Juliana 647 MS                                   74%
+
+
+           Kleinenberg 636 MS                               74%
+
+
+           Remaining Extent of Maseri Pan                   74%
+
+
+             520 MS
+
+
+           Remaining Extent and Portion 2 of                100%
+
+
+             Mount Stuart 153 MT
+
+
+                                                                       Change
+
+
+Project                                                                  during
+
+
+   Name    Tenement Number                       Location   Interest    quarter
+
+
+           Nakab 184 MT                                      100%
+
+
+           Phantom 640 MS                                    74%
+
+
+           Riet 182 MT                                       100%
+
+
+           Rissik 637 MS                                     100%
+
+
+           Schuitdrift 179 MT                                100%
+
+
+           Septimus 156 MT                                   100%
+
+
+           Solitude 111 MT                                   74%
+
+
+           Stayt 183 MT                                      100%
+
+
+           Remaining Extent & Portion 1 of                   100%
+
+
+             Terblanche 155 MT
+
+
+           Van Deventer 641 MS                               74%
+
+
+           Wildgoose 577 MS                                  74%
+
+
+Mopane     Ancaster 501 MS                       Limpopo~    100%
+
+
+Project*
+
+
+           Banff 502 MS                                      74%
+
+
+           Bierman 599 MS                                    74%
+
+
+           Cavan 508 MS                                      100%
+
+
+           Cohen 591 MS                                      100%
+
+
+           Remaining Extent, Portions 1 & 2 of               74%
+
+
+             Delft 499 MS
+
+
+           Dreyer 526 MS                                     74%
+
+
+           Remaining Extent of Du Toit 563 MS                74%
+
+
+           Faure 562 MS                                      74%
+
+
+           Remaining Extent and Portion 1 of                 74%
+
+
+             Goosen 530 MS
+
+
+           Hermanus 533 MS                                   74%
+
+
+                                                                           Change
+
+
+Project                                                                      during
+
+
+   Name     Tenement Number                          Location   Interest    quarter
+
+
+            Jutland 536 MS                                       100%
+
+
+            Krige 495 MS                                         74%
+
+
+            Mons 557 MS                                          100%
+
+
+            Remaining Extent of Otto 560 MS                      74%
+
+
+              (Now Honeymoon)
+
+
+            Remaining Extent & Portion 1 of                      74%
+
+
+              Pretorius 531 MS
+
+
+            Schalk 542 MS                                        74%
+
+
+            Stubbs 558 MS                                        100%
+
+
+            Ursa Minor 551 MS                                    74%
+
+
+            Van Heerden 519 MS                                   74%
+
+
+            Portions 1, 3, 4, 5, 6, 7, 8, 9,                     74%
+
+
+               Remaining Extent of Portion 10,
+
+
+               Portions 13, 14, 15, 16, 17, 18,
+
+
+               19, 20, 21, 22, 23, 24, 26, 27, 29,
+
+
+               30, 35, 36, 37, 38, 39, 40, 41, 44,
+
+
+               45, 46, 48, 49, 50, 51, 52 & 54 of
+
+
+               Vera 815 MS
+
+
+            Remaining Extent of Verdun 535                       74%
+
+
+              MS
+
+
+            Voorburg 503 MS                                      100%
+
+
+            Scheveningen 500 MS                                  74%
+
+
+Uitkomst    Portion 3 (of 2) of Kweekspruit No.      KwaZulu-    84%
+
+
+Colliery       22                                      Natal~
+
+
+and
+
+
+prospects   Portion 8 (of 1) of Kweekspruit No.                  84%
+
+
+               22
+
+
+            Remainder of Portion 1 of Uitkomst                   84%
+
+
+              No. 95
+
+
+                                                                       Change
+
+
+Project                                                                  during
+
+
+   Name   Tenement Number                        Location   Interest    quarter
+
+
+          Portion 5 (of 2) of Uitkomst No. 95                84%
+
+
+          Remainder Portion1 of Vaalbank                     84%
+
+
+            No. 103
+
+
+          Portion 4 (of 1) of Vaalbank No. 103               84%
+
+
+          Portion 5 (of 1) of Vaalbank No. 103               84%
+
+
+          Remainder of Portion 1 of                          84%
+
+
+            Rustverwacht No. 151
+
+
+          Remainder of Portion 2 of                          84%
+
+
+            Rustverwacht No. 151
+
+
+          Remainder of Portion 3 (of 1) of                   84%
+
+
+            Rustverwacht No. 151
+
+
+          Portion 4 (of 1) Rustverwacht                      84%
+
+
+             No.151
+
+
+          Portion 5 (of 1) Rustverwacht No.                  84%
+
+
+             151
+
+
+          Remainder of Portion 6 (of 1) of                   84%
+
+
+            Rustverwacht No. 151
+
+
+          Portion 7 (of 1) of Rustverwacht No.               84%
+
+
+             151
+
+
+          Portion 8 (of 2) of Rustverwacht No.               84%
+
+
+             151
+
+
+          Remainder of Portion 9 (of 2) of                   84%
+
+
+            Rustverwacht No. 151
+
+
+          Portion 11 (of 6) of Rustverwacht                  84%
+
+
+             No. 151
+
+
+                                                                       Change
+
+
+Project                                                                  during
+
+
+   Name   Tenement Number                        Location   Interest    quarter
+
+
+          Portion 12 (of 9) of Rustverwacht                  84%
+
+
+             No. 151
+
+
+          Portion 13 (of 2) of Rustverwacht                  84%
+
+
+             No. 151
+
+
+          Portion 14 (of 2) of Rustverwacht                  84%
+
+
+             No. 151
+
+
+          Portion 15 (of 3) of Rustverwacht                  84%
+
+
+             No. 151
+
+
+          Portion 16 (of 3) of Rustverwacht                  84%
+
+
+             No. 151
+
+
+          Portion 17 (of 2) of Rustverwacht                  84%
+
+
+             No. 151
+
+
+          Portion 18 (of 3) of Waterval No.                  84%
+
+
+             157
+
+
+          Remainder of Portion 1 of Klipspruit               84%
+
+
+            No. 178
+
+
+          Remainder of Portion 4 of Klipspruit               84%
+
+
+            No. 178
+
+
+          Remainder of Portion 5 of Klipspruit               84%
+
+
+            No. 178
+
+
+          Portion 6 of Klipspruit No. 178                    84%
+
+
+          Portion 7 (of 1) of Klipspruit No.                 84%
+
+
+             178
+
+
+          Portion 8 (of 1 )of Klipspruit No.                 84%
+
+
+             178
+
+
+          Portion 9 of Klipspruit No. 178                    84%
+
+
+                                                                       Change
+
+
+Project                                                                  during
+
+
+   Name   Tenement Number                        Location   Interest    quarter
+
+
+          Remainder of Portion 10 (of 5) of                  84%
+
+
+            Klipspruit No. 178
+
+
+          Portion 11 (of 5) of Klipspruit No.                84%
+
+
+             178
+
+
+          Portion 13 (of 4) of Klipspruit No.                84%
+
+
+             178
+
+
+          Remainder of Portion 14 of                         84%
+
+
+            Klipspruit No. 178
+
+
+          Portion 16 (of 14) of Klipspruit No.               84%
+
+
+             178
+
+
+          Portion 18 of Klipspruit No. 178                   84%
+
+
+          Portion 23 of Klipspruit No. 178                   84%
+
+
+          Remainder of Portion 1 of                          84%
+
+
+            Jackalsdraai No. 299
+
+
+          Remainder of Jericho B No. 400                     84%
+
+
+          Portion 1 of Jericho B No. 400                     84%
+
+
+          Portion 2 of Jericho B No. 400                     84%
+
+
+          Portion 3 of Jericho B No. 400                     84%
+
+
+          Remainder of Jericho C No. 413                     84%
+
+
+          Portion 1 of Jericho C No. 413                     84%
+
+
+          Remainder of Portion 1 of Jericho A                84%
+
+
+            No. 414
+
+
+          Remainder of Portion 2 (of 1) of                   84%
+
+
+            Jericho A No. 414
+
+
+                                                                                              Change
+
+
+    Project                                                                                     during
+
+
+       Name        Tenement Number                         Location          Interest          quarter
+
+
+                   Portion 3 (of 1) of Jericho A No. 414                       84%
+
+
+                   Portion 4 (of 1) of Jericho A No. 414                       84%
+
+
+                   Portion 5 (of 2) of Jericho A No. 414                       84%
+
+
+                   Portion 6 (of 1) of Jericho A No. 414                       84%
+
+
+                   Margin No. 420                                              84%
+
+
+    Vele           Portions of Overvlakte 125 MS           Limpopo~            100%
+
+
+    Colliery          (Remaining Extent, 3, 4, 5, 6, 13,
+
+
+    and               14)
+
+
+    prospects
+
+
+                   Bergen Op Zoom 124 MS                                       100%
+
+
+                   Semple 155 MS                                               100%
+
+
+                   Voorspoed 836 MS                                            100%
+
+
+                   Alyth 837 MS                                                100%
+
+
+* Form part of the Greater Soutpansberg Projects
+
+
+~ Tenement located in the Republic of South Africa
+
+
+^ Tenement located in Australia
+
+
+#
+
+
+     MC Mining's interest will reduce to 67% on completion of the 26% Broad Based Black Economic
+
+
+     Empowerment (BBBEE) transaction
+
+
+<> net smelter royalty of 0.5%
+
+
+Date: 31-10-2025 10:00:00

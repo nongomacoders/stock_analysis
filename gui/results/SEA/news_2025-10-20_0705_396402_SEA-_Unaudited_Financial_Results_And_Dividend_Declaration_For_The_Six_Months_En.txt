@@ -1,0 +1,802 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251020_S511899.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [SEA]
+
+
+Unaudited Financial Results And Dividend Declaration For The Six Months Ended 31 August 2025
+
+
+SPEAR REIT LIMITED
+
+
+(Incorporated in the Republic of South Africa)
+
+
+(Registration number: 2015/407237/06)
+
+
+Share code: SEA
+
+
+ISIN: ZAE000228995
+
+
+LEI: 378900F76170CCB33C50
+
+
+Approved as a REIT by the JSE
+
+
+("Spear" or "the Company")
+
+
+UNAUDITED FINANCIAL RESULTS AND DIVIDEND DECLARATION FOR THE SIX MONTHS ENDED
+
+
+31 AUGUST 2025
+
+
+1.   SALIENT FEATURES
+
+
+                                                     HY2026    HY2025    Variance
+
+
+      Distributable income per               cents   43.78     41.61      5.21%
+
+
+      share
+
+
+      Distribution per share                 cents   41.59     39.53      5.21%
+
+
+      Pay-out ratio                          %       95.00     95.00        -*
+
+
+      Total distributable income             R'000   173,247   111,224   55.76%
+
+
+      Revenue         excluding              R'000   385,867   306,919   25.72%
+
+
+      smoothing
+
+
+      Revenue          including             R'000   395,363   310,167   27.47%
+
+
+      smoothing
+
+
+      Basic earnings per share               cents   73.96     44.97     64.47%
+
+
+      Headline     earnings     per          cents   43.33     38.73     11.88%
+
+
+      share
+
+
+                                                     HY2026    FY2025    Variance
+
+
+ Loan to value                        %              13.85     27.09     -*
+
+
+ Tangible net asset value per         R              12.10     12.20     -0.82%
+
+
+ share
+
+
+ Interest cover ratio                 Times          4.05      3.34      -*
+
+
+ SA REIT Cost to Income               %              45.61     44.37     -*
+
+
+ SA REIT Administrative cost to       %              6.39      6.78      -*
+
+
+ income
+
+
+ Weighted average cost of debt        %              9.02      9.08      -*
+
+
+ Weighted average cost of             %              8.84      9.29      -*
+
+
+ variable debt
+
+
+ Weighted average cost of fixed       %              9.08      9.01      -*
+
+
+ debt
+
+
+ Fixed debt ratio                     %              74.99     77.53     -*
+
+
+ Weighted Average expiry of           Months         26.99     25.97     -*
+
+
+ debt
+
+
+ Number of net shares in issue        '000           395,759   320,400   23.52%
+
+
+     *Note: % variance is not applicable
+
+
+2.   KEY FINANCIAL HIGHLIGHTS
+
+
+                          Industrial      Commercial     Retail        Develop-      HY26 Total        FY25
+
+
+                                                                       ment Land                       Total
+
+
+ Number of properties     14              17             8                           39                39
+
+
+                                                                       -
+
+
+ Value of properties                                                                                   5,532,267
+
+
+ (R'000)                  2,235,328       2,404,419      988,073       73,480        5,701,300
+
+
+ Value %                  39%             42%            17%           1%            100%              -
+
+
+ Property revenue excl                                                                                 681,704
+
+
+ smoothing (R'000)        159,789         156,246        69,805        13            385,854
+
+
+ Revenue %                41.41%          40.49%         18.09%        0.00%         100%              -
+
+
+ Property    cost    to   40.61%          38.19%         38.37%        1842.72%      39.25%
+
+
+ income ratio
+
+
+ GLA m²                                                                                                487,418
+
+
+                          304,310         127,447        55,560        -             487,317
+
+
+ GLA %                    62.45%          26.15%         11.40%        0.00%         100%
+
+
+ Vacant area m²                                                                                        14,634
+
+
+                          10,677          11,469         2,088         -             24,233
+
+
+ Vacancy per sector %     3.51%           9.00%          3.76%         0.00%                           -
+
+
+                                                                                     -
+
+
+ Vacancy on total GLA     2.19%           2.35%          0.43%         0.00%         4.97%             3.00%
+
+
+ %
+
+
+ Yield                    8.42%           7.89%          8.64%         -             8.23%             9.57%
+
+
+ Reversion % YTD          1.55%           -10.84%        -3.81%        0             1.31%             4.18%
+
+
+ Weighted     average     7.47%           7.27%          7.27%         0.00%         7.31%             7.27%
+
+
+ Lease escalation %
+
+
+ Weighted     average                                                                                  24.58
+
+
+ unexpired lease term     38.27           23.99          31.44         -             29.72
+
+
+ (months)
+
+
+3.   CEO COMMENTARY
+
+
+Spear has maintained its uniquely positioned strategy within the South African listed property sector as the only
+
+
+regionally specialised Real Estate Investment Trust with a dedicated focus on the Western Cape. Since listing,
+
+
+Spear has maintained its disciplined mandate of investing exclusively within the borders of the province, with a
+
+
+distinct concentration in the Cape Town metropolitan region. This unwavering geographical focus enables the
+
+
+management to leverage the Western Cape's resilient economy, superior infrastructure, and attractive real estate
+
+
+fundamentals, which collectively provide a stable foundation for long-term value creation for all stakeholders.
+
+
+Spear's portfolio is diversified across high-quality industrial, convenience retail, commercial, and mixed-use real
+
+
+estate assets, each carefully selected to deliver sustainable and predictable cash flows. Spear's industrial assets,
+
+
+in particular, remain a cornerstone of the portfolio, offering defensive income streams and exposure to sectors
+
+
+aligned with the Western Cape's economic strengths. Complementing this are strategically located convenience
+
+
+retail centres, premium commercial offices, and mixed-use developments, all of which are managed internally by
+
+
+highly skilled asset and property management teams with a focus on maximising occupancy, tenant retention,
+
+
+and rental growth.
+
+
+Spear's mission is to be the leading Western Cape-focused REIT, consistently delivering annual growth in
+
+
+distributions per share and achieving operational performance that ranks within the top quartile of the South
+
+
+African REIT sector. This ambition is underpinned by a committed management team with extensive knowledge
+
+
+of the regional real estate market, supported by years of practical experience and a proven track record of
+
+
+execution. Spear's intimate understanding of local dynamics, combined with its commitment to maintaining close
+
+
+operational proximity to assets, ensures a highly engaged, responsive, and hands-on approach to both asset and
+
+
+property management.
+
+
+As a true regional specialist, Spear prides itself on its ability to actively manage every asset in its portfolio,
+
+
+applying a disciplined, detail-oriented methodology that safeguards long-term value while unlocking new growth
+
+
+opportunities. This operational philosophy not only strengthens tenant relationships and enhances asset
+
+
+performance, but also provides shareholders with the confidence that capital is being deployed into one of the
+
+
+most stable and investable geographies on the African continent.
+
+
+During the HY2026 Spear's management team has remained acutely focused on successfully navigating the
+
+
+challenging trading environment and building on the rising tide of tenant activity and strengthening market
+
+
+fundamentals year to date. Despite overall positive sentiments the HY2026 period has not been without its
+
+
+challenges but in the same vain the half year has been a very active period for Spear as we have diligently
+
+
+focussed on robust operational outcomes, maintaining a strong financial cadence and executing on key aspects
+
+
+of Spear's growth strategy.
+
+
+During HY2026 Spear acquired additional real estate assets to the value of R 1,074 billion at an average
+
+
+acquisition yield of 9.54% which is in excess of Spear's weighted average cost of capital. The new acquisitions
+
+
+are set to transfer into the core portfolio during Q3 & Q4 FY2026. The core portfolio remains well placed to deliver
+
+
+consistently on its strategic focus with the key drivers to such delivery being strong return-to-office and letting
+
+
+momentum, semigration, localisation, commencement of an interest rate cutting cycle in South Africa and a
+
+
+constraint in supply of real estate assets in certain sub-sectors within the Western Cape.
+
+
+Robust rental collections, growing letting activity, tenant retention, and hands-on financial, debtors and vacancy
+
+
+management remain the key building blocks for the entire Spear team in FY2026 and beyond. Successful and
+
+
+hands-on marketing and letting initiatives across the core portfolio has seen occupancy levels remain robust at
+
+
+95.03% in HY2026 in addition to Spear's balance sheet being primed for growth with a HY2026 LTV of 13.85%
+
+
+prior to the implementation of the Berg River Industrial Business Park, Consani Industrial Park and Maynard Mall
+
+
+acquisitions.
+
+
+Spear remains well placed to successfully execute on its mission and strategy over the balance of FY2026 and
+
+
+beyond as both operational and finance performance of the core portfolio remains aligned with management's
+
+
+forecasts for the financial year.
+
+
+Sectoral performance
+
+
+Industrial portfolio
+
+
+Spear's industrial portfolio remained a significant moat around the operating business during HY2026. The
+
+
+industrial portfolio makes up 62% of gross lettable area (GLA). The defensive composition of the industrial
+
+
+portfolio is made up of logistics, urban logistics, warehousing, manufacturing and multi-let industrial parks (MLI)
+
+
+in highly sought after nodes with in the Cape metropole. All of Spear's industrial assets offer versatile operational
+
+
+areas, yards, access control and 24 hour security all with embedded PV Solar infrastructure either full
+
+
+commissioned or in the process of being commissioned. Spear's development pipeline of high quality industrial
+
+
+assets is set to add further value to the core industrial portfolio with the GTX Development in George set to add
+
+
+30 000m2 of industrial GLA, Bravo Park extension 2 in Blackheath set to add 7 000m2 of industrial GLA and The
+
+
+Anchorage in Paarden Eiland set to add 2 000m2 of industrial GLA.
+
+
+Retail portfolio
+
+
+Spear's retail portfolio has generated consistent forecast-aligned performance during HY2026 as both the
+
+
+convenience and destination retail portfolio operate with high occupancy and collection rates. The addition of the
+
+
+medical retail assets into the core retail portfolio has been smoothly integrated and are trading very well. The
+
+
+decline in interest rates and the effects of two-pot withdrawals have had positive impacts on Spear's tenants as
+
+
+consumer demand returns as spending power increases. Spear's tenants have reported positive trading
+
+
+conditions as footfall levels remain strong and basket sizes remain in line with tenant expectations particularly
+
+
+within the apparel segment. Currently, 47.5% of Spear's retail tenant mix is made up of national tenants, with
+
+
+management focused on increasing this proportion over time as a key credit risk mitigant. Importantly, none of
+
+
+Spear's retail assets are dependent on local or international tourism but instead benefit from their positioning
+
+
+within strong residential, commuter and commercial nodes. The retail portfolio is concentrated in high-growth
+
+
+areas that service a broad range of LSM groups, supporting continued brand expansion by national retailers
+
+
+across the portfolio. The positive rental reversion achieved at the half year is expected to further underpin
+
+
+management's revenue growth strategy across all of Spear's subsectors.
+
+
+Commercial portfolio
+
+
+Spear's commercial office assets have been net benefactors of the constraint in supply of high-quality commercial
+
+
+office space within Cape Town's primary commercial nodes. The localities of the commercial portfolio provide
+
+
+ease of access to and from all main arterial routes and transportation hubs. The return-to-office momentum in
+
+
+the Cape Town office market has positively improved the occupancy rate of Spear's office portfolio with ongoing
+
+
+vacancy contractions evident. The positive effects in the marginal uptick in economic activity and the ongoing
+
+
+effects of semigration to the Cape region and the establishment of international offices in Cape Town continue to
+
+
+drive demand for quality office accommodation and rental growth opportunities together with a lack of meaningful
+
+
+new supply. Management will maintain its focused and innovative letting campaigns across the office portfolio
+
+
+with a key focus of consistently driving up occupancy rates within the portfolio.
+
+
+Outlook and Guidance
+
+
+Given Spear's strategy aligned operational and financial performance of HY2026 and the information
+
+
+management has at its disposal at the interim results reporting date, management's full year DIPS guidance is
+
+
+maintained at a growth rate of between 4% - 6% compared to FY2025. The payout ratio is set to be maintained
+
+
+at 95% by the Board of Directors.
+
+
+Guidance assumptions
+
+
+Spear's guidance for the remainder of FY2026 remains informed and influenced by the following:
+
+
+        ?       No Loadshedding for the balance of FY2026
+
+
+        ?       Vacancies are reduced in line with management's forecast
+
+
+        ?       Lease renewals are concluded per management's forecast
+
+
+        ?       No major tenant failures occur during the year
+
+
+        ?       Tenants continue to successfully absorb rising costs associated with utility charges, municipal
+
+
+                rates and other charges
+
+
+        ?       No civil unrest within Cape Town, the Western Cape or South Africa.
+
+
+Guidance disclaimers
+
+
+Any deviations from the assumptions outlined above may impact management's forecast for the year ending
+
+
+28 February 2026. The information and opinions provided have been recorded and expressed in good faith and
+
+
+are based upon reliable data made available to management at the time of reporting.
+
+
+No representation, warranty, undertaking or guarantee of whatsoever nature is made or given regarding the
+
+
+accuracy and/or completeness of such information and/or the correctness of such opinions.
+
+
+The forecast for the period ending 28 February 2026 remains the sole responsibility of the directors and has not
+
+
+been reviewed or audited by Spear's independent external auditors.
+
+
+4.   DIVIDEND DECLARATION
+
+
+     The directors of the Company resolved to declare a gross interim dividend of 41.58704 cents per share from
+
+
+     income reserves in respect of the six months ended 31 August 2025. The dividend amount, net of South
+
+
+     African dividend tax of 20%, is 33.26963 cents per share for those shareholders who are not exempt from
+
+
+     dividend withholding tax or are not entitled to a reduced rate in terms of the applicable double-tax agreement.
+
+
+The number of ordinary shares in issue at the declaration date is 414 886 976 and the income tax number
+
+
+of the Company is 9068437236.
+
+
+The salient dates of the dividend declaration are:
+
+
+Declaration date                                              Monday, 20 October 2025
+
+
+Last day to trade cum dividend                                Tuesday, 4 November 2025
+
+
+Trading ex-dividend commences                                 Wednesday, 5 November 2025
+
+
+Record date                                                   Friday, 7 November 2025
+
+
+Date of payment                                               Monday, 10 November 2025
+
+
+Share certificates may not be dematerialised or rematerialised between Wednesday, 5 November 2025 and
+
+
+Friday, 7 November 2025, both days inclusive.
+
+
+In respect of dematerialised shareholders, the distributions will be transferred to the CSDP account / broker
+
+
+accounts on Monday, 10 November 2025. Certificated shareholders' distribution payments will be paid to
+
+
+certificated shareholders' bank accounts on Monday, 10 November 2025.
+
+
+Tax implications
+
+
+As Spear is a REIT, the distribution meets the definition of a 'qualifying distribution' for the purposes of
+
+
+section 25BB of the Income Tax Act, No. 58 of 1962 ("Income Tax Act"). Qualifying distributions received
+
+
+by South African tax residents will form part of their gross income in terms of section 10(1)(k)(i)(aa) of the
+
+
+Income Tax Act. Consequently, these distributions are treated as income in the hands of the shareholders
+
+
+and are not subject to dividends withholding tax. The exemption from dividends withholding tax is not
+
+
+applicable to non-resident shareholders, but they may qualify for relief under a tax treaty.
+
+
+South African tax residents
+
+
+The dividend received by or accrued to South African tax residents must be included in the gross income of
+
+
+such shareholders and will not be exempt from income tax (in terms of the exclusion to the general dividend
+
+
+exception, contained in paragraph (aa) of section 10(1)(k)(i) of the Income Tax Act, because it is a dividend
+
+
+distributed by a REIT. The dividend is exempt from dividend withholding tax in the hands of South African
+
+
+tax resident shareholders, provided that the South African resident shareholders provide the following forms
+
+
+to the CSDP or broker in respect of uncertificated shares, or to the company, in respect of certificated shares:
+
+
+a)   a declaration that the dividend is exempt from dividend tax; and
+
+
+b)   a written undertaking to inform the CSDP, broker or the company, should the circumstances affecting
+
+
+     the exemption change or the beneficial owner cease to be the beneficial owner, both in the form
+
+
+     prescribed by the Commissioner for the South African Revenue Service.
+
+
+Shareholders are advised to contact their CSDP, broker or the company to arrange for the above-mentioned
+
+
+documents to be submitted prior to payment of the dividend, if such documents have not already been
+
+
+submitted.
+
+
+Non-residents shareholders
+
+
+Dividends received by non-resident shareholders will not be taxable as income and instead will be treated
+
+
+as an ordinary dividend which is exempt from income tax in terms of the general dividend exemption in
+
+
+section 10(1)(k)(i) of the Income Tax Act. It should be noted that up to 31 December 2013, dividends
+
+
+received by non-residents from a REIT were not subject to dividend withholding tax. Since 1 January 2014,
+
+
+any dividend received by a non-resident from a REIT will be subject to dividend withholding tax at 20%,
+
+
+unless the rate is reduced in terms of any applicable agreement for the avoidance of double taxation ("DTA")
+
+
+between South Africa and the country of residence of the shareholder concerned.
+
+
+Assuming dividend withholding tax will be withheld at a rate of 20%, the net dividend amount due to non-
+
+
+resident shareholders is 33.26963 cents per share. A reduced dividend withholding rate in terms of the
+
+
+applicable DTA may only be relied on if the non-resident shareholder has provided the following form to their
+
+
+CSDP or broker in respect of uncertificated shares, or the company, in respect of certificated shares:
+
+
+     a) a declaration that the dividend is subject to a reduced rate as a result of the application of DTA; and
+
+
+     b) a written undertaking to inform their CSDP, broker or the company, should the circumstances affecting
+
+
+        the reduced rate change or the beneficial owner cease to be the beneficial owner, both in the form
+
+
+        prescribed by the Commissioner for the South African Revenue Service.
+
+
+     Non-resident shareholders are advised to contact their CSDP, broker or company to arrange for the above-
+
+
+     mentioned documents to be submitted prior to payment of the dividend, if such documents have not already
+
+
+     been submitted.
+
+
+     Holders of uncertificated shares must ensure that they have verified their residence status with their CSDP
+
+
+     or broker. Holders of certificated shares will be asked to complete a declaration to the company.
+
+
+5.   DIRECTORS' RESPONSIBILITY
+
+
+     This short-form announcement is the responsibility of the directors of the Company. It contains only a
+
+
+     summary of the information in the unaudited consolidated interim results for the six months ended 31 August
+
+
+     2025 ("Full Announcement") and does not contain full or complete details. The Full Announcement can be
+
+
+     found at:
+
+
+     https://senspdf.jse.co.za/documents/2025/JSE/ISSE/SEAE/SEAHY26.pdf
+
+
+     A copy of the Full Announcement is also available for viewing on the Company's website at
+
+
+     https://spearprop.co.za/pdf/investor-relations/SEAHY26.pdf. In addition, electronic copies of the Full
+
+
+     Announcement may be requested and obtained, at no charge, from the Company at
+[email protected]
+.
+
+
+     Any investment decisions by investors and/or shareholders should be based on consideration of the Full
+
+
+     Announcement, as a whole.
+
+
+     The Company has based this short-form on information extracted from the unaudited consolidated interim
+
+
+     results of Spear for the six months ended 31 August 2025, which have not been reviewed or audited by the
+
+
+     Company's auditors. https://spearprop.co.za/investor-communications/financial-results/
+
+
+6.   RESULTS PRESENTATION
+
+
+     Shareholders are invited to view Spear's interim results presentation to be broadcasted on YouTube at
+
+
+     11h00 SAST today, 20 October 2025.
+
+
+     Presentation details:
+
+
+     -   View and listen mode;
+
+
+     -   Link: https://youtube.com/live/HyGoTrS6XKo?feature=share
+
+
+     -   Presentation slides will be made available on Spear's website shortly before the broadcast of the
+
+
+         presentation under investor relations / financial results / presentations, at the following link:
+
+
+         https://spearprop.co.za/investor-communications/presentations/
+
+
+     -   Questions may be e-mailed during the presentation to:
+[email protected]
+
+
+Cape Town
+
+
+20 October 2025
+
+
+Sponsor
+
+
+PSG Capital
+
+
+Date: 20-10-2025 07:05:00

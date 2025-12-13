@@ -1,0 +1,595 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20250917_S510629.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [MTM]
+
+
+Symbol [MML09]
+
+
+Symbol [MML08]
+
+
+Symbol [MML07]
+
+
+Symbol [MML06]
+
+
+Symbol [MML05]
+
+
+Symbol [MML04]
+
+
+Symbol [MML03]
+
+
+Symbol [MML02]
+
+
+Symbol [MML01]
+
+
+Annual results for year ended 30 June 2025, dividend declaration and availability of AFS and integrated report
+
+
+MOMENTUM GROUP LIMITED
+
+
+Incorporated in the Republic of South Africa
+
+
+Registration number: 2000/031756/06
+
+
+JSE share code: MTM
+
+
+A2X share code: MTM
+
+
+NSX share code: MMT
+
+
+ISIN code: ZAE000269890
+
+
+("Momentum Group" or "the Group" or "the Company")
+
+
+MOMENTUM METROPOLITAN LIFE LIMITED
+
+
+Incorporated in the Republic of South Africa
+
+
+Registration number: 1904/002186/06
+
+
+LEI: 378900E0A78B7549C212
+
+
+Bond issuer code: MMIG
+
+
+("Momentum Metropolitan Life")
+
+
+Annual results for the year ended 30 June 2025, dividend declaration and availability of annual financial statements and integrated report
+
+
+                                                                           Basic                                Diluted
+
+
+                                                             F2025         F2024       Change         F2025       F2024      Change
+
+
+Earnings (R million)                                         5 978         3 847          55%         5 978       3 847         55%
+
+
+Headline earnings (R million)                                6 002         4 061          48%         6 002       4 098         46%
+
+
+Normalised headline earnings (NHE, R million)(1)                                                      6 260       4 438         41%
+
+
+ Operating profit (R million)(2)                                                                      5 481       3 608         52%
+
+
+ Investment return (R million)                                                                          779         830        (6)%
+
+
+Earnings per share (cents)                                   445.1         282.9          57%         435.4       276.0         58%
+
+
+Headline earnings per share (cents)                          446.9         298.6          50%         437.1       291.3         50%
+
+
+Normalised headline earnings per share (cents)                                                        451.0       309.7         46%
+
+
+Dividend per share (cents)                                                                              175         125         40%
+
+
+Closing CSM (R million)                                                                              20 435      19 398          5%
+
+
+New business CSM (R million)                                                                          1 322       1 606       (18)%
+
+
+Present value of new business premiums (PVNBP, R million)                                            79 793      82 141        (3)%
+
+
+Value of new business (VNB, R million)                                                                  469         589       (20)%
+
+
+Value of new business margin                                                                           0.6%        0.7%
+
+
+Diluted embedded value per share (R)                                                                  42.51       36.94         15%
+
+
+Return on embedded value per share                                                                    19.1%       13.3%
+
+
+Return on equity(3)                                                                                   21.2%       15.5%
+
+
+(1) NHE adjusts the JSE definition of headline earnings for the impact of finance costs related to preference shares that can be converted into ordinary shares
+
+
+of the Group when it is anti-dilutive, the impact of treasury shares held by the iSabelo Trust, the amortisation of intangible assets arising from business
+
+
+combinations and broad-based black economic empowerment ("B-BBEE") costs. Additionally, the iSabelo special purpose vehicle, which houses preference shares
+
+
+issued as part of the employee share ownership scheme's funding arrangement, is deemed to be external from the Group, and the discount at which the
+
+
+iSabelo Trust acquired the Momentum Group's treasury shares is amortised over a period of 10 years and recognised as a reduction to NHE. NHE is the
+
+
+responsibility of the directors and is presented for additional information purposes only.
+
+
+(2) Operating profit represents the profit (net of tax) that is generated from the Group's operational activities and reflects NHE excluding the investment
+
+
+return on shareholders' funds.
+
+
+(3) Return on equity expresses NHE as a percentage of start-of-year net asset value. In this calculation, net asset value is adjusted for the items outlined
+
+
+in footnote 1, consistent with NHE.
+
+
+Momentum Group delivers record earnings
+
+
+Strength of our businesses drives growth
+
+
+Introduction
+
+
+Momentum Group delivered a remarkable set of results for the year ended 30 June 2025 (F2025 or the year), reflecting the strength of the Group's diversified
+
+
+portfolio and disciplined execution of the Impact strategy. Solid operational performance across business units underpinned these results, with notable
+
+
+contributions emanating from annuity profits in Momentum Investments, improved new business profitability in Metropolitan Life, higher earnings from the
+
+
+group risk business in Momentum Corporate, a significantly improved underwriting result in Momentum Insure and strong underwriting performance in Guardrisk.
+
+
+Earnings were further supported by positive actuarial assumption changes, and investment market returns.
+
+
+The Group's solvency position, liquidity resilience and level of cash earnings remain strong relative to internal target levels.
+
+
+Group financial performance
+
+
+Momentum Group achieved normalised headline earnings (NHE) growth of 41% to R6 260 million for the year. NHE per share increased by 46% from 309.7 cents to
+
+
+451.0 cents, reflecting the impact of the share buyback programme. Headline earnings per share improved by 50% from 298.6 cents to 446.9 cents and earnings
+
+
+per share increased by 57% from 282.9 cents to 445.1 cents.
+
+
+Operating profit increased by 52% from R3 608 million to R5 481 million. This excellent performance was built on the higher contractual service margin (CSM)
+
+
+release across the life businesses, supported by a larger CSM balance compared to the prior year, which illustrates the underlying growth in our core life
+
+
+insurance operations. Momentum Retail benefited from higher mortality experience variance in the protection and traditional business, while Metropolitan
+
+
+Life saw improved new business profitability and persistency experience variances. Momentum Corporate continued to deliver strong results aided by positive
+
+
+mortality and morbidity trends. Momentum Insure delivered a notable improvement in underwriting results, while Guardrisk achieved steady growth in underwriting
+
+
+profit and fee income. The Group's results were further aided by positive investment market returns and higher market variances following favourable yield curve
+
+
+shifts over the year. The decline in Africa's operating profit followed lower market variances, higher new business strain and an increase in support costs.
+
+
+The operating loss in India narrowed, supported by strong gross written premium (GWP) growth, a reduction in the loss component and an improved combined ratio.
+
+
+Net asset value
+
+
+R million                                                    F2025             Restated(4)      Change
+
+
+                                                                                   F2024
+
+
+Total assets                                               802 823               706 575           14%
+
+
+Total liabilities                                         (769 869)             (676 518)          14%
+
+
+Total equity                                                32 954                30 057           10%
+
+
+(4) Refer to the Annual Financial Statements for more information on the restatements.
+
+
+The following table outlines the contribution from operating profit and investment return to NHE per business unit:
+
+
+                                             F2025                                               F2024                                          Change
+
+
+                           Operating    Investment      Normalised          Operating       Investment        Normalised       Operating    Investment      Normalised
+
+
+                         profit/(loss)      return        headline      profit/(loss)           return          headline          profit        return        headline
+
+
+R million                                                 earnings                                              earnings                                      earnings
+
+
+Momentum Retail                1 192           164           1 356                907              202             1 109             31%         (19)%             22%
+
+
+Momentum Investments             897            66             963                450               83               533             99%         (20)%             81%
+
+
+Metropolitan Life                760           108             868                476              119               595             60%          (9)%             46%
+
+
+Momentum Corporate             1 449           169           1 618                996              186             1 182             45%          (9)%             37%
+
+
+Momentum Health                  295             -             295                255                -               255             16%             -             16%
+
+
+Guardrisk                        797           (22)            775                668              (15)              653             19%         (47)%             19%
+
+
+Momentum Insure                  291           147             438                 59              133               192           >100%           11%           >100%
+
+
+Momentum Africa                  (89)          377             288                (27)             403               376         <(100)%          (6)%           (23)%
+
+
+India                            (69)            2             (67)              (275)               1              (274)            75%          100%             76%
+
+
+Normalised headline earnings
+
+
+from operating business units  5 523         1 011           6 534              3 509            1 112             4 621             57%          (9)%             41%
+
+
+Shareholders segment             (42)         (232)           (274)                99             (282)             (183)        <(100)%           18%           (50)%
+
+
+Normalised headline earnings   5 481           779           6 260              3 608              830             4 438             52%          (6)%             41%
+
+
+Group new business performance
+
+
+Key metrics                                       F2025         F2024          Change
+
+
+Recurring premiums (R million)                    4 190         4 150              1%
+
+
+Single premiums (R million)                      60 139        62 865            (4)%
+
+
+PVNBP (R million)                                79 793        82 141            (3)%
+
+
+VNB (R million)                                     469           589           (20)%
+
+
+New business margin                                 0.6           0.7
+
+
+The Group's new business sales, as measured by the present value of new business premiums (PVNBP), decreased by 3% to R79.8 billion. Momentum Retail delivered
+
+
+growth in long-term savings new business volumes, outpacing the more modest growth in protection new business volumes. Momentum Investments delivered strong growth
+
+
+on the Momentum Wealth platform, partially offset by decreased life annuity sales. Metropolitan Life's PVNBP decreased following lower protection and life annuity
+
+
+new business volumes. This decline should be seen against the backdrop of the business's stringent focus on the quality of new business. Momentum Corporate's PVNBP
+
+
+declined due to lower structured investment flows and a reduction in protection new business volumes. Africa delivered strong new business volumes following increased
+
+
+corporate protection new business volumes in Lesotho and Namibia, along with increased retail new business volumes in Namibia and Botswana.
+
+
+The Group's VNB declined from R589 million to R469 million, highlighting the need for enhanced focus on improving VNB. This decline was largely impacted by
+
+
+lower life annuity new business volumes in Momentum Investments and a shift in Momentum Corporate's new business mix away from the more profitable FundsAtWork
+
+
+business. These pressures were partially offset by improved VNB contributions from Momentum Retail, Metropolitan Life, and Africa. Overall, the Group's new business
+
+
+margin declined to 0.6%.
+
+
+Contractual service margin
+
+
+Under IFRS 17, the CSM is a component of the insurance liability that represents the present value of expected future earnings on a large subset of the in-force
+
+
+insurance business. CSM has become an important metric for assessing the future earnings prospects of an insurance entity. The CSM increased by 5% to R20.4 billion,
+
+
+with new business contributing R1.3 billion, expected growth adding R2.0 billion, and changes in estimates contributing R0.5 billion to the opening balance. These
+
+
+positive factors were offset by R2.9 billion released from the CSM into current earnings.
+
+
+Return on equity and embedded value
+
+
+Return on equity (ROE) increased to 21.2%, up from 15.5% in the prior year, reflecting the higher NHE reported for the year. The Group's embedded value per share
+
+
+was R42.51 as of 30 June 2025, with a return on embedded value per share of 19.1% for the year.
+
+
+Solvency
+
+
+The solvency positions of most of the Group's regulated insurance entities remain close to the upper end of their specified target solvency ranges. For Momentum
+
+
+Metropolitan Life, the Group's main life insurance entity, the solvency cover (pre-foreseeable dividend) decreased from 2.10 times the solvency capital requirement
+
+
+(SCR) on 30 June 2024 to 1.96 times SCR on 30 June 2025, towards the upper end of the target range of 1.6 to 2.0 times SCR. Momentum Group Limited's solvency cover
+
+
+(pre-foreseeable dividend) decreased from 1.65 times SCR on 30 June 2024 to 1.58 times SCR on 30 June 2025 and remains within the target range of 1.35 to 1.65
+
+
+times SCR.
+
+
+Share buyback programme
+
+
+Given our strong capital and liquidity position and in accordance with our Capital Management Framework, the Board has approved a further R1 billion for the buyback
+
+
+programme of the Group's ordinary shares (subject to Prudential Authority approval). This decision is underpinned by the prevailing discount to embedded value.
+
+
+By 12 September 2025, the Group had completed share buyback programmes totalling R2 billion. This includes the R1 billion share buyback communicated at the F2024
+
+
+annual results announcement and the R1 billion share buyback announced at the interim results. Under the second programme, the Group repurchased 29.1 million shares
+
+
+at an average price of R34.42 per share for a total consideration of R1 billion including costs. This represents an average discount of 19% to the embedded value of
+
+
+R42.51 per share on 30 June 2025.
+
+
+Dividends
+
+
+The Board has approved an updated dividend policy that targets an ordinary dividend payout range of 40% to 60% of NHE. The previous dividend policy targeted an
+
+
+ordinary dividend payout range of 33% to 50% of NHE. This revised policy underscores the Group's strengthened cash generation and robust financial position.
+
+
+It reflects our commitment to maintaining a sustainable and predictable ordinary dividend while preserving flexibility to distribute surplus capital through share
+
+
+buybacks or special dividends. The Momentum Group has declared a final dividend of 90 cents per ordinary share, bringing the total dividend for the financial year
+
+
+to 175 cents per ordinary share. The F2025 final dividend represents a payout ratio of 44% of NHE for the second half, towards the lower end of the Group's revised
+
+
+dividend payout range.
+
+
+The final dividend is payable from income reserves to all holders of ordinary shares recorded in the Company's register on the record date. The final dividend will
+
+
+be subject to local dividend withholding tax at a rate of 20% unless the shareholder is exempt from paying dividend tax or is entitled to a reduced rate. This will
+
+
+result in a net final dividend of 72 cents per ordinary share for those shareholders who are not exempt from paying dividend tax. The number of ordinary shares at
+
+
+the declaration date was 1 362 044 968.
+
+
+The income tax number of the Momentum Group is 975 2050 147.
+
+
+Publication of declaration date     Wednesday, 17 September 2025
+
+
+Last date to trade cum-dividend          Tuesday, 7 October 2025
+
+
+Trading ex-dividend                    Wednesday, 8 October 2025
+
+
+Record date                              Friday, 10 October 2025
+
+
+Payment date                             Monday, 13 October 2025
+
+
+Share certificates may not be dematerialised or rematerialised between Wednesday, 8 October 2025 and Friday, 10 October 2025, both days inclusive.
+
+
+Outlook
+
+
+Globally, we remain mindful of elevated uncertainty, fiscal pressures and market volatility. In South Africa, economic growth remains subdued. Although inflation
+
+
+has moderated and interest rates have started to decline, the high cost of living is expected to continue affecting new business volumes which place pressure on
+
+
+margins. The combination of lower inflation, easing interest rates and improved energy availability could gradually restore consumer confidence, support employment
+
+
+and boost disposable income.
+
+
+We are encouraged by the excellent earnings delivered by Momentum Group, underpinned by the strong operational performance of our empowered, accountable business
+
+
+units. While pleased with the earnings performance, we recognise the importance of sustaining this momentum and have enhanced our focus on improving VNB and driving
+
+
+sales volume growth of profitable products.
+
+
+Our Impact strategy positions us well to achieve this. Advice continues to differentiate us in the market, enabling us to deepen client relationships and strengthen
+
+
+our financial adviser channels. By leveraging technology to enhance the client experience and empower our advisers, we ensure that our solutions remain relevant,
+
+
+accessible, and tailored to evolving client needs, while being delivered with a human touch.
+
+
+We continue our focus on delivering on the Impact strategy and believe that the financial ambitions for F2027 (NHE of R7 billion, ROE of 20% and VNB margin of 1% to
+
+
+2%) are achievable.
+
+
+Results announcement statement
+
+
+The information in this results announcement, including the financial information on which the outlook is based and any non-IFRS financial measures
+
+
+(which are presented for additional information purposes only), is the responsibility of the directors and has not been reviewed and reported on by Momentum
+
+
+Group's external auditors.
+
+
+Our outlook is based on several assumptions including continued recovery in consumer confidence and disposable income due to easing inflation and interest rates,
+
+
+experience aligned to recent trends, successful execution of strategic initiatives under the Impact strategy and no material adverse changes to regulation, tax
+
+
+or macroeconomic conditions. These ambitions were initially published on 23 July 2024 and should be read in conjunction with the Group's previously published
+
+
+results, specifically NHE (income statement), shareholders' equity (statement of financial position) and VNB (EV statement) in the Annual Financial Statements (AFS)
+
+
+toward our F2027 ambitions.
+
+
+The AFS for the year ended 30 June 2025 are accessible from Wednesday, 17 September 2025 and can be found on the Group's website at:
+
+
+https://www.momentumgroupltd.co.za/investor-relations/reporting-centre/annual-results and via the JSE cloudlink at:
+
+
+https://senspdf.jse.co.za/documents/2025/jse/isse/MTME/FY25Result.pdf
+
+
+Any investment decisions should be based on the AFS as the information in this results announcement does not provide all the details.
+
+
+The AFS have been audited by the Group's auditors, Ernst & Young Inc. and PricewaterhouseCoopers Inc., and their unqualified audit report is available for
+
+
+inspection at the registered offices of the Momentum Group together with the AFS identified in the audit opinion.
+
+
+In addition, shareholders are advised that a combined pack including the operating update, summarised financial statements and the results presentation is
+
+
+accessible from Wednesday, 17 September 2025, via the Group's website at https://www.momentumgroupltd.co.za/investor-relations/reporting-centre/annual-results.
+
+
+Availability of integrated report
+
+
+While the AFS are available as indicated above, shareholders are advised that the 2025 Integrated Report, will be available on the Group's website
+
+
+at: https://www.momentumgroupltd.co.za/investor-relations/reporting-centre on Wednesday, 17 September 2025.
+
+
+SENS issue: 17 September 2025
+
+
+Equity sponsor
+
+
+Tamela Holdings (Pty) Limited
+
+
+Sponsor in Namibia
+
+
+Simonis Storm Securities (Pty) Limited
+
+
+Debt sponsor
+
+
+Nedbank Corporate and Investment Banking, a division of Nedbank Limited
+
+
+Date: 17-09-2025 07:30:00

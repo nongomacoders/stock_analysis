@@ -1,0 +1,1873 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251106_S512962.pdf]
+
+
+Symbol [SSW]
+
+
+Operating Update for the Quarter ended 30 September 2025
+
+
+SIBANYE STILLWATER LIMITED
+
+
+(SIBANYE-STILLWATER)
+
+
+Incorporated in the Republic of South Africa
+
+
+Registration number 2014/243852/06
+
+
+Share code: SSW and SBSW
+
+
+Issuer code: SSW
+
+
+ISIN: ZAE000259701
+
+
+OPERATING UPDATE
+
+
+QUARTER ENDED 30 SEPTEMBER 2025
+
+
+Johannesburg, 6 November 2025: Sibanye Stillwater Limited (Sibanye-Stillwater or the Group) (JSE: SSW and NYSE: SBSW) is pleased to
+
+
+provide an operating update for the quarter ended 30 September 2025. Comparisons include year-on-year (Q3 2025 on Q3 2024), year-
+
+
+to-date (YTD) from 1 January 2025 to 30 September 2025, and Q3 2025 compared with the previous Q2 2025 quarter (quarter-on-quarter
+
+
+or Q3-on-Q2) where appropriate. Group financial results are only provided on a six-monthly basis.
+
+
+SALIENT FEATURES - QUARTER ENDED 30 SEPTEMBER 2025 (Q3 2025)
+
+
+- Safe production: continued improvement in lagging indicators (YTD TRIFR <4, SIFR of 2.25) but elimination of fatal incidents remains our
+
+
+  priority
+
+
+- Unique exposure to both gold and PGMs, underpinned by improved operational performance, ensures leverage to increasing precious
+
+
+  metal prices
+
+
+   - Group adjusted EBITDA (including S45X10 credits), increased by 198% to R9.9bn (US$560m) year-on-year
+
+
+   - Group adjusted EBITDA (excluding S45X10 credits) of R9.5bn (US$541m) was 53% higher Q3-on-Q2
+
+
+- Operations stable or improving relative to Q3 2024 and H1 2025 and all on track to achieve annual guidance
+
+
+- SA PGM operations: consistent delivery combined with commendable cost control and 36% higher basket price underpinned earnings
+
+
+   - 213% increase in adjusted EBITDA to R5.0bn (US$281m)
+
+
+- US PGM operations: consistent operational delivery post restructuring optimises value from higher PGM prices
+
+
+   - Adjusted EBITDA of US$33m (R579m) (including US$10m (R181m) S45X10 credits), increased more than 100% year-on-year
+
+
+- SA gold operations (including DRDGOLD): improved operating performance and 35% higher average gold price
+
+
+   - 177% increase in adjusted EBITDA to R3.7bn (US$212m) year-on-year
+
+
+- US recycling (excl. Metallix) contributed US$27m (R475m) to Group adjusted EBITDA, including US$8m (R148m) S45X10 credit for US PGM
+
+
+  recycling
+
+
+- Decarbonisation strategy advancing - two renewable energy projects achieved commercial operation in 2025, generating 99 GWh
+
+
+  energy with direct cost savings of R45m and 107ktCO2e avoided11
+
+
+KEY STATISTICS - GROUP
+
+
+                   US dollar                                                                                                       SA rand
+
+
+                 Quarter ended                                             KEY STATISTICS                                        Quarter ended
+
+
+     Sep 2024       Jun 2025       Sep 2025                                     GROUP                                  Sep 2025     Jun 2025       Sep 2024
+
+
+          184            596            560     US$m                     Adjusted EBITDA1,8                    Rm         9,872       10,964          3,312
+
+
+        17.96          18.29          17.64     R/US$      Average exchange rate using daily closing rate
+
+
+Stock data for the Quarter ended 30 September 2025
+
+
+Number of shares in issue
+
+
+- at 30 September 2025                                                2,830,567,264
+
+
+- weighted average                                                    2,830,567,264
+
+
+Free Float                                                                     99 %
+
+
+Bloomberg/Reuters                                                      SSWSJ/SSWJ.J
+
+
+JSE Limited - (SSW)
+
+
+Price range per ordinary share (High/Low)                          R32.64 to R49.57
+
+
+Average daily volume                                                     28,326,857
+
+
+NYSE - (SBSW); one ADR represents four ordinary shares
+
+
+Price range per ADR (High/Low)                                  US$7.27 to US$11.24
+
+
+Average daily volume                                                      8,437,421
+
+
+KEY STATISTICS BY REGION
+
+
+                   US dollar                                                                                                          SA rand
+
+
+                 Quarter ended                                              KEY STATISTICS                                         Quarter ended
+
+
+     Sep 2024       Jun 2025       Sep 2025                                                                            Sep 2025       Jun 2025       Sep 2024
+
+
+                                                                           AMERICAS REGION
+
+
+                                                                   US PGM underground operations
+
+
+      111,976         69,133         73,171     oz                      2E PGM production2,3                   kg         2,276          2,150          3,483
+
+
+          983            999          1,184     US$/2Eoz                Average basket price               R/2Eoz        20,886         18,272         17,663
+
+
+           (6)           160             33     US$m                      Adjusted EBITDA8                     Rm           579          2,947           (108)
+
+
+        1,157          1,278          1,165     US$/2Eoz              All-in sustaining cost4,8,9          R/2Eoz        20,555         23,375         20,771
+
+
+                                                                          US PGM recycling
+
+
+       81,762         75,153         82,503     oz                      3E PGM recycling2,3                    kg         2,566          2,338          2,543
+
+
+        1,293          1,233          1,319     US$/3Eoz                Average basket price               R/3Eoz        23,267         22,552         23,231
+
+
+            5            125             11     US$m                      Adjusted EBITDA8                     Rm           202          2,307             98
+
+
+                                                                        US Reldan operations
+
+
+            8             11             15     US$m                      Adjusted EBITDA8                     Rm           273            203            149
+
+
+                                                                     SOUTHERN AFRICA (SA) REGION
+
+
+                                                                           PGM operations
+
+
+      473,938        428,129        493,863     oz                      4E PGM production3,5                   kg        15,361         13,316         14,741
+
+
+        1,331          1,489          1,839     US$/4Eoz                 Average basket price              R/4Eoz        32,438         27,240         23,909
+
+
+           88            123            281     US$m                      Adjusted EBITDA8                     Rm         4,961          2,251          1,584
+
+
+        1,182          1,271          1,278     US$/4Eoz              All-in sustaining cost4,8            R/4Eoz        22,537         23,250         21,228
+
+
+                                                                            Gold operations
+
+
+      179,465        159,082        175,929     oz                           Gold produced                     kg         5,472          4,948          5,582
+
+
+        2,470          3,249          3,402     US$/oz                    Average gold price                 R/kg     1,929,491      1,910,621      1,426,290
+
+
+           75            162            212     US$m                      Adjusted EBITDA8                     Rm         3,731          2,998          1,347
+
+
+        2,250          2,466          2,442     US$/oz                All-in sustaining cost4,8              R/kg     1,385,189      1,450,218      1,298,923
+
+
+                                                                           EUROPEAN REGION
+
+
+                                                                      Sandouville nickel refinery
+
+
+        2,039            163              -     tNi                       Nickel production                   tNi             -            163          2,039
+
+
+           (8)            (7)            (7)    US$m                      Adjusted EBITDA8                     Rm          (126)          (129)          (152)
+
+
+                                                                         AUSTRALIAN REGION
+
+
+                                                                  Century zinc retreatment operation
+
+
+           27             26             24     ktZn                   Payable zinc production6              ktZn            24             26             27
+
+
+        3,093          2,585          2,696     US$/tZn      Average equivalent zinc concentrate price7     R/tZn        47,562         47,276         55,553
+
+
+           31             26             28     US$m                      Adjusted EBITDA8                     Rm           486            479            565
+
+
+        1,809          1,787          2,015     US$/tZn               All-in sustaining cost4,8             R/tZn        35,539         32,679         32,486
+
+
+1    The Group reports adjusted earnings before interest, taxes, depreciation and amortisation (EBITDA) based on the formula included in the facility agreements for compliance with the debt
+
+
+     covenant. Adjusted EBITDA may not be comparable to similarly titled measures of other companies. Adjusted EBITDA is not a measure of performance under IFRS and should be considered in
+
+
+     addition to and not as a substitute for any other measure of financial performance and liquidity. For a reconciliation of profit before royalties and tax to adjusted EBITDA, see "Adjusted EBITDA
+
+
+     reconciliation - Quarters"
+
+
+2    The US PGM operations' underground production is converted to metric tonnes and kilograms, and financial performance is translated to SA rand (rand). In addition to the US PGM operations'
+
+
+     underground production, the operation treats various recycling material which is excluded from the 2E PGM production, average basket price and All-in sustaining cost statistics shown. PGM
+
+
+     recycling represents palladium, platinum and rhodium ounces fed to the furnace
+
+
+3    The Platinum Group Metals (PGM) production in the SA operations is principally platinum, palladium, rhodium and gold, referred to as 4E (3PGM+Au) and measured at the concentrator, and in
+
+
+     the US underground operations is principally platinum and palladium, referred to as 2E (2PGM) and US PGM recycling is principally platinum, palladium and rhodium referred to as 3E (3PGM)
+
+
+4    See "Salient features and cost benchmarks - Quarters" for the definition of All-in sustaining cost (AISC). The SA PGM All-in sustaining cost excludes the production and costs associated with the
+
+
+     purchase of concentrate (PoC) from third parties
+
+
+5    The SA PGM production excludes the production associated with the purchase of concentrate (PoC) from third parties. For a reconciliation of the production including third party PoC, refer to
+
+
+     the "Reconciliation of operating cost excluding third party PoC for Total SA PGM operations and Marikana - Quarters"
+
+
+6    Payable zinc production is the payable quantity of zinc metal produced after applying smelter content deductions
+
+
+7    Average equivalent zinc concentrate price is the total zinc sales revenue recognised at the price expected to be received excluding the fair value adjustments divided by the payable zinc
+
+
+     metal sold
+
+
+8    Adjusted EBITDA and AISC are not measures of performance under IFRS and should not be considered in isolation or as substitutes for measures of financial performance prepared in
+
+
+     accordance with IFRS. See "Non-IFRS measures" for more information on the Non-IFRS metrics presented by Sibanye-Stillwater
+
+
+9    The US PGM operations' All-in sustaining cost for the quarter ended 30 September 2024 was adjusted to include the Section 45X (S45X) Advance Manufacturing Production Credits. During the
+
+
+     quarter ended 30 June 2025 the US PGM operations recognised R237 million (US$13 million) which related to mining costs for the quarter ended 30 September 2024
+
+
+10    The adjusted EBITDA for Q3 2025 includes S45X for both the US underground and recycling operations totalling R329 million ($19 million). The adjusted EBITDA for Q2 2025 includes S45X credits for
+
+
+     both the US underground and recycling operations for FY2023 (R2.5 billion, US$140 million), FY2024 (R1.9 billion, US$109 million), Q1 2025 (R305 million, US$17 million) and Q2 2025 (R344 million,
+
+
+     US$19 million) totalling R5.1 billion (US$285 million)
+
+
+11   Conversion factor used of 1.08 tCO2e/MWh
+
+
+STATEMENT BY RICHARD STEWART, CHIEF EXECUTIVE OFFICER OF SIBANYE-STILLWATER
+
+
+This is my first official update to the investment market and to other stakeholders as CEO of Sibanye-Stillwater, since assuming the mantle
+
+
+from Neal Froneman on 1 October 2025. As such, I am really pleased to present this positive operating update for the third quarter of 2025
+
+
+(Q3 2025) as my inaugural report.
+
+
+The Group's operating performance for Q3 2025 was pleasing, reflecting greater operational stability post the restructuring undertaken in
+
+
+2023 and 2024, and with the quarter-on-quarter (Q3-on-Q2) performance reflecting improved operational output and cost control across
+
+
+all our major operations, which are all on track to deliver on annual guidance for 2025. This continued improvement, combined with
+
+
+higher precious metal prices, delivered a significantly enhanced financial performance across the Group, with all operations contributing
+
+
+positively on an operating cost and all-in sustaining cost (AISC) basis, except for the Sandouville refinery which is currently ramping down
+
+
+production to be placed on care and maintenance.
+
+
+Safe production is our first priority. The improvement in leading and lagging indicators at our operations continued in Q3 2025, reflecting
+
+
+progress in real risk reduction. Several operations are achieving global leading safety rates, reflected in the 2025 year-to-date total
+
+
+recordable injury frequency rate (TRIFR) remaining below 4 and the serious injury frequency rate (SIFR) at 2.25. The positive lagging
+
+
+indicator trends were maintained during Q3 2025, with continued improvements recorded in Group safety indicators when compared to
+
+
+Q3 2024. The Group SIFR (per million hours worked) for the Q3 2025 of 2.24 improved by 9%, with the lost day injury frequency rate (LDIFR)
+
+
+of 3.43 and TRIFR of 4.09, improving by 14% and 12% respectively, year-on-year. The Group fatal injury frequency rate (FIFR) for Q3 2025
+
+
+improved by 35% (from 0.074 to 0.048) when compared to the corresponding period in 2024.
+
+
+However, safety for us is not about statistics; it is about eliminating harm. Tragically, during the quarter, we lost two colleagues. The Board
+
+
+and management of Sibanye-Stillwater extend their heartfelt condolences to the families and friends of Mr. Phaswisi Ramaila and Mr.
+
+
+Brian Hanson, who are deeply mourned. On 26 July 2025, Mr. Hanson, an electrician at the Stillwater mine, was fatally injured after
+
+
+contacting energised switchgear. On 28 August 2025, Mr. Ramaila, a miner at Driefontein Khomanane shaft, sustained serious injuries
+
+
+during a seismic-related fall of ground and sadly passed away on 6 September 2025. Our commitment to preventing fatalities through our
+
+
+Fatality elimination strategy is unwavering and remains our highest priority.
+
+
+The stable operating performance from all Group operations underpinned a strong financial performance, which, combined with
+
+
+increasing commodity prices, resulted in a 198% increase in Group adjusted EBITDA to R9.9 billion (US$560 million), from R3.3 billion (US$184
+
+
+million) for Q3 2024. Adjusted EBITDA for Q2 2025 of R11.0 billion (US$596 million) includes R4.7 billion (US$266 million) S45X credits for 2023,
+
+
+2024 and Q1 2025. Adjusted EBITDA for Q2 2025 excluding these credits, of R6.3 billion (US$330 million) was 53% lower than adjusted EBITDA
+
+
+for Q3 2025, illustrating the significant leverage of the Group to higher precious metal prices, which have continued to rise in Q4 2025.
+
+
+In an uncertain macro economic and socio-political environment, change is inevitable and heightened commodity price volatility should
+
+
+be expected in the near term. Despite the volatility, the outlook for precious metal prices remains constructive for the balance of 2025
+
+
+and into 2026. The uncertain current macroeconomic and sociopolitical outlook and disruptive global changes are supportive for gold,
+
+
+the perennial safe haven asset. The recent rally in PGM prices has largely been driven by increased investment demand and restocking,
+
+
+driven by similar macro uncertainty, but longer term are supported by positive market fundamentals.
+
+
+The SA PGM operations delivered a pleasing production performance which, combined with good cost management, resulted in unit
+
+
+costs increasing by less than mining inflation year-on-year. Unit operating cost increased by 3% year-on-year but was 5% lower Q3-on-Q2,
+
+
+with AISC (excluding purchase of concentrate (PoC)) 6% higher year-on-year but 3% lower Q3-on-Q2. This consistent delivery of safe
+
+
+production and cost management continues to drive the SA PGM operations down the industry cost curve, improving their competitive
+
+
+position relative to industry peers.
+
+
+On 1 November 2025, Sibanye-Stillwater implemented strategic enhancements to the historical Marikana contract between Lonmin and
+
+
+the Glencore Merafe (GM) Venture, and began implementing the new Chrome Management Agreement (CMA) at our SA PGM
+
+
+operations, as announced on 19 February 2025. The closure of the GM Venture agreements marked a pivotal step in unlocking long-term
+
+
+value from significant chrome by-product potential at our SA PGM operations, which will further reduce costs and increase operating
+
+
+margins, enhancing the commercial viability, and laying the foundation for long term sustainability, of the SA PGM operations.
+
+
+Production from the US PGM operations for Q3 2025 was in-line with the planned outcomes of the Q4 2024 restructuring and increased by
+
+
+6% Q2-on-Q3, with a corresponding decline in unit operating costs. This operating improvement, combined with the Section 45X credits
+
+
+and recent PGM price increases, have contributed to a significant increase in adjusted EBITDA from the US PGM operations. The return to
+
+
+profitability by the US PGM operations validates our decision to restructure these strategic operations in discrete phases since mid-2022.
+
+
+While the recent increase in PGM prices and S45X credits provide welcome relief for the US PGM operations, management's priority is to
+
+
+assess opportunities to further reduce AISC, targeting US$1,000/2Eoz, in the medium term.
+
+
+The SA gold operations delivered improved results for Q3 2025, with the Driefontein and Beatrix operations recovering from challenges
+
+
+which affected H1 2025. Production from the Driefontein operation, increased by 21% year-on-year, and by 25% Q3-on-Q2, with AISC
+
+
+benefiting from the increase in production, declining by 2% year-on-year and by 6% Q3-on-Q2. Production from the Beatrix operation
+
+
+improved by 13% Q3-on-Q2, with AISC 8% lower Q3-on-Q2. Significant progress has been made addressing challenges in the Beatrix
+
+
+processing plant, which constrained throughput during H1 2025, affecting processing and sales during Q3 2025. An estimated, 78 kt of ore
+
+
+on surface stockpiles at the end of Q3 2025 is expected to be processed over the next two quarters, boosting gold sales and revenue
+
+
+from the Beatrix operation. Production from the Kloof operation stabilised quarter-on-quarter, following the decision to cease operations
+
+
+at Kloof 7 shaft and reduce exposure to seismically active areas. A sustainable production plan for Kloof is currently under assessment with
+
+
+a revised production profile expected in Q1 2026.
+
+
+Earnings from the recycling operations benefitted from increased metal prices and, at the US PGM recycling operations, S45X credits,
+
+
+which resulted in the recycling contribution to Group adjusted EBITDA doubling year-on-year. The integration of Metallix and realisation of
+
+
+synergies is expected to further increase the financial contribution from the recycling operations.
+
+
+Steady production from the Century reprocessing operations, despite the rescheduling of annual plant maintenance from Q4 to Q3 2025
+
+
+and a favourable price environment, led to a consistent financial contribution from from the Century reprocessing operations, which is
+
+
+expected to be maintained in 2026.
+
+
+It has been extremely satisfying to advance our renewable energy projects in South Africa, adding 164 MW of capacity year-to-date
+
+
+toward a long-term target of 600 MW, marking a major step towards our target of carbon neutrality by 2040. The Castle Wind Farm
+
+
+(commissioned in March 2025), with an 89 MW capacity, has generated 140 GWh to date, avoiding 151ktCO?e and delivering R62 million
+
+
+in savings. During Q3 2025, Sibanye-Stillwater also benefited from its first solar project-the Springbok solar project (operational since
+
+
+September 2025)-a 150 MW plant, of which Sibanye-Stillwater plans to procure 75 MW for 10 years. Together, these projects delivered
+
+
+R45 million in Q3 2025 savings and avoided 107ktCO?e emissions for the quarter, and year to date generated, 156GWh energy, avoided
+
+
+168ktCO2e emissions and saved R67 million.
+
+
+The antidumping and countervailing duty petitions on imports of unwrought palladium from Russia filed on 30 July 2025, by Sibanye-
+
+
+Stillwater and the United Steelworkers, supported by 70% of US palladium industry participants (domestic palladium mining and recycling
+
+
+companies), with the US Department of Commerce and the US International Trade Commission (ITC) is under consideration. A preliminary
+
+
+hearing was held in mid-August, and on 12 September 2025, the ITC issued an unanimous preliminary determination that there is a
+
+
+reasonable indication that the US palladium industry is materially injured by reason of imports of unwrought palladium from Russia. The US
+
+
+Department of Commerce's final determination is expected to be announced at the end of March 2026 at the earliest and the ITC
+
+
+hearing to occur in the same timeframe. The ITC's final phase investigation should conclude in late May 2026. It should be noted that
+
+
+these deadlines may be extended in the event of a prolonged shutdown of the US government.
+
+
+Operating review
+
+
+Southern Africa (SA) region
+
+
+SA PGM operations
+
+
+The SA PGM operations continue to deliver consistent and reliable operating results. PGM production for Q3 2025 of 493,863 4Eoz
+
+
+(including attributable production from Mimosa and excluding third-party PoC was 4% higher year-on-year and 15% higher quarter-on-
+
+
+quarter (Q3-on-Q2). Underground production increased by 8% to 464,803 4Eoz, due to increased production from both the Rustenburg
+
+
+and Marikana operations for Q3 2025, while production from the surface operations declined by 31% to 29,060 4Eoz year-on-year,
+
+
+primarily due to depletion of the Waterval West Tailings Storage Facility, and lower throughput from the ETD1 facility at the Marikana
+
+
+operation, which is reaching the end of life. Third-party PoC production of 17,189 4Eoz was 32% lower, in line with annual contractual
+
+
+agreements.
+
+
+Unit operating cost for Q3 2025 of R24,094/4Eoz (US$1,366/4Eoz) was 3% higher year-on-year, well within historical annual mining inflation
+
+
+rates. This is particularly pleasing considering the higher tolling costs incurred by the Kroondal operation following the change from a PoC
+
+
+to toll processing arrangement from 1 September 2024. AISC (excluding PoC) increased by 6% year-on-year to R22,537/4Eoz
+
+
+(US$1,278/4Eoz), primarily due to a 26% increase in sustaining capital expenditure, a significant increase in royalty tax due to higher PGM
+
+
+prices and tolling costs at Kroondal. AISC (excluding PoC) was 3% lower Q3-on-Q2 mainly due to the 15% increase in production, which
+
+
+was partially offset by higher royalty tax, ore reserve development capital and sustaining capital expenditure.
+
+
+Total capital expenditure for Q3 2025 of R1.5 billion (US$82 million), was 6% higher year-on-year. Sustaining capital increased by 26% to
+
+
+R656 million (US$37 million) primarily on upgrading the rhodium, iridium and ruthenium plants at the Precious Metals Refinery (PMR). Capital
+
+
+expenditure to upgrade these plants is forecast to continue until 2029. ORD capital expenditure decreased by 7% to R644 million (US$37
+
+
+million) due to lower off-reef development at the Marikana operation. Growth project capital decreased by 4% to R154 million (US$9
+
+
+million) as capital for the K4 project tapers down in line with the production build-up.
+
+
+Adjusted EBITDA for Q3 2025 increased by 213% year-on-year to R5.0 billion (US$281 million), driven by increased production output and a
+
+
+36% year-on-year increase in the average 4E basket price to R32,438/4Eoz (US$1,839/4Eoz) for Q3 2025.
+
+
+The average 4E PGM basket price increased by 19% quarter-on-quarter which, coupled with the 20% increase in 4E PGM sold quarter-on-
+
+
+quarter, resulted in adjusted EBITDA increasing by 120% Q3-on-Q2.
+
+
+Attributable PGM production from Mimosa for Q3 2025 of 29,646 4Eoz was 6% lower year-on-year. AISC increased by 16% to US$1,327/4Eoz
+
+
+(R23,410/4Eoz) for Q3 2025 due to lower production, exacerbated by higher royalty tax expenses and lower by-product metal credits,
+
+
+partially offset by the 41% decrease in sustaining capital to US$4 million (R75 million) following the commissioning of the new tailings
+
+
+storage facility in April 2024.
+
+
+Total chrome production from the SA PGM operations for Q3 2025 of 673kt was 5% lower year-on-year, primarily due to the ETD1 dam
+
+
+nearing the end of its reserve life. Total chrome sales of 514kt for Q3 2025 were 26% lower than sales of 694kt year-on-year, mainly due to
+
+
+loading constraints which resulted in the accumulation of 156kt of stockpile at port that will be sold during Q4 2025. Chrome revenue of
+
+
+R917 million (US$52 million) for Q3 2025 was 43% lower year-on-year, due to lower sales volumes and a 12% lower average chrome market
+
+
+price of US$270/t for Q3 2025 compared to US$305/t for Q3 2024.
+
+
+SA gold operations
+
+
+Production from the SA gold operations (excluding DRDGOLD) for Q3 2025 of 4,281kg (137,637oz), was in line with production for Q3 2024.
+
+
+As guided in the H1 2025 results, the operating results from the Driefontein and Beatrix operations, having largely addressed the issues
+
+
+which impacted H1 2025, were notably improved Q3-on-Q2. Production of 2,263kg (72,757oz) from the Driefontein underground operation
+
+
+increased by 21% year-on-year and by 25% Q3-on-Q2. Production of 873kg (28,068oz) from the Beatrix operation for Q3 2025 was relatively
+
+
+stable year-on-year (2% lower than for Q3 2024), but was notably improved Q3-on-Q2, increasing by 13%. Throughput constraints at the
+
+
+Beatrix plant resulted in the accumulation of ore stockpile. By the end of September 2025 approximately 78kt of the stockpiled ore
+
+
+remained, of which approximately 80% is expected to be processed by year-end.
+
+
+Underground production from the Kloof operation for Q3 2025 of 874kg (28,100oz) was stable compared to Q2 2025, but 19% lower year-
+
+
+on-year. Production at the Kloof operations stabilised during Q3 2025 following the decision to cease operations at Kloof 7 shaft
+
+
+(Manyano) and reduce exposure to seismically active areas. These are primarily higher grade VCR stopes at Kloof 1 shaft. While the
+
+
+closure of Kloof 7 shaft was planned for 2025, the suspension of mining, for safety reasons, in high grade areas impacted by seismicity, will
+
+
+negatively impact the Kloof operations. All opportunities to optimise the mine plan for commercial viability are being considered within
+
+
+the context of our steadfast commitment to safe production practices. The outcome of this Kloof operational replanning exercise will be
+
+
+shared in Q1 2026.
+
+
+Gold production (including DRDGOLD) for Q3 2025 of 5,472kg (175,929oz) was 2% lower year-on-year, primarily due to a 10% decline in
+
+
+DRDGOLD production.
+
+
+Costs for the SA gold operations (excluding DRDGOLD) were well managed despite the challenges. AISC for the SA gold operations
+
+
+(excluding DRDGOLD) of R1,513,205/kg (US$2,668/oz) for Q3 2025 was 7% higher year-on-year, mainly due to above inflation increases in
+
+
+primary cost drivers such as electricity and water. AISC (including DRDGOLD) of R1,385,189/kg (US$2,442/oz) also increased by 7% year-on-
+
+
+year, but quarter-on-quarter, AISC was 4% lower, reflecting the improved operating performance in Q3 2025, compared with Q1 and Q2
+
+
+2025.
+
+
+The significant leverage of the SA gold operations (excluding DRDGOLD) to the gold price is clearly evident from the 295% (R2.0 billion
+
+
+(US$112 million)) increase in adjusted EBITDA (excluding DRDGOLD) for Q3 2025 to R2.6 billion (US$150 million,) primarily driven by the 30%
+
+
+increase in the average rand gold price year-on-year, underpinned by a more stable operational performance. Adjusted EBITDA
+
+
+(including DRDGOLD) of R3.7 billion (US$212 million) for Q3 2025 increased by 177% year-on-year and by 24% Q3-on-Q2.
+
+
+This marks the 12th consecutive quarter since Q4 2022, that adjusted EBITDA from the SA gold operations (including DRDGOLD) has been
+
+
+positive for a sustained period. Over that period, the average quarterly gold price increased by 99% from R971,623/kg (US$1,716/oz) for
+
+
+Q4 2022, to R1,929,491/kg (US$3,402/oz) for Q3 2025. Comparatively, over the same period, adjusted EBITDA from the SA gold operations
+
+
+increased by a factor of 10 (10x) from R371 million (US$21 million) for Q4 2022 to R3.7 billion (US$212 million) for Q3 2025.
+
+
+Capital expenditure for Q3 2025 (excluding DRDGOLD) of R1.0 billion (US$58 million) was 7% higher than for Q3 2024. ORD increased 10%
+
+
+to R821 million (US$47 million) and sustaining capital increased by 11% to R202 million (US$11 million) reflecting increased expenditure on
+
+
+winder upgrades, infrastructure and metallurgical plant refurbishment at the Beatrix operation. Capital expenditure from DRDGOLD
+
+
+increased by 165% year-on-year to R833 million (US$47 million), with planned capital investment for the phase 2 expansion of the Far West
+
+
+Gold Recoveries (FWGR) and recommencement of deposition at Ergo's tailing storage facility accounting for 94% of the total capital
+
+
+expenditure.
+
+
+The wage negotiations for the South African gold operations are currently in progress and are being conducted under the auspices of the
+
+
+Commission for Conciliation, Mediation and Arbitration (CCMA). The previous wage agreement expired in June 2025.
+
+
+DRDGOLD production decreased to 1,191kg (38,292oz) for Q3 2025, primarily driven by a 9% decline in yield reflecting Ergo's transition to
+
+
+reclaim lower grade material. Consequently, gold sales decreased by 10% to 1,158kg (37,231oz). AISC increased to R1,045,769/kg
+
+
+(US$1,844/oz), primarily due to lower gold production and gold sold. The solar power plant and battery energy storage system (BESS)
+
+
+commissioned on 1 November 2024, is expected to reduce costs in Q4 2025.
+
+
+Americas (US) region
+
+
+US PGM operations
+
+
+Due to the restructuring of the US PGM operations during Q4 2024, Q3 2025 is not directly comparable to Q3 2024 on most measures.
+
+
+Production for 2025 is forecast to be at the top end of annual guidance, with AISC forecast to be at the bottom-end of the guided range.
+
+
+The US PGM operations continued to deliver consistent production and cost in line with the planned outcomes of the restructuring
+
+
+implemented in Q4 2024. Mined 2E PGM production of 73,171 2Eoz for Q3 2025 was in line with the restructuring plan, but increased Q3-
+
+
+on-Q2. Planned restructuring outcomes and 2E PGM sales of 78,340 2Eoz was 5,169 2Eoz higher than produced, due to the release in Q3
+
+
+2025 of inventory accumulated during the transition to the refurbished EF2 Furnace in Q2 2025.
+
+
+Costs were well managed, with AISC 1% higher year-on-year and 9% lower Q3-on-Q2, primarily due to higher quarter-on-quarter
+
+
+production, lower capital expenditure and favourable inventory net realisable value adjustments. The US PGM operations generated a
+
+
+positive AISC margin of US$19/2Eoz or 2% compared to average 2E PGM basket price received for Q3 2025, a commendable turnaround
+
+
+year-on-year.
+
+
+Total capital expenditure decreased by 38% year-on-year to US$22 million (R396 million). ORD capital declined by 36% to US$15 million
+
+
+(R263 million) and sustaining capital decreased by 43% to US$3 million (R57 million) in line with the restructuring plans Capital expenditure
+
+
+for Q4 2025 is forecast to increase due to delivery of new mining and support fleet during the quarter. In addition, the Stillwater East mine
+
+
+has begun implementing vertical infrastructure development to improve ore handling, which is expected to increase ORD expenditure for
+
+
+12-to-18 months. This infrastructure development and capital investment is part of the strategic initiative to reduce AISC to US$1,000/2Eoz
+
+
+(in 2024 real terms) over the medium-term.
+
+
+Project capital declined to US$4 million (R76 million) from US$7 million (R131 million) year-on-year, focused on the construction of the East
+
+
+Boulder tailings storage facility.
+
+
+The restructuring has significantly reduced losses compared with losses incurred in previous periods, and stabilised the financial position of
+
+
+the US PGM operations. This has enabled the realisation of tangible benefits from higher PGM prices and S45X credits.
+
+
+Underpinned by this solid operational performance, the 20% increase in the average 2E PGM basket price year-on-year to US$1,184/2Eoz
+
+
+(R20,886/2Eoz) for Q3 2025, resulted in a substantial increase in adjusted EBITDA to US$33 million (R579 million) (including US$10 million (R181
+
+
+million) S45X credits). This return to profitability for the US PGM operations is a significant turnaround for the US PGM operations, after an
+
+
+extended period of sustained losses, following the palladium price collapse during H1 2023.
+
+
+US recycling operations
+
+
+Global automotive market demand has been stable during 2025, with promising signs of increased global vehicle sales recently
+
+
+emerging. The recent rally in PGM prices and recent interest rate cut by the Federal Reserve Bank are other notable factors with positive
+
+
+implications for the recycling industry and margins. While these are encouraging fundamentals, they are expected to take time to
+
+
+translate into any meaningful increase in spent autocatalyst volumes or recycling supply in the medium term.
+
+
+The US PGM recycling operation's average daily feed of spent autocatalysts for Q3 2025 was 11.2 tonnes per day (tpd), representing a 6%
+
+
+increase from an average of 10.6 tpd in Q3 2024. This was primarily due to processing of inventory which had built up during Q2 2025
+
+
+following the transition to the EF2 furnace in Q2 2025 at the Columbus metallurgical facility. Recycling production of 82,503 3Eoz for Q3
+
+
+2025 was 10% higher than for Q2 2025 as a result, with inventory of approximately 147 tonnes at the end of Q2 2025 declining to
+
+
+approximately 73 tonnes at the end of Q3 2025.
+
+
+The average 3E PGM recycling basket price of US$1,319/3Eoz (R23,267/3Eoz) for Q3 2025 was 2% higher than Q3 2024. Adjusted EBITDA of
+
+
+US$11 million (R202 million) for the US PGM recycling operation includes S45X credits of US$8 million (R148 million) for Q3 2025.
+
+
+For Q3 2025, Reldan processed 4.3 million lb (5.6 million lb for Q3 2024) of mixed scrap and sold 35.2 koz gold (Q3 2024: 31.0 koz), 433.8 koz
+
+
+silver (Q3 2024: 433.0 koz), 5.3 koz platinum (Q3 2024:4.7 koz), 5.7 koz palladium (Q3 2024: 6.6 koz), and 0.8 million lb copper (Q3 2024: 0.8
+
+
+million lbs). The variance between quarters reflects a strategic decision to recycle less post-consumer electronics recycling, which are
+
+
+high volume but low margin sources, to focus on higher-margin industrial segment sources and other high margin materials. This resulted in
+
+
+a 13% year-on-year growth in the higher-margin industrial segment and an 80% surge in post-consumer jewellery volumes. Revenues rose
+
+
+51% on a weighted metal ounce sold basis, while tight control of non-metal costs further supported the 87% increase year-on-year in
+
+
+adjusted EBITDA for Q3 2025 to US$15 million (R273 million) and 41% increase in adjusted EBITDA for Q3-on-Q2.
+
+
+The acquisition of Metallix was successfully concluded on 4 September 2025 for an equity cash purchase consideration of US$78 million
+
+
+(total purchase consideration of US$129 million on a debt-free basis). No financial information has been included from Metallix for Q3 2025
+
+
+as management is in the process of assessing the purchase price allocation and incorporating Metallix into its reporting processes.
+
+
+European (EU) region
+
+
+Sandouville nickel refinery
+
+
+At the Sandouville facility in France, selected downstream process areas remained operational to facilitate nickel recovery from diluted
+
+
+solutions generated during the ramp-down. A voluntary redundancy plan for 90 employees has been agreed with the unions and
+
+
+approved by the French authorities. Negotiations for further headcount reductions are ongoing.
+
+
+An adjusted EBITDA loss of US$7 million (R126 million) was incurred for Q3 2025. The Sandouville refinery is being placed on care and
+
+
+maintenance (C&M), which is scheduled for completion by the end of 2025. Financial losses are forecast to reduce significantly in 2026.
+
+
+The GalliCam project prefeasibility study is progressing, with completion now forecast for the end of 2026. GalliCam prefeasibility costs of
+
+
+US$3 million (R49 million) were expensed in Q3 2025 against a forecast of US$11 million (R207 million) for 2025.
+
+
+Keliber lithium project
+
+
+The Keliber lithium project continued with final construction activities during Q3 2025. These activities included process electrification, as
+
+
+well as the installation of instrumentation and information and communications technology (ICT) systems. Final equipment installation
+
+
+works and the construction of the tailings storage facility also progressed at the concentrator site.
+
+
+Capital expenditure for Q3 2025 (including capitalised interest and other capitalised expenditure outside the project's initial forecast
+
+
+scope, such as exploration), of EUR75 million (R1.5 billion), was consistent with annual guidance of EUR300 million(R5.9 billion)* for 2025. The
+
+
+project capital expenditure for the construction phase of the project at the end of Q3 2025 is EUR645 million (R13.1 billion) (excluding
+
+
+capitalised interest and exploration) which remains within the total revised capital forecast of EUR783 million (R15.9 billion) (2024 real terms,
+
+
+excluding capitalised interest and exploration).
+
+
+The Keliber lithium project is an advanced stage, fully integrated lithium hydroxide project in the EU region and has been designated a
+
+
+"Strategic Project" in terms of the EU Critical Raw Materials Act (CRMA). The construction phase of the Keliber lithium project (mine site,
+
+
+concentrator and refinery) is scheduled for completion in H1 2026, with the second phase comprising the hot commissioning of the
+
+
+concentrator and refinery and the commencement of the production build up.
+
+
+As guided in August 2025 in the H1 2025 results the lithium market has been in surplus since H1 2023, dampening lithium prices and resulting
+
+
+in downward revisions to medium term lithium market fundamentals. As a result, we are currently assessing various scenarios to ensure a
+
+
+responsible start up of the project considering market fundamentals.
+
+
+* The guidance has been translated where relevant at an average exchange rate of R19.80/EUR
+
+
+Australian region
+
+
+Century zinc retreatment operation
+
+
+The Century operation delivered another solid, consistent operational performance for Q3 2025 and year to date.
+
+
+Century operation produced 24 kilotonnes (kt) of payable zinc for Q3 2025, 10% lower than for Q3 2024 as production was impacted by
+
+
+the planned five day annual plant maintenance shutdown, which had previously been conducted in Q4 2024.
+
+
+Sales of payable zinc for Q3 2025 of 17kt were 16% lower than for Q3 2024, primarily due to the timing of shipments (Q3 2024: 20kt). AISC
+
+
+for Q3 2025 of US$2,015/tZn (R35,539/tZn) increased by 11% compared to Q3 2024 of US$1,809/tZn (R32,559/tZn), primarily due to lower
+
+
+payable zinc production. Sustaining capital for Q3 2025 was US$1 million (R11 million) due to completion of a number of projects during
+
+
+the annual maintenance shutdown.
+
+
+The decrease in payable zinc sales due to the plant maintenance and timing of shipments, together with the 13% lower zinc concentrate
+
+
+price year-on-year, resulted in a 12% decrease in adjusted EBITDA to US$28 million (R486 million) for Q3 2025.
+
+
+The strong operational and financial performance year-to-date, coupled with continued favourable A$ zinc prices, low treatment
+
+
+charges, and shipments scheduled to reduce inventory levels by year end supports a positive final quarter outlook for the Century
+
+
+operation.
+
+
+Options to leverage the existing infrastructure (processing plant, pipeline, and port facilities) and extend the life of the assets beyond the
+
+
+current zinc retreatment operations continue to be actively explored. This includes opportunities to potentially utilise the Century
+
+
+infrastructure to access the extensive, largely undeveloped phosphate resources in the region.
+
+
+Mt Lyell copper project
+
+
+The Mt Lyell feasibility study (AACE Class 2 Estimate) is progressing well and is expected to be completed during Q4 2025.
+
+
+OPERATING GUIDANCE FOR 2025-
+
+
+Annual operating guidance is unchanged with all operations anticipated to meet guidance for 2025 as in the table below. The US PGM
+
+
+operations are expected to be at, or exceed, the upper end of the production range and the lower end of the AISC range.
+
+
+2025 Annual guidance                                                   Production                          All-in sustaining cost                  Total capital
+
+
+US region     US PGM operations                                     255 - 270 koz                         US$1,420 - 1,460/2E oz1              US$100m - US$110m
+
+
+              (2E mined)                                                                Incl. S45X credit: US$1,320 - 1,360/2E oz               (R1.8bn - R2bn)2
+
+
+              US PGM recycling
+
+
+              (3E)                                                  300 - 350 koz                                             n/a                US$1.5m (R27m)2
+
+
+              Reldan recycling                                 Gold 120 - 130 koz                                             n/a                US$2.8m (R51m)2
+
+
+              (e-waste and industrial waste)                   Silver 2 - 2.3 moz
+
+
+                                                               3E PGM 35 - 40 koz
+
+
+                                                            Copper 3.0 - 3.2 mlbs
+
+
+SA region     SA PGM operations                                1.75 - 1.85 moz3,4                          R23,500 - 24,500/4E oz              R6.5bn (US$356m)2
+
+
+              (4E PGMs)                                                                                  (US$1,288 -1,343/4E oz)2         (incl. R1.4bn (US$78m)
+
+
+                                                                                                                                            for project capital)
+
+
+              SA gold operations                                15,000 - 16,000kg                             R1,450k - 1,550k/kg              R3.5bn (US$192m)2
+
+
+              (excl. DRDGOLD)                                      (480 -514 koz)                          (US$2,473 - 2,643/oz)2
+
+
+EU region     Sandouville nickel refinery5                                    n/a                                             n/a            GalliCam study cost
+
+
+                                                                                                                                                   EUR10m (R198m)2
+
+
+              Keliber lithium project                                         n/a                                             n/a                EUR300m (R5.9bn)2
+
+
+AUS region    Century zinc operations                        88.3k - 97.8k tonnes                                 A$3,400-3,700/t                           A$8m
+
+
+                                                                         (payable)                          (R39,678 - 43,179/t)2                (US$5.7m/R93m)2
+
+
+                                                                                                            (US$2,175 - 2,367/t)2
+
+
+              Mount Lyell copper mine6                                        n/a                                             n/a                           A$6m
+
+
+              (under feasibility study)                                                                                                           (US$4.3/R70m)2
+
+
+Source: Company forecasts, Note: Guidance does not take into account the impact of unplanned events
+
+
+- As at 28 August 2025
+
+
+1. US PGM AISC are impacted by tax and royalties paid based on PGM prices, current guidance was based on spot 2E PGM prices of US$950/oz
+
+
+2. Estimates are converted at an exchange rate of R18.24/US$, R19.80/EUR and R11.67/A$
+
+
+3. SA PGM operations production guidance includes third party POC and 50% attributable production from Mimosa
+
+
+4. SA PGM operations AISC excludes the purchase cost of third party POC and Mimosa costs and capital (equity accounted) and attributable production for both
+
+
+5. The ramp down and preparation for care and maintenance will be complete by year end. The GalliCam prefeasibility study is being conducted to evaluate the
+
+
+   viability of producing pCAM and is expected to be completed around the end of 2026. The GalliCam study cost excludes the care and maintenance costs of the
+
+
+   refinery
+
+
+6. Mount Lyell was an operating copper mine which closed and is currently under care and maintenance. The feasibility study is expected to be completed
+
+
+   during Q4 2025
+
+
+CLARIFICATION IN RESPECT OF THE REVISED EARNINGS PER SHARE AND HEADLINE EARNINGS PER SHARE FOR THE 6 MONTHS ENDED 30 JUNE
+
+
+2024
+
+
+Sibanye-Stillwater wishes to clarify the revisions made to loss attributable to owners of Sibanye-Stillwater (loss), earnings per share (EPS) and
+
+
+headline earnings per share (HEPS) for the six months ended 30 June 2024 (H1 2024), as disclosed in the Operating and Financial Results
+
+
+released on the Stock Exchange News Service (SENS) on 21 February 2025.
+
+
+During the six months period ended 31 December 2024, the loss, EPS and consequentially, the HEPS for H1 2024 were revised from that
+
+
+previously reported in the Operating and Financial Results for H1 2024 and released on SENS on 12 September 2024. These revisions
+
+
+resulted from additional information obtained within 12 months from the acquisition date in respect of the Reldan business combination, in
+
+
+accordance with IFRS 3, Business Combinations.
+
+
+The fair value gain relating to the metal borrowing liability assumed in the business combination was revised by R137 million, due to
+
+
+changes in the acquisition value of this liability. Gain/loss on financial instruments for H1 2024 changed from R1,359 million (as reported on
+
+
+12 September 2024) to R1,496 million (as reported on 21 February 2025). This change was also detailed in note 10.1 to the condensed
+
+
+consolidated financial statements for the year ended 31 December 2024.
+
+
+Accordingly, the loss and EPS for H1 2024 were revised from R7,472 million to R7,335 million, and 264 cents per share (loss) to 259 cents per
+
+
+share (loss), respectively. Consequently, the HEPS for H1 2024 were also revised from 5 cents per share to 10 cents per share.
+
+
+For more information, refer to the announcement on 21 February 2025 available on the website 2024 results page or at the direct
+
+
+download link 2024 year-end results book.
+
+
+RICHARD STEWART
+
+
+CHIEF EXECUTIVE OFFICER
+
+
+The information disclosed is only a summary of the operating update and additional information is contained in the booklet outlining the full operating update
+
+
+for the quarter ended 30 September 2025 (booklet), which is available for viewing on the Company's website at
+
+
+https://www.sibanyestillwater.com/news-investors/reports/quarterly/. Any investment decisions by investors and/or shareholders should be based on a booklet.
+
+
+Non-IFRS measures
+
+
+Sibanye-Stillwater presents certain non-IFRS figures to provide readers with additional financial information that is regularly reviewed by
+
+
+management to assess the operational performance of the Group and is the responsibility of the Group's Board of Directors. These non-
+
+
+IFRS measures should not be considered as alternatives to IFRS Accounting Standards measures, including cost of sales, net operating
+
+
+profit, profit before taxation, cash from operating activities or any other measure of financial performance presented in accordance with
+
+
+IFRS Accounting Standards, and may not be comparable to similarly titled measures of other companies.
+
+
+The non-IFRS financial measures discussed in this document are listed below:
+
+
+Non-IFRS measure          Definition                                           Purpose why these non-IFRS measures are           Reconciled on page
+
+
+                                                                               reported                                          of the booklet
+
+
+Adjusted EBITDA           Adjusted earnings before interest, tax,              Used in the calculation of the debt covenant      18
+
+
+                          depreciation and amortisation, and is reported       ratio: net debt/(cash) to adjusted EBITDA
+
+
+                          based on the formula included in Sibanye-
+
+
+                          Stillwater's facility agreements for compliance
+
+
+                          with the debt covenant formula and involves
+
+
+                          eliminating the effects of various one-time,
+
+
+                          irregular, and non-recurring items from the
+
+
+                          standard EBITDA calculation
+
+
+All-in sustaining         Cost of sales before amortisation and                Developed by the World Gold council for the        12,13,14,15
+
+
+costs (AISC)              depreciation plus additional costs which             purpose of the gold mining industry, AISC
+
+
+                          include community costs, inventory change            provides metrics and aims to reflect the full
+
+
+                          (PGM operations only), share-based payments,         cost to sustain the production and sale of our
+
+
+                          royalties, carbon tax, rehabilitation, leases, ore   commodities, and reporting this metric allows
+
+
+                          reserve development (ORD), sustaining capital        for a meaningful comparisons across our
+
+
+                          expenditure and deducting the by-product             operations and different mining companies
+
+
+                          credit
+
+
+All-in costs (AIC)        AISC plus additional costs relating to corporate     Developed by the World Gold council for the        12,13,14,15
+
+
+                          and major capital expenditure associated with        purpose of the gold mining industry, AIC
+
+
+                          growth                                               provides metrics and aims to reflect the full
+
+
+                                                                               cost to sustain the production and sale of our
+
+
+                                                                               commodities, after including growth capital,
+
+
+                                                                               and reporting this metric allows for a
+
+
+                                                                               meaningful comparisons across our operations
+
+
+                                                                               and different mining companies
+
+
+AISC/AIC per unit         AISC/AIC divided by the total PGM produced/          Developed by the World Gold council for the        12,13,14,15
+
+
+                          gold sold/zinc produced (payable)                    purpose of the gold mining industry, AISC/AIC
+
+
+                                                                               per unit provides a metric that aims to reflect
+
+
+                                                                               the full cost to sustain the production and sale,
+
+
+                                                                               after including growth capital (AIC), of an
+
+
+                                                                               ounce/kilogram/tonne of commodity and
+
+
+                                                                               reporting this metric allows for a meaningful
+
+
+                                                                               comparisons across our operations and
+
+
+                                                                               different mining companies
+
+
+Operating costs           The average cost of production, and                  Report a measure that aims to reflect the          13,16,17
+
+
+                          operating cost per tonne is calculated by            operating cost to produce our commodities,
+
+
+                          dividing the cost of sales, before amortisation      and reporting this metric allows for a
+
+
+                          and depreciation and change in inventory in a        meaningful comparisons across our operations
+
+
+                          period by the tonnes milled/treated in the           and different mining companies
+
+
+                          same period, and operating cost per ounce
+
+
+                          (and kilograms) is calculated by dividing the
+
+
+                          cost of sales, before amortisation and
+
+
+                          depreciation and change in inventory in a
+
+
+                          period by the gold kilograms produced or
+
+
+                          PGM 2E and 4E ounces produced in the same
+
+
+                          period
+
+
+Pro-forma financial information
+
+
+Certain financial information, including non-IFRS measures, presented in this operating update constitutes pro forma financial information.
+
+
+The responsibility for preparing and presenting the pro forma financial information for the completeness and accuracy of the pro forma
+
+
+financial information is that of the directors of Sibanye-Stillwater. This pro forma financial information is presented for illustrative purposes
+
+
+only. Because of its nature, the pro forma financial information may not fairly present Sibanye-Stillwater's financial position, changes in
+
+
+equity, and results of operations or cash flows. This pro forma financial information has not been audited or reviewed or otherwise
+
+
+reported on by Sibanye-Stillwater's external auditor.
+
+
+ADMINISTRATION AND CORPORATE INFORMATION
+
+
+SIBANYE STILLWATER LIMITED                                                    JSE SPONSOR
+
+
+(SIBANYE-STILLWATER)                                                          JP Morgan Equities South Africa Proprietary Limited
+
+
+Incorporated in the Republic of South Africa                                  Registration number 1995/011815/07
+
+
+Registration number 2014/243852/06
+
+
+Share code: SSW and SBSW                                                      1 Fricker Road, Illovo
+
+
+Issuer code: SSW                                                              Johannesburg 2196
+
+
+ISIN: ZAE000259701                                                            South Africa
+
+
+                                                                              Private Bag X9936
+
+
+LISTINGS                                                                      Sandton 2146
+
+
+                                                                              South Africa
+
+
+JSE: SSW
+
+
+NYSE: SBSW
+
+
+                                                                              AUDITORS
+
+
+WEBSITE                                                                       BDO
+
+
+www.sibanyestillwater.com                                                     Wanderers Office Park
+
+
+                                                                              52 Corlett Drive
+
+
+REGISTERED AND CORPORATE OFFICE                                               Illovo 2196
+
+
+Constantia Office Park                                                        South Africa
+
+
+Bridgeview House, Building 11, Ground floor                                   Private Bag X60500
+
+
+Cnr 14th Avenue & Hendrik Potgieter Road                                      Houghton 2041
+
+
+Weltevreden Park 1709                                                         South Africa
+
+
+South Africa
+
+
+                                                                              Tel: +27 11 488 1700
+
+
+Private Bag X5
+
+
+Westonaria 1780                                                               AMERICAN DEPOSITARY RECEIPTS
+
+
+South Africa                                                                  TRANSFER AGENT
+
+
+Tel: +27 11 278 9600                                                          BNY Mellon Shareowner Correspondence (ADSs)
+
+
+Fax: +27 11 278 9863                                                          Mailing address of agent:
+
+
+                                                                              Computershare
+
+
+COMPANY SECRETARY                                                             PO Box 43078
+
+
+                                                                              Providence, RI 02940-3078
+
+
+Lerato Matlosa
+
+
+                                                                              Overnight/certified/registered delivery:
+
+
+Email:
+[email protected]
+                                   Computershare
+
+
+                                                                              150 Royall Street, Suite 101
+
+
+                                                                              Canton, MA 02021
+
+
+DIRECTORS                                                                     US toll free: + 1 888 269 2377
+
+
+Dr Vincent Maphai* (Chairman)                                                 Tel: +1 201 680 6825
+
+
+Dr Richard Stewart (CEO)+                                                     Email:
+[email protected]
+
+
+Charl Keyter (CFO)
+
+
+Dr Elaine Dorward-King*                                                       Tatyana Vesselovskaya
+
+
+Harry Kenyon-Slaney*^                                                         Relationship Manager - BNY Mellon
+
+
+Prof Jeremiah Vilakazi#                                                       Depositary Receipts
+
+
+Dr Lindiwe Mthimunye++                                                        Email:
+[email protected]
+
+
+Keith Rayner#
+
+
+Dr Peter Hancock*                                                             TRANSFER SECRETARIES SOUTH AFRICA
+
+
+Philippe Boisseau*                                                            Computershare Investor Services Proprietary Limited
+
+
+Richard Menell#                                                               Rosebank Towers
+
+
+Dr Sindiswa Zilwa*                                                            15 Biermann Avenue
+
+
+Dr Terence Nombembe*                                                          Rosebank 2196
+
+
+Dr Sindiswa Zilwa*
+
+
+Timothy Cumming#                                                              PO Box 61051
+
+
+                                                                              Marshalltown 2107
+
+
+*    Independent non-executive                                                South Africa
+
+
+#    Non-executive
+
+
+^    Lead independent director                                                Tel: +27 11 370 5000
+
+
++    Appointed as executive director 1 March 2025 and as CEO 1 October 2025   Fax: +27 11 688 5248
+
+
+++   Appointed as independent non-executive director 25 August 2025
+
+
+INVESTOR ENQUIRIES
+
+
+James Wellsted
+
+
+Executive Vice President: Investor Relations and Corporate Affairs
+
+
+Mobile: +27 83 453 4014
+
+
+Email:
+[email protected]
+
+
+or
+[email protected]
+
+
+DISCLAIMER
+
+
+Forward-looking statements
+
+
+The information in this report may contain forward-looking statements within the meaning of the "safe harbour" provisions of the United States Private Securities Litigation Reform Act of 1995. These
+
+
+forward-looking statements, including, among others, those relating to Sibanye Stillwater Limited's (Sibanye-Stillwater or the Group) financial positions, business strategies, business prospects,
+
+
+industry forecasts, production and operational guidance, climate and ESG-related targets and metrics, plans and objectives of management for future operations, are necessarily estimates
+
+
+reflecting the best judgment of the senior management and directors of Sibanye-Stillwater and involve a number of risks and uncertainties that could cause actual results to differ materially from
+
+
+those suggested by the forward-looking statements. As a consequence, these forward-looking statements should be considered in light of various important factors, including those set forth in this
+
+
+report.
+
+
+All statements other than statements of historical facts included in this report may be forward-looking statements. Forward-looking statements also often use words such as "will", "would", "expect",
+
+
+"forecast", "potential", "may", "could", "believe", "aim", "anticipate", "target", "estimate" and words of similar meaning. By their nature, forward-looking statements involve risk and uncertainty
+
+
+because they relate to future events and circumstances and should be considered in light of various important factors, including those set forth in this disclaimer. Readers are cautioned not to
+
+
+place undue reliance on such statements.
+
+
+The important factors that could cause Sibanye-Stillwater's actual results, performance or achievements to differ materially from estimates or projections contained in the forward-looking
+
+
+statements include, without limitation, Sibanye-Stillwater's future financial position, plans, strategies, objectives, capital expenditures, projected costs and anticipated cost savings, financing plans,
+
+
+debt position and ability to reduce debt leverage; economic, business, political and social conditions in South Africa, Zimbabwe, the United States, Europe and elsewhere; plans and objectives of
+
+
+management for future operations; Sibanye-Stillwater's ability to obtain the benefits of any streaming arrangements or pipeline financing; the ability of Sibanye-Stillwater to comply with loan and
+
+
+other covenants and restrictions and difficulties in obtaining additional financing or refinancing; Sibanye-Stillwater's ability to service its bond instruments; changes in assumptions underlying
+
+
+Sibanye-Stillwater's estimation of its Mineral Resources and Mineral Reserves; any failure of a tailings storage facility; the ability to achieve anticipated efficiencies and other cost savings in
+
+
+connection with, and the ability to successfully integrate, past, ongoing and future acquisitions (including Metallix), as well as at existing operations; the ability of Sibanye-Stillwater to complete any
+
+
+ongoing or future acquisitions; the success of Sibanye-Stillwater's business strategy and exploration and development activities, including any proposed, anticipated or planned expansions into the
+
+
+battery metals or adjacent sectors and estimations or expectations of enterprise value; the ability of Sibanye-Stillwater to comply with requirements that it operate in ways that provide progressive
+
+
+benefits to affected communities; changes in the market price of gold, silver, PGMs, battery metals (e.g., nickel, lithium, copper and zinc) and the cost of power, petroleum fuels, and oil, among
+
+
+other commodities and supply requirements; the occurrence of hazards associated with underground and surface mining; any further downgrade of South Africa's credit rating; the impact of
+
+
+South Africa's greylisting; a challenge regarding the title to any of Sibanye-Stillwater's properties by claimants to land under restitution and other legislation; Sibanye-Stillwater's ability to implement
+
+
+its strategy and any changes thereto; the outcome of legal challenges to the Group's mining or other land use rights; the occurrence of labour disputes, disruptions and industrial actions; the
+
+
+availability, terms and deployment of capital or credit; changes in the imposition of industry standards, regulatory costs and relevant government regulations, particularly environmental,
+
+
+sustainability, tax, health and safety regulations and new legislation affecting water, mining, mineral rights and business ownership, including any interpretation thereof which may be subject to
+
+
+dispute; the outcome and consequence of any potential or pending litigation or regulatory proceedings, including in relation to any environmental, health or safety issues; failure to meet ethical
+
+
+standards, including actual or alleged instances of fraud, bribery or corruption; the effect of climate change or other extreme weather events on Sibanye-Stillwater's business; the concentration of
+
+
+all final refining activity and a large portion of Sibanye-Stillwater's PGM sales from mine production in the United States with one entity; the identification of a material weakness in disclosure and
+
+
+internal controls over financial reporting; the effect of US tax reform legislation on Sibanye-Stillwater and its subsidiaries; the effect of South African Exchange Control Regulations on Sibanye-
+
+
+Stillwater's financial flexibility; operating in new geographies and regulatory environments where Sibanye-Stillwater has no previous experience; power disruptions, constraints and cost increases;
+
+
+supply chain disruptions and shortages and increases in the price of production inputs; the regional concentration of Sibanye-Stillwater's operations; fluctuations in exchange rates, currency
+
+
+devaluations, inflation and other macro-economic monetary policies; the occurrence of temporary stoppages or precautionary suspension of operations at its mines for safety or environmental
+
+
+incidents (including natural disasters) and unplanned maintenance; Sibanye-Stillwater's ability to hire and retain senior management and employees with sufficient technical and/or production
+
+
+skills across its global operations necessary to meet its labour recruitment and retention goals, as well as its ability to achieve sufficient representation of historically disadvantaged South Africans in
+
+
+its management positions, or maintain required board gender diversity; failure of Sibanye-Stillwater's information technology, communications and systems, evolving cyber threats to Sibanye-
+
+
+Stillwater's operations and the impact of cybersecurity incidents or breaches; the adequacy of Sibanye-Stillwater's insurance coverage; social unrest, sickness or natural or man-made disaster in
+
+
+surrounding mining communities, including informal settlements in the vicinity of some of Sibanye-Stillwater's South African-based operations; and the impact of contagious diseases, including
+
+
+global pandemics.
+
+
+Further details of potential risks and uncertainties affecting Sibanye-Stillwater are described in Sibanye-Stillwater's filings with the Johannesburg Stock Exchange and the United States Securities and
+
+
+Exchange Commission, including the 2024 Integrated Report and the Annual Financial Report for the fiscal year ended 31 December 2024 on Form 20-F filed with the United States Securities and
+
+
+Exchange Commission on 25 April 2025 (SEC File no. 333-234096).
+
+
+These forward-looking statements speak only as of the date of the content. Sibanye-Stillwater expressly disclaims any obligation or undertaking to update orand the cost of power, petroleum fuels, and oil, among
+
+
+other commodities and supply requirements; the occurrence of hazards associated with underground and surface mining; any further downgrade of South Africa's credit rating; the impact of
+
+
+South Africa's greylisting; a challenge regarding the title to any of Sibanye-Stillwater's properties by claimants to land under restitution and other legislation; Sibanye-Stillwater's ability to implement
+
+
+its strategy and any changes thereto; the outcome of legal challenges to the Group's mining or other land use rights; the occurrence of labour disputes, disruptions and industrial actions; the
+
+
+availability, terms and deployment of capital or credit; changes in the imposition of industry standards, regulatory costs and relevant government regulations, particularly environmental,
+
+
+sustainability, tax, health and safety regulations and new legislation affecting water, mining, mineral rights and business ownership, including any interpretation thereof which may be subject to
+
+
+dispute; the outcome and consequence of any potential or pending litigation or regulatory proceedings, including in relation to any environmental, health or safety issues; failure to meet ethical
+
+
+standards, including actual or alleged instances of fraud, bribery or corruption; the effect of climate change or other extreme weather events on Sibanye-Stillwater's business; the concentration of
+
+
+all final refining activity and a large portion of Sibanye-Stillwater's PGM sales from mine production in the United States with one entity; the identification of a material weakness in disclosure and
+
+
+internal controls over financial reporting; the effect of US tax reform legislation on Sibanye-Stillwater and its subsidiaries; the effect of South African Exchange Control Regulations on Sibanye-
+
+
+Stillwater's financial flexibility; operating in new geographies and regulatory environments where Sibanye-Stillwater has no previous experience; power disruptions, constraints and cost increases;
+
+
+supply chain disruptions and shortages and increases in the price of production inputs; the regional concentration of Sibanye-Stillwater's operations; fluctuations in exchange rates, currency
+
+
+devaluations, inflation and other macro-economic monetary policies; the occurrence of temporary stoppages or precautionary suspension of operations at its mines for safety or environmental
+
+
+incidents (including natural disasters) and unplanned maintenance; Sibanye-Stillwater's ability to hire and retain senior management and employees with sufficient technical and/or production
+
+
+skills across its global operations necessary to meet its labour recruitment and retention goals, as well as its ability to achieve sufficient representation of historically disadvantaged South Africans in
+
+
+its management positions, or maintain required board gender diversity; failure of Sibanye-Stillwater's information technology, communications and systems, evolving cyber threats to Sibanye-
+
+
+Stillwater's operations and the impact of cybersecurity incidents or breaches; the adequacy of Sibanye-Stillwater's insurance coverage; social unrest, sickness or natural or man-made disaster in
+
+
+surrounding mining communities, including informal settlements in the vicinity of some of Sibanye-Stillwater's South African-based operations; and the impact of contagious diseases, including
+
+
+global pandemics.
+
+
+Further details of potential risks and uncertainties affecting Sibanye-Stillwater are described in Sibanye-Stillwater's filings with the Johannesburg Stock Exchange and the United States Securities and
+
+
+Exchange Commission, including the 2024 Integrated Report and the Annual Financial Report for the fiscal year ended 31 December 2024 on Form 20-F filed with the United States Securities and
+
+
+Exchange Commission on 25 April 2025 (SEC File no. 333-234096).
+
+
+These forward-looking statements speak only as of the date of the content. Sibanye-Stillwater expressly disclaims any obligation or undertaking to update or revise any forward-looking statement
+
+
+(except to the extent legally required). These forward-looking statements have not been reviewed or reported on by the Group's external auditors.
+
+
+Non-IFRS1 measures
+
+
+The information contained in this report may contain certain non-IFRS measures, including, among others, adjusted EBITDA, adjusted free cash flow, AISC and AIC. These measures may not be
+
+
+comparable to similarly-titled measures used by other companies and are not measures of Sibanye-Stillwater's financial performance under IFRS Accounting Standards. These measures should not
+
+
+be considered in isolation or as a substitute for measures of performance prepared in accordance with IFRS Accounting Standards. Sibanye-Stillwater is not providing a reconciliation of the
+
+
+forecast non-IFRS financial information presented in this report because it is unable to provide this reconciliation without unreasonable effort. These forecast non-IFRS financial information
+
+
+presented have not been reviewed or reported on by the Group's external auditors.
+
+
+1 IFRS refers to International Financial Reporting Standards Accounting Standards (IFRS Accounting Standards) as issued by the International Accounting Standards Board (IASB)
+
+
+Websites
+
+
+References in this document to information on websites (and/or social media sites) are included as an aid to their location and such information is not incorporated in, and does not form part of,
+
+
+this report.
+
+
+Date: 06-11-2025 08:00:00

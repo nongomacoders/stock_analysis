@@ -1,0 +1,817 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20250828_S509699.pdf;https://senspdf.jse.co.za/documents/2025/js]
+
+
+Symbol [IMP]
+
+
+Audited Consolidated Annual Results for the Financial Year ended 30 June 2025 and Cash Dividend Declaration
+
+
+IMPALA PLATINUM HOLDINGS LIMITED
+
+
+(Incorporated in the Republic of South Africa)
+
+
+(Registration number 1957/001979/06)
+
+
+JSE share code: IMP
+
+
+ISIN: ZAE000083648
+
+
+ADR code: IMPUY
+
+
+("Implats" or the "Group" or the "Company")
+
+
+AUDITED CONSOLIDATED ANNUAL RESULTS FOR THE FINANCIAL YEAR ENDED 30 JUNE 2025 AND CASH DIVIDEND DECLARATION
+
+
+Key features for FY2025:
+
+
+- Eight fatalities in seven incidents at managed operations
+
+
+- 11% improvement in LTIFR* to 3.46 and 2% improvement in TIFR* to 8.15
+
+
+- No major or significant environmental incidents
+
+
+- Fourth consecutive inclusion in the S&P Global Sustainability Yearbook (2025)
+
+
+- Group 6E production declined 3% to 3.55Moz
+
+
+- Refined and saleable 6E production was stable at 3.37Moz
+
+
+- 6E sales volumes retraced 2% to 3.37Moz
+
+
+- Stock-adjusted Group 6E unit costs increased 7% to R22 491/oz
+
+
+- Consolidated Group capital expenditure reduced 50% to R7.0 billion
+
+
+- Dollar revenue per 6E ounce sold up 3% to US$1 389
+
+
+- Rand revenue per 6E ounce flat at R25 172
+
+
+- EBITDA of R9.9bn with headline earnings of R732 million or 82c per share
+
+
+- Basic earnings of R761 million or 85c per share
+
+
+- Free cash flow of R2.4 billion and closing adjusted net cash of R8.1 billion
+
+
+- Final dividend of 165c per ordinary share declared
+
+
+- All three major PGM markets are likely to remain in fundamental deficit in 2025, with market shortfalls increasing
+
+
+  from prior estimates.
+
+
+*Per million man-hours worked
+
+
+Commentary
+
+
+Implats delivered a commendable performance across its mining and processing assets in FY2025. Unit costs benefited
+
+
+from easing input inflation and rand appreciation but faced headwinds from lower production volumes. Following a robust
+
+
+first half, the Group experienced unplanned furnace maintenance and utility supply and weather-related disruptions at its
+
+
+base and precious metals refineries. This materially impacted its ability to meet planned refined and sales volumes and
+
+
+resulted in an increase of excess in-process inventory to approximately 420 000 6E ounces.
+
+
+Capital expenditure in FY2025 was carefully planned in response to a weak rand PGM price environment and constrained
+
+
+profitability. Investments were directed toward initiatives that enhance safety, improve operational efficiency and
+
+
+preserve the integrity of Group infrastructure. Several notable milestones were achieved during the year, including the
+
+
+commissioning of a 38MW smelter and a 35MW solar power plant at Zimplats.
+
+
+The Group delivered another strong environmental and sustainability performance. Implats remains firmly committed to
+
+
+achieving carbon neutrality by 2050 and is actively progressing toward its interim target of a 30% reduction in carbon
+
+
+emissions by FY2030, using FY2019 as the baseline. Renewable energy agreements were concluded to supply power to our
+
+
+refineries, and the 45MW Phase 2A solar project at Zimplats received approval. Our focus on high-impact, strategic social
+
+
+performance initiatives continued through programmes supporting community wellbeing, education, skills development and
+
+
+infrastructure enhancement.
+
+
+Group profitability was affected by lower sales volumes and muted rand PGM prices, as gains from higher dollar PGM
+
+
+prices were offset by the strengthening rand. Despite effective cost containment, operational challenges and restructuring
+
+
+costs at our South African and Canadian assets further impacted earnings. Free cash flow generation improved, despite
+
+
+lower earnings, and the Group maintained a strong and flexible balance sheet.
+
+
+Implats generated EBITDA of R9.9 billion, headline earnings of R732 million or 82 cents per share and recorded a free
+
+
+cash flow of R2.4 billion. The Group closed the period with an adjusted net cash balance (excluding limited recourse
+
+
+funding) of R8.1 billion and R19.7 billion in liquidity headroom.
+
+
+FY2026 started with an improved performance at our mining operations and greater stability across the processing assets.
+
+
+Group production is expected to be supported by sustained momentum at Impala Rustenburg, Mimosa and Two Rivers, while
+
+
+restored performance at Zimplats and improved stability at Marula bode well for the production outlook. Volumes at
+
+
+Impala Canada will decline in line with the planned cessation of commercial operations during the year.
+
+
+Implats has introduced an optimised operating strategy and enhanced maintenance protocols across Group furnaces, with
+
+
+plans to begin the phased introduction of select design enhancements in FY2026. Further upgrades aimed at ensuring
+
+
+long-term furnace integrity and performance, while addressing changes in furnace feed mineralogy, will be implemented
+
+
+in scheduled rebuilds from FY2027.
+
+
+Our broader strategic agenda is focused on optimal capital allocation and unlocking value across our portfolio.
+
+
+Supported by a strong and flexible balance sheet, we aim to deliver a resilient and higher-value Implats.
+
+
+Safety
+
+
+Implats continues to reinforce its commitment to a safety-first culture across all operations. This is driven by
+
+
+initiatives that promote personal responsibility, accountability and teamwork. Our approach is anchored in the consistent
+
+
+implementation of our eight-point safety plan, supported by robust systems and proactive risk management. We place a strong
+
+
+emphasis on sharing learnings from high-potential incidents and remain deeply committed to the wellbeing of employees
+
+
+and steadfast in our goal of eliminating fatalities and life-altering injuries, aligned with our vision of achieving zero
+
+
+harm.
+
+
+Despite our efforts, it is with deep regret we report eight fatalities in seven incidents at our managed operations
+
+
+during the period. The Group's fatal-injury frequency rate (FIFR) improved by 55% to 0.057/mmhw (FY2024: 0.127). The
+
+
+lost-time injury frequency rate (LTIFR) improved 11% to 3.46/mmhw and the total-injury frequency rate (TIFR) showed a
+
+
+2% improvement to 8.15/mmhw, reflecting an improving trend in our ongoing safety drive.
+
+
+The formal Department of Minerals and Petroleum Resources (DMPR) inquiry into the 11 Shaft incident began in December 2024
+
+
+and is expected to continue for 12 to 18 months in total. We remain fully committed to implementing the recommendations
+
+
+that emerge.
+
+
+Operational summary
+
+
+Tonnes milled at Group managed operations decreased by 6% to 26.29 million. Milled throughput at Zimplats was constrained
+
+
+by lower fleet availability and Impala Canada's volumes declined in line with its revised operating parameters. Production
+
+
+at Impala Rustenburg and Impala Bafokeng was impacted by safety stoppages, while Marula faced constrained mining flexibility
+
+
+and navigated extensive labour restructuring. 6E milled grade rose 1% to 3.78 grams per tonne (g/t) as lower development
+
+
+rates and reduced off-reef mining resulted in improvements at Impala Rustenburg. 6E production at managed operations declined
+
+
+by 4% to 2.80 million ounces.
+
+
+6E concentrate production from the Group's joint ventures (JVs) declined by 1% to 542 000 ounces. Mimosa delivered
+
+
+sustained operating momentum despite intermittent power interruptions and Two Rivers improved its UG2 mining performance,
+
+
+which was offset by lower milled volumes of low-grade Merensky ore. At Impala Refining Services (IRS), 6E in concentrate
+
+
+receipts from third-party customers increased by 9% to 209 000 ounces, with better-than-expected deliveries from key
+
+
+contracts.
+
+
+In total, Group 6E production decreased by 3% to 3.55 million ounces.
+
+
+Group processing capacity was limited by unplanned maintenance in South Africa, the commissioning of the expanded
+
+
+furnace complex at Zimplats, heavy rains and utility supply interruptions at the base and precious metals refineries in
+
+
+the period. In December 2024, a decision was taken to expedite the full rebuild of Furnace 3 at Impala Rustenburg, while
+
+
+in early February 2025, unplanned repairs were completed at Furnace 5, resulting in the deferral of 150 000 ounces of
+
+
+refined 6E production. Interruptions to the water, power and hydrogen supply to Impala Refineries had a further 80 000 6E
+
+
+ounce impact.
+
+
+Refined 6E production, which includes saleable ounces from Impala Bafokeng and Impala Canada, was stable at 3.37 million
+
+
+ounces and Implats ended the period with excess inventory of approximately 420 000 6E ounces.
+
+
+Implats has introduced an optimised operating strategy and enhanced maintenance protocols across its Group furnaces.
+
+
+The phased introduction of select design enhancements will commence in FY2026, beginning with the scheduled rebuild of
+
+
+Furnace 4 in December 2026. Further enhancements include a redesigned furnace configuration aimed at ensuring long-term
+
+
+integrity and performance, while addressing changes in furnace feed mineralogy. The full rollout of the optimised design
+
+
+will be incorporated into scheduled rebuilds from FY2027 onward.
+
+
+In addition, the residual impact of administrative delays affecting the movement of Mimosa concentrate to both IRS and
+
+
+Zimplats during FY2025, is expected to extend the timeframe for destocking previously accumulated excess inventory.
+
+
+Completion of this process is now anticipated in FY2029.
+
+
+Mining inflation across managed operations moderated in the period, while costs also benefitted from a lower labour
+
+
+complement and the translation of subsidiaries' cash costs at a stronger rand exchange rate. Unit costs were negatively
+
+
+impacted by ex-gratia payments to employees, the expensing of capital at Impala Canada and lower stock-adjusted equivalent
+
+
+refined volumes at managed operations. Group stock-adjusted unit costs increased by 7% to R22 491 per 6E ounce and were
+
+
+5.5% higher at R22 075 per 6E ounce on a like-for-like basis (excluding Impala Canada capex and ex-gratia employee
+
+
+payments made in the period).
+
+
+Capital expenditure at managed operations declined 50% to R7.0 billion due to lower growth and replacement capital as
+
+
+key projects neared completion. Stay-in-business capital retraced as Zimplats completed the first phase of its solar
+
+
+project and spend at Impala Canada was transferred to working costs, in line with the Groups' accounting policies and the
+
+
+shortened life-of-mine at the operation. Stay-in-business spend of R5.4 billion, replacement spend of R676 million and
+
+
+expansion capital of R924 million decreased by 33%, 63% and 77% respectively.
+
+
+Financial summary
+
+
+Group profitability was impacted by lacklustre rand PGM pricing, with rand appreciation offsetting the benefit of higher
+
+
+dollar PGM pricing. Despite good cost containment, this was compounded by operational challenges at the mining and
+
+
+processing operations and restructuring costs at the South African and Canadian assets.
+
+
+Revenue of R85.5 billion decreased by 1%, while cost of sales of R83.0 billion increased by 3% and Implats delivered
+
+
+gross profit of R2.4 billion. Profit for the year ended 30 June 2024 ("prior comparable period") was impacted by several
+
+
+significant, once-off, non-cash items. There were no impairments in the period under review.
+
+
+Net foreign exchange losses eased to R294 million, while net finance costs were negligible. Other income comprised the
+
+
+receipt of insurance proceeds and fair value gains on rehabilitation investments, while other expenses included R635 million
+
+
+incurred on restructuring costs at managed operations in the period. Included in the restructuring costs is a R440 million
+
+
+provision for severance in respect of Impala Canada.
+
+
+The loss from earnings at the JVs - Mimosa and Two Rivers - moderated with earnings in the current period adversely
+
+
+impacted by the movement of unrealised profit on inventory. Implats achieved EBITDA of R9.9 billion at an EBITDA margin
+
+
+of 12%.
+
+
+The R786 million tax charge resulted in an effective tax rate of 53% and was elevated primarily due to not recognising
+
+
+deferred tax on the losses incurred by Impala Canada during the period, as well as the inclusion of post-tax loss from
+
+
+associates in profit before tax.
+
+
+Headline earnings declined by 70% to R732 million and 82 cents per share (FY2024: R2.4 billion and 269 cents per share).
+
+
+Basic earnings improved to R761 million and 85 cents per share from a loss of R17.3 billion or 1 929 cents per share in
+
+
+the prior comparable period, when the cumulative impact of impairments resulted in a post-tax charge of R19.8 billion
+
+
+or 2 204 cents per share.
+
+
+The weighted average number of shares in issue for the period increased to 897.45 million from 897.36 million in the
+
+
+prior comparable period, with period-end shares of 904.37 million in issue, unchanged from the prior comparable period.
+
+
+The Group recorded a free cash inflow of R2.4 billion, after net cash capital outflows of R6.9 billion, and ended the
+
+
+period with adjusted net cash after debt of R8.1 billion and liquidity headroom of R19.7 billion.
+
+
+Implats' capital allocation framework aims to sustain and grow meaningful value for all stakeholders and provide
+
+
+attractive returns to shareholders, while maintaining financial flexibility for the Group.
+
+
+During the period, Implats invested R6.9 billion in capital expenditure, with a further R0.6 billion allocated to
+
+
+acquiring shares for the Group's share incentive schemes. After adjusting for foreign exchange translation losses and
+
+
+R0.9 billion in growth capital, the Group realised an adjusted free cash flow of R2.6 billion.
+
+
+Implats' dividend policy is premised on returning a minimum of 30% adjusted free cash flow (pre growth capital) to
+
+
+shareholders. After considering the Group's financial performance, robust balance sheet, future capital requirements and
+
+
+improving market conditions, the board declared a final cash dividend of 165 cents per share, amounting to R1.5 billion.
+
+
+Including dividends paid to Impala Chrome minorities in the period, this equates to an approximately 60% allocation of
+
+
+adjusted free cash flow to shareholder returns in FY2025.
+
+
+Outlook and guidance
+
+
+FY2026 began with an improved performance at our mining operations and stability across Group processing assets. Rand
+
+
+PGM pricing gains were maintained in the early months of FY2026, despite the traditionally quiet Northern Hemisphere
+
+
+'summer lull' and continued macroeconomic uncertainty, including tariff-related developments. Sales are set to benefit
+
+
+from the delayed destocking of accumulated in-process inventory.
+
+
+Our operational focus remains firmly on improving safety outcomes and arresting the unacceptable incidence of fatal
+
+
+injuries. In FY2026, we will intensify efforts across several key areas: managing the orderly wind-down of commercial
+
+
+operations at Impala Canada, ensuring continued employee relations stability, realising operational efficiencies at our
+
+
+newly consolidated Impala operations and securing operational improvements at Marula.
+
+
+Our broader strategic agenda centres on optimal capital allocation and maximising the optionality and opportunities
+
+
+within our portfolio, supported by our strong and flexible balance sheet, to deliver a resilient and higher-value
+
+
+Implats.
+
+
+Group production in FY2026 will be supported by sustained operating momentum at Impala Rustenburg, Mimosa and Two Rivers,
+
+
+while restored momentum at Zimplats and improved stability at Marula bode well for the Group's production outlook.
+
+
+Impala Canada volumes will decline in line with the planned end of commercial operations during the year.
+
+
+Refined volumes are expected to benefit from improved annual processing availability at both Impala Rustenburg and
+
+
+Zimplats, driven by an optimised operating strategy and enhanced maintenance protocols, and the destocking of previously
+
+
+accumulated inventory, a process expected to be completed by FY2029. Group 6E refined and saleable production is expected
+
+
+to be between 3.4 and 3.6 million ounces. Group unit costs are forecast to rise by between 4% to 9% or R23 500 and
+
+
+R24 500 per 6E ounce on a stock-adjusted basis. Group capital expenditure is forecast to be between R8 billion and
+
+
+R9 billion, with negligible growth capital expected. This guidance assumes exchange rates of R18.00/US$ and C$1.39/US$,
+
+
+respectively.
+
+
+The financial information in this paragraph has not been reviewed and reported on by the Group's external auditors.
+
+
+Key financial metrics
+
+
+                                                                   Year ended         Year ended       Variance
+
+
+                                                                 30 June 2025       30 June 2024              %
+
+
+Revenue                                               (Rm)             85 459             86 398           (1.1)
+
+
+Gross profit                                          (Rm)              2 443              5 467          (55.3)
+
+
+EBITDA*                                               (Rm)              9 919             12 367          (19.8)
+
+
+Profit/(loss) for the year                            (Rm)                707            (17 151)         104.1
+
+
+Basic earnings/(loss)                                 (Rm)                761            (17 313)         104.4
+
+
+Headline earnings                                     (Rm)                732              2 411          (69.6)
+
+
+Free cash flow*                                       (Rm)              2 354             (3 954)         159.5
+
+
+Adjusted net cash*                                    (Rm)              8 141              6 923           17.6
+
+
+Basic earnings/(loss) per share                       (cps)                85             (1 929)         104.4
+
+
+Headline earnings per share                           (cps)                82                269          (69.5)
+
+
+Dividends per share                                   (cps)               165                  -              -
+
+
+*Non-International Financial Reporting Standards (IFRS) metrics
+
+
+Note: All non-IFRS measures are defined in the Audited Summarised Consolidated Annual Results for the year ended
+
+
+30 June 2025 available at www.implats.co.za.
+
+
+Operating statistics
+
+
+                                                                   Year ended         Year ended       Variance
+
+
+                                                                      30 June            30 June              %
+
+
+                                                                         2025               2024
+
+
+Gross refined production
+
+
+6E                                                   (000oz)          3 374.5            3 377.8           (0.1)
+
+
+Platinum                                             (000oz)          1 602.9            1 589.8            0.8
+
+
+Palladium                                            (000oz)          1 136.8            1 157.5           (1.8)
+
+
+Rhodium                                              (000oz)            193.2              189.6            1.9
+
+
+Nickel                                              (tonnes)           15 693             16 155           (2.9)
+
+
+Sales volumes
+
+
+6E                                                   (000oz)          3 369.0            3 438.6           (2.0)
+
+
+Platinum                                             (000oz)          1 588.9            1 579.4            0.6
+
+
+Palladium                                            (000oz)          1 124.1            1 192.9           (5.8)
+
+
+Rhodium                                              (000oz)            196.4              193.3            1.6
+
+
+Nickel                                              (tonnes)           13 299             12 617            5.4
+
+
+Prices achieved
+
+
+Platinum                                            (US$/oz)              986                934            5.6
+
+
+Palladium                                           (US$/oz)              986              1 083           (9.0)
+
+
+Rhodium                                             (US$/oz)            4 818              4 360           10.5
+
+
+Nickel                                               (US$/t)           15 467             18 241          (15.2)
+
+
+Consolidated statistics
+
+
+Average rate achieved                                (R/US$)            18.12              18.71           (3.2)
+
+
+Closing rate for the period                          (R/US$)            17.72              18.19           (2.6)
+
+
+Revenue per 6E ounce sold                           (US$/oz)            1 389              1 350            2.9
+
+
+Revenue per 6E ounce sold                             (R/oz)           25 172             25 257           (0.3)
+
+
+Tonnes milled ex-mine*                                (000t)           26 294             27 887           (5.7)
+
+
+Group 6E production                                  (000oz)          3 553.3            3 653.7           (2.7)
+
+
+Group unit cost per 6E ounce (stock-adjusted)         (R/oz)           22 491             20 922           (7.5)
+
+
+Group unit cost per 6E ounce (stock-adjusted)       (US$/oz)            1 238              1 118          (10.7)
+
+
+Capital expenditure*                                    (Rm)            6 979             14 003           50.2
+
+
+*Managed operations
+
+
+Dividend declaration
+
+
+Shareholders are advised that the board has resolved to declare a final gross cash dividend of 165 cents per ordinary
+
+
+share amounting to R1.5 billion as at the date of declaration, for the financial year ended 30 June 2025. The dividend
+
+
+will be paid from retained earnings.
+
+
+In line with Implats' approved dividend policy, which targets a minimum return of 30% of adjusted free cash flow before
+
+
+growth capital, the board has carefully considered the Groups' financial performance, strong balance sheet, future
+
+
+capital requirements and improving market conditions. As a result, the final dividend represents an increased payout
+
+
+of approximately 60% of adjusted free cash flow, reaffirming the Group's commitment to prioritising shareholder returns.
+
+
+Implats has 904 368 485 ordinary shares in issue and the Company's tax reference number is 9700178719. The cash dividend
+
+
+will be subject to a 20% dividend withholding for shareholders who are not exempt from, or do not qualify for, a reduced
+
+
+rate of withholding tax. Therefore, the net dividend amount is 132.00000 cents per ordinary share for shareholders liable
+
+
+to pay the dividend withholding tax and 165 cents per ordinary share for shareholders exempt from dividend withholding
+
+
+tax. Shareholders are advised to complete the requisite declaration form available from Computershare to inform the
+
+
+Company of their tax status.
+
+
+The salient dates are as follows:
+
+
+Declaration date:                                                       Thursday, 28 August 2025
+
+
+Last day for trading to be eligible for cash dividend:                Tuesday, 16 September 2025
+
+
+Trading ex-dividend commences:                                      Wednesday, 17 September 2025
+
+
+Record date:                                                           Friday, 19 September 2025
+
+
+Dividend payment date:                                                 Monday, 22 September 2025
+
+
+Share certificates may not be dematerialised or rematerialised between Wednesday, 17 September 2025 and Friday,
+
+
+19 September 2025, both days inclusive.
+
+
+Short form announcement
+
+
+This announcement is not audited but is extracted from the Group's audited consolidated annual financial statements
+
+
+for the year ended 30 June 2025 ("AFS2025") and, as such, does not contain full or complete details. Any investment
+
+
+decisions should be based on consideration of the AFS2025.
+
+
+This short form announcement is the responsibility of the board of directors of Implats.
+
+
+Deloitte & Touche, the external auditors, have issued an unmodified audit opinion on the AFS2025, which is available
+
+
+on Implats' website at https://www.implats.co.za/corporate-reports-results-and-presentations.php and on the JSE's
+
+
+cloudlink at https://senspdf.jse.co.za/documents/2025/jse/isse/IMPE/YE2025.pdf
+
+
+Queries
+
+
+Johan Theron
+
+
+E-mail :
+[email protected]
+
+
+T: +27 (0) 11 731 9013
+
+
+M: +27 (0) 82 809 0166
+
+
+Emma Townshend
+
+
+E-mail :
+[email protected]
+
+
+T: +27 (0) 21 794 8345
+
+
+M: +27 (0) 82 415 3770
+
+
+Alice Lourens
+
+
+E-mail :
+[email protected]
+
+
+T: +27 (0) 11 731 9033
+
+
+M: +27 (0) 82 498 3608
+
+
+28 August 2025
+
+
+Johannesburg
+
+
+Sponsor
+
+
+Nedbank Corporate and Investment Banking, a division of Nedbank Limited
+
+
+Date: 28-08-2025 07:05:00
