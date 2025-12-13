@@ -1,4 +1,6 @@
 from typing import List, Dict, Optional, Any, Callable
+from core.db.engine import DBEngine
+import logging
 from modules.data.parsers import (
     parse_multi_year_share_statistics,
     parse_multi_year_ratios,
@@ -86,3 +88,30 @@ class FundamentalsScraper:
         except Exception as e:
             self.log(f"  Error scraping {ticker}: {e}")
             return None
+
+
+async def get_watchlist_tickers_without_deepresearch(limit: int | None = None):
+    """Return list of watchlist tickers that have no deepresearch (NULL or empty).
+
+    Tolerates '.JO' suffix by joining stock_analysis on both the exact and REPLACE(ticker, '.JO','') value.
+    """
+    logger = logging.getLogger(__name__)
+    query = """
+        SELECT w.ticker
+        FROM watchlist w
+        JOIN stock_details sd ON w.ticker = sd.ticker
+        LEFT JOIN stock_analysis sa ON (sa.ticker = w.ticker OR sa.ticker = REPLACE(w.ticker, '.JO', ''))
+        WHERE w.status NOT IN ('WL-Sleep')
+          AND (sa.deepresearch IS NULL OR TRIM(sa.deepresearch) = '')
+        ORDER BY
+            CASE WHEN sd.priority = 'A' THEN 1
+                 WHEN sd.priority = 'B' THEN 2
+                 ELSE 3 END,
+            w.ticker
+    """
+    if limit:
+        query += f" LIMIT {limit}"
+    rows = await DBEngine.fetch(query)
+    tickers = [r['ticker'] for r in rows]
+    logger.info("get_watchlist_tickers_without_deepresearch: found %d tickers", len(tickers))
+    return tickers

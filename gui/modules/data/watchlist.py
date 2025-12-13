@@ -3,6 +3,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Note: helper get_watchlist_tickers_without_deepresearch is defined in gui/modules/data/scraper.py
+# and can be imported from there directly; no forwarding import here to avoid circular imports.
+
 
 async def fetch_watchlist_data():
     """

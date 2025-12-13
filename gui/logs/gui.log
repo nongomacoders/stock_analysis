@@ -1,61 +1,7 @@
-2025-12-12 17:30:37,678 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-12 17:30:37,690 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-12 17:30:47,674 __main__ INFO: Selected: NTU.JO
-2025-12-12 17:30:47,929 components.deep_research_tab INFO: [DeepResearch] load_content called for NTU.JO, setting loading=True
-2025-12-12 17:30:47,929 components.deep_research_tab INFO: [DeepResearch] load_content complete for NTU.JO, setting loading=False
-2025-12-12 17:30:58,797 __main__ INFO: Selected: ACT.JO
-2025-12-12 17:30:58,797 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: ACT.JO
-2025-12-12 17:30:58,968 components.deep_research_tab INFO: [DeepResearch] load_content called for ACT.JO, setting loading=True
-2025-12-12 17:30:58,968 components.deep_research_tab INFO: [DeepResearch] load_content complete for ACT.JO, setting loading=False
-2025-12-12 17:31:34,657 __main__ INFO: Selected: AGL.JO
-2025-12-12 17:31:34,657 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: AGL.JO
-2025-12-12 17:31:34,806 components.deep_research_tab INFO: [DeepResearch] load_content called for AGL.JO, setting loading=True
-2025-12-12 17:31:34,806 components.deep_research_tab INFO: [DeepResearch] load_content complete for AGL.JO, setting loading=False
-2025-12-12 17:31:35,770 __main__ INFO: Selected: GFI.JO
-2025-12-12 17:31:35,770 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: GFI.JO
-2025-12-12 17:31:35,934 components.deep_research_tab INFO: [DeepResearch] load_content called for GFI.JO, setting loading=True
-2025-12-12 17:31:35,935 components.deep_research_tab INFO: [DeepResearch] load_content complete for GFI.JO, setting loading=False
-2025-12-12 17:31:55,966 __main__ INFO: Selected: ACL.JO
-2025-12-12 17:31:55,966 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: ACL.JO
-2025-12-12 17:31:56,133 components.deep_research_tab INFO: [DeepResearch] load_content called for ACL.JO, setting loading=True
-2025-12-12 17:31:56,133 components.deep_research_tab INFO: [DeepResearch] load_content complete for ACL.JO, setting loading=False
-2025-12-12 17:42:33,024 components.base_text_tab INFO: _safe_save called on StrategyTab ticker=ACL.JO
-2025-12-12 17:42:39,223 components.research_tab INFO: Generating research for ACL.JO...
-2025-12-12 17:42:39,239 modules.analysis.engine INFO: AI: Generating Research Summary for ACL.JO...
-2025-12-12 17:42:59,190 components.base_text_tab INFO: _safe_save called on ResearchTab ticker=ACL.JO
-2025-12-12 17:42:59,190 modules.data.research INFO: Saved research for ACL.JO
-2025-12-12 17:43:21,735 __main__ INFO: Selected: AEG.JO
-2025-12-12 17:43:21,736 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: AEG.JO
-2025-12-12 17:43:21,900 components.deep_research_tab INFO: [DeepResearch] load_content called for AEG.JO, setting loading=True
-2025-12-12 17:43:21,900 components.deep_research_tab INFO: [DeepResearch] load_content complete for AEG.JO, setting loading=False
-2025-12-12 17:43:47,405 __main__ INFO: Selected: BTI.JO
-2025-12-12 17:43:47,405 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: BTI.JO
-2025-12-12 17:43:47,613 components.deep_research_tab INFO: [DeepResearch] load_content called for BTI.JO, setting loading=True
-2025-12-12 17:43:47,613 components.deep_research_tab INFO: [DeepResearch] load_content complete for BTI.JO, setting loading=False
-2025-12-12 17:52:36,652 components.research_tab INFO: Generating research for BTI.JO...
-2025-12-12 17:52:36,665 modules.analysis.engine INFO: AI: Generating Research Summary for BTI.JO...
-2025-12-12 17:52:55,491 components.base_text_tab INFO: _safe_save called on ResearchTab ticker=BTI.JO
-2025-12-12 17:52:55,537 modules.data.research INFO: Saved research for BTI.JO
-2025-12-12 17:53:01,037 __main__ INFO: Selected: BTI.JO
-2025-12-12 17:53:01,037 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: BTI.JO
-2025-12-12 17:53:01,194 components.deep_research_tab INFO: [DeepResearch] load_content called for BTI.JO, setting loading=True
-2025-12-12 17:53:01,195 components.deep_research_tab INFO: [DeepResearch] load_content complete for BTI.JO, setting loading=False
-2025-12-12 17:53:19,830 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=966.03, Target=1120.0, Stop=924.05, IsLong=True
-2025-12-12 17:54:14,733 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=966.03, Target=1120.0, Stop=924.05, IsLong=True
-2025-12-12 17:54:17,781 __main__ INFO: Selected: LHC.JO
-2025-12-12 17:54:17,781 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: LHC.JO
-2025-12-12 17:54:17,940 components.deep_research_tab INFO: [DeepResearch] load_content called for LHC.JO, setting loading=True
-2025-12-12 17:54:17,941 components.deep_research_tab INFO: [DeepResearch] load_content complete for LHC.JO, setting loading=False
-2025-12-12 17:54:21,602 __main__ INFO: Selected: ANG.JO
-2025-12-12 17:54:21,602 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: ANG.JO
-2025-12-12 17:54:21,817 components.deep_research_tab INFO: [DeepResearch] load_content called for ANG.JO, setting loading=True
-2025-12-12 17:54:21,817 components.deep_research_tab INFO: [DeepResearch] load_content complete for ANG.JO, setting loading=False
+2025-12-13 10:44:13,550 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-13 10:44:13,584 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-13 10:44:30,409 __main__ INFO: Closing application...
+2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
+2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Released connection for listener.
+2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
