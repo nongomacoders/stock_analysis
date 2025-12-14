@@ -16,7 +16,7 @@ else:
 async def query_ai(prompt: str):
     """Sends a prompt to Gemini and returns the text response asynchronously."""
     try:
-        model = genai.GenerativeModel("gemini-2.5-pro")
+        model = genai.GenerativeModel("gemini-3-pro-preview")
         # Use generate_content_async for non-blocking calls
         response = await model.generate_content_async(prompt)
         return response.text

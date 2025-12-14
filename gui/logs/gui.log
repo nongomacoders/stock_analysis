@@ -1,7 +1,44 @@
-2025-12-13 10:44:13,550 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-13 10:44:13,584 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-13 10:44:30,409 __main__ INFO: Closing application...
-2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
-2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Released connection for listener.
-2025-12-13 10:44:30,409 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
+2025-12-14 08:51:34,363 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-14 08:51:34,388 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-14 08:51:57,549 __main__ INFO: Selected: KIO.JO
+2025-12-14 08:51:57,803 components.deep_research_tab INFO: [DeepResearch] load_content called for KIO.JO, setting loading=True
+2025-12-14 08:51:57,803 components.deep_research_tab INFO: [DeepResearch] load_content complete for KIO.JO, setting loading=False
+2025-12-14 08:52:09,478 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=330.0, Target=360.0, Stop=290.0, IsLong=True
+2025-12-14 08:52:35,327 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=330.0, Target=360.0, Stop=307.84, IsLong=True
+2025-12-14 08:52:40,963 __main__ INFO: Selected: ANG.JO
+2025-12-14 08:52:40,963 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ANG.JO
+2025-12-14 08:52:41,120 components.deep_research_tab INFO: [DeepResearch] load_content called for ANG.JO, setting loading=True
+2025-12-14 08:52:41,120 components.deep_research_tab INFO: [DeepResearch] load_content complete for ANG.JO, setting loading=False
+2025-12-14 08:53:26,334 components.research_tab INFO: Generating research for ANG.JO...
+2025-12-14 08:53:26,346 modules.analysis.engine INFO: AI: Generating Research Summary for ANG.JO...
+2025-12-14 08:53:57,152 components.base_text_tab INFO: _safe_save called on ResearchTab ticker=ANG.JO
+2025-12-14 08:53:57,152 modules.data.research INFO: Saved research for ANG.JO
+2025-12-14 08:54:17,143 components.base_text_tab INFO: _safe_save called on StrategyTab ticker=ANG.JO
+2025-12-14 08:54:37,204 __main__ INFO: Selected: AGL.JO
+2025-12-14 08:54:37,204 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: AGL.JO
+2025-12-14 08:54:37,411 components.deep_research_tab INFO: [DeepResearch] load_content called for AGL.JO, setting loading=True
+2025-12-14 08:54:37,411 components.deep_research_tab INFO: [DeepResearch] load_content complete for AGL.JO, setting loading=False
+2025-12-14 08:55:24,164 components.base_text_tab INFO: _safe_save called on StrategyTab ticker=AGL.JO
+2025-12-14 08:55:30,158 __main__ INFO: Selected: GFI.JO
+2025-12-14 08:55:30,158 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GFI.JO
+2025-12-14 08:55:30,314 components.deep_research_tab INFO: [DeepResearch] load_content called for GFI.JO, setting loading=True
+2025-12-14 08:55:30,314 components.deep_research_tab INFO: [DeepResearch] load_content complete for GFI.JO, setting loading=False
+2025-12-14 08:55:46,885 components.base_text_tab INFO: _safe_save called on StrategyTab ticker=GFI.JO
+2025-12-14 08:55:48,640 __main__ INFO: Selected: NRP.JO
+2025-12-14 08:55:48,640 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: NRP.JO
+2025-12-14 08:55:48,795 components.deep_research_tab INFO: [DeepResearch] load_content called for NRP.JO, setting loading=True
+2025-12-14 08:55:48,795 components.deep_research_tab INFO: [DeepResearch] load_content complete for NRP.JO, setting loading=False
+2025-12-14 08:55:51,085 __main__ INFO: Selected: GFI.JO
+2025-12-14 08:55:51,085 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GFI.JO
+2025-12-14 08:55:51,237 components.deep_research_tab INFO: [DeepResearch] load_content called for GFI.JO, setting loading=True
+2025-12-14 08:55:51,237 components.deep_research_tab INFO: [DeepResearch] load_content complete for GFI.JO, setting loading=False
+2025-12-14 09:02:06,451 __main__ INFO: Selected: RBO.JO
+2025-12-14 09:02:06,451 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RBO.JO
+2025-12-14 09:02:06,634 components.deep_research_tab INFO: [DeepResearch] load_content called for RBO.JO, setting loading=True
+2025-12-14 09:02:06,634 components.deep_research_tab INFO: [DeepResearch] load_content complete for RBO.JO, setting loading=False
