@@ -32,8 +32,8 @@ class WatchlistWidget(ttk.Frame):
 
         self.create_widgets()
 
-        # Initial data load
-        self.refresh()
+        # Note: Initial data load is triggered by main.py after DB is ready
+        # Do NOT call self.refresh() here - it would freeze the UI before DB pool exists
 
     def refresh(self):
         """Refresh the watchlist tab."""

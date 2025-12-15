@@ -81,33 +81,58 @@ class CommandCenter(ttk.Window):
         self.loop_thread = threading.Thread(target=self._run_event_loop, daemon=True)
         self.loop_thread.start()
 
-        # 2. Initialize Database (Singleton Pattern)
-        # We run this on the main thread's interface to the loop
-        self.async_run(DBEngine.get_pool())
-
-        # 3. Start Background Services
-        self.start_market_agent()
-        
-        # 4. Initialize Database Notifier
+        # 2. Create notifier placeholder (will be set up in background)
         self.notifier = DBNotifier()
-        self.async_run(self.notifier.add_listener('action_log_changes', self.on_action_log_notification))
-
-        # 5. Build UI
+        
+        # 3. Build UI immediately (non-blocking)
         self.create_layout()
         
         # Window References
         self.chart_window = None
         self.research_window = None
+        
+        # 4. Initialize database and notifier in background (non-blocking)
+        self._init_services_async()
+
+    def _init_services_async(self):
+        """Initialize DB pool and notifier in background without blocking UI"""
+        async def setup_services():
+            try:
+                # Initialize database pool
+                await DBEngine.get_pool()
+                logging.getLogger(__name__).info("Database pool initialized")
+                
+                # Set up notifier listener
+                await self.notifier.add_listener('action_log_changes', self.on_action_log_notification)
+                logging.getLogger(__name__).info("Notifier listener added")
+                
+                return True
+            except Exception as e:
+                logging.getLogger(__name__).exception("Failed to initialize services: %s", e)
+                return False
+        
+        def on_services_ready(success):
+            if success:
+                # Refresh watchlist once DB is ready
+                self.watchlist.refresh()
+            else:
+                logging.getLogger(__name__).error("Service initialization failed - app may not work correctly")
+        
+        self.async_run_bg(setup_services(), callback=on_services_ready)
 
     def _run_event_loop(self):
         """Run the asyncio event loop in a separate thread"""
         asyncio.set_event_loop(self.loop)
         self.loop.run_forever()
 
-    def async_run(self, coro):
-        """Helper to run async coroutines from sync code"""
+    def async_run(self, coro, timeout=30):
+        """Helper to run async coroutines from sync code (with timeout to prevent freezing)"""
         future = asyncio.run_coroutine_threadsafe(coro, self.loop)
-        return future.result()
+        try:
+            return future.result(timeout=timeout)
+        except Exception as e:
+            logging.getLogger(__name__).exception("async_run timed out or failed: %s", e)
+            return None
 
     def async_run_bg(self, coro, callback=None):
         """Run async coroutine in background without blocking UI"""
@@ -152,8 +177,7 @@ class CommandCenter(ttk.Window):
         self.watchlist = WatchlistWidget(self, self.on_ticker_select, self.async_run, self.async_run_bg, self.notifier)
         self.watchlist.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
-        # Initial Load
-        self.watchlist.refresh()
+        # Note: Initial refresh is triggered by _init_services_async after DB is ready
 
     def on_ticker_select(self, ticker):
         """Callback when watchlist row is clicked"""
