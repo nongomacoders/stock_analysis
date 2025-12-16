@@ -14,7 +14,11 @@ async def fetch_watchlist_data():
     query = """
         SELECT 
             w.ticker, sd.full_name, sd.priority, w.status,
-            w.entry_price, w.stop_loss, w.target_price as target, w.is_long,
+            -- Prefer explicit watchlist values, fall back to the most recent stock_price_levels row when NULL
+            COALESCE(w.entry_price, (SELECT price_level FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'entry' ORDER BY date_added DESC LIMIT 1)) AS entry_price,
+            COALESCE(w.stop_loss, (SELECT price_level FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'stop_loss' ORDER BY date_added DESC LIMIT 1)) AS stop_loss,
+            COALESCE(w.target_price, (SELECT price_level FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'target' ORDER BY date_added DESC LIMIT 1)) AS target,
+            w.is_long,
             p.close_price,
             w.reward_risk_ratio,
             sa.strategy,

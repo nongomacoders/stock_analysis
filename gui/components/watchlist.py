@@ -105,7 +105,8 @@ class WatchlistWidget(ttk.Frame):
             "Name", text="Name", command=lambda: self.sort_column("Name", False)
         )
         self.tree.heading("Price", text="Price")
-        self.tree.heading("Proximity", text="Proximity")
+        # Make Proximity clickable to sort via the centralized helper
+        self.tree.heading("Proximity", text="Proximity", command=lambda: self.sort_column("Proximity", False))
         self.tree.heading(
             "Event", text="Event", command=lambda: self.sort_column("Event", False)
         )
@@ -200,6 +201,19 @@ class WatchlistWidget(ttk.Frame):
                 prox_text, _ = get_proximity_status(
                     row["close_price"], row["entry_price"], row["stop_loss"], row["target"], row.get("is_long", True)
                 )
+
+                # If we have an entry but got no proximity due to missing price data,
+                # show a placeholder so the column remains populated and sortable.
+                if (prox_text is None or str(prox_text).strip() == "" or str(prox_text).strip().lower() == "no data") and row.get("entry_price") is not None:
+                    try:
+                        import logging
+                        logging.getLogger(__name__).debug(
+                            "Proximity unavailable for %s (price=%s entry=%s stop=%s target=%s)",
+                            row.get("ticker"), row.get("close_price"), row.get("entry_price"), row.get("stop_loss"), row.get("target"),
+                        )
+                    except Exception:
+                        pass
+                    prox_text = "(N/A) Entry"
 
                 # 4. Truncate Text
                 strategy_text = str(row.get("strategy", "") or "").replace("\n", " ")

@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import re
 
 
 def sort_watchlist_records(rows, today=None):
@@ -104,6 +105,9 @@ def sort_treeview_column(tree, col, reverse=False):
                 return float("inf")
 
         l.sort(key=upside_key, reverse=reverse)
+    elif col == "Proximity":
+        # Proximity displayed as '(0.5%) Entry' — extract leading percent for numeric sort
+        l.sort(key=proximity_key, reverse=reverse)
     elif col == "PEG":
         # PEG ratio (numeric). Treat missing values as +inf to push them to end.
         def peg_key(item):
@@ -128,3 +132,20 @@ def sort_treeview_column(tree, col, reverse=False):
     except Exception:
         # If the heading can't be set (rare cases if col doesn't exist), ignore
         pass
+
+
+# Module-level helper exposed for unit tests
+def proximity_key(item):
+    val = item[0]
+    if val is None:
+        return float("inf")
+    s = str(val).strip()
+    if s == "" or s == "-" or s.lower() == "no data":
+        return float("inf")
+    m = re.search(r"\(?\s*([0-9]+(?:\.[0-9]+)?)\s*%", s)
+    if m:
+        try:
+            return float(m.group(1))
+        except Exception:
+            return float("inf")
+    return float("inf")

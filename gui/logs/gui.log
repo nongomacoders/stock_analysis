@@ -1,0 +1,7 @@
+2025-12-16 12:41:54,271 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-16 12:41:54,288 __main__ INFO: Database pool initialized
+2025-12-16 12:41:54,481 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-16 12:41:54,481 __main__ INFO: Notifier listener added
+2025-12-16 12:42:31,677 __main__ INFO: Selected: SSW.JO
+2025-12-16 12:42:34,184 components.deep_research_tab INFO: [DeepResearch] load_content called for SSW.JO, setting loading=True
+2025-12-16 12:42:34,186 components.deep_research_tab INFO: [DeepResearch] load_content complete for SSW.JO, setting loading=False

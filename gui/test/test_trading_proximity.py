@@ -9,14 +9,16 @@ def test_long_proximity():
     # near entry (>= entry and <= entry*1.02)
     text, style = get_proximity_status(101, 100, 90, 200, is_long=True)
     assert "Entry" in text and style == "success"
+    # Format should be '(x%) Entry' so it starts with a '(' and contains '%'
+    assert text.strip().startswith("(") and '%' in text
 
     # near target (>= target * 0.98)
     text, style = get_proximity_status(198, 100, 90, 200, is_long=True)
     assert "Target" in text and style == "info"
 
-    # default distance outside proximity -> should be blank
+    # default distance outside proximity -> should now display proximity for sorting
     text, style = get_proximity_status(95, 100, 90, 200, is_long=True)
-    assert text == "" and style == "secondary"
+    assert '%' in text and 'Entry' in text and style == "secondary"
 
 
 def test_short_proximity():
@@ -27,6 +29,7 @@ def test_short_proximity():
     # near entry (<= entry and >= entry * 0.98)
     text, style = get_proximity_status(99, 100, 105, 80, is_long=False)
     assert "Entry" in text and style == "success"
+    assert text.strip().startswith("(") and '%' in text
 
     # near target (<= target * 1.02)
     text, style = get_proximity_status(81, 100, 105, 80, is_long=False)
