@@ -34,7 +34,15 @@ class ResearchWindow(ttk.Toplevel):
 
         # Listen for DB notifications
         self.notifier = notifier
-        self.async_run(self.notifier.add_listener('action_log_changes', self.on_action_log_notification))
+        # Register listener in background to avoid blocking the GUI
+        try:
+            self.async_run_bg(self.notifier.add_listener('action_log_changes', self.on_action_log_notification))
+        except Exception:
+            # Fallback: try synchronously if background registration fails
+            try:
+                self.async_run(self.notifier.add_listener('action_log_changes', self.on_action_log_notification))
+            except Exception:
+                pass
 
         self.create_widgets()
         self.load_research()
@@ -48,16 +56,26 @@ class ResearchWindow(ttk.Toplevel):
         self.ticker = ticker
         self.title(f"{ticker} - Research & Action Log")
         
-        # Update title label if present
+        # Update title label if present (do this asynchronously to avoid blocking)
         if hasattr(self, 'title_label'):
+            def _on_category_loaded(category):
+                if category:
+                    self.title_label.configure(text=f"{ticker} — {category} — Research & Analysis")
+                else:
+                    self.title_label.configure(text=f"{ticker} - Research & Analysis")
+
             try:
-                category = self.async_run(get_stock_category(ticker))
+                self.async_run_bg(get_stock_category(ticker), callback=_on_category_loaded)
             except Exception:
-                category = None
-            if category:
-                self.title_label.configure(text=f"{ticker} — {category} — Research & Analysis")
-            else:
-                self.title_label.configure(text=f"{ticker} - Research & Analysis")
+                # fallback to synchronous fetch if background runner fails
+                try:
+                    category = self.async_run(get_stock_category(ticker))
+                except Exception:
+                    category = None
+                if category:
+                    self.title_label.configure(text=f"{ticker} — {category} — Research & Analysis")
+                else:
+                    self.title_label.configure(text=f"{ticker} - Research & Analysis")
         else:
             # fallback: search existing label
             for widget in self.winfo_children():
@@ -113,22 +131,50 @@ class ResearchWindow(ttk.Toplevel):
         self.notebook.add(self.action_log_tab, text="Action Log")
 
     def load_research(self):
-        # CHANGED: Call module functions
-        data = self.async_run(get_research_data(self.ticker))
-        # fetch category name (if any) and show in heading
+        """Load research data without blocking the GUI by using background tasks."""
+        def _on_research_loaded(data):
+            # Update title/category asynchronously
+            try:
+                self.async_run_bg(
+                    get_stock_category(self.ticker),
+                    callback=lambda category: self.title_label.configure(text=f"{self.ticker} — {category} — Research & Analysis") if category else self.title_label.configure(text=f"{self.ticker} - Research & Analysis"),
+                )
+            except Exception:
+                # fallback: sync fetch
+                try:
+                    category = self.async_run(get_stock_category(self.ticker))
+                except Exception:
+                    category = None
+                if category:
+                    self.title_label.configure(text=f"{self.ticker} — {category} — Research & Analysis")
+                else:
+                    self.title_label.configure(text=f"{self.ticker} - Research & Analysis")
+
+            # Delegate loading to child tabs (immediate update from fetched data)
+            self.deep_research_tab.load_content(data.get("deepresearch") if data else None)
+            self.master_strategy_tab.load_content(data.get("strategy") if data else None)
+            self.master_research_tab.load_content(data.get("research") if data else None)
+
+            # Load SENS data asynchronously
+            try:
+                self.async_run_bg(get_sens_for_ticker(self.ticker), callback=lambda s: self.sens_tab.load_content(s))
+            except Exception:
+                try:
+                    s = self.async_run(get_sens_for_ticker(self.ticker))
+                except Exception:
+                    s = None
+                self.sens_tab.load_content(s)
+
+            # Refresh action log (non-blocking)
+            self.action_log_tab.load_action_logs()
+
+        # Kick off the background fetch for the main research payload
         try:
-            category = self.async_run(get_stock_category(self.ticker))
+            self.async_run_bg(get_research_data(self.ticker), callback=_on_research_loaded)
         except Exception:
-            category = None
-        if category:
-            self.title_label.configure(text=f"{self.ticker} — {category} — Research & Analysis")
-        else:
-            self.title_label.configure(text=f"{self.ticker} - Research & Analysis")
-        sens_data = self.async_run(get_sens_for_ticker(self.ticker))
-        
-        # Delegate loading to child tabs
-        self.deep_research_tab.load_content(data.get("deepresearch") if data else None)
-        self.master_strategy_tab.load_content(data.get("strategy") if data else None)
-        self.master_research_tab.load_content(data.get("research") if data else None)
-        self.sens_tab.load_content(sens_data)
-        self.action_log_tab.load_action_logs()
+            # fallback: synchronous fetch if background runner fails
+            try:
+                data = self.async_run(get_research_data(self.ticker))
+            except Exception:
+                data = None
+            _on_research_loaded(data)

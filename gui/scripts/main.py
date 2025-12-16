@@ -195,7 +195,8 @@ class CommandCenter(ttk.Window):
             self.chart_window.update_ticker(ticker)
             self.chart_window.lift()
         else:
-            self.chart_window = ChartWindow(self, ticker, self.async_run)
+            # Pass async_run_bg so the chart window can fetch data without blocking the UI
+            self.chart_window = ChartWindow(self, ticker, self.async_run, self.async_run_bg)
             c_w = screen_width // 2
             c_h = usable_height // 2
             c_x = screen_width // 2

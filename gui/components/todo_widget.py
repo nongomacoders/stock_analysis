@@ -21,10 +21,15 @@ class TodoWidget(ttk.Frame):
         self.async_run_bg = async_run_bg
         self.notifier = notifier
 
-        # Listen for DB notifications to auto-refresh the list
-        self.async_run(
-            self.notifier.add_listener("daily_todos_changes", self.on_todo_notification)
-        )
+        # Listen for DB notifications to auto-refresh the list (non-blocking)
+        try:
+            self.async_run_bg(self.notifier.add_listener("daily_todos_changes", self.on_todo_notification))
+        except Exception:
+            # fallback to synchronous registration if background runner isn't available
+            try:
+                self.async_run(self.notifier.add_listener("daily_todos_changes", self.on_todo_notification))
+            except Exception:
+                pass
 
         self.create_widgets()
         self.refresh_todos()

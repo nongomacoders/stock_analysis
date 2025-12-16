@@ -12,7 +12,7 @@ from components.base_chart import BaseChart
 
 
 class ChartWindow(ttk.Toplevel):
-    def __init__(self, parent, ticker, async_run):
+    def __init__(self, parent, ticker, async_run, async_run_bg=None):
         # CHANGED: Removed db_layer argument
         super().__init__(parent)
         self.title(f"{ticker} - Price Charts")
@@ -20,6 +20,7 @@ class ChartWindow(ttk.Toplevel):
 
         self.ticker = ticker
         self.async_run = async_run
+        self.async_run_bg = async_run_bg
 
         # Configure matplotlib style
         plt.style.use("seaborn-v0_8-darkgrid")
@@ -134,142 +135,177 @@ class ChartWindow(ttk.Toplevel):
         return frame
 
     def load_charts(self):
-        """Load and display all charts"""
+        """Load and display all charts asynchronously to avoid blocking the GUI."""
         logging.getLogger(__name__).debug("[ChartWindow] load_charts called.")
-        # Single period: 3 Months (90 days)
         periods = {"3M": 90}
 
-        # --- Try to load saved horizontal-line prices from the watchlist table ---
-        saved_levels = []
-        try:
-            async_query = """
-                SELECT 
-                    w.entry_price, w.stop_loss, w.target_price,
-                    (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') as support_levels,
-                    (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') as resistance_levels
-                FROM watchlist w
-                WHERE w.ticker = $1
-            """
-            rows = self.async_run(DBEngine.fetch(async_query, self.ticker))
-            if rows:
-                row = dict(rows[0])
-                raw_entry = row.get("entry_price")
-                raw_stop = row.get("stop_loss")
-                raw_target = row.get("target_price")
-                raw_supports = row.get("support_levels") or []
-                raw_resistances = row.get("resistance_levels") or []
-
-                # DB returns Decimal objects for numeric columns; coerce to float
-                if raw_entry is not None:
-                    price_r = float(raw_entry) / 100.0
-                    saved_levels.append((price_r, "blue", f"Entry: R{price_r:.2f}"))
-                if raw_stop is not None:
-                    price_r = float(raw_stop) / 100.0
-                    saved_levels.append((price_r, "red", f"Stop Loss: R{price_r:.2f}"))
-                if raw_target is not None:
-                    price_r = float(raw_target) / 100.0
-                    saved_levels.append((price_r, "green", f"Target: R{price_r:.2f}"))
-                
-                # Process Support Levels
-                for p in raw_supports:
-                    if p is not None:
-                        price_r = float(p) / 100.0
-                        saved_levels.append((price_r, "green", f"Support: R{price_r:.2f}"))
-                
-                # Process Resistance Levels
-                for p in raw_resistances:
-                    if p is not None:
-                        price_r = float(p) / 100.0
-                        saved_levels.append((price_r, "red", f"Resistance: R{price_r:.2f}"))
-        except Exception as ex:
-            logging.getLogger(__name__).warning(
-                "[ChartWindow]   -> Failed to load saved horizontal line levels: %s", ex
-            )
+        async def _fetch():
+            # Fetch saved horizontal-line prices
             saved_levels = []
+            try:
+                async_query = """
+                    SELECT 
+                        w.entry_price, w.stop_loss, w.target_price,
+                        (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') as support_levels,
+                        (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') as resistance_levels
+                    FROM watchlist w
+                    WHERE w.ticker = $1
+                """
+                rows = await DBEngine.fetch(async_query, self.ticker)
+                if rows:
+                    row = dict(rows[0])
+                    raw_entry = row.get("entry_price")
+                    raw_stop = row.get("stop_loss")
+                    raw_target = row.get("target_price")
+                    raw_supports = row.get("support_levels") or []
+                    raw_resistances = row.get("resistance_levels") or []
 
-        for period_key, days in periods.items():
-            logging.getLogger(__name__).debug(
-                "[ChartWindow] Fetching data for %s (%d days)...", period_key, days
-            )
-            data = self.async_run(get_historical_prices(self.ticker, days))
-            if data:
-                logging.getLogger(__name__).debug(
-                    "[ChartWindow]   -> Fetched %d rows for %s.", len(data), period_key
-                )
-            else:
-                logging.getLogger(__name__).debug(
-                    "[ChartWindow]   -> No data fetched for %s.", period_key
-                )
-            chart = self.charts.get(period_key)
-            if chart:
-                logging.getLogger(__name__).debug(
-                    "[ChartWindow]   -> Plotting %s chart.", period_key
-                )
-                # If we have saved horizontal-line tuples (price,color,label),
-                # assign them directly to the chart instance so they act as
-                # stored_hlines for this plot. We avoid calling
-                # set_horizontal_lines() here because that method triggers a
-                # replot using the chart's stored df (which may be stale) —
-                # instead we set the attribute directly and then plot with
-                # the data for the current period so the hlines map correctly.
-                try:
-                    if saved_levels:
-                        chart.horizontal_lines = list(saved_levels)
-                except Exception:
-                    # Fallback: ignore if chart doesn't support attribute
-                    pass
+                    if raw_entry is not None:
+                        price_r = float(raw_entry) / 100.0
+                        saved_levels.append((price_r, "blue", f"Entry: R{price_r:.2f}"))
+                    if raw_stop is not None:
+                        price_r = float(raw_stop) / 100.0
+                        saved_levels.append((price_r, "red", f"Stop Loss: R{price_r:.2f}"))
+                    if raw_target is not None:
+                        price_r = float(raw_target) / 100.0
+                        saved_levels.append((price_r, "green", f"Target: R{price_r:.2f}"))
 
-                chart.plot(data, period_key)
-        # Load metrics
-        self.load_metrics()
+                    for p in raw_supports:
+                        if p is not None:
+                            price_r = float(p) / 100.0
+                            saved_levels.append((price_r, "green", f"Support: R{price_r:.2f}"))
 
-    def load_metrics(self):
-        """Load and display stock metrics"""
+                    for p in raw_resistances:
+                        if p is not None:
+                            price_r = float(p) / 100.0
+                            saved_levels.append((price_r, "red", f"Resistance: R{price_r:.2f}"))
+            except Exception:
+                saved_levels = []
+
+            # Fetch period data
+            period_results = {}
+            for period_key, days in periods.items():
+                data = await get_historical_prices(self.ticker, days)
+                period_results[period_key] = data
+
+            # Fetch metrics
+            metrics = await get_stock_metrics(self.ticker)
+
+            return {"saved_levels": saved_levels, "periods": period_results, "metrics": metrics}
+
+        def _on_loaded(result):
+            saved_levels = result.get("saved_levels", [])
+            for period_key, data in result.get("periods", {}).items():
+                chart = self.charts.get(period_key)
+                if chart:
+                    try:
+                        if saved_levels:
+                            chart.horizontal_lines = list(saved_levels)
+                    except Exception:
+                        pass
+                    chart.plot(data, period_key)
+
+            # Load metrics using fetched metrics
+            self.load_metrics(metrics=result.get("metrics"))
+
+        try:
+            self.async_run_bg(_fetch(), callback=_on_loaded)
+        except Exception:
+            # fallback to synchronous behavior if background runner fails
+            try:
+                saved_levels = []
+                async_query = """
+                    SELECT 
+                        w.entry_price, w.stop_loss, w.target_price,
+                        (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') as support_levels,
+                        (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') as resistance_levels
+                    FROM watchlist w
+                    WHERE w.ticker = $1
+                """
+                rows = self.async_run(DBEngine.fetch(async_query, self.ticker))
+                if rows:
+                    row = dict(rows[0])
+                    raw_entry = row.get("entry_price")
+                    if raw_entry is not None:
+                        price_r = float(raw_entry) / 100.0
+                        saved_levels.append((price_r, "blue", f"Entry: R{price_r:.2f}"))
+                for period_key, days in periods.items():
+                    data = self.async_run(get_historical_prices(self.ticker, days))
+                    chart = self.charts.get(period_key)
+                    if chart:
+                        try:
+                            if saved_levels:
+                                chart.horizontal_lines = list(saved_levels)
+                        except Exception:
+                            pass
+                        chart.plot(data, period_key)
+                self.load_metrics()
+            except Exception:
+                logging.getLogger(__name__).warning("[ChartWindow]   -> Failed to load charts (fallback): %s", exc_info=True)
+    def load_metrics(self, metrics=None):
+        """Load and display stock metrics. If metrics are provided, use them; otherwise fetch asynchronously."""
         # Clear existing items
         for item in self.metrics_tree.get_children():
             self.metrics_tree.delete(item)
-        
-        # Fetch metrics data
-        metrics = self.async_run(get_stock_metrics(self.ticker))
-        
-        if not metrics:
-            self.metrics_tree.insert("", END, values=("Status", "No metrics data available"))
+
+        def _render_metrics(metrics):
+            if not metrics:
+                self.metrics_tree.insert("", END, values=("Status", "No metrics data available"))
+                return
+
+            # Helper to format and insert
+            def add_row(label, value, fmt="{}", tags=None):
+                display_val = fmt.format(value) if value is not None else "N/A"
+                if tags:
+                    self.metrics_tree.insert("", END, values=(label, display_val), tags=tags)
+                else:
+                    self.metrics_tree.insert("", END, values=(label, display_val))
+
+            # Current Price
+            price = metrics.get('current_price')
+            add_row("Current Price", price/100 if price else None, "R {:.2f}")
+
+            # P/E Ratio
+            add_row("P/E Ratio", metrics.get('pe_ratio'), "{:.2f}")
+
+            # Dividend Yield
+            add_row("Dividend Yield", metrics.get('div_yield_perc'), "{:.2f}%")
+
+            # PEG Ratio (Historical)
+            add_row("PEG Ratio (Hist)", metrics.get('peg_ratio_historical'), "{:.2f}")
+
+            # Graham Fair Value
+            gfv = metrics.get('graham_fair_value')
+            add_row("Graham Fair Value", gfv/100 if gfv else None, "R {:.2f}")
+
+            # Valuation Premium
+            add_row("Valuation Premium", metrics.get('valuation_premium_perc'), "{:.2f}%")
+
+            # Historical Growth CAGR
+            add_row("Hist. Growth CAGR", metrics.get('historical_growth_cagr'), "{:.2f}%")
+            
+            # Financials Date
+            add_row("Financials Date", metrics.get('financials_date'), "{}")
+
+        if metrics is not None:
+            _render_metrics(metrics)
             return
-        
-        # Helper to format and insert
-        def add_row(label, value, fmt="{}", tags=None):
-            display_val = fmt.format(value) if value is not None else "N/A"
-            if tags:
-                self.metrics_tree.insert("", END, values=(label, display_val), tags=tags)
+
+        # Fetch metrics asynchronously
+        try:
+            # Prefer background runner if available
+            if hasattr(self, 'async_run_bg') and self.async_run_bg:
+                self.async_run_bg(get_stock_metrics(self.ticker), callback=_render_metrics)
             else:
-                self.metrics_tree.insert("", END, values=(label, display_val))
-
-        # Current Price
-        price = metrics.get('current_price')
-        add_row("Current Price", price/100 if price else None, "R {:.2f}")
-        
-        # P/E Ratio
-        add_row("P/E Ratio", metrics.get('pe_ratio'), "{:.2f}")
-        
-        # Dividend Yield
-        add_row("Dividend Yield", metrics.get('div_yield_perc'), "{:.2f}%")
-        
-        # PEG Ratio (Historical)
-        add_row("PEG Ratio (Hist)", metrics.get('peg_ratio_historical'), "{:.2f}")
-
-        # Graham Fair Value
-        gfv = metrics.get('graham_fair_value')
-        add_row("Graham Fair Value", gfv/100 if gfv else None, "R {:.2f}")
-
-        # Valuation Premium
-        add_row("Valuation Premium", metrics.get('valuation_premium_perc'), "{:.2f}%")
-
-        # Historical Growth CAGR
-        add_row("Hist. Growth CAGR", metrics.get('historical_growth_cagr'), "{:.2f}%")
-        
-        # Financials Date
-        add_row("Financials Date", metrics.get('financials_date'), "{}")
-
+                # Fallback to synchronous fetch if background runner is not available
+                metrics = self.async_run(get_stock_metrics(self.ticker))
+                _render_metrics(metrics)
+        except Exception:
+            try:
+                metrics = self.async_run(get_stock_metrics(self.ticker))
+            except Exception:
+                metrics = None
+            _render_metrics(metrics)
         # Next results release date (estimated): same logic as fetch_watchlist_data
         # Uses the 2nd most recent results_release_date + 1 year.
         try:
