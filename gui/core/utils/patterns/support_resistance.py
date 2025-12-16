@@ -200,17 +200,26 @@ def detect_support_resistance_zones(
     return {"support": support, "resistance": resistance}
 
 
-def pick_trade_levels(zones: dict, is_long: bool, entry_price: Optional[float] = None):
+def pick_trade_levels(
+    zones: dict,
+    is_long: bool,
+    entry_price: Optional[float] = None,
+    stop_loss: Optional[float] = None,
+    target_price: Optional[float] = None,
+):
     """
-    Pick the best support/resistance levels that make logical sense for a trade.
-    
-    For long trades:
-      - Support must be BELOW entry_price
-      - Resistance must be ABOVE entry_price
-    For short trades:
-      - Resistance must be ABOVE entry_price
-      - Support must be BELOW entry_price (and below resistance)
-    
+    Pick the best support/resistance levels that make logical sense for a trade and
+    strictly prefer levels inside the stop/entry/target band when those are supplied.
+
+    New rules:
+    - Long:
+      Support must be between stop_loss and entry_price
+      Resistance must be between entry_price and target_price
+    - Short:
+      Resistance must be between entry_price and stop_loss
+      Support must be between target_price and entry_price
+
+    Falls back to previous "best scored" candidate if only partial context is present.
     Returns (support_zone, resistance_zone) or (None, None) if not available.
     """
     supports = zones.get("support", [])
@@ -219,24 +228,54 @@ def pick_trade_levels(zones: dict, is_long: bool, entry_price: Optional[float] =
     if not supports and not resistances:
         return None, None
 
+    e = float(entry_price) if entry_price is not None else None
+    sl = float(stop_loss) if stop_loss is not None else None
+    tp = float(target_price) if target_price is not None else None
+
+    def in_band(zmid: float, lo: Optional[float], hi: Optional[float]) -> bool:
+        if lo is None or hi is None:
+            return True
+        lo2, hi2 = (lo, hi) if lo <= hi else (hi, lo)
+        return lo2 <= zmid <= hi2
+
     if is_long:
-        # For long: support below entry, resistance above entry
-        if entry_price is not None:
-            sup = next((s for s in supports if s.mid < entry_price), None)
-            res = next((r for r in resistances if r.mid > entry_price), None)
-        else:
-            # Fallback: just ensure resistance > support
-            sup = supports[0] if supports else None
-            res = next((r for r in resistances if sup and r.mid > sup.mid), None) if resistances else None
+        # Support: between stop and entry
+        sup_candidates = supports
+        if e is not None and sl is not None:
+            sup_candidates = [s for s in sup_candidates if in_band(float(s.mid), sl, e)]
+        elif e is not None:
+            sup_candidates = [s for s in sup_candidates if float(s.mid) < e]
+
+        # Resistance: between entry and target
+        res_candidates = resistances
+        if e is not None and tp is not None:
+            res_candidates = [r for r in res_candidates if in_band(float(r.mid), e, tp)]
+        elif e is not None:
+            res_candidates = [r for r in res_candidates if float(r.mid) > e]
+
+        # Choose “best” by score (zones list is already score-sorted)
+        sup = sup_candidates[0] if sup_candidates else None
+        res = res_candidates[0] if res_candidates else None
         return sup, res
+
     else:
-        # For short: resistance above entry, support below entry (and below resistance)
-        if entry_price is not None:
-            res = next((r for r in resistances if r.mid > entry_price), None)
-            sup = next((s for s in supports if s.mid < entry_price), None)
-        else:
-            res = resistances[0] if resistances else None
-            sup = next((s for s in supports if res and s.mid < res.mid), None) if supports else None
+        # Short trade
+        # Resistance: between entry and stop_loss
+        res_candidates = resistances
+        if e is not None and sl is not None:
+            res_candidates = [r for r in res_candidates if in_band(float(r.mid), e, sl)]
+        elif e is not None:
+            res_candidates = [r for r in res_candidates if float(r.mid) > e]
+
+        # Support: between target and entry
+        sup_candidates = supports
+        if e is not None and tp is not None:
+            sup_candidates = [s for s in sup_candidates if in_band(float(s.mid), tp, e)]
+        elif e is not None:
+            sup_candidates = [s for s in sup_candidates if float(s.mid) < e]
+
+        res = res_candidates[0] if res_candidates else None
+        sup = sup_candidates[0] if sup_candidates else None
         return sup, res
 
 

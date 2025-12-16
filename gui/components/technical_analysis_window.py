@@ -17,8 +17,13 @@ from components.analysis_service import fetch_analysis, delete_price_level
 from components.analysis_control_panel import AnalysisControlPanel
 from components.status_widget import StatusWidget
 from components.button_utils import run_bg_with_button
-from core.utils.patterns.support_resistance import detect_support_resistance_zones, pick_trade_levels
+
 from components.zone_settings_dialog import ZoneSettingsDialog
+
+# Refactored helpers
+from components.navigation_helper import NavigationHelper
+from components.analysis_data_manager import AnalysisDataManager
+from components.zone_detector import ZoneDetector
 
 class TechnicalAnalysisWindow(ttk.Toplevel):
     def __init__(self, parent, ticker, async_run_bg, on_status_saved_callback=None):
@@ -48,6 +53,12 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.zone_settings = dict(ZoneSettingsDialog.DEFAULTS)
 
         self.create_widgets()
+        # Instantiate refactored helpers
+        self.navigation = NavigationHelper(self)
+        self.data_manager = AnalysisDataManager()
+        self.zone_detector = ZoneDetector()
+
+        # Initial load
         self.load_chart("3 Months") # Default to 3 Months
         self.load_existing_data()
         self._update_ticker_name()
@@ -191,77 +202,18 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
             pass
 
     def _update_navigation_state(self):
+        """Delegate to NavigationHelper to update prev/next button enablement."""
         try:
-            # Find a watchlist-like object with get_ordered_tickers
-            parent = getattr(self, 'master', None)
-            watchlist_obj = None
-            if parent and hasattr(parent, 'get_ordered_tickers'):
-                watchlist_obj = parent
-            elif parent and hasattr(parent, 'watchlist'):
-                watchlist_obj = getattr(parent, 'watchlist')
-            else:
-                # Walk up the master chain looking for a watchlist-like object
-                cur = parent
-                while cur is not None:
-                    try:
-                        if hasattr(cur, 'get_ordered_tickers'):
-                            watchlist_obj = cur
-                            break
-                    except Exception:
-                        pass
-                    cur = getattr(cur, 'master', None)
-
-            # If we found a watchlist, evaluate size and enable/disable accordingly
-            if watchlist_obj is not None and callable(getattr(watchlist_obj, 'get_ordered_tickers', None)):
-                try:
-                    t = watchlist_obj.get_ordered_tickers() or []
-                except Exception:
-                    t = []
-                if not t or len(t) <= 1:
-                    try:
-                        self.prev_btn.configure(state='disabled')
-                        self.next_btn.configure(state='disabled')
-                    except Exception:
-                        pass
-                    return
-                else:
-                    try:
-                        self.prev_btn.configure(state='normal')
-                        self.next_btn.configure(state='normal')
-                    except Exception:
-                        pass
-            else:
-                # No watchlist identified — keep navigation disabled
-                try:
-                    self.prev_btn.configure(state='disabled')
-                    self.next_btn.configure(state='disabled')
-                except Exception:
-                    pass
+            if hasattr(self, 'navigation') and self.navigation is not None:
+                self.navigation.update_navigation_state()
         except Exception:
             pass
 
     def _find_watchlist_widget(self):
-        """Try to find a WatchlistWidget instance in the parent chain or 'master'.
-
-        Returns the widget if found, else None.
-        """
+        """Delegate search to NavigationHelper."""
         try:
-            parent = getattr(self, 'master', None)
-            # 1. If parent itself is a watchlist
-            if parent and hasattr(parent, 'get_adjacent_ticker') and hasattr(parent, 'get_ordered_tickers'):
-                return parent
-            # 2. If parent is command center that has .watchlist attribute
-            if parent and hasattr(parent, 'watchlist'):
-                return getattr(parent, 'watchlist')
-            # 3. Walk up the master chain looking for object with 'get_adjacent_ticker'
-            cur = parent
-            while cur is not None:
-                try:
-                    if hasattr(cur, 'get_adjacent_ticker') and hasattr(cur, 'get_ordered_tickers'):
-                        return cur
-                except Exception:
-                    pass
-                cur = getattr(cur, 'master', None)
+            if hasattr(self, 'navigation') and self.navigation is not None:
+                return self.navigation.find_watchlist_widget()
         except Exception:
             pass
         return None
@@ -396,7 +348,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         # --- 6) Persist to DB in CENTS ---
         # offload DB updates to helper that performs the same async operations
         async def update_db_wrapper():
-            await update_analysis_db(self.ticker, entry_c, stop_c, target_c, is_long, strategy, support_cs, resistance_cs)
+            await self.data_manager.update_analysis(self.ticker, entry_c, stop_c, target_c, is_long, strategy, support_cs, resistance_cs)
 
         def _on_saved(_res=None):
             # reload to refresh persisted levels with their assigned IDs
@@ -457,7 +409,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
             # Delete persisted level from DB
             async def delete_task():
-                await delete_price_level(level_id)
+                await self.data_manager.delete_price_level(level_id)
                 # No-op: leave for context (ensures we still call delete).
             # Optimistically remove it from our in-memory list + UI so chart updates immediately
             try:
@@ -509,7 +461,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 return
 
             async def delete_task():
-                await delete_price_level(level_id)
+                await self.data_manager.delete_price_level(level_id)
 
             # Optimistically remove persisted level from our in-memory list + UI and redraw
             try:
@@ -560,23 +512,9 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
 
     def load_existing_data(self):
-        """Fetch existing analysis data from DB."""
+        """Fetch existing analysis data from DB (delegates fetch to AnalysisDataManager)."""
         async def fetch_data():
-            # Fetch entry/target/stop from watchlist and strategy from stock_analysis.
-            # Also fetch latest support/resistance price_level values from stock_price_levels.
-            query = """
-                SELECT 
-                    w.entry_price, w.target_price, w.stop_loss, w.status,
-                    sa.strategy,
-                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') AS support_ids,
-                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') AS support_prices,
-                    (SELECT array_agg(spl.level_id ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') AS resistance_ids,
-                    (SELECT array_agg(spl.price_level ORDER BY spl.date_added DESC) FROM public.stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') AS resistance_prices
-                FROM watchlist w
-                LEFT JOIN stock_analysis sa ON w.ticker = sa.ticker
-                WHERE w.ticker = $1
-            """
-            return await fetch_analysis(self.ticker)
+            return await self.data_manager.fetch_analysis_row(self.ticker)
 
         def on_loaded(data):
             if data:
@@ -589,20 +527,20 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                 raw_res_ids = data.get("resistance_ids") or []
                 raw_res_prices = data.get("resistance_prices") or []
 
-                self.entry_price = price_from_db(raw_entry)
-                self.target_price = price_from_db(raw_target)
-                self.stop_loss = price_from_db(raw_stop)
+                self.entry_price = self.data_manager.price_from_db(raw_entry)
+                self.target_price = self.data_manager.price_from_db(raw_target)
+                self.stop_loss = self.data_manager.price_from_db(raw_stop)
                 # Build lists of persisted (id, price) tuples
                 try:
                     self.support_levels = []
                     for _id, p in zip(raw_support_ids, raw_support_prices):
-                        self.support_levels.append((int(_id) if _id is not None else None, price_from_db(p)))
+                        self.support_levels.append((int(_id) if _id is not None else None, self.data_manager.price_from_db(p)))
                 except Exception:
                     self.support_levels = []
                 try:
                     self.resistance_levels = []
                     for _id, p in zip(raw_res_ids, raw_res_prices):
-                        self.resistance_levels.append((int(_id) if _id is not None else None, price_from_db(p)))
+                        self.resistance_levels.append((int(_id) if _id is not None else None, self.data_manager.price_from_db(p)))
                 except Exception:
                     self.resistance_levels = []
                 strategy = data.get("strategy")
@@ -632,7 +570,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     logging.getLogger(__name__).exception("Failed updating status widget")
 
                 # Pass the prices to BaseChart so it can draw them after the plot
-                to_store = build_saved_levels_from_row(data)
+                to_store = self.data_manager.saved_levels_from_row(data)
                 # We'll build a full final lines list below including support/resistance
 
                 # Build the full set of lines from DB and in-memory levels
@@ -674,34 +612,26 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.async_run_bg(fetch_data(), callback=on_loaded)
     
     def _update_ticker_name(self):
-        """Fetch and display the full name for the current ticker."""
+        """Fetch and display the full name for the current ticker (delegates to AnalysisDataManager)."""
         async def fetch_name():
-            query = "SELECT full_name FROM stock_details WHERE ticker = $1"
-            rows = await DBEngine.fetch(query, self.ticker)
-            return rows[0]['full_name'] if rows and rows[0].get('full_name') else ""
-        
+            return await self.data_manager.fetch_full_name(self.ticker)
+
         def on_name_loaded(full_name):
             if full_name:
                 self.ticker_name_label.config(text=full_name)
             else:
                 self.ticker_name_label.config(text="")
-        
+
         self.async_run_bg(fetch_name(), callback=on_name_loaded)
     
     def _update_upside_display(self):
         """Calculate and display the upside potential based on current price, target, and position direction."""
         try:
-            # Get current price from database
             async def get_current_price():
-                query = "SELECT close_price FROM daily_stock_data WHERE ticker = $1 ORDER BY trade_date DESC LIMIT 1"
-                rows = await DBEngine.fetch(query, self.ticker)
-                return rows[0]['close_price'] if rows else None
-            
+                return await self.data_manager.fetch_current_price(self.ticker)
+
             def on_price_loaded(current_price):
                 try:
-                    # Normalize price units.
-                    # In this app, watchlist prices are stored in cents, while UI values are rands.
-                    # Detect cents by comparing to the target (rand) and downscale when needed.
                     cp = None
                     try:
                         cp = float(current_price) if current_price is not None else None
@@ -715,31 +645,27 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                         except Exception:
                             pass
 
-                    # Calculate upside if we have the required data
                     if (cp is not None and self.target_price is not None and cp > 0):
-                        
-                        # Determine if it's a long position (default assumption)
                         is_long = True
                         if hasattr(self, 'entry_price') and self.entry_price is not None:
                             is_long = self.target_price > self.entry_price
-                        
-                        # Calculate upside
+
                         if is_long:
                             gain = (self.target_price - cp) / cp * 100
                         else:
                             gain = (cp - self.target_price) / cp * 100
-                        
+
                         upside_str = f"Upside: {abs(float(gain)):.1f}%"
                         self.upside_label.config(text=upside_str)
                     else:
                         self.upside_label.config(text="")
-                        
+
                 except Exception as e:
                     logging.getLogger(__name__).warning(f"Failed to calculate upside: {e}")
                     self.upside_label.config(text="")
-            
+
             self.async_run_bg(get_current_price(), callback=on_price_loaded)
-                
+
         except Exception as e:
             logging.getLogger(__name__).warning(f"Failed to start upside calculation: {e}")
             self.upside_label.config(text="")
@@ -749,97 +675,55 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
     # -------------------------------------------------------------------------
     def _on_prev_ticker(self):
         try:
-            w = self._find_watchlist_widget()
-            if w and hasattr(w, 'get_adjacent_ticker'):
-                prev_t = w.get_adjacent_ticker(self.ticker, direction=-1)
-                if prev_t:
-                    try:
-                        if callable(getattr(w, 'on_select', None)):
-                            w.on_select(prev_t)
-                    except Exception:
-                        pass
-                    self.update_ticker(prev_t)
-                    # Bring this window to the front after other windows reload
-                    self.after(100, self.lift)
+            if hasattr(self, 'navigation') and self.navigation is not None:
+                self.navigation.go_prev()
         except Exception:
             logging.getLogger(__name__).exception('Failed moving to previous ticker')
 
     def _on_next_ticker(self):
         try:
-            w = self._find_watchlist_widget()
-            if w and hasattr(w, 'get_adjacent_ticker'):
-                nxt = w.get_adjacent_ticker(self.ticker, direction=1)
-                if nxt:
-                    try:
-                        if callable(getattr(w, 'on_select', None)):
-                            w.on_select(nxt)
-                    except Exception:
-                        pass
-                    self.update_ticker(nxt)
-                    # Bring this window to the front after other windows reload
-                    self.after(100, self.lift)
+            if hasattr(self, 'navigation') and self.navigation is not None:
+                self.navigation.go_next()
         except Exception:
             logging.getLogger(__name__).exception('Failed moving to next ticker')
 
     def _on_detect_zones(self):
-        """Detect support/resistance zones from chart data and draw them on the chart."""
+        """Detect support/resistance zones from chart data and draw them on the chart (delegates to ZoneDetector)."""
         try:
-            # Get current chart data
             df_source = getattr(self.chart, 'df_source', None)
             if df_source is None or df_source.empty:
                 logging.getLogger(__name__).warning('No chart data available for zone detection')
                 return
-            
-            # Prepare dataframe with lowercase column names for the detection function
+
             df = df_source.copy()
             df.columns = [c.lower() for c in df.columns]
-            
-            # Detect zones using current settings
-            zones = detect_support_resistance_zones(df, **self.zone_settings)
-            
-            # Determine is_long based on entry/target prices
-            is_long = True
-            if self.entry_price is not None and self.target_price is not None:
-                is_long = self.target_price > self.entry_price
-            
-            # If entry/target exist, filter to only logically valid zones
-            if self.entry_price is not None and self.target_price is not None:
-                sup_zone, res_zone = pick_trade_levels(zones, is_long, entry_price=self.entry_price)
-                detected_support = [(None, sup_zone.mid)] if sup_zone else []
-                detected_resistance = [(None, res_zone.mid)] if res_zone else []
-                logging.getLogger(__name__).info(
-                    '[TechAnalysis] Filtered zones for %s trade: sup=%s, res=%s',
-                    'LONG' if is_long else 'SHORT',
-                    f'R{sup_zone.mid:.2f}' if sup_zone else 'None',
-                    f'R{res_zone.mid:.2f}' if res_zone else 'None'
+
+            try:
+                detected_support, detected_resistance = self.zone_detector.detect_zones(
+                    df, self.zone_settings, entry_price=self.entry_price, target_price=self.target_price, stop_loss=self.stop_loss
                 )
-            else:
-                # No entry/target set - use all detected zones
-                detected_support = [(None, z.mid) for z in zones.get('support', [])]
-                detected_resistance = [(None, z.mid) for z in zones.get('resistance', [])]
-            
-            # Update internal levels (replace any existing with detected ones)
+            except Exception:
+                logging.getLogger(__name__).exception('ZoneDetector failed')
+                detected_support, detected_resistance = [], []
+
             self.support_levels = detected_support
             self.resistance_levels = detected_resistance
-            
+
             logging.getLogger(__name__).info(
                 '[TechAnalysis] Detected %d support and %d resistance zones',
                 len(detected_support), len(detected_resistance)
             )
-            
-            # Update the analysis panel
+
             try:
                 if hasattr(self.analysis_panel, 'set_levels'):
                     self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
             except Exception:
                 logging.getLogger(__name__).exception('Failed updating analysis panel with detected zones')
-            
-            # Redraw all levels on the chart
+
             try:
                 self._draw_all_levels()
             except Exception:
                 logging.getLogger(__name__).exception('Failed drawing detected zones')
-                
         except Exception:
             logging.getLogger(__name__).exception('Failed detecting zones')
 
