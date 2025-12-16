@@ -17,6 +17,8 @@ from components.analysis_service import fetch_analysis, delete_price_level
 from components.analysis_control_panel import AnalysisControlPanel
 from components.status_widget import StatusWidget
 from components.button_utils import run_bg_with_button
+from core.utils.patterns.support_resistance import detect_support_resistance_zones, pick_trade_levels
+from components.zone_settings_dialog import ZoneSettingsDialog
 
 class TechnicalAnalysisWindow(ttk.Toplevel):
     def __init__(self, parent, ticker, async_run_bg, on_status_saved_callback=None):
@@ -41,9 +43,12 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.support_levels = []
         self.resistance_levels = []
         # Horizontal-line storage handled by BaseChart.horizontal_lines
+        
+        # Zone detection settings
+        self.zone_settings = dict(ZoneSettingsDialog.DEFAULTS)
 
         self.create_widgets()
-        self.load_chart("1 Year") # Default to 1 Year
+        self.load_chart("3 Months") # Default to 3 Months
         self.load_existing_data()
         self._update_ticker_name()
 
@@ -58,7 +63,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
 
         ttk.Label(control_frame, text="Period:", font=("Helvetica", 10, "bold")).pack(side=LEFT, padx=(0, 5))
 
-        self.period_var = ttk.StringVar(value="1 Year")
+        self.period_var = ttk.StringVar(value="3 Months")
         self.period_combo = ttk.Combobox(
             control_frame, 
             textvariable=self.period_var, 
@@ -73,6 +78,14 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
         self.prev_btn.pack(side=LEFT, padx=(6, 0))
         self.next_btn = ttk.Button(control_frame, text="Next ▶", bootstyle="secondary", command=self._on_next_ticker)
         self.next_btn.pack(side=LEFT, padx=(6, 0))
+        
+        # Detect Zones button for automatic support/resistance detection
+        self.detect_zones_btn = ttk.Button(control_frame, text="Detect Zones", bootstyle="info", command=self._on_detect_zones)
+        self.detect_zones_btn.pack(side=LEFT, padx=(6, 0))
+        
+        # Zone settings button (gear icon)
+        self.zone_settings_btn = ttk.Button(control_frame, text="⚙", bootstyle="secondary", width=3, command=self._on_zone_settings)
+        self.zone_settings_btn.pack(side=LEFT, padx=(2, 0))
         
         # Upside label (pack BEFORE the long name so it doesn't get squeezed off-screen)
         self.upside_label = ttk.Label(control_frame, text="", font=("Helvetica", 12, "bold"), foreground="#4CAF50")
@@ -767,3 +780,73 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                     self.after(100, self.lift)
         except Exception:
             logging.getLogger(__name__).exception('Failed moving to next ticker')
+
+    def _on_detect_zones(self):
+        """Detect support/resistance zones from chart data and draw them on the chart."""
+        try:
+            # Get current chart data
+            df_source = getattr(self.chart, 'df_source', None)
+            if df_source is None or df_source.empty:
+                logging.getLogger(__name__).warning('No chart data available for zone detection')
+                return
+            
+            # Prepare dataframe with lowercase column names for the detection function
+            df = df_source.copy()
+            df.columns = [c.lower() for c in df.columns]
+            
+            # Detect zones using current settings
+            zones = detect_support_resistance_zones(df, **self.zone_settings)
+            
+            # Determine is_long based on entry/target prices
+            is_long = True
+            if self.entry_price is not None and self.target_price is not None:
+                is_long = self.target_price > self.entry_price
+            
+            # If entry/target exist, filter to only logically valid zones
+            if self.entry_price is not None and self.target_price is not None:
+                sup_zone, res_zone = pick_trade_levels(zones, is_long, entry_price=self.entry_price)
+                detected_support = [(None, sup_zone.mid)] if sup_zone else []
+                detected_resistance = [(None, res_zone.mid)] if res_zone else []
+                logging.getLogger(__name__).info(
+                    '[TechAnalysis] Filtered zones for %s trade: sup=%s, res=%s',
+                    'LONG' if is_long else 'SHORT',
+                    f'R{sup_zone.mid:.2f}' if sup_zone else 'None',
+                    f'R{res_zone.mid:.2f}' if res_zone else 'None'
+                )
+            else:
+                # No entry/target set - use all detected zones
+                detected_support = [(None, z.mid) for z in zones.get('support', [])]
+                detected_resistance = [(None, z.mid) for z in zones.get('resistance', [])]
+            
+            # Update internal levels (replace any existing with detected ones)
+            self.support_levels = detected_support
+            self.resistance_levels = detected_resistance
+            
+            logging.getLogger(__name__).info(
+                '[TechAnalysis] Detected %d support and %d resistance zones',
+                len(detected_support), len(detected_resistance)
+            )
+            
+            # Update the analysis panel
+            try:
+                if hasattr(self.analysis_panel, 'set_levels'):
+                    self.analysis_panel.set_levels(support=self.support_levels, resistance=self.resistance_levels)
+            except Exception:
+                logging.getLogger(__name__).exception('Failed updating analysis panel with detected zones')
+            
+            # Redraw all levels on the chart
+            try:
+                self._draw_all_levels()
+            except Exception:
+                logging.getLogger(__name__).exception('Failed drawing detected zones')
+                
+        except Exception:
+            logging.getLogger(__name__).exception('Failed detecting zones')
+
+    def _on_zone_settings(self):
+        """Open the zone detection settings dialog."""
+        def on_settings_saved(new_settings):
+            self.zone_settings = new_settings
+            logging.getLogger(__name__).info('[TechAnalysis] Zone settings updated: %s', new_settings)
+        
+        ZoneSettingsDialog(self, current_settings=self.zone_settings, on_save_callback=on_settings_saved)

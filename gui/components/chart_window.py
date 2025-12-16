@@ -77,18 +77,17 @@ class ChartWindow(ttk.Toplevel):
     def create_chart_widgets(self, parent_frame):
         """Creates and grids the individual BaseChart widgets."""
         self.charts = {}
-        periods = [
-            ("3M", "3 Months", 0, 0),
-            ("6M", "6 Months", 0, 1),
-            ("1Y", "1 Year", 1, 0),
-            ("5Y", "5 Years", 1, 1),
-        ]
-        for period_key, period_label, row, col in periods:
-            chart_frame = ttk.Labelframe(parent_frame, text=period_label, bootstyle="primary")
-            chart_frame.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
-            chart_widget = BaseChart(chart_frame, period_label)
-            chart_widget.pack(fill=BOTH, expand=True) # Add this line to place the chart widget
-            self.charts[period_key] = chart_widget
+        # Single Chart: 3 Months
+        period_key = "3M"
+        period_label = "3 Months"
+        
+        chart_frame = ttk.Labelframe(parent_frame, text=period_label, bootstyle="primary")
+        chart_frame.pack(fill=BOTH, expand=True, padx=5, pady=5)
+        
+        chart_widget = BaseChart(chart_frame, period_label)
+        chart_widget.pack(fill=BOTH, expand=True)
+        
+        self.charts[period_key] = chart_widget
 
     def create_metrics_tab(self):
         """Create the metrics tab with key stock metrics"""
@@ -137,15 +136,19 @@ class ChartWindow(ttk.Toplevel):
     def load_charts(self):
         """Load and display all charts"""
         logging.getLogger(__name__).debug("[ChartWindow] load_charts called.")
-        periods = {"3M": 90, "6M": 180, "1Y": 365, "5Y": 1825}
+        # Single period: 3 Months (90 days)
+        periods = {"3M": 90}
 
         # --- Try to load saved horizontal-line prices from the watchlist table ---
         saved_levels = []
         try:
             async_query = """
-                SELECT entry_price, stop_loss, target_price
-                FROM watchlist
-                WHERE ticker = $1
+                SELECT 
+                    w.entry_price, w.stop_loss, w.target_price,
+                    (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'support') as support_levels,
+                    (SELECT array_agg(spl.price_level) FROM stock_price_levels spl WHERE spl.ticker = w.ticker AND spl.level_type = 'resistance') as resistance_levels
+                FROM watchlist w
+                WHERE w.ticker = $1
             """
             rows = self.async_run(DBEngine.fetch(async_query, self.ticker))
             if rows:
@@ -153,6 +156,8 @@ class ChartWindow(ttk.Toplevel):
                 raw_entry = row.get("entry_price")
                 raw_stop = row.get("stop_loss")
                 raw_target = row.get("target_price")
+                raw_supports = row.get("support_levels") or []
+                raw_resistances = row.get("resistance_levels") or []
 
                 # DB returns Decimal objects for numeric columns; coerce to float
                 if raw_entry is not None:
@@ -164,6 +169,18 @@ class ChartWindow(ttk.Toplevel):
                 if raw_target is not None:
                     price_r = float(raw_target) / 100.0
                     saved_levels.append((price_r, "green", f"Target: R{price_r:.2f}"))
+                
+                # Process Support Levels
+                for p in raw_supports:
+                    if p is not None:
+                        price_r = float(p) / 100.0
+                        saved_levels.append((price_r, "green", f"Support: R{price_r:.2f}"))
+                
+                # Process Resistance Levels
+                for p in raw_resistances:
+                    if p is not None:
+                        price_r = float(p) / 100.0
+                        saved_levels.append((price_r, "red", f"Resistance: R{price_r:.2f}"))
         except Exception as ex:
             logging.getLogger(__name__).warning(
                 "[ChartWindow]   -> Failed to load saved horizontal line levels: %s", ex
