@@ -1,5 +1,6 @@
 import ttkbootstrap as ttk
 import tkinter as tk
+import tkinter.font as tkfont
 from ttkbootstrap.constants import BOTH
 from typing import Callable, List, Dict
 
@@ -7,11 +8,25 @@ from typing import Callable, List, Dict
 class HoldingsWidget(ttk.Frame):
     def __init__(self, parent, select_callback: Callable = None, **kwargs):
         super().__init__(parent, **kwargs)
+        # Increase font size by 2 relative to Tk default for readability
+        try:
+            base_size = tkfont.nametofont("TkDefaultFont").cget("size")
+            new_size = int(base_size) + 2
+        except Exception:
+            new_size = 12
+
+        # Create a Style instance (do not pass widget object as theme name)
+        style = ttk.Style()
+        # Treeview style for holdings
+        style.configure("Holdings.Treeview", font=(None, new_size))
+        style.configure("Holdings.Treeview.Heading", font=(None, new_size, "bold"))
+
         self.tree = ttk.Treeview(
             self,
             columns=("ticker", "qty", "avg", "cost", "latest", "pl", "pct"),
             show="headings",
             height=20,
+            style="Holdings.Treeview",
         )
         self.tree.heading("ticker", text="Ticker")
         self.tree.heading("qty", text="Quantity")
@@ -33,9 +48,17 @@ class HoldingsWidget(ttk.Frame):
             self.tree.bind("<<TreeviewSelect>>", select_callback)
 
     def set_holdings(self, rows: List[Dict]):
+        # Clear existing rows
         for item in self.tree.get_children():
             self.tree.delete(item)
-        for r in rows:
+
+        # Sort holdings by ticker (ascending) for consistent order
+        try:
+            rows_sorted = sorted(rows or [], key=lambda r: str(r.get("ticker") or "").upper())
+        except Exception:
+            rows_sorted = rows or []
+
+        for r in rows_sorted:
             latest = r.get("latest_price")
             pl = r.get("pl")
             cost_value = r.get("cost_value")
