@@ -7,6 +7,7 @@ from modules.market_agent.sens import run_sens_check
 from modules.market_agent.prices import run_price_update
 from modules.market_agent.fundamentals import run_fundamentals_check
 import logging
+from modules.market_agent.commodity_fx import run_market_data_update
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,8 @@ async def run_market_agent():
     
     # Track last fundamentals run to avoid duplicates
     fundamentals_last_run_date = None
+    commodity_fx_last_run_date = None
+
 
     try:
         while True:
@@ -50,6 +53,10 @@ async def run_market_agent():
                 if fundamentals_last_run_date != today:
                     await run_fundamentals_check()
                     fundamentals_last_run_date = today
+                today = now.date()
+                if commodity_fx_last_run_date != today:
+                    await run_market_data_update(mode="all")
+                    commodity_fx_last_run_date = today
             else:
                 logger.debug("Outside work hours. Skipping checks.")
 

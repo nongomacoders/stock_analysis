@@ -20,7 +20,7 @@ if str(_GUI_ROOT) not in sys.path:
   sys.path.insert(0, str(_GUI_ROOT))
 
 
-from standalone_scripts.results_scraper.cli import main
+from scripts_standalone.results_scraper.cli import main
 
 
 if __name__ == "__main__":

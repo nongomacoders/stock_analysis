@@ -9,11 +9,11 @@ from pathlib import Path
 
 from playwright.async_api import async_playwright
 
-from standalone_scripts.results_scraper.env import Credentials
-from standalone_scripts.results_scraper.navigation import TARGET_URL, attempt_login, fill_and_click_quote
-from standalone_scripts.results_scraper.paths import ProjectPaths
-from standalone_scripts.results_scraper.utils import dump_debug, find_frame, sanitize_ticker
-from standalone_scripts.results_scraper.watchlist import DBENGINE_IMPORT_PATH, WATCHLIST_HELPER_PATH, resolve_tickers_to_process
+from scripts_standalone.results_scraper.env import Credentials
+from scripts_standalone.results_scraper.navigation import TARGET_URL, attempt_login, fill_and_click_quote
+from scripts_standalone.results_scraper.paths import ProjectPaths
+from scripts_standalone.results_scraper.utils import dump_debug, find_frame, sanitize_ticker
+from scripts_standalone.results_scraper.watchlist import DBENGINE_IMPORT_PATH, WATCHLIST_HELPER_PATH, resolve_tickers_to_process
 
 from .navigation import click_news
 from .db import DBENGINE_IMPORT_PATH as NEWS_DBENGINE_IMPORT_PATH

@@ -115,6 +115,17 @@ class CommandCenter(ttk.Window):
             if success:
                 # Refresh watchlist once DB is ready
                 self.watchlist.refresh()
+
+                # Auto-start market agent if enabled via env var (default: enabled)
+                try:
+                    auto = os.environ.get("AUTO_START_AGENT", "1").lower()
+                    if auto in ("1", "true", "yes"):
+                        logging.getLogger(__name__).info("AUTO_START_AGENT enabled, starting market agent")
+                        self.start_market_agent()
+                    else:
+                        logging.getLogger(__name__).info("AUTO_START_AGENT disabled; not starting market agent")
+                except Exception as e:
+                    logging.getLogger(__name__).exception("Failed to auto-start market agent: %s", e)
             else:
                 logging.getLogger(__name__).error("Service initialization failed - app may not work correctly")
         
@@ -154,8 +165,8 @@ class CommandCenter(ttk.Window):
     def start_market_agent(self):
         """Start market_agent.py as a background daemon process"""
         try:
-            # Note: Update this path if you move market_agent.py to modules/ later
-            agent_path = os.path.join(os.path.dirname(__file__), "market_agent.py")
+            # Note: `market_agent.py` was moved to `scripts_standalone/` — adjust path accordingly
+            agent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts_standalone", "market_agent.py"))
 
             self.market_agent_process = subprocess.Popen([sys.executable, agent_path])
         except Exception as e:

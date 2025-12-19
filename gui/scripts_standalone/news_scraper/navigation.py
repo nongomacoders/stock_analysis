@@ -4,7 +4,7 @@ import asyncio
 import logging
 from pathlib import Path
 
-from standalone_scripts.results_scraper.utils import dump_debug, find_frame
+from scripts_standalone.results_scraper.utils import dump_debug, find_frame
 
 
 async def click_news(page, *, debug_dir: Path) -> bool:

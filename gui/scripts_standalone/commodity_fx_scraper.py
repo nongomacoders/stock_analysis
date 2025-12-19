@@ -17,7 +17,7 @@ if str(_GUI_ROOT) not in sys.path:
     sys.path.insert(0, str(_GUI_ROOT))
 
 
-from standalone_scripts.commodity_fx_scraper.runner import main
+from scripts_standalone.commodity_fx_scraper.runner import main
 
 
 if __name__ == "__main__":

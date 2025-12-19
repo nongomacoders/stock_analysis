@@ -122,3 +122,99 @@
 2025-12-14 09:59:57,955 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
 2025-12-14 10:09:57,953 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
 2025-12-14 10:19:57,944 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
+2025-12-19 15:37:31,475 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-19 15:37:32,616 modules.market_agent.sens INFO: 
+[15:37] --- Running SENS Check ---
+2025-12-19 16:00:08,233 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-19 16:00:08,548 modules.market_agent.sens INFO: 
+[16:00] --- Running SENS Check ---
+2025-12-19 16:00:11,377 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-19 16:00:12,621 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-19 16:00:12,760 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-19 16:00:31,693 yfinance ERROR: 
+7 Failed downloads:
+2025-12-19 16:00:31,693 yfinance ERROR: ['JSE.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10003 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-19 16:00:31,693 yfinance ERROR: ['UPL.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10005 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-19 16:00:31,694 yfinance ERROR: ['SPP.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10013 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-19 16:00:31,694 yfinance ERROR: ['KRO.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-19 16:00:31,694 yfinance ERROR: ['LSK.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10016 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-19 16:00:31,694 yfinance ERROR: ['FTA.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10006 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-19 16:00:31,694 yfinance ERROR: ['KP2.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10004 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-19 16:01:24,742 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-19 16:01:24,821 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-19
+2025-12-19 16:01:24,821 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:01:24,822 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:01:24,822 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-19 16:01:24,822 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-19 16:01:24,823 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-19 16:01:24,824 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-19 16:01:24,824 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:01:24,824 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:01:24,824 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-19 16:01:24,824 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:01:24,824 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-19 16:01:24,825 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-19 16:01:24,825 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-19 16:01:24,825 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:01:24,825 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-19 16:01:24,825 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO:     Days Since Last:   175
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-19 >= 2025-12-06 = True
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO:     Check 2: 175 >= 150 = True
+2025-12-19 16:01:24,826 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO: TICKER: MMP.JO
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-17
+2025-12-19 16:01:24,827 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-12-02 12:42:47.116200+00:00
+2025-12-19 16:01:24,828 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:01:24,828 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-19 16:01:24,828 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-17 + 1 year
+2025-12-19 16:01:24,828 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-17
+2025-12-19 16:01:24,828 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:01:24,828 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:01:24,828 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-17
+2025-12-19 16:01:24,829 modules.market_agent.fundamentals INFO:     Days Since Last:   175
+2025-12-19 16:01:24,829 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-19 >= 2025-12-17 = True
+2025-12-19 16:01:24,829 modules.market_agent.fundamentals INFO:     Check 2: 175 >= 150 = True
+2025-12-19 16:01:24,829 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-19 16:01:24,829 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-19 16:01:24,829 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:01:24,829 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:01:24,830 modules.market_agent.fundamentals INFO: SELECTED TICKERS (3): CCD.JO, RMH.JO, MMP.JO
+2025-12-19 16:01:24,830 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-19 16:01:24,830 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-19 16:01:24,830 modules.market_agent.fundamentals INFO: Processing 3 tickers: CCD.JO, RMH.JO, MMP.JO
+2025-12-19 16:01:24,830 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-19 16:01:24,830 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-19 16:01:24,967 root ERROR: Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file

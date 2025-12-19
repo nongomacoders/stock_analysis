@@ -6,8 +6,8 @@ import logging
 import sys
 from pathlib import Path
 
-from standalone_scripts.results_scraper.env import load_credentials
-from standalone_scripts.results_scraper.paths import compute_paths
+from scripts_standalone.results_scraper.env import load_credentials
+from scripts_standalone.results_scraper.paths import compute_paths
 
 from .runner import run
 

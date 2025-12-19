@@ -339,8 +339,8 @@ async def _save_deepresearch(ticker: str, content: str) -> None:
 
 
 async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars: int | None) -> int:
-    from standalone_scripts.results_scraper.watchlist import resolve_tickers_to_process
-    from standalone_scripts.results_scraper.utils import sanitize_ticker
+    from scripts_standalone.results_scraper.watchlist import resolve_tickers_to_process
+    from scripts_standalone.results_scraper.utils import sanitize_ticker
     from modules.analysis.llm import query_ai
 
     logger = logging.getLogger(__name__)
