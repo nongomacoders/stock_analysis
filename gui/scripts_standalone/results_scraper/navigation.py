@@ -161,6 +161,8 @@ async def attempt_login(page, *, username: str, password: str, debug_dir: Path) 
     logger = logging.getLogger(__name__)
 
     try:
+        logger.info("Attempting login (username=%s)", (username or "")[:3] + "***" if username else "<empty>")
+
         found_frame = await find_frame(page, selector="#normalUsername")
         if not found_frame:
             found_frame = await find_frame(page, selector="#j_password")
@@ -174,14 +176,78 @@ async def attempt_login(page, *, username: str, password: str, debug_dir: Path) 
         if not await frame.query_selector("#normalUsername"):
             logger.warning("#normalUsername not found in selected login frame; aborting login")
             return False
-        await frame.focus("#normalUsername")
-        await frame.type("#normalUsername", username, delay=50)
+
+        # Prefer typing (matches user's desired behavior).
+        try:
+            await frame.wait_for_selector("#normalUsername", state="visible", timeout=15000)
+        except Exception:
+            pass
+        try:
+            await frame.focus("#normalUsername")
+            # Clear any prefilled content first.
+            try:
+                await frame.click("#normalUsername", click_count=3)
+                await frame.keyboard.press("Backspace")
+            except Exception:
+                pass
+            await frame.type("#normalUsername", username, delay=50)
+        except Exception:
+            # Fallback: set value via DOM and dispatch events.
+            try:
+                await frame.evaluate(
+                    """(val) => {
+                        const el = document.querySelector('#normalUsername');
+                        if (!el) return false;
+                        el.focus();
+                        el.value = val;
+                        el.dispatchEvent(new Event('input', { bubbles: true }));
+                        el.dispatchEvent(new Event('change', { bubbles: true }));
+                        return true;
+                    }""",
+                    username,
+                )
+            except Exception:
+                pass
+
+        try:
+            current_user = await frame.input_value("#normalUsername")
+            if (current_user or "").strip() != (username or "").strip():
+                logger.warning("Username field did not reflect filled value (got=%r)", current_user)
+        except Exception:
+            pass
 
         if not await frame.query_selector("#j_password"):
             logger.warning("#j_password not found in selected login frame; aborting login")
             return False
-        await frame.focus("#j_password")
-        await frame.type("#j_password", password, delay=50)
+
+        try:
+            await frame.wait_for_selector("#j_password", state="visible", timeout=15000)
+        except Exception:
+            pass
+        try:
+            await frame.focus("#j_password")
+            try:
+                await frame.click("#j_password", click_count=3)
+                await frame.keyboard.press("Backspace")
+            except Exception:
+                pass
+            await frame.type("#j_password", password, delay=50)
+        except Exception:
+            try:
+                await frame.evaluate(
+                    """(val) => {
+                        const el = document.querySelector('#j_password');
+                        if (!el) return false;
+                        el.focus();
+                        el.value = val;
+                        el.dispatchEvent(new Event('input', { bubbles: true }));
+                        el.dispatchEvent(new Event('change', { bubbles: true }));
+                        return true;
+                    }""",
+                    password,
+                )
+            except Exception:
+                pass
 
         await asyncio.sleep(1)
 

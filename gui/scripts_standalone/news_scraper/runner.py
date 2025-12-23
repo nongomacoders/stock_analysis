@@ -405,7 +405,10 @@ async def run(
                 else:
                     logger.warning("Login attempt failed; continuing without authentication")
             else:
-                logger.info("Skipping login: username/password not provided or still using placeholders")
+                logger.warning(
+                    "Skipping login: OST_USERNAME/OST_PASSWORD not set (or placeholders). "
+                    "Create a .env next to the script with OST_USERNAME and OST_PASSWORD, or set env vars."
+                )
 
             logger.info(
                 "DBEngine import path: %s (watchlist), %s (news); watchlist helper path: %s",
