@@ -218,3 +218,1246 @@
 ============================================================
 2025-12-19 16:01:24,830 modules.market_agent.fundamentals INFO: Processing CCD.JO...
 2025-12-19 16:01:24,967 root ERROR: Error: STOCK_USERNAME and STOCK_PASSWORD must be set in .env file
+2025-12-19 16:18:30,374 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-19 16:18:30,894 modules.market_agent.sens INFO: 
+[16:18] --- Running SENS Check ---
+2025-12-19 16:18:34,278 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-19 16:18:35,520 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-19 16:18:35,655 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-19 16:19:04,662 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-19 16:19:04,738 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-19
+2025-12-19 16:19:04,738 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:19:04,738 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:19:04,739 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-19 16:19:04,740 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:     Days Since Last:   175
+2025-12-19 16:19:04,741 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-19 >= 2025-12-06 = True
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO:     Check 2: 175 >= 150 = True
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO: TICKER: MMP.JO
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:19:04,742 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-19 16:19:04,743 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-17
+2025-12-19 16:19:04,743 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-12-02 12:42:47.116200+00:00
+2025-12-19 16:19:04,743 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:19:04,743 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-19 16:19:04,743 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-17 + 1 year
+2025-12-19 16:19:04,743 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-17
+2025-12-19 16:19:04,743 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:19:04,744 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:19:04,744 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-17
+2025-12-19 16:19:04,744 modules.market_agent.fundamentals INFO:     Days Since Last:   175
+2025-12-19 16:19:04,744 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-19 >= 2025-12-17 = True
+2025-12-19 16:19:04,744 modules.market_agent.fundamentals INFO:     Check 2: 175 >= 150 = True
+2025-12-19 16:19:04,744 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: SELECTED TICKERS (3): CCD.JO, RMH.JO, MMP.JO
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: Processing 3 tickers: CCD.JO, RMH.JO, MMP.JO
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-19 16:19:04,745 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-19 16:19:11,656 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:15,078 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:16,677 playwright_scraper.pw INFO: [PW] Logged in as dtdavan@gmail.com and saved storage_state.
+2025-12-19 16:19:16,678 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-19 16:19:23,394 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:23,457 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for CCD (premium subscription required for Results.aspx).
+2025-12-19 16:19:23,840 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-19 16:19:23,840 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-19 16:19:23,840 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-19 16:19:25,871 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:29,318 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:29,393 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-19 16:19:29,394 playwright_scraper.pw INFO: [PW] GOTO(results_RMH): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE
+2025-12-19 16:19:35,256 playwright_scraper.pw INFO: [PW] GOTO(results_RMH) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:35,306 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for RMH (premium subscription required for Results.aspx).
+2025-12-19 16:19:35,632 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for RMH.JO
+2025-12-19 16:19:35,632 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-19 16:19:35,632 modules.market_agent.fundamentals INFO: Processing MMP.JO...
+2025-12-19 16:19:36,609 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:40,021 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:40,091 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-19 16:19:40,091 playwright_scraper.pw INFO: [PW] GOTO(results_MMP): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=MMP&x=JSE
+2025-12-19 16:19:46,067 playwright_scraper.pw INFO: [PW] GOTO(results_MMP) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:19:46,117 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for MMP (premium subscription required for Results.aspx).
+2025-12-19 16:19:46,401 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for MMP.JO
+2025-12-19 16:19:46,401 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-19 16:19:46,401 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-19 16:19:46,401 modules.market_agent.fundamentals INFO:   Failed: 3
+2025-12-19 16:19:46,401 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-19 16:19:46,402 modules.market_agent.commodity_fx ERROR: Market data update failed
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\commodity_fx.py", line 13, in run_market_data_update
+    from standalone_scripts.commodity_scraper.runner import run as run_scraper
+ModuleNotFoundError: No module named 'standalone_scripts'
+2025-12-19 16:19:46,414 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-19 16:26:05,085 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-19 16:26:05,405 modules.market_agent.sens INFO: 
+[16:26] --- Running SENS Check ---
+2025-12-19 16:26:08,251 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-19 16:26:09,461 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-19 16:26:09,777 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-19 16:26:39,171 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-19 16:26:39,246 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-19
+2025-12-19 16:26:39,247 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:26:39,247 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:26:39,247 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-19 16:26:39,247 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:26:39,248 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-19 16:26:39,248 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-19 16:26:39,248 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-19 16:26:39,248 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:26:39,248 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-19 16:26:39,248 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-19 16:26:39,249 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:26:39,250 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO:     Days Since Last:   175
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-19 >= 2025-12-06 = True
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO:     Check 2: 175 >= 150 = True
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:26:39,251 modules.market_agent.fundamentals INFO: TICKER: MMP.JO
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-17
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-12-02 12:42:47.116200+00:00
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-17 + 1 year
+2025-12-19 16:26:39,252 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-17
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-19
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-17
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO:     Days Since Last:   175
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-19 >= 2025-12-17 = True
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO:     Check 2: 175 >= 150 = True
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-19 16:26:39,253 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-19 16:26:39,254 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-19 16:26:39,254 modules.market_agent.fundamentals INFO: SELECTED TICKERS (3): CCD.JO, RMH.JO, MMP.JO
+2025-12-19 16:26:39,254 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-19 16:26:39,254 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-19 16:26:39,254 modules.market_agent.fundamentals INFO: Processing 3 tickers: CCD.JO, RMH.JO, MMP.JO
+2025-12-19 16:26:39,254 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-19 16:26:39,254 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-19 16:26:40,358 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:26:43,104 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:26:43,174 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-19 16:26:43,174 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-19 16:26:49,501 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:26:49,557 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for CCD (premium subscription required for Results.aspx).
+2025-12-19 16:26:49,853 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-19 16:26:49,854 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-19 16:26:49,854 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-19 16:26:50,854 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:26:53,538 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:26:53,600 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-19 16:26:53,601 playwright_scraper.pw INFO: [PW] GOTO(results_RMH): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE
+2025-12-19 16:26:59,796 playwright_scraper.pw INFO: [PW] GOTO(results_RMH) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:26:59,844 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for RMH (premium subscription required for Results.aspx).
+2025-12-19 16:27:00,125 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for RMH.JO
+2025-12-19 16:27:00,125 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-19 16:27:00,125 modules.market_agent.fundamentals INFO: Processing MMP.JO...
+2025-12-19 16:27:01,141 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:27:03,609 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:27:03,727 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-19 16:27:03,727 playwright_scraper.pw INFO: [PW] GOTO(results_MMP): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=MMP&x=JSE
+2025-12-19 16:27:09,359 playwright_scraper.pw INFO: [PW] GOTO(results_MMP) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-19 16:27:09,412 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for MMP (premium subscription required for Results.aspx).
+2025-12-19 16:27:09,696 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for MMP.JO
+2025-12-19 16:27:09,696 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-19 16:27:09,697 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-19 16:27:09,697 modules.market_agent.fundamentals INFO:   Failed: 3
+2025-12-19 16:27:09,697 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-19 16:27:09,702 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-19 16:27:09,772 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-19 16:27:11,525 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.9 USD/t (as_of=2025-12-18 00:00:00)
+2025-12-19 16:27:13,187 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4327.38 USD/oz (as_of=2025-12-19 00:00:00)
+2025-12-19 16:27:14,849 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.4413 USD/lb (as_of=2025-12-19 00:00:00)
+2025-12-19 16:27:14,850 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-19 16:27:14,850 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-19 16:27:16,611 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1723.5 USD/oz (as_of=2025-12-19 00:00:00)
+2025-12-19 16:27:18,262 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 1976.1 USD/oz (as_of=2025-12-19 00:00:00)
+2025-12-19 16:27:18,262 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-19 16:27:18,263 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-19 16:27:19,934 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8050.0 USD/oz (as_of=2025-12-19 00:00:00)
+2025-12-19 16:27:21,626 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 60.007 USD/bbl (as_of=2025-12-19 00:00:00)
+2025-12-19 16:27:23,667 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.7593 (as_of=None)
+2025-12-19 16:27:26,033 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.17376 (as_of=None)
+2025-12-19 16:27:28,026 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.33859 (as_of=None)
+2025-12-19 16:27:28,027 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-19 16:27:28,027 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 08:12:18,938 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-22 08:12:20,552 modules.market_agent.sens INFO: 
+[08:12] --- Running SENS Check ---
+2025-12-22 08:12:28,103 modules.market_agent.sens INFO:   -> NEW SENS: SLM @ 2025-12-22 08:00:00
+2025-12-22 08:12:28,974 modules.market_agent.sens INFO:   -> NEW SENS: COH @ 2025-12-22 08:00:00
+2025-12-22 08:12:32,346 modules.analysis.engine INFO: AI: Analyzing SENS for SLM.JO...
+2025-12-22 08:12:32,415 modules.analysis.engine WARNING: AI: No context found for SLM.JO
+2025-12-22 08:12:32,415 modules.analysis.engine INFO: AI: Analyzing SENS for COH.JO...
+2025-12-22 08:12:32,459 modules.analysis.engine WARNING: AI: No context found for COH.JO
+2025-12-22 08:12:32,460 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 08:12:32,603 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 08:12:43,552 yfinance ERROR: 
+37 Failed downloads:
+2025-12-22 08:12:43,553 yfinance ERROR: ['PBT.JO', 'SLG.JO', 'PPR.JO', 'IVT.JO', 'SAR.JO', 'OAO.JO', 'TEX.JO', 'XII.JO', 'GPL.JO', 'SZK.JO', 'BCF.JO', 'FTA.JO', 'QFH.JO', 'SOH.JO', 'TLM.JO', 'EXP.JO', 'RTO.JO', 'CKS.JO', 'OAS.JO', 'BAW.JO', 'LSK.JO', 'DNB.JO', 'SKA.JO', 'RNG.JO', 'GTC.JO', 'RHB.JO', 'BRT.JO', 'GCT.JO', 'UPL.JO', 'NRL.JO', 'MMP.JO', 'AOO.JO', 'TRL.JO', 'WEZ.JO', 'CAC.JO', 'PMV.JO', 'ENX.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2025-12-20 -> 2025-12-23)')
+2025-12-22 08:12:54,357 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-22 08:12:54,430 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-22
+2025-12-22 08:12:54,431 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 08:12:54,431 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 08:12:54,431 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-22 08:12:54,432 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 08:12:54,432 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-22 08:12:54,432 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-22 08:12:54,432 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-22 08:12:54,432 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 08:12:54,432 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-22 08:12:54,432 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-22 08:12:54,433 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 08:12:54,434 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-22 08:12:54,434 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-22 08:12:54,434 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-22 08:12:54,434 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 08:12:54,434 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-22 08:12:54,434 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO:     Days Since Last:   178
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-22 >= 2025-12-06 = True
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO:     Check 2: 178 >= 150 = True
+2025-12-22 08:12:54,435 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-22 08:12:54,436 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-22 08:12:54,436 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 08:12:54,436 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 08:12:54,436 modules.market_agent.fundamentals INFO: TICKER: MMP.JO
+2025-12-22 08:12:54,436 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 08:12:54,436 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-22 08:12:54,437 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-17
+2025-12-22 08:12:54,437 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-12-02 12:42:47.116200+00:00
+2025-12-22 08:12:54,437 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 08:12:54,437 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-22 08:12:54,437 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-17 + 1 year
+2025-12-22 08:12:54,437 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-17
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-17
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO:     Days Since Last:   178
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-22 >= 2025-12-17 = True
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO:     Check 2: 178 >= 150 = True
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-22 08:12:54,438 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 08:12:54,439 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 08:12:54,439 modules.market_agent.fundamentals INFO: SELECTED TICKERS (3): CCD.JO, RMH.JO, MMP.JO
+2025-12-22 08:12:54,439 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-22 08:12:54,439 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-22 08:12:54,439 modules.market_agent.fundamentals INFO: Processing 3 tickers: CCD.JO, RMH.JO, MMP.JO
+2025-12-22 08:12:54,439 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 08:12:54,439 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-22 08:13:00,779 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:03,788 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:03,902 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 08:13:03,902 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 08:13:09,437 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:09,481 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for CCD (premium subscription required for Results.aspx).
+2025-12-22 08:13:09,749 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-22 08:13:09,749 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 08:13:09,749 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-22 08:13:10,667 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:13,635 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:13,715 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 08:13:13,715 playwright_scraper.pw INFO: [PW] GOTO(results_RMH): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE
+2025-12-22 08:13:18,079 playwright_scraper.pw INFO: [PW] GOTO(results_RMH) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:18,127 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for RMH (premium subscription required for Results.aspx).
+2025-12-22 08:13:18,391 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for RMH.JO
+2025-12-22 08:13:18,391 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 08:13:18,391 modules.market_agent.fundamentals INFO: Processing MMP.JO...
+2025-12-22 08:13:19,309 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:21,972 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:22,034 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 08:13:22,035 playwright_scraper.pw INFO: [PW] GOTO(results_MMP): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=MMP&x=JSE
+2025-12-22 08:13:26,989 playwright_scraper.pw INFO: [PW] GOTO(results_MMP) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 08:13:27,032 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for MMP (premium subscription required for Results.aspx).
+2025-12-22 08:13:27,300 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for MMP.JO
+2025-12-22 08:13:27,300 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-22 08:13:27,301 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-22 08:13:27,301 modules.market_agent.fundamentals INFO:   Failed: 3
+2025-12-22 08:13:27,301 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-22 08:13:27,308 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-22 08:13:27,377 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-22 08:13:29,125 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.92 USD/t (as_of=2025-12-19 00:00:00)
+2025-12-22 08:13:31,021 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4404.1 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 08:13:32,799 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.4346 USD/lb (as_of=2025-12-22 00:00:00)
+2025-12-22 08:13:32,799 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-22 08:13:32,799 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 08:13:34,778 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1836.0 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 08:13:36,492 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2082.2 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 08:13:36,492 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 08:13:36,492 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 08:13:38,289 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8050.0 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 08:13:40,760 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 61.163 USD/bbl (as_of=2025-12-22 00:00:00)
+2025-12-22 08:13:44,068 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.7259 (as_of=None)
+2025-12-22 08:13:46,688 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.17164 (as_of=None)
+2025-12-22 08:13:48,671 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.3397 (as_of=None)
+2025-12-22 08:13:48,672 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-22 08:13:48,672 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 08:28:48,675 modules.market_agent.sens INFO: 
+[08:28] --- Running SENS Check ---
+2025-12-22 08:28:52,065 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 08:28:52,068 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 08:28:52,201 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 08:28:57,812 yfinance ERROR: 
+37 Failed downloads:
+2025-12-22 08:28:57,813 yfinance ERROR: ['PBT.JO', 'SLG.JO', 'SAR.JO', 'IVT.JO', 'PPR.JO', 'OAO.JO', 'GPL.JO', 'XII.JO', 'TEX.JO', 'SZK.JO', 'BCF.JO', 'FTA.JO', 'TLM.JO', 'QFH.JO', 'SOH.JO', 'EXP.JO', 'RTO.JO', 'OAS.JO', 'LSK.JO', 'BAW.JO', 'DNB.JO', 'CKS.JO', 'SKA.JO', 'GTC.JO', 'RNG.JO', 'RHB.JO', 'BRT.JO', 'GCT.JO', 'UPL.JO', 'NRL.JO', 'MMP.JO', 'AOO.JO', 'WEZ.JO', 'CAC.JO', 'ENX.JO', 'PMV.JO', 'TRL.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2025-12-20 -> 2025-12-23)')
+2025-12-22 08:29:11,515 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 08:44:11,519 modules.market_agent.sens INFO: 
+[08:44] --- Running SENS Check ---
+2025-12-22 08:44:16,168 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 08:44:16,170 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 08:44:16,306 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 08:44:22,082 yfinance ERROR: 
+37 Failed downloads:
+2025-12-22 08:44:22,082 yfinance ERROR: ['PBT.JO', 'SLG.JO', 'IVT.JO', 'SAR.JO', 'OAO.JO', 'TEX.JO', 'XII.JO', 'PPR.JO', 'GPL.JO', 'SZK.JO', 'BCF.JO', 'FTA.JO', 'TLM.JO', 'QFH.JO', 'SOH.JO', 'EXP.JO', 'RTO.JO', 'OAS.JO', 'CKS.JO', 'BAW.JO', 'LSK.JO', 'DNB.JO', 'SKA.JO', 'GTC.JO', 'RNG.JO', 'RHB.JO', 'BRT.JO', 'GCT.JO', 'UPL.JO', 'NRL.JO', 'MMP.JO', 'AOO.JO', 'TRL.JO', 'WEZ.JO', 'CAC.JO', 'PMV.JO', 'ENX.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2025-12-20 -> 2025-12-23)')
+2025-12-22 08:44:46,368 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 08:59:46,382 modules.market_agent.sens INFO: 
+[08:59] --- Running SENS Check ---
+2025-12-22 08:59:51,040 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 08:59:51,042 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 08:59:51,176 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 08:59:57,111 yfinance ERROR: 
+37 Failed downloads:
+2025-12-22 08:59:57,112 yfinance ERROR: ['PBT.JO', 'SLG.JO', 'SAR.JO', 'IVT.JO', 'PPR.JO', 'TEX.JO', 'XII.JO', 'OAO.JO', 'GPL.JO', 'SZK.JO', 'FTA.JO', 'BCF.JO', 'TLM.JO', 'SOH.JO', 'QFH.JO', 'EXP.JO', 'RTO.JO', 'OAS.JO', 'CKS.JO', 'LSK.JO', 'BAW.JO', 'DNB.JO', 'SKA.JO', 'GTC.JO', 'RNG.JO', 'RHB.JO', 'BRT.JO', 'GCT.JO', 'UPL.JO', 'NRL.JO', 'MMP.JO', 'AOO.JO', 'TRL.JO', 'WEZ.JO', 'CAC.JO', 'PMV.JO', 'ENX.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2025-12-20 -> 2025-12-23)')
+2025-12-22 09:00:12,631 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 09:15:12,634 modules.market_agent.sens INFO: 
+[09:15] --- Running SENS Check ---
+2025-12-22 09:15:15,249 modules.market_agent.sens INFO:   -> NEW SENS: ORN @ 2025-12-22 09:06:00
+2025-12-22 09:15:16,055 modules.market_agent.sens INFO:   -> NEW SENS: SRE @ 2025-12-22 09:05:00
+2025-12-22 09:15:16,921 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2025-12-22 09:00:00
+2025-12-22 09:15:17,814 modules.market_agent.sens INFO:   -> NEW SENS: LAB @ 2025-12-22 09:00:00
+2025-12-22 09:15:18,609 modules.market_agent.sens INFO:   -> NEW SENS: SRE @ 2025-12-22 09:00:00
+2025-12-22 09:15:20,273 modules.analysis.engine INFO: AI: Analyzing SENS for ORN.JO...
+2025-12-22 09:15:39,471 modules.analysis.engine INFO: AI: SENS analysis saved for ORN.JO.
+2025-12-22 09:15:39,471 modules.analysis.engine INFO: AI: Analyzing SENS for SRE.JO...
+2025-12-22 09:15:58,670 modules.analysis.engine INFO: AI: SENS analysis saved for SRE.JO.
+2025-12-22 09:15:58,670 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2025-12-22 09:16:18,073 modules.analysis.engine INFO: AI: SENS analysis saved for BTI.JO.
+2025-12-22 09:16:18,074 modules.analysis.engine INFO: AI: Analyzing SENS for LAB.JO...
+2025-12-22 09:16:18,117 modules.analysis.engine WARNING: AI: No context found for LAB.JO
+2025-12-22 09:16:18,118 modules.analysis.engine INFO: AI: Analyzing SENS for SRE.JO...
+2025-12-22 09:16:33,321 modules.analysis.engine INFO: AI: SENS analysis saved for SRE.JO.
+2025-12-22 09:16:33,324 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 09:16:33,706 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 09:16:48,270 yfinance ERROR: 
+35 Failed downloads:
+2025-12-22 09:16:48,271 yfinance ERROR: ['SLG.JO', 'IVT.JO', 'PPR.JO', 'SAR.JO', 'OAO.JO', 'XII.JO', 'TEX.JO', 'GPL.JO', 'BCF.JO', 'SZK.JO', 'FTA.JO', 'TLM.JO', 'QFH.JO', 'SOH.JO', 'EXP.JO', 'RTO.JO', 'OAS.JO', 'CKS.JO', 'BAW.JO', 'DNB.JO', 'SKA.JO', 'GTC.JO', 'RHB.JO', 'BRT.JO', 'GCT.JO', 'UPL.JO', 'MMP.JO', 'AOO.JO', 'TRL.JO', 'WEZ.JO', 'ENX.JO', 'CAC.JO', 'PMV.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2025-12-20 -> 2025-12-23)')
+2025-12-22 09:16:48,271 yfinance ERROR: ['NRL.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10011 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-22 09:16:48,271 yfinance ERROR: ['CLH.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10009 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-22 09:17:04,752 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 09:32:04,757 modules.market_agent.sens INFO: 
+[09:32] --- Running SENS Check ---
+2025-12-22 09:32:07,848 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 09:32:07,851 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 09:32:08,004 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 09:32:35,042 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 09:47:35,057 modules.market_agent.sens INFO: 
+[09:47] --- Running SENS Check ---
+2025-12-22 09:47:40,211 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 09:47:40,213 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 09:47:40,373 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 09:48:40,500 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 10:03:40,503 modules.market_agent.sens INFO: 
+[10:03] --- Running SENS Check ---
+2025-12-22 10:03:43,184 modules.market_agent.sens INFO:   -> NEW SENS: PAN @ 2025-12-22 10:00:00
+2025-12-22 10:03:44,999 modules.analysis.engine INFO: AI: Analyzing SENS for PAN.JO...
+2025-12-22 10:04:02,893 modules.analysis.engine INFO: AI: SENS analysis saved for PAN.JO.
+2025-12-22 10:04:02,895 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 10:04:03,225 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 10:04:39,171 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 10:19:39,186 modules.market_agent.sens INFO: 
+[10:19] --- Running SENS Check ---
+2025-12-22 10:19:42,298 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 10:19:42,300 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 10:19:42,439 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 10:20:10,411 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 10:35:10,423 modules.market_agent.sens INFO: 
+[10:35] --- Running SENS Check ---
+2025-12-22 10:35:15,426 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 10:35:15,428 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 10:35:15,701 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 10:35:42,263 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 10:50:42,278 modules.market_agent.sens INFO: 
+[10:50] --- Running SENS Check ---
+2025-12-22 10:50:48,875 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 10:50:48,877 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 10:50:49,018 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 10:51:19,243 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 11:06:19,247 modules.market_agent.sens INFO: 
+[11:06] --- Running SENS Check ---
+2025-12-22 11:06:22,544 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 11:06:22,546 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 11:06:22,685 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 11:06:56,555 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 11:21:56,563 modules.market_agent.sens INFO: 
+[11:21] --- Running SENS Check ---
+2025-12-22 11:22:01,020 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 11:22:01,022 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 11:22:01,160 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 11:22:49,430 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 11:37:49,440 modules.market_agent.sens INFO: 
+[11:37] --- Running SENS Check ---
+2025-12-22 11:37:52,470 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 11:37:52,473 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 11:37:52,608 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 11:39:08,051 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 11:45:49,253 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-22 11:45:50,219 modules.market_agent.sens INFO: 
+[11:45] --- Running SENS Check ---
+2025-12-22 11:45:52,218 modules.market_agent.sens INFO:   -> NEW SENS: ART @ 2025-12-22 11:34:00
+2025-12-22 11:45:55,211 modules.analysis.engine INFO: AI: Analyzing SENS for ART.JO...
+2025-12-22 11:46:14,840 modules.analysis.engine INFO: AI: SENS analysis saved for ART.JO.
+2025-12-22 11:46:14,842 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 11:46:15,151 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 11:47:11,780 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-22 11:47:12,087 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-22
+2025-12-22 11:47:12,088 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:47:12,088 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:47:12,088 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-22 11:47:12,088 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:47:12,088 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-22 11:47:12,089 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 11:47:12,090 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Days Since Last:   178
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-22 >= 2025-12-06 = True
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Check 2: 178 >= 150 = True
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-22 11:47:12,091 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO: TICKER: MMP.JO
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-17
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-12-02 12:42:47.116200+00:00
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-17 + 1 year
+2025-12-22 11:47:12,092 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-17
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-17
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO:     Days Since Last:   178
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-22 >= 2025-12-17 = True
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO:     Check 2: 178 >= 150 = True
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:47:12,093 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:47:12,094 modules.market_agent.fundamentals INFO: SELECTED TICKERS (3): CCD.JO, RMH.JO, MMP.JO
+2025-12-22 11:47:12,094 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-22 11:47:12,094 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-22 11:47:12,094 modules.market_agent.fundamentals INFO: Processing 3 tickers: CCD.JO, RMH.JO, MMP.JO
+2025-12-22 11:47:12,094 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 11:47:12,094 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-22 11:47:18,430 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:47:21,714 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:47:21,839 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 11:47:21,839 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 11:47:28,575 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 11:47:38,625 root WARNING: Financial tables not found for CCD
+2025-12-22 11:47:38,910 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-22 11:47:38,910 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 11:47:38,910 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-22 11:47:39,884 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:47:42,941 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:47:43,049 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 11:47:43,049 playwright_scraper.pw INFO: [PW] GOTO(results_RMH): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE
+2025-12-22 11:47:47,654 playwright_scraper.pw INFO: [PW] GOTO(results_RMH) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE
+2025-12-22 11:47:58,285 root ERROR: Error toggling highlights in view
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 209, in ensure_comprehensive_data
+    await checkbox.uncheck()
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\async_api\_generated.py", line 17787, in uncheck
+    await self._impl_obj.uncheck(
+    ...<5 lines>...
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_locator.py", line 667, in uncheck
+    return await self._frame.uncheck(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 841, in uncheck
+    await self._channel.send("uncheck", self._timeout, locals_to_params(locals()))
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Locator.uncheck: Target page, context or browser has been closed
+Call log:
+  - waiting for locator("#CheckHighlights")
+    - locator resolved to <input type="checkbox" checked="checked" id="CheckHighlights" onclick="ShowHideHighlights();"/>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <td>…</td> from <div tabindex="-1" role="dialog" aria-labelledby="ui-id-4" aria-describedby="ConcurrentLoginDialog" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-osx ui-draggable ui-resizable">…</div> subtree intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <td>…</td> from <div tabindex="-1" role="dialog" aria-labelledby="ui-id-4" aria-describedby="ConcurrentLoginDialog" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-osx ui-draggable ui-resizable">…</div> subtree intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    20 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <td>…</td> from <div tabindex="-1" role="dialog" aria-labelledby="ui-id-4" aria-describedby="ConcurrentLoginDialog" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-osx ui-draggable ui-resizable">…</div> subtree intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+2025-12-22 11:48:39,558 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-22 11:48:40,257 modules.market_agent.sens INFO: 
+[11:48] --- Running SENS Check ---
+2025-12-22 11:48:43,342 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 11:48:44,450 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 11:48:44,589 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 11:49:50,125 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-22 11:49:50,222 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-22
+2025-12-22 11:49:50,223 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:49:50,223 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:49:50,223 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-22 11:49:50,224 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:49:50,224 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-22 11:49:50,224 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-22 11:49:50,224 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-22 11:49:50,225 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 11:49:50,225 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-22 11:49:50,225 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 11:49:50,225 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 11:49:50,225 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-22 11:49:50,225 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-22 11:49:50,226 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-22 11:49:50,226 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:49:50,226 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:49:50,226 modules.market_agent.fundamentals INFO: TICKER: RMH.JO
+2025-12-22 11:49:50,226 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:49:50,227 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-22 11:49:50,227 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-06
+2025-12-22 11:49:50,227 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-11-27 08:47:20.290475+00:00
+2025-12-22 11:49:50,227 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 11:49:50,227 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-22 11:49:50,228 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-06 + 1 year
+2025-12-22 11:49:50,228 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-06
+2025-12-22 11:49:50,228 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 11:49:50,228 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 11:49:50,228 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-06
+2025-12-22 11:49:50,229 modules.market_agent.fundamentals INFO:     Days Since Last:   178
+2025-12-22 11:49:50,229 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-22 >= 2025-12-06 = True
+2025-12-22 11:49:50,229 modules.market_agent.fundamentals INFO:     Check 2: 178 >= 150 = True
+2025-12-22 11:49:50,229 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-22 11:49:50,229 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-22 11:49:50,230 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:49:50,230 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:49:50,230 modules.market_agent.fundamentals INFO: TICKER: MMP.JO
+2025-12-22 11:49:50,230 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:49:50,230 modules.market_agent.fundamentals INFO:   [1] Most recent release:    2025-06-27
+2025-12-22 11:49:50,230 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     2024-12-17
+2025-12-22 11:49:50,230 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): 2025-12-02 12:42:47.116200+00:00
+2025-12-22 11:49:50,231 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 11:49:50,231 modules.market_agent.fundamentals INFO:     Next Expected = 2nd Recent + 1 Year
+2025-12-22 11:49:50,231 modules.market_agent.fundamentals INFO:     Next Expected = 2024-12-17 + 1 year
+2025-12-22 11:49:50,231 modules.market_agent.fundamentals INFO:     Next Expected = 2025-12-17
+2025-12-22 11:49:50,231 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 11:49:50,231 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 11:49:50,232 modules.market_agent.fundamentals INFO:     Next Expected:     2025-12-17
+2025-12-22 11:49:50,232 modules.market_agent.fundamentals INFO:     Days Since Last:   178
+2025-12-22 11:49:50,232 modules.market_agent.fundamentals INFO:     Check 1: 2025-12-22 >= 2025-12-17 = True
+2025-12-22 11:49:50,232 modules.market_agent.fundamentals INFO:     Check 2: 178 >= 150 = True
+2025-12-22 11:49:50,232 modules.market_agent.fundamentals INFO:     Both checks: True
+2025-12-22 11:49:50,232 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - Will be loaded
+2025-12-22 11:49:50,233 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 11:49:50,233 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 11:49:50,233 modules.market_agent.fundamentals INFO: SELECTED TICKERS (3): CCD.JO, RMH.JO, MMP.JO
+2025-12-22 11:49:50,233 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-22 11:49:50,233 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-22 11:49:50,233 modules.market_agent.fundamentals INFO: Processing 3 tickers: CCD.JO, RMH.JO, MMP.JO
+2025-12-22 11:49:50,234 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 11:49:50,234 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-22 11:49:51,345 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:49:53,940 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:49:54,018 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 11:49:54,018 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 11:50:00,208 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 11:50:10,259 root WARNING: Financial tables not found for CCD
+2025-12-22 11:50:10,549 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-22 11:50:10,549 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 11:50:10,549 modules.market_agent.fundamentals INFO: Processing RMH.JO...
+2025-12-22 11:50:11,527 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:50:14,974 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:50:15,071 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 11:50:15,071 playwright_scraper.pw INFO: [PW] GOTO(results_RMH): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE
+2025-12-22 11:50:21,048 playwright_scraper.pw INFO: [PW] GOTO(results_RMH) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=RMH&x=JSE
+2025-12-22 11:50:25,690 modules.market_agent.fundamentals INFO:   Retrieved 2 sets of tables
+2025-12-22 11:50:25,715 modules.market_agent.fundamentals INFO:   [OK] Extracted total 8 periods for RMH.JO
+2025-12-22 11:50:26,992 modules.market_agent.fundamentals INFO:   [OK] Upserted 8 periods
+2025-12-22 11:50:26,993 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 11:50:26,993 modules.market_agent.fundamentals INFO: Processing MMP.JO...
+2025-12-22 11:50:27,976 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:50:31,222 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 11:50:31,328 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 11:50:31,329 playwright_scraper.pw INFO: [PW] GOTO(results_MMP): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=MMP&x=JSE
+2025-12-22 11:50:37,500 playwright_scraper.pw INFO: [PW] GOTO(results_MMP) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=MMP&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=MMP&x=JSE
+2025-12-22 11:50:42,232 modules.market_agent.fundamentals INFO:   Retrieved 2 sets of tables
+2025-12-22 11:50:42,263 modules.market_agent.fundamentals INFO:   [OK] Extracted total 8 periods for MMP.JO
+2025-12-22 11:50:42,625 modules.market_agent.fundamentals INFO:   [OK] Upserted 8 periods
+2025-12-22 11:50:42,626 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-22 11:50:42,626 modules.market_agent.fundamentals INFO:   Succeeded: 2
+2025-12-22 11:50:42,626 modules.market_agent.fundamentals INFO:   Failed: 1
+2025-12-22 11:50:42,626 modules.market_agent.fundamentals INFO:   Total periods: 16
+2025-12-22 11:50:42,635 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-22 11:50:42,707 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-22 11:50:44,500 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.92 USD/t (as_of=2025-12-19 00:00:00)
+2025-12-22 11:50:46,200 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4413.45 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 11:50:47,897 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.4385 USD/lb (as_of=2025-12-22 00:00:00)
+2025-12-22 11:50:47,898 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-22 11:50:47,898 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 11:50:49,577 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1808.5 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 11:50:51,242 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2091.1 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 11:50:51,243 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 11:50:51,243 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 11:50:52,953 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8050.0 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 11:50:54,659 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 60.973 USD/bbl (as_of=2025-12-22 00:00:00)
+2025-12-22 11:50:56,747 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.7021 (as_of=None)
+2025-12-22 11:50:58,706 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.1729 (as_of=None)
+2025-12-22 11:51:00,666 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.34195 (as_of=None)
+2025-12-22 11:51:00,666 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-22 11:51:00,667 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 12:06:00,669 modules.market_agent.sens INFO: 
+[12:06] --- Running SENS Check ---
+2025-12-22 12:06:03,429 modules.market_agent.sens INFO:   -> NEW SENS: SZK @ 2025-12-22 12:00:00
+2025-12-22 12:06:05,187 modules.analysis.engine INFO: AI: Analyzing SENS for SZK.JO...
+2025-12-22 12:06:05,253 modules.analysis.engine WARNING: AI: No context found for SZK.JO
+2025-12-22 12:06:05,256 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 12:06:05,395 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 12:06:35,718 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 12:21:35,729 modules.market_agent.sens INFO: 
+[12:21] --- Running SENS Check ---
+2025-12-22 12:21:40,567 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 12:21:40,569 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 12:21:40,722 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 12:22:51,948 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 12:37:51,960 modules.market_agent.sens INFO: 
+[12:37] --- Running SENS Check ---
+2025-12-22 12:37:55,262 modules.market_agent.sens INFO:   -> NEW SENS: FTA @ 2025-12-22 12:20:00
+2025-12-22 12:37:58,189 modules.analysis.engine INFO: AI: Analyzing SENS for FTA.JO...
+2025-12-22 12:37:58,257 modules.analysis.engine WARNING: AI: No context found for FTA.JO
+2025-12-22 12:37:58,259 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 12:37:58,413 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 12:38:53,021 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 12:53:53,034 modules.market_agent.sens INFO: 
+[12:53] --- Running SENS Check ---
+2025-12-22 12:54:02,687 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 12:54:02,689 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 12:54:03,096 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 12:55:10,173 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 13:10:10,112 modules.market_agent.sens INFO: 
+[13:10] --- Running SENS Check ---
+2025-12-22 13:10:14,672 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 13:10:14,674 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 13:10:14,813 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 13:11:24,381 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 13:26:24,276 modules.market_agent.sens INFO: 
+[13:26] --- Running SENS Check ---
+2025-12-22 13:26:31,575 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 13:26:31,577 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 13:26:32,085 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 13:27:37,721 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 13:42:37,638 modules.market_agent.sens INFO: 
+[13:42] --- Running SENS Check ---
+2025-12-22 13:42:47,203 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 13:42:47,204 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 13:42:47,608 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 13:43:37,988 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 13:57:16,096 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-22 13:57:16,401 modules.market_agent.sens INFO: 
+[13:57] --- Running SENS Check ---
+2025-12-22 13:57:20,405 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 13:57:21,522 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 13:57:22,035 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 13:58:29,209 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-22 13:58:29,702 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-22
+2025-12-22 13:58:29,703 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 13:58:29,703 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 13:58:29,703 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-22 13:58:29,703 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 13:58:29,703 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-22 13:58:29,704 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-22 13:58:29,704 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-22 13:58:29,704 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 13:58:29,704 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-22 13:58:29,704 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 13:58:29,704 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 13:58:29,704 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2025-12-22 13:58:29,705 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 13:58:29,706 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-22 13:58:30,723 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 13:58:34,665 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 13:58:34,737 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 13:58:34,737 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 13:58:41,245 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 13:58:51,296 root WARNING: Financial tables not found for CCD
+2025-12-22 13:58:51,565 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-22 13:58:51,565 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-22 13:58:51,565 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-22 13:58:51,565 modules.market_agent.fundamentals INFO:   Failed: 1
+2025-12-22 13:58:51,566 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-22 13:58:51,571 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-22 13:58:51,846 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-22 13:58:54,296 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.92 USD/t (as_of=2025-12-19 00:00:00)
+2025-12-22 13:58:56,058 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4409.48 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 13:58:57,774 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.4448 USD/lb (as_of=2025-12-22 00:00:00)
+2025-12-22 13:58:57,775 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-22 13:58:57,775 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 13:58:59,496 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1823.0 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 13:59:01,609 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2110.0 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 13:59:01,610 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 13:59:01,610 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 13:59:03,360 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8050.0 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 13:59:05,086 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 61.689 USD/bbl (as_of=2025-12-22 00:00:00)
+2025-12-22 13:59:07,142 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.7011 (as_of=None)
+2025-12-22 13:59:09,119 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.17321 (as_of=None)
+2025-12-22 13:59:11,104 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.34379 (as_of=None)
+2025-12-22 13:59:11,105 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-22 13:59:11,105 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 14:14:11,074 modules.market_agent.sens INFO: 
+[14:14] --- Running SENS Check ---
+2025-12-22 14:14:16,710 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 14:14:16,712 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 14:14:16,846 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 14:15:27,964 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 14:30:27,946 modules.market_agent.sens INFO: 
+[14:30] --- Running SENS Check ---
+2025-12-22 14:30:33,107 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 14:30:33,110 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 14:30:33,258 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 14:31:18,430 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 15:42:56,894 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-22 15:42:57,220 modules.market_agent.sens INFO: 
+[15:42] --- Running SENS Check ---
+2025-12-22 15:43:00,916 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 15:43:02,065 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 15:43:02,204 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 15:43:39,623 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-22 15:43:39,705 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-22
+2025-12-22 15:43:39,706 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 15:43:39,706 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 15:43:39,706 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-22 15:43:39,707 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 15:43:39,707 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-22 15:43:39,707 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-22 15:43:39,707 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-22 15:43:39,707 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-22 15:43:39,707 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-22 15:43:39,708 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-22 15:43:39,708 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-22
+2025-12-22 15:43:39,708 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-22 15:43:39,708 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-22 15:43:39,708 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-22 15:43:39,708 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-22 15:43:39,708 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-22 15:43:39,709 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2025-12-22 15:43:39,709 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-22 15:43:39,709 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-22 15:43:39,709 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2025-12-22 15:43:39,709 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-22 15:43:39,709 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-22 15:43:40,695 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 15:43:44,839 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-22 15:43:44,919 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-22 15:43:44,920 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 15:43:50,329 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-22 15:44:00,367 root WARNING: Financial tables not found for CCD
+2025-12-22 15:44:00,599 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-22 15:44:00,599 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-22 15:44:00,599 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-22 15:44:00,599 modules.market_agent.fundamentals INFO:   Failed: 1
+2025-12-22 15:44:00,600 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-22 15:44:00,604 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-22 15:44:00,833 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-22 15:44:02,707 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.92 USD/t (as_of=2025-12-19 00:00:00)
+2025-12-22 15:44:04,445 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4425.24 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 15:44:06,127 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.444 USD/lb (as_of=2025-12-22 00:00:00)
+2025-12-22 15:44:06,127 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-22 15:44:06,127 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 15:44:07,786 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1805.5 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 15:44:09,844 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2102.7 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 15:44:09,844 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 15:44:09,845 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-22 15:44:12,222 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8050.0 USD/oz (as_of=2025-12-22 00:00:00)
+2025-12-22 15:44:14,241 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 61.845 USD/bbl (as_of=2025-12-22 00:00:00)
+2025-12-22 15:44:16,289 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.702 (as_of=None)
+2025-12-22 15:44:18,271 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.17506 (as_of=None)
+2025-12-22 15:44:20,493 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.34407 (as_of=None)
+2025-12-22 15:44:20,494 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-22 15:44:20,494 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 15:59:20,496 modules.market_agent.sens INFO: 
+[15:59] --- Running SENS Check ---
+2025-12-22 15:59:31,748 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 15:59:31,750 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 15:59:31,891 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 15:59:58,169 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 16:14:58,170 modules.market_agent.sens INFO: 
+[16:14] --- Running SENS Check ---
+2025-12-22 16:15:02,083 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 16:15:02,086 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 16:15:02,226 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 16:15:32,282 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 16:30:32,287 modules.market_agent.sens INFO: 
+[16:30] --- Running SENS Check ---
+2025-12-22 16:30:36,166 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-22 16:30:36,168 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-22 16:30:36,316 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-22 16:31:07,994 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-22 16:43:39,028 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-22 16:43:39,339 modules.market_agent.sens INFO: 
+[16:43] --- Running SENS Check ---
+2025-12-22 16:43:42,007 modules.market_agent.sens INFO:   -> NEW SENS: BYI @ 2025-12-22 16:30:00
+2025-12-22 16:43:44,951 modules.analysis.engine INFO: AI: Analyzing SENS for BYI.JO...
+2025-12-23 08:05:03,666 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-23 08:05:04,376 modules.market_agent.sens INFO: 
+[08:05] --- Running SENS Check ---
+2025-12-23 08:05:07,756 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 08:05:08,869 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 08:05:09,331 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 08:06:30,158 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-23 08:06:30,232 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-23
+2025-12-23 08:06:30,233 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-23 08:06:30,233 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-23 08:06:30,233 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-23 08:06:30,234 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-23 08:06:30,234 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-23 08:06:30,234 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-23 08:06:30,234 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-23 08:06:30,234 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-23
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-23 08:06:30,235 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-23 08:06:30,236 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2025-12-23 08:06:30,236 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-23 08:06:30,236 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-23 08:06:30,236 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2025-12-23 08:06:30,236 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-23 08:06:30,236 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-23 08:06:36,461 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-23 08:06:39,217 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-23 08:06:39,300 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-23 08:06:39,300 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-23 08:06:47,676 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-23 08:06:57,727 root WARNING: Financial tables not found for CCD
+2025-12-23 08:06:57,978 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-23 08:06:57,978 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-23 08:06:57,978 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-23 08:06:57,978 modules.market_agent.fundamentals INFO:   Failed: 1
+2025-12-23 08:06:57,978 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-23 08:06:57,985 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-23 08:06:58,259 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-23 08:07:00,668 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.94 USD/t (as_of=2025-12-22 00:00:00)
+2025-12-23 08:07:02,332 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4475.75 USD/oz (as_of=2025-12-23 00:00:00)
+2025-12-23 08:07:06,356 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.4282 USD/lb (as_of=2025-12-23 00:00:00)
+2025-12-23 08:07:06,357 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-23 08:07:06,357 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-23 08:07:08,199 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1837.5 USD/oz (as_of=2025-12-23 00:00:00)
+2025-12-23 08:07:09,997 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2183.4 USD/oz (as_of=2025-12-23 00:00:00)
+2025-12-23 08:07:09,998 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-23 08:07:09,998 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-23 08:07:11,903 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8125.0 USD/oz (as_of=2025-12-23 00:00:00)
+2025-12-23 08:07:13,600 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 61.88 USD/bbl (as_of=2025-12-23 00:00:00)
+2025-12-23 08:07:16,451 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.7095 (as_of=None)
+2025-12-23 08:07:23,889 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.17744 (as_of=None)
+2025-12-23 08:07:25,926 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.34878 (as_of=None)
+2025-12-23 08:07:25,926 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-23 08:07:25,926 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 08:22:25,907 modules.market_agent.sens INFO: 
+[08:22] --- Running SENS Check ---
+2025-12-23 08:22:30,464 modules.market_agent.sens INFO:   -> NEW SENS: S32 @ 2025-12-23 08:15:00
+2025-12-23 08:22:33,376 modules.analysis.engine INFO: AI: Analyzing SENS for S32.JO...
+2025-12-23 08:22:53,100 modules.analysis.engine INFO: AI: SENS analysis saved for S32.JO.
+2025-12-23 08:22:53,102 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 08:22:54,550 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 08:24:33,044 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 08:39:33,017 modules.market_agent.sens INFO: 
+[08:39] --- Running SENS Check ---
+2025-12-23 08:39:43,973 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 08:39:43,975 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 08:39:45,130 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 08:40:42,970 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 08:55:42,949 modules.market_agent.sens INFO: 
+[08:55] --- Running SENS Check ---
+2025-12-23 08:55:52,113 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 08:55:52,115 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 08:55:52,626 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 08:56:54,067 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 09:11:54,053 modules.market_agent.sens INFO: 
+[09:11] --- Running SENS Check ---
+2025-12-23 09:11:59,119 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 09:11:59,121 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 09:11:59,260 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 09:12:44,235 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 09:27:44,220 modules.market_agent.sens INFO: 
+[09:27] --- Running SENS Check ---
+2025-12-23 09:27:47,766 modules.market_agent.sens INFO:   -> NEW SENS: ORN @ 2025-12-23 09:21:00
+2025-12-23 09:27:48,564 modules.market_agent.sens INFO:   -> NEW SENS: ORN @ 2025-12-23 09:20:00
+2025-12-23 09:27:52,649 modules.analysis.engine INFO: AI: Analyzing SENS for ORN.JO...
+2025-12-23 09:28:16,285 modules.analysis.engine INFO: AI: SENS analysis saved for ORN.JO.
+2025-12-23 09:28:16,285 modules.analysis.engine INFO: AI: Analyzing SENS for ORN.JO...
+2025-12-23 09:28:38,508 modules.analysis.engine INFO: AI: SENS analysis saved for ORN.JO.
+2025-12-23 09:28:38,511 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 09:28:38,866 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 09:29:31,857 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 09:44:31,850 modules.market_agent.sens INFO: 
+[09:44] --- Running SENS Check ---
+2025-12-23 09:44:36,570 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 09:44:36,571 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 09:44:36,725 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 09:45:49,619 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 10:00:49,612 modules.market_agent.sens INFO: 
+[10:00] --- Running SENS Check ---
+2025-12-23 10:00:54,385 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 10:00:54,387 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 10:00:54,521 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 10:02:03,824 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 10:17:03,811 modules.market_agent.sens INFO: 
+[10:17] --- Running SENS Check ---
+2025-12-23 10:17:07,812 modules.market_agent.sens INFO:   -> NEW SENS: ART @ 2025-12-23 10:13:00
+2025-12-23 10:17:13,850 modules.analysis.engine INFO: AI: Analyzing SENS for ART.JO...
+2025-12-23 10:17:33,589 modules.analysis.engine INFO: AI: SENS analysis saved for ART.JO.
+2025-12-23 10:17:33,592 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 10:17:34,209 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 10:18:58,507 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 10:33:58,493 modules.market_agent.sens INFO: 
+[10:33] --- Running SENS Check ---
+2025-12-23 10:34:02,607 modules.market_agent.sens INFO:   -> NEW SENS: LHC @ 2025-12-23 10:30:00
+2025-12-23 10:34:05,347 modules.analysis.engine INFO: AI: Analyzing SENS for LHC.JO...
+2025-12-23 10:34:25,973 modules.analysis.engine INFO: AI: SENS analysis saved for LHC.JO.
+2025-12-23 10:34:25,975 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 10:34:26,396 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 10:35:39,786 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 10:50:39,772 modules.market_agent.sens INFO: 
+[10:50] --- Running SENS Check ---
+2025-12-23 10:50:44,685 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 10:50:44,687 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 10:50:44,821 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 10:52:12,799 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 11:07:12,795 modules.market_agent.sens INFO: 
+[11:07] --- Running SENS Check ---
+2025-12-23 11:07:17,856 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 11:07:17,858 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 11:07:18,000 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 11:08:45,243 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 11:23:45,230 modules.market_agent.sens INFO: 
+[11:23] --- Running SENS Check ---
+2025-12-23 11:23:51,686 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 11:23:51,688 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 11:23:52,003 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 11:25:11,510 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 11:40:11,467 modules.market_agent.sens INFO: 
+[11:40] --- Running SENS Check ---
+2025-12-23 11:40:16,360 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 11:40:16,362 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 11:40:16,504 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 11:41:13,156 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 12:25:00,567 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-23 12:25:01,552 modules.market_agent.sens INFO: 
+[12:25] --- Running SENS Check ---
+2025-12-23 12:25:04,129 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 12:25:05,368 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 12:25:05,504 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 12:26:23,105 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-23 12:26:23,476 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-23
+2025-12-23 12:26:23,477 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-23 12:26:23,477 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-23 12:26:23,477 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-23 12:26:23,478 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-23 12:26:23,478 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-23 12:26:23,478 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-23 12:26:23,478 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-23 12:26:23,478 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-23 12:26:23,478 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-23 12:26:23,478 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-23 12:26:23,479 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-23
+2025-12-23 12:26:23,479 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-23 12:26:23,479 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-23 12:26:23,479 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-23 12:26:23,479 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-23 12:26:23,479 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-23 12:26:23,479 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2025-12-23 12:26:23,480 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-23 12:26:23,480 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-23 12:26:23,480 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2025-12-23 12:26:23,480 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-23 12:26:23,480 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-23 12:26:31,668 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-23 12:26:34,756 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-23 12:26:34,894 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-23 12:26:34,894 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-23 12:26:41,273 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-23 12:26:51,310 root WARNING: Financial tables not found for CCD
+2025-12-23 12:26:51,552 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-23 12:26:51,552 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-23 12:26:51,553 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-23 12:26:51,553 modules.market_agent.fundamentals INFO:   Failed: 1
+2025-12-23 12:26:51,553 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-23 12:26:51,553 modules.market_agent.commodity_fx ERROR: Market data update failed
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\commodity_fx.py", line 22, in run_market_data_update
+    from standalone_scripts.commodity_scraper.runner import run as run_scraper
+ModuleNotFoundError: No module named 'standalone_scripts'
+2025-12-23 12:26:51,555 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 12:41:51,516 modules.market_agent.sens INFO: 
+[12:41] --- Running SENS Check ---
+2025-12-23 12:41:56,349 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 12:41:56,351 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 12:41:56,512 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 12:42:14,430 yfinance ERROR: 
+8 Failed downloads:
+2025-12-23 12:42:14,430 yfinance ERROR: ['HDC.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10014 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:14,430 yfinance ERROR: ['SHC.JO']: Timeout('Failed to perform, curl: (28) Operation timed out after 10014 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:14,430 yfinance ERROR: ['REN.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:14,431 yfinance ERROR: ['EMI.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10016 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:14,431 yfinance ERROR: ['PPR.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:14,431 yfinance ERROR: ['SDO.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10009 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:14,431 yfinance ERROR: ['PPE.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10008 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:14,431 yfinance ERROR: ['MFL.JO']: Timeout('Failed to perform, curl: (28) Connection timed out after 10012 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2025-12-23 12:42:48,614 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 12:57:48,600 modules.market_agent.sens INFO: 
+[12:57] --- Running SENS Check ---
+2025-12-23 12:57:52,157 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 12:57:52,158 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 12:57:52,294 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 12:58:19,866 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-23 13:13:19,841 modules.market_agent.sens INFO: 
+[13:13] --- Running SENS Check ---
+2025-12-23 13:13:22,659 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-23 13:13:22,661 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-23 13:13:22,804 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-23 13:13:49,256 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...

@@ -94,3 +94,42 @@ INSTRUCTIONS:
 """
 
 
+def build_spot_price_prompt(deep_research: str | None, ticker: str, report_date: str | None, avg_commodity_price: float | None, avg_fx_rate: float | None):
+    """Build a prompt to ask the AI for a "share price at spot" estimate.
+
+    The AI should return a concise numeric estimate and 2-3 brief reasons supporting the update.
+    Return must be plain text (no markdown).
+    """
+    parts = [
+        "You are a professional JSE financial analyst.",
+        "\n--- CONTEXT ---",
+        f"Ticker: {ticker}",
+    ]
+
+    if report_date:
+        parts.append(f"Report date: {report_date}")
+
+    if avg_commodity_price is not None:
+        parts.append(f"Average commodity price across all commodities since report date: {avg_commodity_price}")
+    else:
+        parts.append("Average commodity price since report date: unavailable")
+
+    if avg_fx_rate is not None:
+        parts.append(f"Average FX rate across all pairs since report date: {avg_fx_rate}")
+    else:
+        parts.append("Average FX rate since report date: unavailable")
+
+    parts.append("\n--- BASELINE DEEP RESEARCH ---")
+    parts.append(deep_research or "<none>")
+    parts.append("--- END BASELINE ---\n")
+
+    parts.append(
+        "INSTRUCTIONS:\n"
+        "1) Provide a single-line numeric 'share price at spot' estimate (in the same units as the report share price), labelled clearly as: SHARE PRICE AT SPOT: <numeric>\n"
+        "2) Then give 2-3 brief reasons (one short sentence each) explaining the change based on the commodity and FX context and the deep research.\n"
+        "3) Answer in plain text only, no bullets, no markdown, max 6 lines."
+    )
+
+    return "\n".join(parts)
+
+

@@ -1,12 +1,15 @@
 from modules.data.research import save_deep_research_data
 from components.base_text_tab import BaseTextTab
 import logging
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import RIGHT
 from ttkbootstrap.dialogs import Messagebox
 
 logger = logging.getLogger(__name__)
 
 
 from components.button_utils import run_bg_with_button
+from modules.analysis.engine import estimate_spot_price
 
 
 class DeepResearchTab(BaseTextTab):
@@ -16,6 +19,18 @@ class DeepResearchTab(BaseTextTab):
         super().__init__(parent, ticker, async_run)
         self.async_run_bg = async_run_bg
         self._loading = False  # Flag to prevent saves during content load
+
+        # Add 'Share price at spot' button to the toolbar (right side, near Save)
+        try:
+            self.spot_btn = ttk.Button(
+                self.toolbar,
+                text="Share price at spot",
+                bootstyle="info",
+                command=self._on_spot_price_clicked,
+            )
+            self.spot_btn.pack(side=RIGHT, padx=5)
+        except Exception:
+            logger.exception("Failed to create spot price button")
 
     def save_content(self):
         """Saves the content of the text widget to the database."""
@@ -80,3 +95,29 @@ class DeepResearchTab(BaseTextTab):
         finally:
             self._loading = False
             logger.info(f"[DeepResearch] load_content complete for {self.ticker}, setting loading=False")
+
+    def _on_spot_price_clicked(self):
+        """Handler for the 'Share price at spot' button.
+
+        Runs the AI estimation in the background and displays the result in a dialog.
+        """
+        try:
+            # Prefer background runner if available
+            if hasattr(self, "async_run_bg") and self.async_run_bg:
+                def _show(result):
+                    try:
+                        Messagebox.show_info("Share Price at Spot", result or "(no result)", parent=self)
+                    except Exception:
+                        logger.exception("Failed to show spot price result dialog")
+
+                run_bg_with_button(self.spot_btn, self.async_run_bg, estimate_spot_price(self.ticker), callback=_show)
+                return
+        except Exception:
+            logger.exception("Failed to start background spot price job; falling back to sync")
+
+        # Fallback: run synchronously on event loop and show result
+        try:
+            res = self.async_run(estimate_spot_price(self.ticker))
+            Messagebox.show_info("Share Price at Spot", res or "(no result)", parent=self)
+        except Exception:
+            logger.exception("Failed to compute or show spot price")

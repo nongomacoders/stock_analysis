@@ -54,6 +54,65 @@ async def generate_master_research(ticker: str, deep_research=None):
     prompt = build_research_prompt(deep_research)
     return await query_ai(prompt)
 
+
+async def estimate_spot_price(ticker: str):
+    """Estimate 'share price at spot' using DB averages and the last deep research.
+
+    - Fetch deepresearch and deepresearch_date from stock_analysis.
+    - Compute average commodity price and average FX rate since the deepresearch_date.
+    - Build prompt and query AI.
+    - Save an action_log entry of type 'Spot Price' containing the AI response.
+    Returns the AI text (string) or an explanatory error message.
+    """
+    import logging
+    logger = logging.getLogger(__name__)
+
+    # 1) Fetch deep research and report date
+    q = "SELECT deepresearch, deepresearch_date FROM stock_analysis WHERE ticker = $1"
+    rows = await DBEngine.fetch(q, ticker)
+    if not rows:
+        logger.warning("Spot price: no stock_analysis row for %s", ticker)
+        return "No deep research row found for this ticker."
+
+    row = rows[0]
+    deep = row.get("deepresearch")
+    report_date = row.get("deepresearch_date")
+
+    if not report_date:
+        logger.warning("Spot price: no deepresearch_date for %s", ticker)
+        return "Cannot compute spot price: report date (deepresearch_date) not set for this ticker."
+
+    # 2) Compute averages since report_date (inclusive)
+    try:
+        q1 = "SELECT AVG(price) AS avg_price, COUNT(*) AS cnt FROM commodity_prices WHERE collected_ts >= $1"
+        rows1 = await DBEngine.fetch(q1, report_date)
+        avg_comm = rows1[0]["avg_price"] if rows1 and rows1[0]["avg_price"] is not None else None
+
+        q2 = "SELECT AVG(rate) AS avg_rate, COUNT(*) AS cnt FROM fx_rates WHERE collected_ts >= $1"
+        rows2 = await DBEngine.fetch(q2, report_date)
+        avg_fx = rows2[0]["avg_rate"] if rows2 and rows2[0]["avg_rate"] is not None else None
+    except Exception:
+        logger.exception("Failed to compute averages for %s", ticker)
+        avg_comm = None
+        avg_fx = None
+
+    # 3) Build prompt and query AI
+    try:
+        prompt = build_spot_price_prompt(deep, ticker, str(report_date), avg_comm, avg_fx)
+        logger.info("Spot price: querying AI for %s (report_date=%s)", ticker, report_date)
+        analysis = await query_ai(prompt)
+    except Exception:
+        logger.exception("AI query failed for spot price %s", ticker)
+        analysis = "Error generating AI response for spot price."
+
+    # 4) Save to action_log for auditability
+    try:
+        await _save_log(ticker, "Spot Price", f"Spot price estimate requested (report_date={report_date})", analysis)
+    except Exception:
+        logger.exception("Failed to save spot price action log for %s", ticker)
+
+    return analysis
+
 async def _save_log(ticker, type_, content, analysis):
     q = """
         INSERT INTO action_log (ticker, trigger_type, trigger_content, ai_analysis)

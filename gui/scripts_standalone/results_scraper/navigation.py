@@ -7,7 +7,13 @@ import re
 import urllib.parse
 from pathlib import Path
 
-from .utils import dump_debug, find_frame, sanitize_ticker
+from .utils import (
+    dump_debug,
+    find_frame,
+    sanitize_ticker,
+    extract_pdf_creation_date,
+    format_pdf_filename,
+)
 
 
 TARGET_URL = "https://securities.standardbank.co.za/ost/"
@@ -550,6 +556,63 @@ async def click_first_pdf_in_list(
             out_path = results_dir / filename
             out_path.write_bytes(data)
             logger.info("Saved PDF via request to %s", out_path)
+
+            # Try to extract creation date from PDF and rename file accordingly
+            final_path = out_path
+            try:
+                dt = extract_pdf_creation_date(data)
+                if dt:
+                    new_name = format_pdf_filename(dt)
+                    new_path = out_path.with_name(new_name)
+                    # Ensure unique filename
+                    i = 1
+                    while new_path.exists():
+                        stem = new_name[:-4]
+                        new_path = out_path.with_name(f"{stem}_{i}.pdf")
+                        i += 1
+                    out_path.rename(new_path)
+                    final_path = new_path
+                    logger.info("Renamed PDF to %s", new_path)
+            except Exception:
+                logger.exception("Failed to rename PDF to creation date")
+
+            # Cleanup: remove older PDFs and news items in this ticker folder
+            try:
+                import shutil
+
+                removed = []
+                for child in results_dir.iterdir():
+                    # Skip the file we just saved
+                    try:
+                        if child.samefile(final_path):
+                            continue
+                    except Exception:
+                        # On some platforms samefile may fail for non-existing paths; fallback to name check
+                        if child.resolve() == final_path.resolve():
+                            continue
+
+                    # Files to delete: PDFs, HTML/text/json news artifacts, or names that start with 'news'
+                    if child.is_file():
+                        low = child.suffix.lower()
+                        if low == ".pdf" or low in {".html", ".htm", ".txt", ".json"} or child.name.lower().startswith("news"):
+                            try:
+                                child.unlink()
+                                removed.append(child)
+                            except Exception:
+                                logger.exception("Failed to remove old artifact %s", child)
+                    elif child.is_dir():
+                        if child.name.lower().startswith("news"):
+                            try:
+                                shutil.rmtree(child)
+                                removed.append(child)
+                            except Exception:
+                                logger.exception("Failed to remove news directory %s", child)
+
+                if removed:
+                    logger.info("Cleaned up %d old file(s)/dir(s) in %s: %s", len(removed), results_dir, removed)
+            except Exception:
+                logger.exception("Cleanup of older PDFs/news items failed")
+
             return True
         except Exception as ex:
             last_error = ex
