@@ -94,13 +94,22 @@ INSTRUCTIONS:
 """
 
 
-def build_spot_price_prompt(deep_research: str | None, ticker: str, report_date: str | None, avg_commodity_price: float | None, avg_fx_rate: float | None):
+def build_spot_price_prompt(
+    deep_research: str | None,
+    ticker: str,
+    report_date: str | None,
+    commodity_avgs: list[tuple[str, float, int]] | None,
+    fx_avgs: list[tuple[str, float, int]] | None,
+):
     """Build a prompt to ask the AI for a "share price at spot" estimate.
+
+    - commodity_avgs: list of (commodity, avg_price, count)
+    - fx_avgs: list of (pair, avg_rate, count)
 
     The AI should return a concise numeric estimate and 2-3 brief reasons supporting the update.
     Return must be plain text (no markdown).
     """
-    parts = [
+    parts: list[str] = [
         "You are a professional JSE financial analyst.",
         "\n--- CONTEXT ---",
         f"Ticker: {ticker}",
@@ -109,15 +118,21 @@ def build_spot_price_prompt(deep_research: str | None, ticker: str, report_date:
     if report_date:
         parts.append(f"Report date: {report_date}")
 
-    if avg_commodity_price is not None:
-        parts.append(f"Average commodity price across all commodities since report date: {avg_commodity_price}")
+    # Add per-commodity averages (limit output to top 10 by count)
+    if commodity_avgs:
+        parts.append("Per-commodity averages since report date:")
+        for c, avg, cnt in (commodity_avgs[:10]):
+            parts.append(f"- {c}: {avg:.6f} (n={cnt})")
     else:
-        parts.append("Average commodity price since report date: unavailable")
+        parts.append("Per-commodity averages: unavailable")
 
-    if avg_fx_rate is not None:
-        parts.append(f"Average FX rate across all pairs since report date: {avg_fx_rate}")
+    # Add per-FX averages
+    if fx_avgs:
+        parts.append("Per-FX pair averages since report date:")
+        for p, avg, cnt in (fx_avgs[:10]):
+            parts.append(f"- {p}: {avg:.6f} (n={cnt})")
     else:
-        parts.append("Average FX rate since report date: unavailable")
+        parts.append("Per-FX pair averages: unavailable")
 
     parts.append("\n--- BASELINE DEEP RESEARCH ---")
     parts.append(deep_research or "<none>")
@@ -125,7 +140,7 @@ def build_spot_price_prompt(deep_research: str | None, ticker: str, report_date:
 
     parts.append(
         "INSTRUCTIONS:\n"
-        "1) Provide a single-line numeric 'share price at spot' estimate (in the same units as the report share price), labelled clearly as: SHARE PRICE AT SPOT: <numeric>\n"
+        "1) Provide a single-line numeric 'SHARE PRICE AT SPOT: <numeric>' (use the same units as the report's share price).\n"
         "2) Then give 2-3 brief reasons (one short sentence each) explaining the change based on the commodity and FX context and the deep research.\n"
         "3) Answer in plain text only, no bullets, no markdown, max 6 lines."
     )

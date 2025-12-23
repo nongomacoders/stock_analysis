@@ -19,7 +19,7 @@ async def run_market_data_update(mode: str = "all") -> int:
             sys.path.insert(0, _gui_root)
 
         # Import here so sys.path + DBEngine are already ready (same pattern as your runner)
-        from standalone_scripts.commodity_scraper.runner import run as run_scraper
+        from scripts_standalone.commodity_scraper.runner import run as run_scraper
 
         # Our runner signature: run(mode, symbol, pair, limit)
         rc = await run_scraper(mode=mode, symbol=None, pair=None, limit=None)

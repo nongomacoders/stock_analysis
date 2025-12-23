@@ -4,6 +4,7 @@ from modules.analysis.prompts import (
     build_sens_prompt,
     build_price_prompt,
     build_research_prompt,
+    build_spot_price_prompt,
 )
 
 
@@ -82,23 +83,47 @@ async def estimate_spot_price(ticker: str):
         logger.warning("Spot price: no deepresearch_date for %s", ticker)
         return "Cannot compute spot price: report date (deepresearch_date) not set for this ticker."
 
-    # 2) Compute averages since report_date (inclusive)
+    # 2) Compute per-commodity and per-FX averages since report_date (inclusive)
+    commodity_avgs = []
+    fx_avgs = []
     try:
-        q1 = "SELECT AVG(price) AS avg_price, COUNT(*) AS cnt FROM commodity_prices WHERE collected_ts >= $1"
+        q1 = "SELECT commodity, AVG(price) AS avg_price, COUNT(*) AS cnt FROM commodity_prices WHERE collected_ts >= $1 GROUP BY commodity ORDER BY cnt DESC"
         rows1 = await DBEngine.fetch(q1, report_date)
-        avg_comm = rows1[0]["avg_price"] if rows1 and rows1[0]["avg_price"] is not None else None
+        if rows1:
+            for r in rows1:
+                try:
+                    commodity_avgs.append((r["commodity"], float(r["avg_price"]), int(r["cnt"])))
+                except Exception:
+                    continue
 
-        q2 = "SELECT AVG(rate) AS avg_rate, COUNT(*) AS cnt FROM fx_rates WHERE collected_ts >= $1"
+        q2 = "SELECT pair, AVG(rate) AS avg_rate, COUNT(*) AS cnt FROM fx_rates WHERE collected_ts >= $1 GROUP BY pair ORDER BY cnt DESC"
         rows2 = await DBEngine.fetch(q2, report_date)
-        avg_fx = rows2[0]["avg_rate"] if rows2 and rows2[0]["avg_rate"] is not None else None
+        if rows2:
+            for r in rows2:
+                try:
+                    fx_avgs.append((r["pair"], float(r["avg_rate"]), int(r["cnt"])))
+                except Exception:
+                    continue
+
+        # Also compute an overall weighted average (fallback)
+        total_comm = sum(avg * cnt for (_, avg, cnt) in commodity_avgs) if commodity_avgs else 0.0
+        total_comm_cnt = sum(cnt for (_, _, cnt) in commodity_avgs) if commodity_avgs else 0
+        avg_comm = (total_comm / total_comm_cnt) if total_comm_cnt else None
+
+        total_fx = sum(avg * cnt for (_, avg, cnt) in fx_avgs) if fx_avgs else 0.0
+        total_fx_cnt = sum(cnt for (_, _, cnt) in fx_avgs) if fx_avgs else 0
+        avg_fx = (total_fx / total_fx_cnt) if total_fx_cnt else None
+
     except Exception:
         logger.exception("Failed to compute averages for %s", ticker)
+        commodity_avgs = []
+        fx_avgs = []
         avg_comm = None
         avg_fx = None
 
     # 3) Build prompt and query AI
     try:
-        prompt = build_spot_price_prompt(deep, ticker, str(report_date), avg_comm, avg_fx)
+        prompt = build_spot_price_prompt(deep, ticker, str(report_date), commodity_avgs, fx_avgs)
         logger.info("Spot price: querying AI for %s (report_date=%s)", ticker, report_date)
         analysis = await query_ai(prompt)
     except Exception:

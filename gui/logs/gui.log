@@ -1,68 +1,20 @@
-2025-12-23 12:24:59,367 __main__ INFO: Database pool initialized
-2025-12-23 12:24:59,411 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
-2025-12-23 12:24:59,411 __main__ INFO: Notifier listener added
-2025-12-23 12:24:59,411 __main__ INFO: AUTO_START_AGENT enabled, starting market agent
-2025-12-23 12:24:59,465 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
-2025-12-23 12:25:09,200 __main__ INFO: Selected: NVS.JO
-2025-12-23 12:25:09,688 components.deep_research_tab INFO: [DeepResearch] load_content called for NVS.JO, setting loading=True
-2025-12-23 12:25:09,689 components.deep_research_tab INFO: [DeepResearch] load_content complete for NVS.JO, setting loading=False
-2025-12-23 12:25:40,184 __main__ INFO: Selected: SSW.JO
-2025-12-23 12:25:40,184 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: SSW.JO
-2025-12-23 12:25:40,319 components.deep_research_tab INFO: [DeepResearch] load_content called for SSW.JO, setting loading=True
-2025-12-23 12:25:40,320 components.deep_research_tab INFO: [DeepResearch] load_content complete for SSW.JO, setting loading=False
-2025-12-23 12:29:58,801 __main__ INFO: Selected: NPN.JO
-2025-12-23 12:29:58,801 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: NPN.JO
-2025-12-23 12:29:59,100 components.deep_research_tab INFO: [DeepResearch] load_content called for NPN.JO, setting loading=True
-2025-12-23 12:29:59,101 components.deep_research_tab INFO: [DeepResearch] load_content complete for NPN.JO, setting loading=False
-2025-12-23 12:59:26,152 __main__ INFO: Selected: WBC.JO
-2025-12-23 12:59:26,152 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: WBC.JO
-2025-12-23 12:59:26,731 components.deep_research_tab INFO: [DeepResearch] load_content called for WBC.JO, setting loading=True
-2025-12-23 12:59:26,733 components.deep_research_tab INFO: [DeepResearch] load_content complete for WBC.JO, setting loading=False
-2025-12-23 12:59:27,134 __main__ INFO: Selected: INL.JO
-2025-12-23 12:59:27,134 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: INL.JO
-2025-12-23 12:59:27,708 components.deep_research_tab INFO: [DeepResearch] load_content called for INL.JO, setting loading=True
-2025-12-23 12:59:27,709 components.deep_research_tab INFO: [DeepResearch] load_content complete for INL.JO, setting loading=False
-2025-12-23 12:59:39,357 __main__ INFO: Selected: ANG.JO
-2025-12-23 12:59:39,358 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: ANG.JO
-2025-12-23 12:59:39,444 components.deep_research_tab INFO: [DeepResearch] load_content called for ANG.JO, setting loading=True
-2025-12-23 12:59:39,444 components.deep_research_tab INFO: [DeepResearch] load_content complete for ANG.JO, setting loading=False
-2025-12-23 12:59:41,198 __main__ INFO: Selected: AGL.JO
-2025-12-23 12:59:41,198 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: AGL.JO
-2025-12-23 12:59:41,257 components.deep_research_tab INFO: [DeepResearch] load_content called for AGL.JO, setting loading=True
-2025-12-23 12:59:41,258 components.deep_research_tab INFO: [DeepResearch] load_content complete for AGL.JO, setting loading=False
-2025-12-23 12:59:47,361 __main__ INFO: Selected: NRP.JO
-2025-12-23 12:59:47,362 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: NRP.JO
-2025-12-23 12:59:47,427 components.deep_research_tab INFO: [DeepResearch] load_content called for NRP.JO, setting loading=True
-2025-12-23 12:59:47,427 components.deep_research_tab INFO: [DeepResearch] load_content complete for NRP.JO, setting loading=False
-2025-12-23 13:04:22,575 __main__ INFO: Selected: KP2.JO
-2025-12-23 13:04:22,576 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: KP2.JO
-2025-12-23 13:04:22,641 components.deep_research_tab INFO: [DeepResearch] load_content called for KP2.JO, setting loading=True
-2025-12-23 13:04:22,642 components.deep_research_tab INFO: [DeepResearch] load_content complete for KP2.JO, setting loading=False
-2025-12-23 13:10:23,656 __main__ INFO: Selected: NPN.JO
-2025-12-23 13:10:23,656 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: NPN.JO
-2025-12-23 13:10:24,514 components.deep_research_tab INFO: [DeepResearch] load_content called for NPN.JO, setting loading=True
-2025-12-23 13:10:24,514 components.deep_research_tab INFO: [DeepResearch] load_content complete for NPN.JO, setting loading=False
-2025-12-23 13:11:28,502 __main__ INFO: Selected: NVS.JO
-2025-12-23 13:11:28,503 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: NVS.JO
-2025-12-23 13:11:29,580 __main__ INFO: Selected: NPN.JO
-2025-12-23 13:11:29,580 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: NPN.JO
-2025-12-23 13:11:29,639 components.deep_research_tab INFO: [DeepResearch] load_content called for NPN.JO, setting loading=True
-2025-12-23 13:11:29,639 components.deep_research_tab INFO: [DeepResearch] load_content complete for NPN.JO, setting loading=False
-2025-12-23 13:11:35,594 __main__ INFO: Selected: SEP.JO
-2025-12-23 13:11:35,594 components.chart_window INFO: 
-[ChartWindow] Updating to ticker: SEP.JO
-2025-12-23 13:11:42,301 components.deep_research_tab INFO: [DeepResearch] load_content called for SEP.JO, setting loading=True
-2025-12-23 13:11:42,301 components.deep_research_tab INFO: [DeepResearch] load_content complete for SEP.JO, setting loading=False
-2025-12-23 13:11:44,145 components.deep_research_tab INFO: [DeepResearch] load_content called for SEP.JO, setting loading=True
-2025-12-23 13:11:44,146 components.deep_research_tab INFO: [DeepResearch] load_content complete for SEP.JO, setting loading=False
+2025-12-23 14:09:40,279 __main__ INFO: Database pool initialized
+2025-12-23 14:09:40,394 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-23 14:09:40,394 __main__ INFO: Notifier listener added
+2025-12-23 14:09:40,395 __main__ INFO: AUTO_START_AGENT enabled, starting market agent
+2025-12-23 14:09:40,499 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-23 14:09:43,965 __main__ INFO: Selected: SSW.JO
+2025-12-23 14:09:44,244 components.deep_research_tab INFO: [DeepResearch] load_content called for SSW.JO, setting loading=True
+2025-12-23 14:09:44,245 components.deep_research_tab INFO: [DeepResearch] load_content complete for SSW.JO, setting loading=False
+2025-12-23 14:10:09,384 __main__ INFO: Selected: PAN.JO
+2025-12-23 14:10:09,385 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: PAN.JO
+2025-12-23 14:10:09,495 components.deep_research_tab INFO: [DeepResearch] load_content called for PAN.JO, setting loading=True
+2025-12-23 14:10:09,496 components.deep_research_tab INFO: [DeepResearch] load_content complete for PAN.JO, setting loading=False
+2025-12-23 14:10:17,253 __main__ INFO: Selected: GLN.JO
+2025-12-23 14:10:17,253 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GLN.JO
+2025-12-23 14:10:17,330 components.deep_research_tab INFO: [DeepResearch] load_content called for GLN.JO, setting loading=True
+2025-12-23 14:10:17,331 components.deep_research_tab INFO: [DeepResearch] load_content complete for GLN.JO, setting loading=False
+2025-12-23 14:10:49,441 modules.analysis.engine WARNING: Spot price: no deepresearch_date for GLN.JO
+2025-12-23 14:11:29,944 modules.analysis.engine WARNING: Spot price: no deepresearch_date for GLN.JO

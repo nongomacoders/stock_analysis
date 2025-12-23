@@ -20,6 +20,12 @@ async def mark_log_read(log_id: int):
     await DBEngine.execute(query, log_id)
 
 
+async def delete_action_log(log_id: int):
+    """Delete an action log entry by id."""
+    query = "DELETE FROM action_log WHERE log_id = $1"
+    await DBEngine.execute(query, log_id)
+
+
 async def get_research_data(ticker: str):
     """Get all research data for a ticker from stock_analysis table."""
     query = """

@@ -32,6 +32,28 @@ class ActionLogTab(ttk.Frame):
         )
         self.mark_read_btn.pack(side=RIGHT, padx=5)
 
+        # Delete button to remove an action log entry
+        try:
+            import tkinter.messagebox as messagebox
+            from modules.data.research import delete_action_log
+
+            self.delete_btn = ttk.Button(
+                toolbar,
+                text="Delete",
+                bootstyle="danger",
+                command=self._on_delete_clicked,
+                state=DISABLED,
+            )
+            self.delete_btn.pack(side=RIGHT, padx=5)
+        except Exception:
+            # If imports fail, we'll proceed without the delete button
+            self.delete_btn = None
+            try:
+                logger = __import__('logging').getLogger(__name__)
+                logger.exception('Failed to create delete button for ActionLogTab')
+            except Exception:
+                pass
+
         # Master-Detail View
         paned = ttk.Panedwindow(self, orient=HORIZONTAL)
         paned.pack(fill=BOTH, expand=True, padx=5, pady=5)
@@ -112,6 +134,12 @@ class ActionLogTab(ttk.Frame):
         self.text_widget.config(state=DISABLED)
 
         self.mark_read_btn.config(state=NORMAL if not data.get("is_read", False) else DISABLED)
+        # Enable delete button if present
+        try:
+            if getattr(self, 'delete_btn', None):
+                self.delete_btn.config(state=NORMAL)
+        except Exception:
+            pass
 
     def mark_as_read(self):
         selection = self.tree.selection()
@@ -127,3 +155,51 @@ class ActionLogTab(ttk.Frame):
                 # fallback to original behavior
                 self.mark_read_btn.config(state=DISABLED)
                 self.async_run_bg(mark_log_read(data["log_id"]))
+
+    def _on_delete_clicked(self):
+        """Handler for the Delete button. Confirms then deletes the selected log."""
+        try:
+            import tkinter.messagebox as messagebox
+            from modules.data.research import delete_action_log
+        except Exception:
+            # If imports fail, log and abort
+            try:
+                __import__('logging').getLogger(__name__).exception('Delete handler imports failed')
+            except Exception:
+                pass
+            return
+
+        selection = self.tree.selection()
+        if not selection:
+            return
+        item_id = selection[0]
+        data = self.logs_map.get(item_id)
+        if not data:
+            return
+
+        # Confirm with the user
+        try:
+            ok = messagebox.askyesno("Confirm Delete", "Delete this action log entry?", parent=self)
+        except Exception:
+            ok = False
+
+        if not ok:
+            return
+
+        # Disable delete button while running
+        if getattr(self, 'delete_btn', None):
+            try:
+                self.delete_btn.config(state=DISABLED)
+            except Exception:
+                pass
+
+        # Run delete in background and reload logs when done
+        try:
+            run_bg_with_button(self.delete_btn or self.mark_read_btn, self.async_run_bg, delete_action_log(data["log_id"]), callback=lambda _ : self.load_action_logs())
+        except Exception:
+            try:
+                # fallback: call background function directly
+                self.async_run_bg(delete_action_log(data["log_id"]))
+                self.load_action_logs()
+            except Exception:
+                __import__('logging').getLogger(__name__).exception('Failed to delete action log')
