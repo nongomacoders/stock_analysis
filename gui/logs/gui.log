@@ -1,0 +1,54 @@
+2025-12-24 12:06:39,379 __main__ INFO: Database pool initialized
+2025-12-24 12:06:39,586 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-24 12:06:39,598 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-24 12:06:39,599 __main__ INFO: Notifier listener added
+2025-12-24 12:06:39,600 __main__ INFO: AUTO_START_AGENT enabled, starting market agent
+2025-12-24 12:06:54,365 __main__ INFO: Selected: ACT.JO
+2025-12-24 12:06:55,228 components.deep_research_tab INFO: [DeepResearch] load_content called for ACT.JO, setting loading=True
+2025-12-24 12:06:55,229 components.deep_research_tab INFO: [DeepResearch] load_content complete for ACT.JO, setting loading=False
+2025-12-24 12:18:54,290 __main__ INFO: Selected: THA.JO
+2025-12-24 12:18:54,291 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: THA.JO
+2025-12-24 12:18:54,774 components.deep_research_tab INFO: [DeepResearch] load_content called for THA.JO, setting loading=True
+2025-12-24 12:18:54,775 components.deep_research_tab INFO: [DeepResearch] load_content complete for THA.JO, setting loading=False
+2025-12-24 12:19:07,049 __main__ INFO: Selected: SOL.JO
+2025-12-24 12:19:07,050 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: SOL.JO
+2025-12-24 12:19:07,473 components.deep_research_tab INFO: [DeepResearch] load_content called for SOL.JO, setting loading=True
+2025-12-24 12:19:07,474 components.deep_research_tab INFO: [DeepResearch] load_content complete for SOL.JO, setting loading=False
+2025-12-24 12:19:08,006 __main__ INFO: Selected: AFE.JO
+2025-12-24 12:19:08,006 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: AFE.JO
+2025-12-24 12:19:08,394 components.deep_research_tab INFO: [DeepResearch] load_content called for AFE.JO, setting loading=True
+2025-12-24 12:19:08,395 components.deep_research_tab INFO: [DeepResearch] load_content complete for AFE.JO, setting loading=False
+2025-12-24 12:19:20,985 __main__ INFO: Selected: ACT.JO
+2025-12-24 12:19:20,987 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ACT.JO
+2025-12-24 12:19:21,131 components.deep_research_tab INFO: [DeepResearch] load_content called for ACT.JO, setting loading=True
+2025-12-24 12:19:21,132 components.deep_research_tab INFO: [DeepResearch] load_content complete for ACT.JO, setting loading=False
+2025-12-24 12:19:33,147 __main__ INFO: Selected: INL.JO
+2025-12-24 12:19:33,148 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: INL.JO
+2025-12-24 12:19:33,446 components.deep_research_tab INFO: [DeepResearch] load_content called for INL.JO, setting loading=True
+2025-12-24 12:19:33,446 components.deep_research_tab INFO: [DeepResearch] load_content complete for INL.JO, setting loading=False
+2025-12-24 12:19:42,063 __main__ INFO: Selected: BTI.JO
+2025-12-24 12:19:42,065 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: BTI.JO
+2025-12-24 12:19:42,391 components.deep_research_tab INFO: [DeepResearch] load_content called for BTI.JO, setting loading=True
+2025-12-24 12:19:42,392 components.deep_research_tab INFO: [DeepResearch] load_content complete for BTI.JO, setting loading=False
+2025-12-24 12:19:51,708 __main__ INFO: Selected: IMP.JO
+2025-12-24 12:19:51,709 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: IMP.JO
+2025-12-24 12:19:51,876 components.deep_research_tab INFO: [DeepResearch] load_content called for IMP.JO, setting loading=True
+2025-12-24 12:19:51,877 components.deep_research_tab INFO: [DeepResearch] load_content complete for IMP.JO, setting loading=False
+2025-12-24 12:20:33,248 __main__ INFO: Selected: MDI.JO
+2025-12-24 12:20:33,249 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: MDI.JO
+2025-12-24 12:20:33,480 components.deep_research_tab INFO: [DeepResearch] load_content called for MDI.JO, setting loading=True
+2025-12-24 12:20:33,481 components.deep_research_tab INFO: [DeepResearch] load_content complete for MDI.JO, setting loading=False
+2025-12-24 12:20:41,483 __main__ INFO: Selected: SEA.JO
+2025-12-24 12:20:41,484 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: SEA.JO
+2025-12-24 12:20:41,625 components.deep_research_tab INFO: [DeepResearch] load_content called for SEA.JO, setting loading=True
+2025-12-24 12:20:41,626 components.deep_research_tab INFO: [DeepResearch] load_content complete for SEA.JO, setting loading=False
+2025-12-24 12:20:57,885 __main__ INFO: Closing application...

@@ -1789,3 +1789,283 @@ Fundamentals Update Summary:
 2025-12-23 14:11:11,651 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.35084 (as_of=None)
 2025-12-23 14:11:11,652 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
 2025-12-23 14:11:11,652 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-24 08:23:17,453 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-24 08:23:20,105 modules.market_agent.sens INFO: 
+[08:23] --- Running SENS Check ---
+2025-12-24 08:23:31,246 modules.market_agent.sens INFO: No new SENS announcements found.
+2025-12-24 08:23:32,374 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-24 08:23:32,972 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-24 08:26:00,316 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-24 08:26:00,662 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-24
+2025-12-24 08:26:00,663 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-24 08:26:00,663 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-24 08:26:00,663 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-24 08:26:00,663 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-24 08:26:00,664 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-24 08:26:00,664 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-24 08:26:00,664 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-24 08:26:00,664 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-24 08:26:00,664 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-24
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2025-12-24 08:26:00,665 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-24 08:26:00,666 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-24 08:26:00,666 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2025-12-24 08:26:00,666 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-24 08:26:00,666 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-24 08:26:07,198 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-24 08:26:37,253 playwright_scraper.pw ERROR: [PW] GOTO failed (home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 102, in _goto_with_debug
+    response = await page.goto(url, wait_until=wait_until, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\async_api\_generated.py", line 8992, in goto
+    await self._impl_obj.goto(
+        url=url, timeout=timeout, waitUntil=wait_until, referer=referer
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_page.py", line 556, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 153, in goto
+    await self._channel.send(
+        "goto", self._navigation_timeout, locals_to_params(locals())
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.sharedata.co.za/v2/Scripts/Home.aspx", waiting until "domcontentloaded"
+
+2025-12-24 08:26:37,477 root ERROR: Error scraping CCD.JO
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 255, in scrape_ticker_fundamentals
+    await ensure_logged_in(page, context)
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 118, in ensure_logged_in
+    await _goto_with_debug(page, f"{BASE_URL}/Home.aspx", label="home")
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 102, in _goto_with_debug
+    response = await page.goto(url, wait_until=wait_until, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\async_api\_generated.py", line 8992, in goto
+    await self._impl_obj.goto(
+        url=url, timeout=timeout, waitUntil=wait_until, referer=referer
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_page.py", line 556, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 153, in goto
+    await self._channel.send(
+        "goto", self._navigation_timeout, locals_to_params(locals())
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.sharedata.co.za/v2/Scripts/Home.aspx", waiting until "domcontentloaded"
+
+2025-12-24 08:26:37,478 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-24 08:26:37,479 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-24 08:26:37,479 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-24 08:26:37,479 modules.market_agent.fundamentals INFO:   Failed: 1
+2025-12-24 08:26:37,479 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-24 08:26:37,484 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-24 08:26:40,470 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-24 08:26:47,614 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.95 USD/t (as_of=2025-12-23 00:00:00)
+2025-12-24 08:26:51,614 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4486.77 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 08:26:55,657 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.5194 USD/lb (as_of=2025-12-24 00:00:00)
+2025-12-24 08:26:55,657 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-24 08:26:55,657 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-24 08:27:00,476 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1973.0 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 08:27:03,962 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2341.3 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 08:27:03,963 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-24 08:27:03,963 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-24 08:27:07,298 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8200.0 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 08:27:11,786 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 62.468 USD/bbl (as_of=2025-12-24 00:00:00)
+2025-12-24 08:27:16,432 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.6694 (as_of=None)
+2025-12-24 08:27:19,996 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.17998 (as_of=None)
+2025-12-24 08:27:24,194 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.35198 (as_of=None)
+2025-12-24 08:27:24,195 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-24 08:27:24,195 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-24 08:42:24,186 modules.market_agent.sens INFO: 
+[08:42] --- Running SENS Check ---
+2025-12-24 08:42:27,792 modules.market_agent.sens INFO:   -> NEW SENS: ACT @ 2025-12-24 08:30:00
+2025-12-24 08:42:36,478 modules.analysis.engine INFO: AI: Analyzing SENS for ACT.JO...
+2025-12-24 08:43:03,782 modules.analysis.engine INFO: AI: SENS analysis saved for ACT.JO.
+2025-12-24 08:43:03,784 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-24 08:43:03,951 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-24 08:44:59,065 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2025-12-24 08:59:59,053 modules.market_agent.sens INFO: 
+[08:59] --- Running SENS Check ---
+2025-12-24 09:00:20,086 modules.market_agent.agent ERROR: CRITICAL AGENT ERROR
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\agent.py", line 48, in run_market_agent
+    await run_sens_check()
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\sens.py", line 23, in run_sens_check
+    rows = await DBEngine.fetch(q_tickers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\core\db\engine.py", line 39, in fetch
+    async with pool.acquire() as conn:
+               ~~~~~~~~~~~~^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 1056, in __aenter__
+    self.connection = await self.pool._acquire(self.timeout)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 896, in _acquire
+    return await _acquire_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 881, in _acquire_impl
+    proxy = await ch.acquire()  # type: PoolConnectionProxy
+            ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 161, in acquire
+    await self.connect()
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 153, in connect
+    self._con = await self._pool._get_new_connection()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 538, in _get_new_connection
+    con = await self._connect(
+          ^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connection.py", line 2443, in connect
+    return await connect_utils._connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<22 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1249, in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+    ...<2 lines>...
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1218, in _connect
+    conn = await _connect_addr(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1054, in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1099, in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 969, in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        host, port)
+        ^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1160, in create_connection
+    raise exceptions[0]
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1135, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+        exceptions, addrinfo, laddr_infos)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1038, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 726, in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 804, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 600, in finish_connect
+    ov.getresult()
+    ~~~~~~~~~~~~^^
+OSError: [WinError 121] The semaphore timeout period has expired
+2025-12-24 12:06:41,722 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2025-12-24 12:06:43,229 modules.market_agent.sens INFO: 
+[12:06] --- Running SENS Check ---
+2025-12-24 12:06:47,280 modules.market_agent.sens INFO:   -> NEW SENS: AFE @ 2025-12-24 12:00:00
+2025-12-24 12:06:57,203 modules.analysis.engine INFO: AI: Analyzing SENS for AFE.JO...
+2025-12-24 12:07:23,599 modules.analysis.engine INFO: AI: SENS analysis saved for AFE.JO.
+2025-12-24 12:07:23,602 modules.market_agent.prices INFO: +++ Running Price Update +++
+2025-12-24 12:07:24,102 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2025-12-24 12:07:37,330 yfinance ERROR: 
+1 Failed download:
+2025-12-24 12:07:37,331 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2025-12-24 12:09:16,179 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2025-12-24 12:09:16,536 modules.market_agent.fundamentals INFO: CURRENT DATE: 2025-12-24
+2025-12-24 12:09:16,537 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-24 12:09:16,538 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-24 12:09:16,538 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2025-12-24 12:09:16,538 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-24 12:09:16,538 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2025-12-24 12:09:16,539 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2025-12-24 12:09:16,539 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2025-12-24 12:09:16,539 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2025-12-24 12:09:16,539 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2025-12-24 12:09:16,540 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2025-12-24 12:09:16,540 modules.market_agent.fundamentals INFO:     Current Date:      2025-12-24
+2025-12-24 12:09:16,540 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2025-12-24 12:09:16,540 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2025-12-24 12:09:16,541 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2025-12-24 12:09:16,541 modules.market_agent.fundamentals INFO: ================================================================================
+2025-12-24 12:09:16,541 modules.market_agent.fundamentals INFO: 
+================================================================================
+2025-12-24 12:09:16,541 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2025-12-24 12:09:16,542 modules.market_agent.fundamentals INFO: ================================================================================
+
+2025-12-24 12:09:16,542 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2025-12-24 12:09:16,542 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2025-12-24 12:09:16,542 modules.market_agent.fundamentals INFO: 
+============================================================
+2025-12-24 12:09:16,543 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2025-12-24 12:09:27,609 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-24 12:09:29,376 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2025-12-24 12:09:29,635 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2025-12-24 12:09:29,635 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-24 12:09:38,901 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2025-12-24 12:09:48,978 root WARNING: Financial tables not found for CCD
+2025-12-24 12:09:49,554 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2025-12-24 12:09:49,555 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2025-12-24 12:09:49,555 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2025-12-24 12:09:49,556 modules.market_agent.fundamentals INFO:   Failed: 1
+2025-12-24 12:09:49,556 modules.market_agent.fundamentals INFO:   Total periods: 0
+2025-12-24 12:09:49,566 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2025-12-24 12:09:50,019 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2025-12-24 12:09:52,613 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 106.95 USD/t (as_of=2025-12-23 00:00:00)
+2025-12-24 12:09:55,037 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4497.0 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 12:09:57,229 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.5464 USD/lb (as_of=2025-12-24 00:00:00)
+2025-12-24 12:09:57,230 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2025-12-24 12:09:57,230 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2025-12-24 12:09:59,614 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1890.5 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 12:10:02,001 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2295.4 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 12:10:02,002 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2025-12-24 12:10:02,002 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2025-12-24 12:10:04,334 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 8200.0 USD/oz (as_of=2025-12-24 00:00:00)
+2025-12-24 12:10:06,915 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 62.453 USD/bbl (as_of=2025-12-24 00:00:00)
+2025-12-24 12:10:10,294 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.6433 (as_of=None)
+2025-12-24 12:10:13,061 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.17959 (as_of=None)
+2025-12-24 12:10:15,574 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.35206 (as_of=None)
+2025-12-24 12:10:15,575 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2025-12-24 12:10:15,575 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
