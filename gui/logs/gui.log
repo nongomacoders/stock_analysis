@@ -1,0 +1,102 @@
+2025-12-25 17:57:44,745 __main__ INFO: Database pool initialized
+2025-12-25 17:57:44,895 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-25 17:57:44,896 __main__ INFO: Notifier listener added
+2025-12-25 17:57:44,926 __main__ INFO: AUTO_START_AGENT enabled, starting market agent
+2025-12-25 17:57:44,927 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-25 17:58:07,295 __main__ INFO: Selected: VAL.JO
+2025-12-25 17:58:08,361 components.deep_research_tab INFO: [DeepResearch] load_content called for VAL.JO, setting loading=True
+2025-12-25 17:58:08,362 components.deep_research_tab INFO: [DeepResearch] load_content complete for VAL.JO, setting loading=False
+2025-12-25 17:58:43,925 modules.analysis.engine INFO: Spot price: querying AI for VAL.JO (report_date=2025-12-25)
+2025-12-25 18:02:17,477 components.base_text_tab INFO: _safe_save called on StrategyTab ticker=VAL.JO
+2025-12-25 18:33:01,164 modules.analysis.engine INFO: Spot price: querying AI for VAL.JO (report_date=2025-12-25)
+2025-12-25 18:33:57,514 components.base_text_tab INFO: _safe_save called on DeepResearchTab ticker=VAL.JO
+2025-12-25 18:33:57,514 components.deep_research_tab INFO: [DeepResearch] save_async called for VAL.JO, content length: 31260
+2025-12-25 18:33:57,514 components.deep_research_tab INFO: [DeepResearch] Proceeding with save for VAL.JO
+2025-12-25 18:34:03,372 modules.analysis.engine INFO: Spot price: querying AI for VAL.JO (report_date=2025-12-25)
+2025-12-25 18:42:43,754 components.base_text_tab INFO: _safe_save called on StrategyTab ticker=VAL.JO
+2025-12-25 18:42:51,190 __main__ INFO: Selected: VAL.JO
+2025-12-25 18:42:51,190 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: VAL.JO
+2025-12-25 18:42:52,204 components.deep_research_tab INFO: [DeepResearch] load_content called for VAL.JO, setting loading=True
+2025-12-25 18:42:52,206 components.deep_research_tab INFO: [DeepResearch] load_content complete for VAL.JO, setting loading=False
+2025-12-25 18:43:05,940 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=1500.0, Target=1900.0, Stop=1099.02, IsLong=True
+2025-12-25 18:43:21,359 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=1500.0, Target=1900.0, Stop=1099.02, IsLong=True
+2025-12-25 18:43:25,010 __main__ INFO: Selected: TBS.JO
+2025-12-25 18:43:25,010 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: TBS.JO
+2025-12-25 18:43:25,429 components.deep_research_tab INFO: [DeepResearch] load_content called for TBS.JO, setting loading=True
+2025-12-25 18:43:25,429 components.deep_research_tab INFO: [DeepResearch] load_content complete for TBS.JO, setting loading=False
+2025-12-25 18:43:25,768 __main__ INFO: Selected: WBC.JO
+2025-12-25 18:43:25,768 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: WBC.JO
+2025-12-25 18:43:26,526 __main__ INFO: Selected: VAL.JO
+2025-12-25 18:43:26,526 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: VAL.JO
+2025-12-25 18:43:26,600 components.deep_research_tab INFO: [DeepResearch] load_content called for VAL.JO, setting loading=True
+2025-12-25 18:43:26,600 components.deep_research_tab INFO: [DeepResearch] load_content complete for VAL.JO, setting loading=False
+2025-12-25 18:43:27,350 components.deep_research_tab INFO: [DeepResearch] load_content called for VAL.JO, setting loading=True
+2025-12-25 18:43:27,350 components.deep_research_tab INFO: [DeepResearch] load_content complete for VAL.JO, setting loading=False
+2025-12-25 18:44:09,262 __main__ INFO: Selected: NPH.JO
+2025-12-25 18:44:09,262 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: NPH.JO
+2025-12-25 18:44:09,622 components.deep_research_tab INFO: [DeepResearch] load_content called for NPH.JO, setting loading=True
+2025-12-25 18:44:09,623 components.deep_research_tab INFO: [DeepResearch] load_content complete for NPH.JO, setting loading=False
+2025-12-25 18:46:09,559 components.status_widget INFO: StatusWidget.on_save called for NPH.JO -> Pre-Trade
+2025-12-25 18:46:09,737 modules.data.watchlist INFO: Updated watchlist status for NPH.JO -> Pre-Trade
+2025-12-25 18:46:09,737 components.status_widget INFO: StatusWidget._on_done called for NPH.JO result=True
+2025-12-25 18:46:11,353 components.technical_analysis_window INFO: Status for NPH.JO set to Pre-Trade
+2025-12-25 18:46:26,263 __main__ INFO: Selected: ANG.JO
+2025-12-25 18:46:26,263 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ANG.JO
+2025-12-25 18:46:29,563 components.deep_research_tab INFO: [DeepResearch] load_content called for ANG.JO, setting loading=True
+2025-12-25 18:46:29,563 components.deep_research_tab INFO: [DeepResearch] load_content complete for ANG.JO, setting loading=False
+2025-12-25 18:46:35,843 components.status_widget INFO: StatusWidget.on_save called for ANG.JO -> Pre-Trade
+2025-12-25 18:46:37,924 modules.data.watchlist INFO: Updated watchlist status for ANG.JO -> Pre-Trade
+2025-12-25 18:46:37,924 components.status_widget INFO: StatusWidget._on_done called for ANG.JO result=True
+2025-12-25 18:46:39,483 components.technical_analysis_window INFO: Status for ANG.JO set to Pre-Trade
+2025-12-25 18:46:44,407 __main__ INFO: Selected: GFI.JO
+2025-12-25 18:46:44,407 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GFI.JO
+2025-12-25 18:46:46,326 components.deep_research_tab INFO: [DeepResearch] load_content called for GFI.JO, setting loading=True
+2025-12-25 18:46:46,326 components.deep_research_tab INFO: [DeepResearch] load_content complete for GFI.JO, setting loading=False
+2025-12-25 18:46:51,348 components.status_widget INFO: StatusWidget.on_save called for GFI.JO -> Pre-Trade
+2025-12-25 18:46:52,752 modules.data.watchlist INFO: Updated watchlist status for GFI.JO -> Pre-Trade
+2025-12-25 18:46:52,752 components.status_widget INFO: StatusWidget._on_done called for GFI.JO result=True
+2025-12-25 18:46:54,551 components.technical_analysis_window INFO: Status for GFI.JO set to Pre-Trade
+2025-12-25 18:46:59,469 __main__ INFO: Selected: AGL.JO
+2025-12-25 18:46:59,469 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: AGL.JO
+2025-12-25 18:47:01,813 components.deep_research_tab INFO: [DeepResearch] load_content called for AGL.JO, setting loading=True
+2025-12-25 18:47:01,814 components.deep_research_tab INFO: [DeepResearch] load_content complete for AGL.JO, setting loading=False
+2025-12-25 18:47:08,251 components.status_widget INFO: StatusWidget.on_save called for AGL.JO -> WL-Active
+2025-12-25 18:47:10,496 modules.data.watchlist INFO: Updated watchlist status for AGL.JO -> WL-Active
+2025-12-25 18:47:10,496 components.status_widget INFO: StatusWidget._on_done called for AGL.JO result=True
+2025-12-25 18:47:12,121 components.technical_analysis_window INFO: Status for AGL.JO set to WL-Active
+2025-12-25 18:47:19,731 __main__ INFO: Selected: GFI.JO
+2025-12-25 18:47:19,731 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GFI.JO
+2025-12-25 18:47:23,020 components.deep_research_tab INFO: [DeepResearch] load_content called for GFI.JO, setting loading=True
+2025-12-25 18:47:23,021 components.deep_research_tab INFO: [DeepResearch] load_content complete for GFI.JO, setting loading=False
+2025-12-25 18:47:24,569 components.status_widget INFO: StatusWidget.on_save called for GFI.JO -> Pre-Trade
+2025-12-25 18:47:30,329 modules.data.watchlist INFO: Updated watchlist status for GFI.JO -> Pre-Trade
+2025-12-25 18:47:30,329 components.status_widget INFO: StatusWidget._on_done called for GFI.JO result=True
+2025-12-25 18:47:32,003 components.technical_analysis_window INFO: Status for GFI.JO set to Pre-Trade
+2025-12-25 18:47:34,737 __main__ INFO: Selected: AGL.JO
+2025-12-25 18:47:34,737 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: AGL.JO
+2025-12-25 18:47:36,095 components.deep_research_tab INFO: [DeepResearch] load_content called for AGL.JO, setting loading=True
+2025-12-25 18:47:36,095 components.deep_research_tab INFO: [DeepResearch] load_content complete for AGL.JO, setting loading=False
+2025-12-25 18:47:39,663 components.status_widget INFO: StatusWidget.on_save called for AGL.JO -> Pre-Trade
+2025-12-25 18:47:42,989 modules.data.watchlist INFO: Updated watchlist status for AGL.JO -> Pre-Trade
+2025-12-25 18:47:42,990 components.status_widget INFO: StatusWidget._on_done called for AGL.JO result=True
+2025-12-25 18:47:47,737 components.technical_analysis_window INFO: Status for AGL.JO set to WL-Active
+2025-12-25 18:47:54,567 __main__ INFO: Selected: GFI.JO
+2025-12-25 18:47:54,567 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: GFI.JO
+2025-12-25 18:48:01,689 components.deep_research_tab INFO: [DeepResearch] load_content called for GFI.JO, setting loading=True
+2025-12-25 18:48:01,689 components.deep_research_tab INFO: [DeepResearch] load_content complete for GFI.JO, setting loading=False
+2025-12-25 18:48:04,665 components.status_widget INFO: StatusWidget.on_save called for GFI.JO -> Pre-Trade
+2025-12-25 18:48:06,402 modules.data.watchlist INFO: Updated watchlist status for GFI.JO -> Pre-Trade
+2025-12-25 18:48:06,403 components.status_widget INFO: StatusWidget._on_done called for GFI.JO result=True
+2025-12-25 18:48:08,061 components.technical_analysis_window INFO: Status for GFI.JO set to Pre-Trade
+2025-12-25 18:48:09,445 __main__ INFO: Closing application...

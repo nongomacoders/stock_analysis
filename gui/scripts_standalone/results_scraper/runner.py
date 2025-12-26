@@ -36,6 +36,27 @@ async def run(
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=False)
             context = await browser.new_context()
+
+            # Block image requests to speed up the run and reduce bandwidth
+            async def _block_images(route, request):
+                try:
+                    if request.resource_type == "image":
+                        await route.abort()
+                    else:
+                        await route.continue_()
+                except Exception:
+                    # Best-effort: if continuing fails, ignore and let it proceed
+                    try:
+                        await route.continue_()
+                    except Exception:
+                        pass
+
+            try:
+                await context.route("**/*", _block_images)
+                logger.info("Configured context to block image requests")
+            except Exception:
+                logger.warning("Failed to configure request routing to block images; continuing without blocking")
+
             page = await context.new_page()
 
             async def _close_popup(popup_page):
