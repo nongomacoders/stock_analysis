@@ -1,0 +1,29 @@
+2025-12-30 14:32:54,714 __main__ INFO: Database pool initialized
+2025-12-30 14:32:54,854 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2025-12-30 14:32:54,855 __main__ INFO: Notifier listener added
+2025-12-30 14:32:54,855 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2025-12-30 14:32:54,855 __main__ INFO: AUTO_START_AGENT enabled, starting market agent
+2025-12-30 14:33:06,986 __main__ INFO: Selected: MSP.JO
+2025-12-30 14:33:07,161 components.deep_research_tab INFO: [DeepResearch] load_content called for MSP.JO, setting loading=True
+2025-12-30 14:33:07,162 components.deep_research_tab INFO: [DeepResearch] load_content complete for MSP.JO, setting loading=False
+2025-12-30 14:33:25,135 __main__ INFO: Selected: HYP.JO
+2025-12-30 14:33:25,135 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: HYP.JO
+2025-12-30 14:33:25,203 components.deep_research_tab INFO: [DeepResearch] load_content called for HYP.JO, setting loading=True
+2025-12-30 14:33:25,203 components.deep_research_tab INFO: [DeepResearch] load_content complete for HYP.JO, setting loading=False
+2025-12-30 14:33:26,075 __main__ INFO: Selected: SBK.JO
+2025-12-30 14:33:26,075 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: SBK.JO
+2025-12-30 14:33:26,133 components.deep_research_tab INFO: [DeepResearch] load_content called for SBK.JO, setting loading=True
+2025-12-30 14:33:26,133 components.deep_research_tab INFO: [DeepResearch] load_content complete for SBK.JO, setting loading=False
+2025-12-30 14:33:36,118 __main__ INFO: Selected: EXX.JO
+2025-12-30 14:33:36,118 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: EXX.JO
+2025-12-30 14:33:36,181 components.deep_research_tab INFO: [DeepResearch] load_content called for EXX.JO, setting loading=True
+2025-12-30 14:33:36,182 components.deep_research_tab INFO: [DeepResearch] load_content complete for EXX.JO, setting loading=False
+2025-12-30 14:34:11,444 __main__ INFO: Selected: ZZD.JO
+2025-12-30 14:34:11,444 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ZZD.JO
+2025-12-30 14:34:11,603 components.deep_research_tab INFO: [DeepResearch] load_content called for ZZD.JO, setting loading=True
+2025-12-30 14:34:11,604 components.deep_research_tab INFO: [DeepResearch] load_content complete for ZZD.JO, setting loading=False
+2025-12-30 14:36:12,976 __main__ INFO: Closing application...
