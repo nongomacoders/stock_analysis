@@ -2057,3 +2057,346 @@ Traceback (most recent call last):
     from standalone_scripts.commodity_scraper.runner import run as run_scraper
 ModuleNotFoundError: No module named 'standalone_scripts'
 2025-12-30 14:34:00,649 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 08:15:04,355 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-01-02 08:15:05,082 modules.market_agent.sens INFO: 
+[08:15] --- Running SENS Check ---
+2026-01-02 08:15:07,716 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 08:15:08,915 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 08:15:09,043 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 08:15:17,796 yfinance ERROR: 
+1 Failed download:
+2026-01-02 08:15:17,796 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 08:15:37,787 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2026-01-02 08:15:37,854 modules.market_agent.fundamentals INFO: CURRENT DATE: 2026-01-02
+2026-01-02 08:15:37,855 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-02 08:15:37,855 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-02 08:15:37,855 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2026-01-02 08:15:37,855 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-02 08:15:37,855 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO:     Current Date:      2026-01-02
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-01-02 08:15:37,856 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: ================================================================================
+
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-01-02 08:15:37,857 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2026-01-02 08:15:44,816 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-02 08:15:47,723 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-02 08:15:47,854 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-01-02 08:15:47,854 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-01-02 08:15:52,175 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-01-02 08:16:02,216 root WARNING: Financial tables not found for CCD
+2026-01-02 08:16:02,470 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2026-01-02 08:16:02,471 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2026-01-02 08:16:02,471 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2026-01-02 08:16:02,471 modules.market_agent.fundamentals INFO:   Failed: 1
+2026-01-02 08:16:02,471 modules.market_agent.fundamentals INFO:   Total periods: 0
+2026-01-02 08:16:02,472 modules.market_agent.commodity_fx ERROR: Market data update failed
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\commodity_fx.py", line 22, in run_market_data_update
+    from standalone_scripts.commodity_scraper.runner import run as run_scraper
+ModuleNotFoundError: No module named 'standalone_scripts'
+2026-01-02 08:16:02,483 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 13:22:40,485 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-01-02 13:22:40,773 modules.market_agent.sens INFO: 
+[13:22] --- Running SENS Check ---
+2026-01-02 13:22:42,937 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 13:22:44,236 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 13:22:44,369 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 13:22:53,504 yfinance ERROR: 
+1 Failed download:
+2026-01-02 13:22:53,505 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 13:23:12,140 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2026-01-02 13:23:12,211 modules.market_agent.fundamentals INFO: CURRENT DATE: 2026-01-02
+2026-01-02 13:23:12,211 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-02 13:23:12,211 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-02 13:23:12,211 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2026-01-02 13:23:12,212 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-02 13:23:12,212 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-01-02 13:23:12,212 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-01-02 13:23:12,212 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-01-02 13:23:12,212 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-01-02 13:23:12,212 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-01-02 13:23:12,212 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO:     Current Date:      2026-01-02
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO: ================================================================================
+
+2026-01-02 13:23:12,213 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2026-01-02 13:23:12,214 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2026-01-02 13:23:12,214 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-01-02 13:23:12,214 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2026-01-02 13:23:19,135 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-02 13:23:22,242 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-02 13:23:22,380 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-01-02 13:23:22,381 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-01-02 13:23:28,442 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-01-02 13:23:38,488 root WARNING: Financial tables not found for CCD
+2026-01-02 13:23:38,746 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2026-01-02 13:23:38,747 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2026-01-02 13:23:38,747 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2026-01-02 13:23:38,747 modules.market_agent.fundamentals INFO:   Failed: 1
+2026-01-02 13:23:38,747 modules.market_agent.fundamentals INFO:   Total periods: 0
+2026-01-02 13:23:38,748 modules.market_agent.commodity_fx ERROR: Market data update failed
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\commodity_fx.py", line 22, in run_market_data_update
+    from standalone_scripts.commodity_scraper.runner import run as run_scraper
+ModuleNotFoundError: No module named 'standalone_scripts'
+2026-01-02 13:23:38,749 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 13:38:38,656 modules.market_agent.sens INFO: 
+[13:38] --- Running SENS Check ---
+2026-01-02 13:38:41,136 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 13:38:41,138 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 13:38:41,287 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 13:38:47,198 yfinance ERROR: 
+1 Failed download:
+2026-01-02 13:38:47,199 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 13:39:12,217 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 13:54:12,151 modules.market_agent.sens INFO: 
+[13:54] --- Running SENS Check ---
+2026-01-02 13:54:15,816 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 13:54:15,818 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 13:54:15,947 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 13:54:21,600 yfinance ERROR: 
+1 Failed download:
+2026-01-02 13:54:21,600 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 13:55:17,877 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 14:10:17,837 modules.market_agent.sens INFO: 
+[14:10] --- Running SENS Check ---
+2026-01-02 14:10:20,757 modules.market_agent.sens INFO:   -> NEW SENS: BYI @ 2026-01-02 14:00:00
+2026-01-02 14:10:22,145 modules.analysis.engine INFO: AI: Analyzing SENS for BYI.JO...
+2026-01-02 14:10:44,507 modules.analysis.engine INFO: AI: SENS analysis saved for BYI.JO.
+2026-01-02 14:10:44,509 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 14:10:45,148 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 14:10:50,894 yfinance ERROR: 
+1 Failed download:
+2026-01-02 14:10:50,894 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 14:11:25,584 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 14:26:25,549 modules.market_agent.sens INFO: 
+[14:26] --- Running SENS Check ---
+2026-01-02 14:26:29,364 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2026-01-02 14:20:00
+2026-01-02 14:26:30,556 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2026-01-02 14:15:00
+2026-01-02 14:26:32,206 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2026-01-02 14:26:52,403 modules.analysis.engine INFO: AI: SENS analysis saved for BTI.JO.
+2026-01-02 14:26:52,403 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2026-01-02 14:27:07,825 modules.analysis.engine INFO: AI: SENS analysis saved for BTI.JO.
+2026-01-02 14:27:07,827 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 14:27:08,337 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 14:27:14,555 yfinance ERROR: 
+1 Failed download:
+2026-01-02 14:27:14,556 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 14:28:16,776 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 14:43:16,760 modules.market_agent.sens INFO: 
+[14:43] --- Running SENS Check ---
+2026-01-02 14:43:20,632 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 14:43:20,634 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 14:43:20,770 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 14:43:26,272 yfinance ERROR: 
+1 Failed download:
+2026-01-02 14:43:26,272 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 14:44:19,330 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 14:59:19,322 modules.market_agent.sens INFO: 
+[14:59] --- Running SENS Check ---
+2026-01-02 14:59:22,912 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 14:59:22,914 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 14:59:23,043 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 14:59:29,009 yfinance ERROR: 
+1 Failed download:
+2026-01-02 14:59:29,010 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 15:00:49,541 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 15:15:49,540 modules.market_agent.sens INFO: 
+[15:15] --- Running SENS Check ---
+2026-01-02 15:15:53,466 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 15:15:53,468 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 15:15:53,711 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 15:15:59,839 yfinance ERROR: 
+1 Failed download:
+2026-01-02 15:15:59,839 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 15:17:59,915 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 15:32:59,909 modules.market_agent.sens INFO: 
+[15:32] --- Running SENS Check ---
+2026-01-02 15:33:03,011 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 15:33:03,013 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 15:33:03,143 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 15:33:08,991 yfinance ERROR: 
+1 Failed download:
+2026-01-02 15:33:08,992 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 15:33:48,773 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 15:48:48,779 modules.market_agent.sens INFO: 
+[15:48] --- Running SENS Check ---
+2026-01-02 15:48:52,551 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 15:48:52,553 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 15:48:52,682 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 15:48:58,672 yfinance ERROR: 
+1 Failed download:
+2026-01-02 15:48:58,672 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 15:49:55,944 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 16:04:55,950 modules.market_agent.sens INFO: 
+[16:04] --- Running SENS Check ---
+2026-01-02 16:04:59,562 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 16:04:59,564 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 16:04:59,692 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 16:05:06,093 yfinance ERROR: 
+1 Failed download:
+2026-01-02 16:05:06,094 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 16:05:27,530 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 16:20:27,534 modules.market_agent.sens INFO: 
+[16:20] --- Running SENS Check ---
+2026-01-02 16:20:30,345 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 16:20:30,347 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 16:20:30,592 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 16:20:36,574 yfinance ERROR: 
+1 Failed download:
+2026-01-02 16:20:36,574 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 16:21:22,842 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 16:36:22,853 modules.market_agent.sens INFO: 
+[16:36] --- Running SENS Check ---
+2026-01-02 16:36:31,021 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 16:36:31,023 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 16:36:31,531 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 16:36:38,434 yfinance ERROR: 
+1 Failed download:
+2026-01-02 16:36:38,434 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 16:36:57,482 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-02 16:51:57,492 modules.market_agent.sens INFO: 
+[16:51] --- Running SENS Check ---
+2026-01-02 16:52:00,754 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-02 16:52:00,756 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-02 16:52:00,882 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-02 16:52:06,466 yfinance ERROR: 
+1 Failed download:
+2026-01-02 16:52:06,466 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-02 16:52:25,427 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-05 10:12:01,822 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-01-05 10:12:03,487 modules.market_agent.sens INFO: 
+[10:12] --- Running SENS Check ---
+2026-01-05 10:12:12,198 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-05 10:12:13,321 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-05 10:12:13,800 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-05 10:12:32,860 yfinance ERROR: 
+1 Failed download:
+2026-01-05 10:12:32,861 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-05 10:14:01,361 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2026-01-05 10:14:01,590 modules.market_agent.fundamentals INFO: CURRENT DATE: 2026-01-05
+2026-01-05 10:14:01,591 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-05 10:14:01,591 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-05 10:14:01,591 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2026-01-05 10:14:01,591 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-05 10:14:01,592 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-01-05 10:14:01,592 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-01-05 10:14:01,592 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-01-05 10:14:01,592 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-01-05 10:14:01,592 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-01-05 10:14:01,592 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-01-05 10:14:01,592 modules.market_agent.fundamentals INFO:     Current Date:      2026-01-05
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO: ================================================================================
+
+2026-01-05 10:14:01,593 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2026-01-05 10:14:01,594 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2026-01-05 10:14:01,594 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-01-05 10:14:01,594 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2026-01-05 10:14:07,997 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-05 10:14:14,138 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-05 10:14:14,216 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-01-05 10:14:14,216 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-01-05 10:14:24,126 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-01-05 10:14:34,180 root WARNING: Financial tables not found for CCD
+2026-01-05 10:14:34,414 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2026-01-05 10:14:34,415 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2026-01-05 10:14:34,415 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2026-01-05 10:14:34,415 modules.market_agent.fundamentals INFO:   Failed: 1
+2026-01-05 10:14:34,415 modules.market_agent.fundamentals INFO:   Total periods: 0
+2026-01-05 10:14:34,416 modules.market_agent.commodity_fx ERROR: Market data update failed
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\commodity_fx.py", line 22, in run_market_data_update
+    from standalone_scripts.commodity_scraper.runner import run as run_scraper
+ModuleNotFoundError: No module named 'standalone_scripts'
+2026-01-05 10:14:34,417 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-05 10:29:34,417 modules.market_agent.sens INFO: 
+[10:29] --- Running SENS Check ---
+2026-01-05 10:29:44,073 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-05 10:29:44,075 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-05 10:29:44,689 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-05 10:30:00,095 yfinance ERROR: 
+1 Failed download:
+2026-01-05 10:30:00,096 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-05 10:31:31,161 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-05 10:46:31,164 modules.market_agent.sens INFO: 
+[10:46] --- Running SENS Check ---
+2026-01-05 10:46:40,034 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-05 10:46:40,036 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-05 10:46:40,228 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-05 10:46:56,470 yfinance ERROR: 
+1 Failed download:
+2026-01-05 10:46:56,471 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-05 10:48:19,231 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-05 11:03:19,236 modules.market_agent.sens INFO: 
+[11:03] --- Running SENS Check ---
+2026-01-05 11:03:27,377 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-05 11:03:27,379 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-05 11:03:28,039 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-05 11:03:44,789 yfinance ERROR: 
+1 Failed download:
+2026-01-05 11:03:44,790 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-05 11:05:10,700 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-05 11:20:10,705 modules.market_agent.sens INFO: 
+[11:20] --- Running SENS Check ---
+2026-01-05 11:20:21,332 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-05 11:20:21,333 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-05 11:20:21,867 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-05 11:20:39,065 yfinance ERROR: 
+1 Failed download:
+2026-01-05 11:20:39,065 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-05 11:22:23,638 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-05 11:37:23,654 modules.market_agent.sens INFO: 
+[11:37] --- Running SENS Check ---
+2026-01-05 11:37:33,539 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-05 11:37:33,541 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-05 11:37:34,079 modules.market_agent.prices INFO: Downloading for 241 tickers...
+2026-01-05 11:37:50,628 yfinance ERROR: 
+1 Failed download:
+2026-01-05 11:37:50,628 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-05 11:38:19,454 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
