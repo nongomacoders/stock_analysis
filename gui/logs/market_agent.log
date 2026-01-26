@@ -2400,3 +2400,338 @@ ModuleNotFoundError: No module named 'standalone_scripts'
 1 Failed download:
 2026-01-05 11:37:50,628 yfinance ERROR: ['SAR.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
 2026-01-05 11:38:19,454 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 09:42:06,488 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-01-26 09:42:06,821 modules.market_agent.sens INFO: 
+[09:42] --- Running SENS Check ---
+2026-01-26 09:42:09,196 modules.market_agent.sens INFO:   -> NEW SENS: PAN @ 2026-01-26 09:00:00
+2026-01-26 09:42:10,137 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2026-01-26 09:00:00
+2026-01-26 09:42:10,996 modules.market_agent.sens INFO:   -> NEW SENS: SKA @ 2026-01-26 08:21:00
+2026-01-26 09:42:11,960 modules.market_agent.sens INFO:   -> NEW SENS: SSU @ 2026-01-26 08:20:00
+2026-01-26 09:42:12,874 modules.market_agent.sens INFO:   -> NEW SENS: CSB @ 2026-01-26 07:05:00
+2026-01-26 09:42:13,731 modules.market_agent.sens INFO:   -> NEW SENS: BAW @ 2026-01-26 07:05:00
+2026-01-26 09:42:14,569 modules.market_agent.sens INFO:   -> NEW SENS: BYI @ 2026-01-23 17:30:00
+2026-01-26 09:42:15,521 modules.market_agent.sens INFO:   -> NEW SENS: SRE @ 2026-01-23 17:00:00
+2026-01-26 09:42:16,405 modules.market_agent.sens INFO:   -> NEW SENS: FSR @ 2026-01-23 16:05:00
+2026-01-26 09:42:17,212 modules.market_agent.sens INFO:   -> NEW SENS: CML @ 2026-01-23 15:37:00
+2026-01-26 09:42:18,008 modules.market_agent.sens INFO:   -> NEW SENS: PPE @ 2026-01-23 15:00:00
+2026-01-26 09:42:18,824 modules.market_agent.sens INFO:   -> NEW SENS: IVT @ 2026-01-23 14:09:00
+2026-01-26 09:42:19,615 modules.market_agent.sens INFO:   -> NEW SENS: INL @ 2026-01-23 13:59:00
+2026-01-26 09:42:20,392 modules.market_agent.sens INFO:   -> NEW SENS: ANG @ 2026-01-23 13:12:00
+2026-01-26 09:42:21,234 modules.market_agent.sens INFO:   -> NEW SENS: GLN @ 2026-01-23 13:00:00
+2026-01-26 09:42:22,113 modules.market_agent.sens INFO:   -> NEW SENS: BAW @ 2026-01-23 12:56:00
+2026-01-26 09:42:22,946 modules.market_agent.sens INFO:   -> NEW SENS: INL @ 2026-01-23 12:00:00
+2026-01-26 09:42:23,718 modules.market_agent.sens INFO:   -> NEW SENS: INP @ 2026-01-23 12:00:00
+2026-01-26 09:42:24,546 modules.market_agent.sens INFO:   -> NEW SENS: VAL @ 2026-01-23 11:35:00
+2026-01-26 09:42:25,364 modules.market_agent.sens INFO:   -> NEW SENS: NED @ 2026-01-23 11:10:00
+2026-01-26 09:42:26,170 modules.market_agent.sens INFO:   -> NEW SENS: SHC @ 2026-01-23 11:00:00
+2026-01-26 09:42:27,109 modules.market_agent.sens INFO:   -> NEW SENS: JBL @ 2026-01-23 09:00:00
+2026-01-26 09:42:27,970 modules.market_agent.sens INFO:   -> NEW SENS: RNI @ 2026-01-23 08:00:00
+2026-01-26 09:42:28,762 modules.market_agent.sens INFO:   -> NEW SENS: MRP @ 2026-01-23 07:05:00
+2026-01-26 09:42:29,535 modules.market_agent.sens INFO:   -> NEW SENS: WBC @ 2026-01-23 07:05:00
+2026-01-26 09:42:30,320 modules.market_agent.sens INFO:   -> NEW SENS: TRU @ 2026-01-22 17:05:00
+2026-01-26 09:42:31,129 modules.market_agent.sens INFO:   -> NEW SENS: TRL @ 2026-01-22 17:00:00
+2026-01-26 09:42:31,993 modules.market_agent.sens INFO:   -> NEW SENS: GCT @ 2026-01-22 17:00:00
+2026-01-26 09:42:32,783 modules.market_agent.sens INFO:   -> NEW SENS: RMH @ 2026-01-22 16:45:00
+2026-01-26 09:42:33,590 modules.market_agent.sens INFO:   -> NEW SENS: INP @ 2026-01-22 16:30:00
+2026-01-26 09:42:34,407 modules.market_agent.sens INFO:   -> NEW SENS: INL @ 2026-01-22 16:30:00
+2026-01-26 09:42:35,211 modules.market_agent.sens INFO:   -> NEW SENS: GLN @ 2026-01-22 15:30:00
+2026-01-26 09:42:36,030 modules.market_agent.sens INFO:   -> NEW SENS: THA @ 2026-01-22 15:00:00
+2026-01-26 09:42:36,836 modules.market_agent.sens INFO:   -> NEW SENS: MRP @ 2026-01-22 15:00:00
+2026-01-26 09:42:37,769 modules.market_agent.sens INFO:   -> NEW SENS: AEL @ 2026-01-22 14:35:00
+2026-01-26 09:42:39,030 modules.analysis.engine INFO: AI: Analyzing SENS for PAN.JO...
+2026-01-26 09:43:01,306 modules.analysis.engine INFO: AI: SENS analysis saved for PAN.JO.
+2026-01-26 09:43:01,307 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2026-01-26 09:43:23,827 modules.analysis.engine INFO: AI: SENS analysis saved for BTI.JO.
+2026-01-26 09:43:23,827 modules.analysis.engine INFO: AI: Analyzing SENS for SKA.JO...
+2026-01-26 09:43:23,893 modules.analysis.engine WARNING: AI: No context found for SKA.JO
+2026-01-26 09:43:23,893 modules.analysis.engine INFO: AI: Analyzing SENS for SSU.JO...
+2026-01-26 09:43:47,297 modules.analysis.engine INFO: AI: SENS analysis saved for SSU.JO.
+2026-01-26 09:43:47,298 modules.analysis.engine INFO: AI: Analyzing SENS for CSB.JO...
+2026-01-26 09:44:14,414 modules.analysis.engine INFO: AI: SENS analysis saved for CSB.JO.
+2026-01-26 09:44:14,415 modules.analysis.engine INFO: AI: Analyzing SENS for BAW.JO...
+2026-01-26 09:44:14,619 modules.analysis.engine WARNING: AI: No context found for BAW.JO
+2026-01-26 09:44:14,620 modules.analysis.engine INFO: AI: Analyzing SENS for BYI.JO...
+2026-01-26 09:44:33,757 modules.analysis.engine INFO: AI: SENS analysis saved for BYI.JO.
+2026-01-26 09:44:33,757 modules.analysis.engine INFO: AI: Analyzing SENS for SRE.JO...
+2026-01-26 09:44:54,915 modules.analysis.engine INFO: AI: SENS analysis saved for SRE.JO.
+2026-01-26 09:44:54,916 modules.analysis.engine INFO: AI: Analyzing SENS for FSR.JO...
+2026-01-26 09:45:15,356 modules.analysis.engine INFO: AI: SENS analysis saved for FSR.JO.
+2026-01-26 09:45:15,356 modules.analysis.engine INFO: AI: Analyzing SENS for CML.JO...
+2026-01-26 09:45:57,161 modules.analysis.engine INFO: AI: SENS analysis saved for CML.JO.
+2026-01-26 09:45:57,161 modules.analysis.engine INFO: AI: Analyzing SENS for PPE.JO...
+2026-01-26 09:46:42,676 modules.analysis.engine INFO: AI: SENS analysis saved for PPE.JO.
+2026-01-26 09:46:42,677 modules.analysis.engine INFO: AI: Analyzing SENS for IVT.JO...
+2026-01-26 09:47:43,196 modules.analysis.engine INFO: AI: SENS analysis saved for IVT.JO.
+2026-01-26 09:47:43,196 modules.analysis.engine INFO: AI: Analyzing SENS for INL.JO...
+2026-01-26 09:48:08,505 modules.analysis.engine INFO: AI: SENS analysis saved for INL.JO.
+2026-01-26 09:48:08,505 modules.analysis.engine INFO: AI: Analyzing SENS for ANG.JO...
+2026-01-26 09:48:37,642 modules.analysis.engine INFO: AI: SENS analysis saved for ANG.JO.
+2026-01-26 09:48:37,643 modules.analysis.engine INFO: AI: Analyzing SENS for GLN.JO...
+2026-01-26 09:49:11,220 modules.analysis.engine INFO: AI: SENS analysis saved for GLN.JO.
+2026-01-26 09:49:11,221 modules.analysis.engine INFO: AI: Analyzing SENS for BAW.JO...
+2026-01-26 09:49:11,362 modules.analysis.engine WARNING: AI: No context found for BAW.JO
+2026-01-26 09:49:11,363 modules.analysis.engine INFO: AI: Analyzing SENS for INL.JO...
+2026-01-26 09:49:29,431 modules.analysis.engine INFO: AI: SENS analysis saved for INL.JO.
+2026-01-26 09:49:29,431 modules.analysis.engine INFO: AI: Analyzing SENS for INP.JO...
+2026-01-26 09:49:29,692 modules.analysis.engine WARNING: AI: No context found for INP.JO
+2026-01-26 09:49:29,693 modules.analysis.engine INFO: AI: Analyzing SENS for VAL.JO...
+2026-01-26 09:49:53,252 modules.analysis.engine INFO: AI: SENS analysis saved for VAL.JO.
+2026-01-26 09:49:53,253 modules.analysis.engine INFO: AI: Analyzing SENS for NED.JO...
+2026-01-26 09:50:22,958 root ERROR: LLM ERROR
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\analysis\llm.py", line 22, in query_ai
+    return response.text
+           ^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\generativeai\types\generation_types.py", line 479, in text
+    raise ValueError(msg)
+ValueError: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
+2026-01-26 09:50:23,162 modules.analysis.engine INFO: AI: SENS analysis saved for NED.JO.
+2026-01-26 09:50:23,162 modules.analysis.engine INFO: AI: Analyzing SENS for SHC.JO...
+2026-01-26 13:01:07,980 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-01-26 13:01:08,664 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 13:01:08,899 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 13:01:18,117 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 13:01:18,118 yfinance ERROR: ['ARA.JO', 'SAR.JO', 'MFL.JO', 'COH.JO', 'REN.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2026-01-17 -> 2026-01-27)')
+2026-01-26 13:03:47,711 modules.market_agent.commodity_fx ERROR: Market data update failed
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\commodity_fx.py", line 22, in run_market_data_update
+    from standalone_scripts.commodity_scraper.runner import run as run_scraper
+ModuleNotFoundError: No module named 'standalone_scripts'
+2026-01-26 13:03:47,712 modules.market_agent.sens INFO: 
+[13:03] --- Running SENS Check ---
+2026-01-26 13:03:49,754 modules.market_agent.sens INFO:   -> NEW SENS: BYI @ 2026-01-26 11:45:00
+2026-01-26 13:03:50,585 modules.market_agent.sens INFO:   -> NEW SENS: SRI @ 2026-01-26 11:08:00
+2026-01-26 13:03:51,456 modules.market_agent.sens INFO:   -> NEW SENS: FSR @ 2026-01-26 11:00:00
+2026-01-26 13:03:52,303 modules.market_agent.sens INFO:   -> NEW SENS: DCP @ 2026-01-26 10:45:00
+2026-01-26 13:03:53,238 modules.market_agent.sens INFO:   -> NEW SENS: SEA @ 2026-01-26 10:00:00
+2026-01-26 13:03:56,040 modules.analysis.engine INFO: AI: Analyzing SENS for BYI.JO...
+2026-01-26 13:04:20,250 modules.analysis.engine INFO: AI: SENS analysis saved for BYI.JO.
+2026-01-26 13:04:20,250 modules.analysis.engine INFO: AI: Analyzing SENS for SRI.JO...
+2026-01-26 13:04:20,459 modules.analysis.engine WARNING: AI: No context found for SRI.JO
+2026-01-26 13:04:20,459 modules.analysis.engine INFO: AI: Analyzing SENS for FSR.JO...
+2026-01-26 13:04:44,154 modules.analysis.engine INFO: AI: SENS analysis saved for FSR.JO.
+2026-01-26 13:04:44,154 modules.analysis.engine INFO: AI: Analyzing SENS for DCP.JO...
+2026-01-26 13:04:44,421 modules.analysis.engine WARNING: AI: No context found for DCP.JO
+2026-01-26 13:04:44,422 modules.analysis.engine INFO: AI: Analyzing SENS for SEA.JO...
+2026-01-26 13:05:10,662 modules.analysis.engine INFO: AI: SENS analysis saved for SEA.JO.
+2026-01-26 13:05:10,664 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2026-01-26 13:05:10,942 modules.market_agent.fundamentals INFO: CURRENT DATE: 2026-01-26
+2026-01-26 13:05:10,942 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-26 13:05:10,942 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-26 13:05:10,943 modules.market_agent.fundamentals INFO: TICKER: ^J200.JO
+2026-01-26 13:05:10,943 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-26 13:05:10,943 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-01-26 13:05:10,943 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-01-26 13:05:10,943 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-01-26 13:05:10,944 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-01-26 13:05:10,944 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-01-26 13:05:10,944 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-01-26 13:05:10,944 modules.market_agent.fundamentals INFO:     Current Date:      2026-01-26
+2026-01-26 13:05:10,944 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-01-26 13:05:10,944 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-01-26 13:05:10,945 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-01-26 13:05:10,945 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-26 13:05:10,945 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-26 13:05:10,945 modules.market_agent.fundamentals INFO: TICKER: ^J203.JO
+2026-01-26 13:05:10,945 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-26 13:05:10,945 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-01-26 13:05:10,945 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-01-26 13:05:10,946 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-01-26 13:05:10,946 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-01-26 13:05:10,946 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-01-26 13:05:10,946 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-01-26 13:05:10,946 modules.market_agent.fundamentals INFO:     Current Date:      2026-01-26
+2026-01-26 13:05:10,946 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-01-26 13:05:10,947 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-01-26 13:05:10,947 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-01-26 13:05:10,947 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-26 13:05:10,947 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-26 13:05:10,947 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2026-01-26 13:05:10,947 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-26 13:05:10,948 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-01-26 13:05:10,948 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-01-26 13:05:10,948 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-01-26 13:05:10,948 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-01-26 13:05:10,948 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-01-26 13:05:10,948 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-01-26 13:05:10,948 modules.market_agent.fundamentals INFO:     Current Date:      2026-01-26
+2026-01-26 13:05:10,949 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-01-26 13:05:10,949 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-01-26 13:05:10,949 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-01-26 13:05:10,949 modules.market_agent.fundamentals INFO: ================================================================================
+2026-01-26 13:05:10,949 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-01-26 13:05:10,949 modules.market_agent.fundamentals INFO: SELECTED TICKERS (3): ^J200.JO, ^J203.JO, CCD.JO
+2026-01-26 13:05:10,950 modules.market_agent.fundamentals INFO: ================================================================================
+
+2026-01-26 13:05:10,950 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2026-01-26 13:05:10,950 modules.market_agent.fundamentals INFO: Processing 3 tickers: ^J200.JO, ^J203.JO, CCD.JO
+2026-01-26 13:05:10,950 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-01-26 13:05:10,950 modules.market_agent.fundamentals INFO: Processing ^J200.JO...
+2026-01-26 13:05:18,829 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-26 13:05:22,105 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-26 13:05:22,275 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-01-26 13:05:22,275 playwright_scraper.pw INFO: [PW] GOTO(results_^J200): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=^J200&x=JSE
+2026-01-26 13:05:23,040 playwright_scraper.pw INFO: [PW] GOTO(results_^J200) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=^J200&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=^J200&x=JSE
+2026-01-26 13:05:33,070 root WARNING: Financial tables not found for ^J200
+2026-01-26 13:05:33,342 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for ^J200.JO
+2026-01-26 13:05:33,342 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-01-26 13:05:33,342 modules.market_agent.fundamentals INFO: Processing ^J203.JO...
+2026-01-26 13:05:34,570 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-26 13:05:37,277 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-26 13:05:37,416 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-01-26 13:05:37,416 playwright_scraper.pw INFO: [PW] GOTO(results_^J203): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=^J203&x=JSE
+2026-01-26 13:05:38,266 playwright_scraper.pw INFO: [PW] GOTO(results_^J203) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=^J203&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=^J203&x=JSE
+2026-01-26 13:05:48,296 root WARNING: Financial tables not found for ^J203
+2026-01-26 13:05:48,559 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for ^J203.JO
+2026-01-26 13:05:48,559 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-01-26 13:05:48,559 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2026-01-26 13:05:49,917 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-26 13:05:52,903 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-26 13:05:53,008 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-01-26 13:05:53,008 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-01-26 13:05:58,945 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-01-26 13:05:58,993 playwright_scraper.pw WARNING: [PW] Redirected to Home.aspx after navigating to Results for CCD (premium subscription required for Results.aspx).
+2026-01-26 13:05:59,287 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2026-01-26 13:05:59,287 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2026-01-26 13:05:59,287 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2026-01-26 13:05:59,288 modules.market_agent.fundamentals INFO:   Failed: 3
+2026-01-26 13:05:59,288 modules.market_agent.fundamentals INFO:   Total periods: 0
+2026-01-26 13:05:59,288 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 13:20:59,260 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 13:21:00,721 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 13:21:07,236 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 13:21:07,236 yfinance ERROR: ['ARA.JO', 'SAR.JO', 'MFL.JO', 'COH.JO', 'REN.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-26 13:22:17,421 modules.market_agent.sens INFO: 
+[13:22] --- Running SENS Check ---
+2026-01-26 13:22:20,622 modules.market_agent.sens INFO:   -> NEW SENS: RFG @ 2026-01-26 13:12:00
+2026-01-26 13:22:22,096 modules.analysis.engine INFO: AI: Analyzing SENS for RFG.JO...
+2026-01-26 13:22:22,168 modules.analysis.engine WARNING: AI: No context found for RFG.JO
+2026-01-26 13:22:22,170 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 13:37:22,146 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 13:37:23,216 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 13:37:30,021 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 13:37:30,021 yfinance ERROR: ['ARA.JO', 'SAR.JO', 'MFL.JO', 'COH.JO', 'REN.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-26 13:38:00,964 modules.market_agent.sens INFO: 
+[13:38] --- Running SENS Check ---
+2026-01-26 13:38:04,622 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-26 13:38:04,624 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 13:53:04,598 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 13:53:05,120 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 13:53:12,410 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 13:53:12,411 yfinance ERROR: ['ARA.JO', 'SAR.JO', 'MFL.JO', 'COH.JO', 'REN.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-26 13:54:12,581 modules.market_agent.sens INFO: 
+[13:54] --- Running SENS Check ---
+2026-01-26 13:54:15,932 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-26 13:54:15,934 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 14:09:15,907 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 14:09:17,150 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 14:09:23,514 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 14:09:23,515 yfinance ERROR: ['ARA.JO', 'MFL.JO', 'SAR.JO', 'COH.JO', 'REN.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-26 14:10:24,562 modules.market_agent.sens INFO: 
+[14:10] --- Running SENS Check ---
+2026-01-26 14:10:27,460 modules.market_agent.sens INFO:   -> NEW SENS: ABG @ 2026-01-26 14:04:00
+2026-01-26 14:10:28,807 modules.analysis.engine INFO: AI: Analyzing SENS for ABG.JO...
+2026-01-26 14:11:49,010 root ERROR: LLM ERROR
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\analysis\llm.py", line 22, in query_ai
+    return response.text
+           ^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\generativeai\types\generation_types.py", line 479, in text
+    raise ValueError(msg)
+ValueError: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
+2026-01-26 14:11:49,510 modules.analysis.engine INFO: AI: SENS analysis saved for ABG.JO.
+2026-01-26 14:11:49,512 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 14:26:49,485 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 14:26:50,322 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 14:26:56,342 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 14:26:56,342 yfinance ERROR: ['ARA.JO', 'SAR.JO', 'MFL.JO', 'COH.JO', 'REN.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-26 14:27:18,856 modules.market_agent.sens INFO: 
+[14:27] --- Running SENS Check ---
+2026-01-26 14:27:21,257 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-01-26 14:27:21,259 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 14:42:21,242 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 14:42:21,733 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 14:42:28,308 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 14:42:28,308 yfinance ERROR: ['ARA.JO', 'SAR.JO', 'MFL.JO', 'COH.JO', 'REN.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-26 14:42:54,550 modules.market_agent.sens INFO: 
+[14:42] --- Running SENS Check ---
+2026-01-26 14:42:56,358 modules.market_agent.sens INFO:   -> NEW SENS: PHP @ 2026-01-26 14:30:00
+2026-01-26 14:42:57,738 modules.analysis.engine INFO: AI: Analyzing SENS for PHP.JO...
+2026-01-26 14:52:57,549 root ERROR: LLM ERROR
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\analysis\llm.py", line 21, in query_ai
+    response = await model.generate_content_async(prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\generativeai\generative_models.py", line 385, in generate_content_async
+    response = await self._async_client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\async_client.py", line 440, in generate_content
+    response = await rpc(
+               ^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\api_core\retry\retry_unary_async.py", line 231, in retry_wrapped_func
+    return await retry_target(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\api_core\retry\retry_unary_async.py", line 163, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\api_core\retry\retry_unary_async.py", line 158, in retry_target
+    return await target()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\api_core\grpc_helpers_async.py", line 89, in __await__
+    raise exceptions.from_grpc_error(rpc_error) from rpc_error
+google.api_core.exceptions.DeadlineExceeded: 504 Deadline expired before operation could complete.
+2026-01-26 14:52:58,603 modules.analysis.engine INFO: AI: SENS analysis saved for PHP.JO.
+2026-01-26 14:52:58,603 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-01-26 15:02:25,703 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-01-26 15:02:25,983 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-01-26 15:02:26,140 modules.market_agent.prices INFO: Downloading for 243 tickers...
+2026-01-26 15:02:36,093 yfinance ERROR: 
+5 Failed downloads:
+2026-01-26 15:02:36,093 yfinance ERROR: ['ARA.JO', 'REN.JO', 'SAR.JO', 'MFL.JO', 'COH.JO']: YFPricesMissingError('possibly delisted; no price data found  (period=2d)')
+2026-01-26 15:02:56,029 modules.market_agent.commodity_fx ERROR: Market data update failed
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\commodity_fx.py", line 22, in run_market_data_update
+    from standalone_scripts.commodity_scraper.runner import run as run_scraper
+ModuleNotFoundError: No module named 'standalone_scripts'
+2026-01-26 15:02:56,030 modules.market_agent.sens INFO: 
+[15:02] --- Running SENS Check ---
+2026-01-26 15:02:57,992 modules.market_agent.sens INFO:   -> NEW SENS: CLS @ 2026-01-26 14:50:00
+2026-01-26 15:03:01,184 modules.analysis.engine INFO: AI: Analyzing SENS for CLS.JO...

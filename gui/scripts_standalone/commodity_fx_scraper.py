@@ -2,7 +2,7 @@
 Standalone entrypoint for all commodity scrapers.
 
 Run:
-  python "standalone_scripts/commodity_scraper.py" [--commodity gold|iron_ore|coal|all]
+  python "scripts_standalone/commodity_scraper.py" [--commodity gold|iron_ore|coal|all]
 """
 
 from __future__ import annotations

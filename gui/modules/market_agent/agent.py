@@ -42,21 +42,26 @@ async def run_market_agent():
             logger.debug("Now=%s, Weekday=%s, WorkHours=%s", now, is_weekday, is_work_hours)
 
             # 1. SENS & Price Check (Runs periodically during work hours)
+            # 1. Price Checks (Stock, Commodity, FX) & Analysis (SENS, Fundamentals)
             if is_weekday and is_work_hours:
                 logger.debug("Inside work hours block. Running checks...")
-                # We await this, so it finishes before sleeping
-                await run_sens_check()
+                today = now.date()
+
+                # A. Stock Prices
                 await run_price_update()
-                
-                # Run fundamentals check once per day
-                today = now.date()
-                if fundamentals_last_run_date != today:
-                    await run_fundamentals_check()
-                    fundamentals_last_run_date = today
-                today = now.date()
+
+                # B. Commodity & FX Prices (Daily check)
                 if commodity_fx_last_run_date != today:
                     await run_market_data_update(mode="all")
                     commodity_fx_last_run_date = today
+
+                # C. SENS Analysis
+                await run_sens_check()
+                
+                # D. Results / Fundamentals (Daily check)
+                if fundamentals_last_run_date != today:
+                    await run_fundamentals_check()
+                    fundamentals_last_run_date = today
             else:
                 logger.debug("Outside work hours. Skipping checks.")
 
