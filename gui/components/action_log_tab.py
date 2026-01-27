@@ -63,7 +63,7 @@ class ActionLogTab(ttk.Frame):
         paned.add(left, weight=1)
 
         self.tree = ttk.Treeview(
-            left, columns=("date", "type", "content", "status"), show="headings", bootstyle="info"
+            left, columns=("date", "type", "content", "status"), show="headings", bootstyle="info", selectmode="extended"
         )
         self.tree.heading("date", text="Date")
         self.tree.heading("type", text="Type")
@@ -120,44 +120,85 @@ class ActionLogTab(ttk.Frame):
 
     def on_action_log_select(self, event):
         selection = self.tree.selection()
-        if not selection: return
-        item_id = selection[0]
-        data = self.logs_map.get(item_id)
-        if not data: return
+        # Clear details and disable buttons when nothing is selected
+        if not selection:
+            self.text_widget.config(state=NORMAL)
+            self.text_widget.delete("1.0", END)
+            self.text_widget.config(state=DISABLED)
+            self.mark_read_btn.config(state=DISABLED)
+            try:
+                if getattr(self, 'delete_btn', None):
+                    self.delete_btn.config(state=DISABLED)
+            except Exception:
+                pass
+            return
 
-        display_text = f"Trigger Type: {data['trigger_type']}\nDate: {data['log_timestamp']}\n{'-'*40}\n\n"
-        display_text += f"TRIGGER CONTENT:\n{data['trigger_content']}\n\n{'='*40}\n\nAI ANALYSIS:\n{data['ai_analysis']}"
+        # Show a brief summary if multiple items are selected; display details for the first selected
+        first_id = selection[0]
+        first_data = self.logs_map.get(first_id)
+
+        display_text = ""
+        if len(selection) > 1:
+            display_text += f"Multiple items selected: {len(selection)}\n\n"
+
+        if first_data:
+            display_text += f"Trigger Type: {first_data['trigger_type']}\nDate: {first_data['log_timestamp']}\n{'-'*40}\n\n"
+            display_text += f"TRIGGER CONTENT:\n{first_data['trigger_content']}\n\n{'='*40}\n\nAI ANALYSIS:\n{first_data['ai_analysis']}"
+        else:
+            display_text += "No details available."
 
         self.text_widget.config(state=NORMAL)
         self.text_widget.delete("1.0", END)
         self.text_widget.insert("1.0", display_text)
         self.text_widget.config(state=DISABLED)
 
-        self.mark_read_btn.config(state=NORMAL if not data.get("is_read", False) else DISABLED)
-        # Enable delete button if present
+        # Enable mark-read if any selected item is unread
+        any_unread = False
+        for iid in selection:
+            data = self.logs_map.get(iid)
+            if data and not data.get("is_read", False):
+                any_unread = True
+                break
+
+        self.mark_read_btn.config(state=NORMAL if any_unread else DISABLED)
+
+        # Enable delete if a delete button exists
         try:
             if getattr(self, 'delete_btn', None):
-                self.delete_btn.config(state=NORMAL)
+                self.delete_btn.config(state=NORMAL if selection else DISABLED)
         except Exception:
             pass
 
     def mark_as_read(self):
         selection = self.tree.selection()
-        if not selection: return
-        item_id = selection[0]
-        data = self.logs_map.get(item_id)
+        if not selection:
+            return
 
-        if data and not data.get("is_read", False):
-            # Use helper to disable the button while the mark-as-read background job runs
-            try:
-                run_bg_with_button(self.mark_read_btn, self.async_run_bg, mark_log_read(data["log_id"]), callback=lambda _ : self.load_action_logs())
-            except Exception:
-                # fallback to original behavior
-                self.mark_read_btn.config(state=DISABLED)
-                self.async_run_bg(mark_log_read(data["log_id"]))
+        log_ids = []
+        for iid in selection:
+            data = self.logs_map.get(iid)
+            if data and not data.get("is_read", False):
+                log_ids.append(data["log_id"])
+
+        if not log_ids:
+            return
+
+        async def _mark_many(ids):
+            for lid in ids:
+                try:
+                    await mark_log_read(lid)
+                except Exception:
+                    __import__('logging').getLogger(__name__).exception("Failed marking log %s as read", lid)
+            return True
+
+        try:
+            run_bg_with_button(self.mark_read_btn, self.async_run_bg, _mark_many(log_ids), callback=lambda _ : self.load_action_logs())
+        except Exception:
+            self.mark_read_btn.config(state=DISABLED)
+            self.async_run_bg(_mark_many(log_ids))
 
     def _on_delete_clicked(self):
-        """Handler for the Delete button. Confirms then deletes the selected log."""
+        """Handler for the Delete button. Confirms then deletes the selected log(s)."""
         try:
             import tkinter.messagebox as messagebox
             from modules.data.research import delete_action_log
@@ -172,14 +213,25 @@ class ActionLogTab(ttk.Frame):
         selection = self.tree.selection()
         if not selection:
             return
-        item_id = selection[0]
-        data = self.logs_map.get(item_id)
-        if not data:
+
+        # Gather log ids to delete
+        log_ids = []
+        for iid in selection:
+            data = self.logs_map.get(iid)
+            if data:
+                log_ids.append(data["log_id"])
+
+        if not log_ids:
             return
 
-        # Confirm with the user
+        # Confirm with the user (show count for multiple)
+        if len(log_ids) > 1:
+            prompt = f"Delete {len(log_ids)} selected action log entries?"
+        else:
+            prompt = "Delete this action log entry?"
+
         try:
-            ok = messagebox.askyesno("Confirm Delete", "Delete this action log entry?", parent=self)
+            ok = messagebox.askyesno("Confirm Delete", prompt, parent=self)
         except Exception:
             ok = False
 
@@ -193,13 +245,21 @@ class ActionLogTab(ttk.Frame):
             except Exception:
                 pass
 
+        async def _delete_many(ids):
+            for did in ids:
+                try:
+                    await delete_action_log(did)
+                except Exception:
+                    __import__('logging').getLogger(__name__).exception("Failed deleting log %s", did)
+            return True
+
         # Run delete in background and reload logs when done
         try:
-            run_bg_with_button(self.delete_btn or self.mark_read_btn, self.async_run_bg, delete_action_log(data["log_id"]), callback=lambda _ : self.load_action_logs())
+            run_bg_with_button(self.delete_btn or self.mark_read_btn, self.async_run_bg, _delete_many(log_ids), callback=lambda _ : self.load_action_logs())
         except Exception:
             try:
                 # fallback: call background function directly
-                self.async_run_bg(delete_action_log(data["log_id"]))
+                self.async_run_bg(_delete_many(log_ids))
                 self.load_action_logs()
             except Exception:
                 __import__('logging').getLogger(__name__).exception('Failed to delete action log')
