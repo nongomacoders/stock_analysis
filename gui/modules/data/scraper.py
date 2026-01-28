@@ -32,6 +32,10 @@ class FundamentalsScraper:
             List of period data dictionaries, or None if scraping fails
         """
         try:
+            if ticker and ticker.strip().startswith("^"):
+                self.log(f"  Skipping fundamentals scrape for index ticker: {ticker}")
+                return None
+
             # Import here to avoid circular dependency
             from playwright_scraper.pw import scrape_ticker_fundamentals
 

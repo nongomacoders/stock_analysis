@@ -44,13 +44,35 @@ class RawFundamentalsLoader:
             self.log("No tickers to process.")
             return {"succeeded": 0, "failed": 0, "tickers": [], "total_periods": 0}
 
-        self.log(f"Processing {len(tickers)} tickers: {', '.join(tickers)}")
+        # Indices (eg: '^J200.JO') do not have fundamentals on ShareData.
+        # Filter them out early so we don't waste time scraping.
+        normalized = [t.strip() for t in tickers if t and t.strip()]
+        skipped_tickers = [t for t in normalized if t.startswith("^")]
+        process_tickers = [t for t in normalized if not t.startswith("^")]
+
+        if skipped_tickers:
+            self.log(
+                f"Skipping {len(skipped_tickers)} index tickers (no fundamentals): {', '.join(skipped_tickers)}"
+            )
+
+        if not process_tickers:
+            self.log("No non-index tickers to process.")
+            return {
+                "succeeded": 0,
+                "failed": 0,
+                "skipped": len(skipped_tickers),
+                "tickers": [],
+                "skipped_tickers": skipped_tickers,
+                "total_periods": 0,
+            }
+
+        self.log(f"Processing {len(process_tickers)} tickers: {', '.join(process_tickers)}")
 
         succeeded = 0
         failed = 0
         total_periods = 0
 
-        for ticker in tickers:
+        for ticker in process_tickers:
             try:
                 self.log(f"\n{'='*60}")
                 self.log(f"Processing {ticker}...")
@@ -88,6 +110,8 @@ class RawFundamentalsLoader:
         return {
             "succeeded": succeeded,
             "failed": failed,
-            "tickers": tickers,
+            "skipped": len(skipped_tickers),
+            "tickers": process_tickers,
+            "skipped_tickers": skipped_tickers,
             "total_periods": total_periods,
         }

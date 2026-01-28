@@ -46,6 +46,7 @@ async def get_tickers_needing_update() -> list[str]:
                 EXISTS(SELECT 1 FROM watchlist w WHERE w.ticker = sd.ticker) as in_watchlist,
                 EXISTS(SELECT 1 FROM portfolio_holdings ph WHERE ph.ticker = sd.ticker) as in_portfolio
             FROM stock_details sd
+            WHERE sd.ticker NOT LIKE '^%'
         ),
         ticker_update_status AS (
             SELECT 
