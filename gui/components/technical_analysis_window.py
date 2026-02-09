@@ -29,7 +29,7 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
     def __init__(self, parent, ticker, async_run_bg, on_status_saved_callback=None):
         super().__init__(parent)
         self.title(f"{ticker} - Technical Analysis")
-        self.geometry("1000x700")
+        self.geometry("1500x700")
 
         self.ticker = ticker
         self.async_run_bg = async_run_bg

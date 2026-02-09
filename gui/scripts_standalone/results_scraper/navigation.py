@@ -7,6 +7,7 @@ import re
 import urllib.parse
 from pathlib import Path
 
+from .db import record_results_download
 from .utils import (
     dump_debug,
     find_frame,
@@ -624,10 +625,12 @@ async def click_first_pdf_in_list(
             logger.info("Saved PDF via request to %s", out_path)
 
             # Try to extract creation date from PDF and rename file accordingly
+            release_date = None
             final_path = out_path
             try:
                 dt = extract_pdf_creation_date(data)
                 if dt:
+                    release_date = dt.date()
                     new_name = format_pdf_filename(dt)
                     new_path = out_path.with_name(new_name)
                     # Ensure unique filename
@@ -641,6 +644,24 @@ async def click_first_pdf_in_list(
                     logger.info("Renamed PDF to %s", new_path)
             except Exception:
                 logger.exception("Failed to rename PDF to creation date")
+
+            # Record the download in the DB for automation/traceability.
+            try:
+                record_path = final_path
+                try:
+                    record_path = final_path.relative_to(results_root.parent)
+                except Exception:
+                    pass
+                await record_results_download(
+                    ticker=ticker or "",
+                    release_date=release_date,
+                    pdf_path=record_path,
+                    pdf_url=abs_url,
+                    source="ost",
+                    data=data,
+                )
+            except Exception:
+                logger.exception("Failed to record results download for %s", safe_ticker)
 
             # Cleanup: remove older PDFs and news items in this ticker folder
             try:

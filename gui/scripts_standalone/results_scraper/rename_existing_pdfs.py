@@ -1,7 +1,7 @@
 """Rename existing PDFs under the results directory to their PDF creation date.
 
 Usage:
-  python -m scripts_standalone.results_scraper.rename_existing_pdfs [--results-root PATH] [--apply] [--verbose]
+    python -m scripts_standalone.results_scraper.rename_existing_pdfs [--results-root PATH] [--apply] [--verbose]
 
 By default the script performs a dry-run and prints proposed renames. Use --apply to perform the filesystem changes.
 """
@@ -62,7 +62,7 @@ def unique_target_path(path: Path, new_name: str) -> Path:
 
 
 def process_file(path: Path, apply: bool = False) -> bool:
-    """Try to extract creation date and rename the file. Returns True if renamed."""
+    """Try to extract creation date and rename the file (date-only). Returns True if renamed."""
     try:
         data = path.read_bytes()
     except Exception as ex:

@@ -15,6 +15,7 @@ from components.chart_window import ChartWindow
 from components.research_window import ResearchWindow
 from components.technical_analysis_window import TechnicalAnalysisWindow
 from components.todo_widget import TodoWidget
+from components.notification_widget import NotificationWidget
 # Sorting logic is implemented in `components.watchlist_sorting` to reduce the
 # size of this module and make sorting reusable across the project.
 
@@ -29,6 +30,10 @@ class WatchlistWidget(ttk.Frame):
         self.async_run = async_run
         self.async_run_bg = async_run_bg
         self.notifier = notifier
+
+        # Cache the last loaded rows so the dropdown filter can re-render
+        # without re-querying the DB.
+        self._watchlist_last_data = []
 
         self.create_widgets()
 
@@ -68,6 +73,16 @@ class WatchlistWidget(ttk.Frame):
         todo_frame = TodoWidget(self.notebook, self.async_run, self.async_run_bg, self.notifier)
         self.notebook.add(todo_frame, text="Todo")
 
+        # --- TAB 3: NOTIFICATIONS ---
+        notif_frame = NotificationWidget(
+            self.notebook,
+            self.async_run,
+            self.async_run_bg,
+            self.notifier,
+            on_select_callback=self.on_select,
+        )
+        self.notebook.add(notif_frame, text="Notifications")
+
     def create_watchlist_tab(self, parent_frame):
         """Creates the content for the Watchlist tab."""
         # --- TOOLBAR ---
@@ -95,6 +110,22 @@ class WatchlistWidget(ttk.Frame):
             command=self.refresh,
             bootstyle="success-outline",
         ).pack(side=LEFT, padx=(6, 0))
+
+        # --- Filter dropdown (client-side only; does not change DB/query) ---
+        ttk.Label(toolbar, text="Filter:").pack(side=LEFT, padx=(16, 5))
+
+        # Mirror the lightweight Combobox pattern used elsewhere in the GUI.
+        # Default 'active' preserves prior behavior (WL-Sleep excluded from view).
+        self.watchlist_filter_var = ttk.StringVar(value="active")
+        self.watchlist_filter_combo = ttk.Combobox(
+            toolbar,
+            textvariable=self.watchlist_filter_var,
+            values=["active", "sleep", "unread", "holding", "pre-trade", "no-research", "all"],
+            state="readonly",
+            width=12,
+        )
+        self.watchlist_filter_combo.pack(side=LEFT, padx=2)
+        self.watchlist_filter_combo.bind("<<ComboboxSelected>>", lambda e: self._render_watchlist())
 
         # --- COLUMNS ---
         cols = ("Ticker", "Name", "Price", "Proximity", "BTE", "Event", "RR", "PEG", "Upside", "Strategy")
@@ -167,144 +198,187 @@ class WatchlistWidget(ttk.Frame):
     def refresh_watchlist(self):
         """Refresh watchlist data (non-blocking)."""
         def on_data_loaded(data):
-            if not data:
-                return
+            # Cache rows for client-side filtering.
+            self._watchlist_last_data = data or []
 
-            # Clear existing items
-            for item in self.tree.get_children():
-                self.tree.delete(item)
-
-            today = date.today()
-
-            # Sort incoming data so Treeview shows the most important status groups in the desired order
-            for row in sort_watchlist_records(data):
-                # 1. Event Days
-                next_date = row.get("next_event_date")
-                days_str = "-"
-
-                if next_date:
-                    days = (next_date - today).days
-                    days_str = f"{days}d"
-
-                # 2. Background Tag
-                row_tag = ""
-                if row.get("unread_log_count", 0) > 0:
-                    row_tag = "unread"
-                elif row["is_holding"]:
-                    row_tag = "holding"
-                elif row["status"] == "Pre-Trade":
-                    row_tag = "pretrade"
-                elif not row.get("deepresearch"):
-                    row_tag = "no_research"
-
-                # 3. Proximity Text
-                prox_text, _ = get_proximity_status(
-                    row["close_price"], row["entry_price"], row["stop_loss"], row["target"], row.get("is_long", True)
-                )
-
-                # If we have an entry but got no proximity due to missing price data,
-                # show a placeholder so the column remains populated and sortable.
-                if (prox_text is None or str(prox_text).strip() == "" or str(prox_text).strip().lower() == "no data") and row.get("entry_price") is not None:
-                    try:
-                        import logging
-                        logging.getLogger(__name__).debug(
-                            "Proximity unavailable for %s (price=%s entry=%s stop=%s target=%s)",
-                            row.get("ticker"), row.get("close_price"), row.get("entry_price"), row.get("stop_loss"), row.get("target"),
-                        )
-                    except Exception:
-                        pass
-                    prox_text = "(N/A) Entry"
-
-                # 4. Truncate Text
-                strategy_text = str(row.get("strategy", "") or "").replace("\n", " ")
-                if len(strategy_text) > 100:
-                    strategy_text = strategy_text[:100] + "..."
-
-
-                full_name = row["full_name"] if row["full_name"] else ""
-                short_name = full_name[:10]
-
-                price_val = row["close_price"]
-                price_str = f"{int(price_val)}" if price_val is not None else "-"
-
-                # 5. BTE (Better Than Entry): how much current price is better than entry
-                entry_price = row.get("entry_price")
-                is_long = row.get("is_long", True)
-                if entry_price is None or price_val is None:
-                    bte_str = "-"
-                else:
-                    try:
-                        # BTE (Better Than Entry) should be positive when the current
-                        # price is 'better' relative to entry for the trade direction.
-                        # - For long positions: price < entry is better -> diff = entry - price
-                        # - For short positions: price > entry is better -> diff = price - entry
-                        if is_long:
-                            diff = entry_price - price_val
-                        else:
-                            diff = price_val - entry_price
-
-                        pct = (diff / entry_price) * 100 if entry_price != 0 else 0
-                        sign = "+" if pct >= 0 else "-"
-                        bte_str = f"{sign}{abs(pct):.2f}%"
-                    except Exception:
-                        bte_str = "-"
-
-                # Format RR (reward_risk_ratio) coming from DB (numeric/Decimal)
-                rr_val = row.get("reward_risk_ratio")
-                if rr_val is None:
-                    rr_str = "-"
-                else:
-                    try:
-                        rr_str = f"{float(rr_val):.2f}"
-                    except Exception:
-                        rr_str = str(rr_val)
-
-                # PEG: use peg_ratio returned from fetch_watchlist_data if present
-                peg_val = row.get("peg_ratio") or row.get("peg_ratio_historical")
-                if peg_val is None:
-                    peg_str = "-"
-                else:
-                    try:
-                        peg_str = f"{float(peg_val):.2f}"
-                    except Exception:
-                        peg_str = str(peg_val)
-
-                # 6. Upside: expected percent return if target is reached
-                target_val = row.get("target")
-                try:
-                    # Upside should be the percent return from current price -> target
-                    # For long: (target - current) / current
-                    # For short: (current - target) / current
-                    if price_val is None or target_val is None or price_val == 0:
-                        upside_str = "-"
-                    else:
-                        if is_long:
-                            gain = (target_val - price_val) / price_val * 100
-                        else:
-                            gain = (price_val - target_val) / price_val * 100
-                        upside_str = f"{abs(float(gain)):.2f}%"
-                except Exception:
-                    upside_str = "-"
-
-                self.tree.insert(
-                    "",
-                    "end",
-                    values=(
-                        row["ticker"],
-                        short_name,
-                        price_str,
-                        prox_text,
-                        bte_str,
-                        days_str,
-                        rr_str,
-                        peg_str,
-                        upside_str,
-                        strategy_text,
-                    ),
-                    tags=(row_tag,),
-                )
+            # Render immediately (applies current dropdown filter).
+            self._render_watchlist()
 
         self.async_run_bg(fetch_watchlist_data(), callback=on_data_loaded)
+
+    def _get_filtered_watchlist_rows(self, rows):
+        """Apply the toolbar dropdown filter to watchlist rows."""
+        try:
+            filter_type = (self.watchlist_filter_var.get() or "all").strip().lower()
+        except Exception:
+            filter_type = "all"
+
+        if not rows:
+            return []
+
+        if filter_type == "all":
+            return list(rows)
+        if filter_type == "active":
+            return [r for r in rows if (r.get("status") != "WL-Sleep")]
+        if filter_type == "sleep":
+            return [r for r in rows if (r.get("status") == "WL-Sleep")]
+        if filter_type == "unread":
+            return [r for r in rows if (r.get("unread_log_count", 0) or 0) > 0]
+        if filter_type == "holding":
+            return [r for r in rows if bool(r.get("is_holding"))]
+        if filter_type == "pre-trade":
+            return [r for r in rows if (r.get("status") == "Pre-Trade")]
+        if filter_type == "no-research":
+            def has_research(r):
+                v = r.get("deepresearch")
+                if v is None:
+                    return False
+                return str(v).strip() != ""
+
+            return [r for r in rows if not has_research(r)]
+
+        # Unknown selection -> no filtering.
+        return list(rows)
+
+    def _render_watchlist(self):
+        """Re-render the treeview from cached rows, applying the dropdown filter."""
+        data = self._get_filtered_watchlist_rows(self._watchlist_last_data)
+
+        # Clear existing items
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+
+        if not data:
+            return
+
+        today = date.today()
+
+        # Sort incoming data so Treeview shows the most important status groups in the desired order
+        for row in sort_watchlist_records(data):
+            # 1. Event Days
+            next_date = row.get("next_event_date")
+            days_str = "-"
+
+            if next_date:
+                days = (next_date - today).days
+                days_str = f"{days}d"
+
+            # 2. Background Tag
+            row_tag = ""
+            if row.get("unread_log_count", 0) > 0:
+                row_tag = "unread"
+            elif row["is_holding"]:
+                row_tag = "holding"
+            elif row["status"] == "Pre-Trade":
+                row_tag = "pretrade"
+            elif not row.get("deepresearch"):
+                row_tag = "no_research"
+
+            # 3. Proximity Text
+            prox_text, _ = get_proximity_status(
+                row["close_price"], row["entry_price"], row["stop_loss"], row["target"], row.get("is_long", True)
+            )
+
+            # If we have an entry but got no proximity due to missing price data,
+            # show a placeholder so the column remains populated and sortable.
+            if (prox_text is None or str(prox_text).strip() == "" or str(prox_text).strip().lower() == "no data") and row.get("entry_price") is not None:
+                try:
+                    import logging
+                    logging.getLogger(__name__).debug(
+                        "Proximity unavailable for %s (price=%s entry=%s stop=%s target=%s)",
+                        row.get("ticker"), row.get("close_price"), row.get("entry_price"), row.get("stop_loss"), row.get("target"),
+                    )
+                except Exception:
+                    pass
+                prox_text = "(N/A) Entry"
+
+            # 4. Truncate Text
+            strategy_text = str(row.get("strategy", "") or "").replace("\n", " ")
+            if len(strategy_text) > 100:
+                strategy_text = strategy_text[:100] + "..."
+
+            full_name = row["full_name"] if row["full_name"] else ""
+            short_name = full_name[:10]
+
+            price_val = row["close_price"]
+            price_str = f"{int(price_val)}" if price_val is not None else "-"
+
+            # 5. BTE (Better Than Entry): how much current price is better than entry
+            entry_price = row.get("entry_price")
+            is_long = row.get("is_long", True)
+            if entry_price is None or price_val is None:
+                bte_str = "-"
+            else:
+                try:
+                    # BTE (Better Than Entry) should be positive when the current
+                    # price is 'better' relative to entry for the trade direction.
+                    # - For long positions: price < entry is better -> diff = entry - price
+                    # - For short positions: price > entry is better -> diff = price - entry
+                    if is_long:
+                        diff = entry_price - price_val
+                    else:
+                        diff = price_val - entry_price
+
+                    pct = (diff / entry_price) * 100 if entry_price != 0 else 0
+                    sign = "+" if pct >= 0 else "-"
+                    bte_str = f"{sign}{abs(pct):.2f}%"
+                except Exception:
+                    bte_str = "-"
+
+            # Format RR (reward_risk_ratio) coming from DB (numeric/Decimal)
+            rr_val = row.get("reward_risk_ratio")
+            if rr_val is None:
+                rr_str = "-"
+            else:
+                try:
+                    rr_str = f"{float(rr_val):.2f}"
+                except Exception:
+                    rr_str = str(rr_val)
+
+            # PEG: use peg_ratio returned from fetch_watchlist_data if present
+            peg_val = row.get("peg_ratio") or row.get("peg_ratio_historical")
+            if peg_val is None:
+                peg_str = "-"
+            else:
+                try:
+                    peg_str = f"{float(peg_val):.2f}"
+                except Exception:
+                    peg_str = str(peg_val)
+
+            # 6. Upside: expected percent return if target is reached
+            target_val = row.get("target")
+            try:
+                # Upside should be the percent return from current price -> target
+                # For long: (target - current) / current
+                # For short: (current - target) / current
+                if price_val is None or target_val is None or price_val == 0:
+                    upside_str = "-"
+                else:
+                    if is_long:
+                        gain = (target_val - price_val) / price_val * 100
+                    else:
+                        gain = (price_val - target_val) / price_val * 100
+                    upside_str = f"{abs(float(gain)):.2f}%"
+            except Exception:
+                upside_str = "-"
+
+            self.tree.insert(
+                "",
+                "end",
+                values=(
+                    row["ticker"],
+                    short_name,
+                    price_str,
+                    prox_text,
+                    bte_str,
+                    days_str,
+                    rr_str,
+                    peg_str,
+                    upside_str,
+                    strategy_text,
+                ),
+                tags=(row_tag,),
+            )
 
     def _on_row_click(self, event):
         sel = self.tree.selection()

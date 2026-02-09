@@ -1,26 +1,98 @@
-def build_sens_prompt(research, strategy, sens_content):
+def build_sens_prompt(
+    research, strategy, sens_content, current_price: float | None = None
+):
+    price_info = f"Current Share Price: {current_price}c\n" if current_price else ""
+
     return f"""
-    You are a professional JSE financial analyst.
-    
-    --- MY RESEARCH ---
-    {research}
-    --- END RESEARCH ---
+You are a professional JSE financial analyst.
 
-    --- MY STRATEGY ---
-    {strategy}
-    --- END STRATEGY ---
+--- MARKET CONTEXT ---
+{price_info}
+--- END CONTEXT ---
 
-    --- NEW SENS ANNOUNCEMENT ---
-    {sens_content}
-    --- END SENS ---
+--- MY RESEARCH ---
+{research}
+--- END RESEARCH ---
 
-    INSTRUCTIONS:
-    Based only on the research, strategy, and this new SENS:
-    1. Significance: What is the key takeaway? Relate it to "Key Metrics".
-    2. Impact: Positive, Negative, or Neutral?
-    3. Action Plan: Buy, Sell, Hold, or Watchlist?
-    4. Research Update: If this contains new hard financial data (HEPS, Dividends) state "Required", otherwise "Not required".
-    """
+--- MY STRATEGY ---
+{strategy}
+--- END STRATEGY ---
+
+--- NEW SENS ANNOUNCEMENT ---
+{sens_content}
+--- END SENS ---
+
+INSTRUCTIONS:
+
+1. Significance Classification:
+Classify the SENS announcement into ONE of the following levels ONLY:
+
+- Low:
+Administrative or procedural announcements unlikely to influence valuation or investor behaviour.
+Examples include director dealings, shareholder notifications, share scheme adjustments, or meeting notices.
+
+- Medium:
+Operational or corporate updates that may influence sentiment but are unlikely to materially change valuation.
+Examples include trading updates without large earnings deviations, minor acquisitions/disposals, operational updates, or strategy commentary.
+
+- High:
+Material valuation-impacting announcements likely to influence share price meaningfully.
+Examples include:
+• Results releases (interim or annual)
+• Trading statements with large HEPS deviations
+• Dividends or capital returns
+• M&A transactions
+• Capital raises or debt refinancing
+• Major operational disruptions or production guidance changes
+• Regulatory rulings with earnings impact
+
+2. Significance Explanation:
+Explain WHY the announcement falls into that classification.
+Relate your reasoning to:
+- Key metrics in my research
+- Earnings impact
+- Balance sheet impact
+- Valuation impact
+- Current share price attractiveness or risk
+
+3. Market Impact:
+State whether the news is:
+Positive, Negative, or Neutral
+
+Also explain:
+- Whether the news is likely already priced in
+- Whether current valuation now appears attractive or expensive
+
+4. Action Plan:
+Provide ONE of the following:
+Buy, Sell, Hold, Watchlist
+
+Explicitly reference:
+- Current share price
+- My strategy
+- Whether this SENS changes the investment thesis
+
+5. Research Update Requirement:
+If the announcement contains NEW hard financial data (HEPS, EPS, dividends, guidance, production metrics, balance sheet metrics) respond:
+"Required"
+
+Otherwise respond:
+"Not required"
+
+OUTPUT FORMAT (STRICT):
+
+Significance: <Low / Medium / High>
+Explanation: <text>
+
+Impact: <Positive / Negative / Neutral>
+Impact Explanation: <text>
+
+Action Plan: <Buy / Sell / Hold / Watchlist>
+Action Rationale: <text>
+
+Research Update: <Required / Not required>
+
+"""
 
 
 def build_price_prompt(research, strategy, ticker, new_price, price_level):
@@ -146,5 +218,3 @@ def build_spot_price_prompt(
     )
 
     return "\n".join(parts)
-
-

@@ -44,7 +44,6 @@ async def fetch_watchlist_data():
             SELECT close_price FROM daily_stock_data 
             WHERE ticker = w.ticker ORDER BY trade_date DESC LIMIT 1
         ) p ON true
-        WHERE w.status NOT IN ('WL-Sleep')
         ORDER BY 
             CASE WHEN sd.priority = 'A' THEN 1 
                  WHEN sd.priority = 'B' THEN 2 

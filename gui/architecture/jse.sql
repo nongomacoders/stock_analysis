@@ -402,6 +402,7 @@ CREATE TABLE public.action_log (
 	trigger_content text NULL,
 	ai_analysis text NULL,
 	is_read bool DEFAULT false NULL,
+	significance varchar(20) NULL,
 	CONSTRAINT action_log_pkey PRIMARY KEY (log_id),
 	CONSTRAINT action_log_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
 );
@@ -612,6 +613,28 @@ CREATE TABLE public.stock_analysis (
 	CONSTRAINT stock_analysis_ticker_key UNIQUE (ticker),
 	CONSTRAINT stock_analysis_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
 );
+
+
+-- public.results_downloads definition
+
+-- Drop table
+
+-- DROP TABLE public.results_downloads;
+
+CREATE TABLE public.results_downloads (
+	id bigserial NOT NULL,
+	ticker varchar(20) NOT NULL,
+	release_date date NULL,
+	pdf_path text NOT NULL,
+	pdf_url text NULL,
+	"source" text DEFAULT 'ost'::text NOT NULL,
+	checksum text NULL,
+	created_at timestamptz DEFAULT now() NOT NULL,
+	CONSTRAINT results_downloads_pkey PRIMARY KEY (id),
+	CONSTRAINT results_downloads_ticker_fkey FOREIGN KEY (ticker) REFERENCES public.stock_details(ticker) ON DELETE CASCADE
+);
+CREATE UNIQUE INDEX results_downloads_ticker_path_uniq ON public.results_downloads USING btree (ticker, pdf_path);
+CREATE INDEX results_downloads_ticker_date_idx ON public.results_downloads USING btree (ticker, release_date DESC);
 
 
 -- public.v_latest_commodity_prices source

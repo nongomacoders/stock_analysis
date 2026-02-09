@@ -18,13 +18,29 @@ async def analyze_new_sens(ticker: str, content: str):
     if not row:
         return
 
+    # 1.5 Fetch Current Price
+    q_price = "SELECT close_price FROM daily_stock_data WHERE ticker = $1 ORDER BY trade_date DESC LIMIT 1"
+    price_row = await DBEngine.fetch(q_price, ticker)
+    current_price = price_row[0]["close_price"] if price_row else None
+
     # 2. Build Prompt & Query
-    prompt = build_sens_prompt(row["research"], row["strategy"], content)
+    prompt = build_sens_prompt(row["research"], row["strategy"], content, current_price)
     analysis = await query_ai(prompt)
 
-    # 3. Save Log
+    # 3. Extract significance from the response
+    significance = None
+    try:
+        # Parse "Significance: <Low / Medium / High>" from the response
+        import re
+        match = re.search(r'Significance:\s*(Low|Medium|High)', analysis, re.IGNORECASE)
+        if match:
+            significance = match.group(1).capitalize()
+    except Exception:
+        logger.debug("Could not extract significance from SENS analysis for %s", ticker)
+
+    # 4. Save Log
     headline = (content[:200] + "...") if len(content) > 200 else content
-    await _save_log(ticker, "SENS", headline, analysis)
+    await _save_log(ticker, "SENS", headline, analysis, significance=significance)
     logger.info("AI: SENS analysis saved for %s.", ticker)
 
 
@@ -138,12 +154,12 @@ async def estimate_spot_price(ticker: str):
 
     return analysis
 
-async def _save_log(ticker, type_, content, analysis):
+async def _save_log(ticker, type_, content, analysis, significance=None):
     q = """
-        INSERT INTO action_log (ticker, trigger_type, trigger_content, ai_analysis)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO action_log (ticker, trigger_type, trigger_content, ai_analysis, significance)
+        VALUES ($1, $2, $3, $4, $5)
     """
-    await DBEngine.execute(q, ticker, type_, content, analysis)
+    await DBEngine.execute(q, ticker, type_, content, analysis, significance)
 
 
 async def _fetch_context(ticker: str):

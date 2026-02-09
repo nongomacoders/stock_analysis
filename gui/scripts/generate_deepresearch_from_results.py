@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import logging
 import sys
 import time
@@ -207,6 +208,24 @@ def _gemini_file_name_slug(value: str) -> str:
     return slug or "file"
 
 
+def _gemini_resource_name(raw: str, *, max_len: int = 40, fallback_prefix: str = "file") -> str:
+    """Return a Gemini Files API resource name (File ID) within the API constraints.
+
+    Constraint (from API error): file name (ID, excluding 'files/') must be <= 40 chars.
+    Also must be lowercase alphanumeric or dashes, and cannot start/end with a dash.
+    """
+
+    slug = _gemini_file_name_slug(raw)
+    if len(slug) <= max_len:
+        return slug
+
+    # Keep stable uniqueness while staying short.
+    digest = hashlib.sha1(raw.encode("utf-8", errors="ignore")).hexdigest()[:12]
+    prefix = _gemini_file_name_slug(fallback_prefix)[: max(1, max_len - (1 + len(digest)))]
+    out = f"{prefix}-{digest}".strip("-")
+    return out[:max_len].strip("-") or digest
+
+
 def _build_llm_prompt(prompt_template: str, *, ticker: str, price: float | None, payload: str) -> str:
     today = date.today().isoformat()
     # DB stores close_price in ZAR cents (ZARc). Convert to ZAR for the model.
@@ -256,7 +275,11 @@ def _query_ai_with_pdfs(*, prompt: str, pdf_paths: list[Path], display_name_pref
 
     for pdf_path in pdf_paths:
         # Resource name must be a slug; display_name can be the real filename for citations.
-        resource_name = _gemini_file_name_slug(f"{display_name_prefix}-{pdf_path.stem}")
+        resource_name = _gemini_resource_name(
+            f"{display_name_prefix}-{pdf_path.stem}",
+            max_len=40,
+            fallback_prefix=display_name_prefix,
+        )
         uploaded = client.files.upload(
             file=str(pdf_path),
             config={

@@ -79,10 +79,33 @@ from datetime import datetime as _dt
 def extract_pdf_creation_date(data: bytes) -> _dt | None:
     """Try to extract a creation datetime from PDF bytes.
 
-    Looks for XMP CreateDate, then /CreationDate or /ModDate in PDF info.
-    Returns a timezone-aware datetime when possible, otherwise naive datetime.
+    Looks for XMP CreateDate and PDF Info /CreationDate or /ModDate, then picks
+    the latest of the dates found. Returns a timezone-aware datetime when
+    possible, otherwise naive datetime.
     """
+
+    def _parse_pdf_info_date(raw: str) -> _dt | None:
+        if raw.startswith("D:"):
+            raw = raw[2:]
+            raw = re.sub(r"'", "", raw)
+        try:
+            return _dateutil_parser.parse(raw)
+        except Exception:
+            digits = re.match(r"(\d{4})(\d{2})?(\d{2})?(\d{2})?(\d{2})?(\d{2})?", raw)
+            if digits:
+                parts = digits.groups()
+                year = int(parts[0])
+                month = int(parts[1] or 1)
+                day = int(parts[2] or 1)
+                hour = int(parts[3] or 0)
+                minute = int(parts[4] or 0)
+                second = int(parts[5] or 0)
+                return _dt(year, month, day, hour, minute, second)
+        return None
+
     try:
+        candidates: list[_dt] = []
+
         # 1) Try XMP packet
         xmp_start = data.find(b"<x:xmpmeta")
         if xmp_start >= 0:
@@ -93,7 +116,8 @@ def extract_pdf_creation_date(data: bytes) -> _dt | None:
                 if m:
                     s = m.group(1).decode("utf-8", errors="replace").strip()
                     try:
-                        return _dateutil_parser.parse(s)
+                        parsed = _dateutil_parser.parse(s)
+                        candidates.append(parsed)
                     except Exception:
                         pass
                 # Common alternate XMP tags
@@ -101,7 +125,8 @@ def extract_pdf_creation_date(data: bytes) -> _dt | None:
                 if m:
                     s = m.group(1).decode("utf-8", errors="replace").strip()
                     try:
-                        return _dateutil_parser.parse(s)
+                        parsed = _dateutil_parser.parse(s)
+                        candidates.append(parsed)
                     except Exception:
                         pass
 
@@ -113,31 +138,12 @@ def extract_pdf_creation_date(data: bytes) -> _dt | None:
             m = re.search(rb"/ModDate\s*\(\s*(D:[^\)]+)\s*\)", data)
         if m:
             raw = m.group(1).decode("utf-8", errors="replace").strip()
-            # Normalize D:DATE strings
-            if raw.startswith("D:"):
-                raw = raw[2:]
-                # timezone may be +02'00' style, remove apostrophes
-                raw = re.sub(r"'", "", raw)
-                # insert colon in timezone if needed for fromisoformat compatibility
-                try:
-                    return _dateutil_parser.parse(raw)
-                except Exception:
-                    # Fallback: parse fixed-width components
-                    digits = re.match(r"(\d{4})(\d{2})?(\d{2})?(\d{2})?(\d{2})?(\d{2})?", raw)
-                    if digits:
-                        parts = digits.groups()
-                        year = int(parts[0])
-                        month = int(parts[1] or 1)
-                        day = int(parts[2] or 1)
-                        hour = int(parts[3] or 0)
-                        minute = int(parts[4] or 0)
-                        second = int(parts[5] or 0)
-                        return _dt(year, month, day, hour, minute, second)
-            else:
-                try:
-                    return _dateutil_parser.parse(raw)
-                except Exception:
-                    pass
+            parsed = _parse_pdf_info_date(raw)
+            if parsed:
+                candidates.append(parsed)
+
+        if candidates:
+            return max(candidates)
 
     except Exception:
         # Best-effort: don't raise from helper
@@ -147,13 +153,10 @@ def extract_pdf_creation_date(data: bytes) -> _dt | None:
 
 
 def format_pdf_filename(dt: _dt) -> str:
-    """Format a datetime into a filesystem-safe filename for a PDF.
+    """Format a datetime into a filesystem-safe date-only filename for a PDF.
 
-    Example: 20251223_101512+0200.pdf
+    Example: 20251223.pdf
     """
-    base = dt.strftime("%Y%m%d_%H%M%S")
-    tz = dt.strftime("%z")
-    if tz:
-        base = f"{base}{tz}"
+    base = dt.strftime("%Y%m%d")
     return f"{base}.pdf"
 
