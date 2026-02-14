@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 # --- Scheduler Configuration ---
 RUN_START = dt_time(7, 0)  # 7:00 AM
-RUN_END = dt_time(17, 30)  # 5:30 PM
+RUN_END = dt_time(22, 30)  # 5:30 PM
 CLOSE_TIME = dt_time(17, 30)  # Markets Close
 MIDNIGHT = dt_time(0, 5)  # Reset flags
 

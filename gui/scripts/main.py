@@ -18,7 +18,9 @@ logging.basicConfig(
 )
 
 # Persistent rotating file handler (defaults to gui/logs/gui.log)
-LOG_DIR = os.environ.get("LOG_DIR", os.path.join(os.path.dirname(__file__), "..", "logs"))
+LOG_DIR = os.environ.get(
+    "LOG_DIR", os.path.join(os.path.dirname(__file__), "..", "logs")
+)
 LOG_DIR = os.path.abspath(LOG_DIR)
 os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE = os.path.join(LOG_DIR, "gui.log")
@@ -43,7 +45,9 @@ if not has_file_handler:
     # Use a simple file handler for the session logs (opened in write mode)
     file_handler = FileHandler(LOG_FILE, mode="w", encoding="utf-8")
     file_handler.setLevel(LOG_LEVEL)
-    file_handler.setFormatter(logging.Formatter("%(asctime)s %(name)s %(levelname)s: %(message)s"))
+    file_handler.setFormatter(
+        logging.Formatter("%(asctime)s %(name)s %(levelname)s: %(message)s")
+    )
     root_logger.addHandler(file_handler)
 
 # Add project root to sys.path
@@ -63,15 +67,15 @@ class CommandCenter(ttk.Window):
     def __init__(self):
         super().__init__(themename="cosmo")
         self.title("JSE Command Center")
-        
+
         # Get screen dimensions
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
-        
+
         # Account for taskbar (typically 40-60 pixels)
         taskbar_height = 80
         usable_height = screen_height - taskbar_height
-        
+
         # Set geometry to left half of screen
         # Format: widthxheight+x+y
         self.geometry(f"{screen_width // 2}x{usable_height}+0+0")
@@ -83,34 +87,39 @@ class CommandCenter(ttk.Window):
 
         # 2. Create notifier placeholder (will be set up in background)
         self.notifier = DBNotifier()
-        
+
         # 3. Build UI immediately (non-blocking)
         self.create_layout()
-        
+
         # Window References
         self.chart_window = None
         self.research_window = None
-        
+
         # 4. Initialize database and notifier in background (non-blocking)
         self._init_services_async()
 
     def _init_services_async(self):
         """Initialize DB pool and notifier in background without blocking UI"""
+
         async def setup_services():
             try:
                 # Initialize database pool
                 await DBEngine.get_pool()
                 logging.getLogger(__name__).info("Database pool initialized")
-                
+
                 # Set up notifier listener
-                await self.notifier.add_listener('action_log_changes', self.on_action_log_notification)
+                await self.notifier.add_listener(
+                    "action_log_changes", self.on_action_log_notification
+                )
                 logging.getLogger(__name__).info("Notifier listener added")
-                
+
                 return True
             except Exception as e:
-                logging.getLogger(__name__).exception("Failed to initialize services: %s", e)
+                logging.getLogger(__name__).exception(
+                    "Failed to initialize services: %s", e
+                )
                 return False
-        
+
         def on_services_ready(success):
             if success:
                 # Refresh watchlist once DB is ready
@@ -120,15 +129,23 @@ class CommandCenter(ttk.Window):
                 try:
                     auto = os.environ.get("AUTO_START_AGENT", "1").lower()
                     if auto in ("1", "true", "yes"):
-                        logging.getLogger(__name__).info("AUTO_START_AGENT enabled, starting market agent")
+                        logging.getLogger(__name__).info(
+                            "AUTO_START_AGENT enabled, starting market agent"
+                        )
                         self.start_market_agent()
                     else:
-                        logging.getLogger(__name__).info("AUTO_START_AGENT disabled; not starting market agent")
+                        logging.getLogger(__name__).info(
+                            "AUTO_START_AGENT disabled; not starting market agent"
+                        )
                 except Exception as e:
-                    logging.getLogger(__name__).exception("Failed to auto-start market agent: %s", e)
+                    logging.getLogger(__name__).exception(
+                        "Failed to auto-start market agent: %s", e
+                    )
             else:
-                logging.getLogger(__name__).error("Service initialization failed - app may not work correctly")
-        
+                logging.getLogger(__name__).error(
+                    "Service initialization failed - app may not work correctly"
+                )
+
         self.async_run_bg(setup_services(), callback=on_services_ready)
 
     def _run_event_loop(self):
@@ -142,13 +159,15 @@ class CommandCenter(ttk.Window):
         try:
             return future.result(timeout=timeout)
         except Exception as e:
-            logging.getLogger(__name__).exception("async_run timed out or failed: %s", e)
+            logging.getLogger(__name__).exception(
+                "async_run timed out or failed: %s", e
+            )
             return None
 
     def async_run_bg(self, coro, callback=None):
         """Run async coroutine in background without blocking UI"""
         future = asyncio.run_coroutine_threadsafe(coro, self.loop)
-        
+
         def on_done(fut):
             try:
                 result = fut.result()
@@ -159,14 +178,21 @@ class CommandCenter(ttk.Window):
                 logging.getLogger(__name__).exception("Background task error: %s", e)
                 if callable(callback):
                     self.after(0, callback, None)
-        
+
         future.add_done_callback(on_done)
 
     def start_market_agent(self):
         """Start market_agent.py as a background daemon process"""
         try:
             # Note: `market_agent.py` was moved to `scripts_standalone/` — adjust path accordingly
-            agent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts_standalone", "market_agent.py"))
+            agent_path = os.path.abspath(
+                os.path.join(
+                    os.path.dirname(__file__),
+                    "..",
+                    "scripts_standalone",
+                    "market_agent.py",
+                )
+            )
 
             self.market_agent_process = subprocess.Popen([sys.executable, agent_path])
         except Exception as e:
@@ -185,7 +211,13 @@ class CommandCenter(ttk.Window):
 
         # Main Watchlist Grid
         # CHANGE: Removed 'self.db' argument. The widget should now import data modules directly.
-        self.watchlist = WatchlistWidget(self, self.on_ticker_select, self.async_run, self.async_run_bg, self.notifier)
+        self.watchlist = WatchlistWidget(
+            self,
+            self.on_ticker_select,
+            self.async_run,
+            self.async_run_bg,
+            self.notifier,
+        )
         self.watchlist.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
         # Note: Initial refresh is triggered by _init_services_async after DB is ready
@@ -193,39 +225,48 @@ class CommandCenter(ttk.Window):
     def on_ticker_select(self, ticker):
         """Callback when watchlist row is clicked"""
         logging.getLogger(__name__).info("Selected: %s", ticker)
-        
+
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
-        
+
         # Account for taskbar
         taskbar_height = 80
         usable_height = screen_height - taskbar_height
-        
+
         # Chart Window - Right Lower Quadrant
         if self.chart_window and self.chart_window.winfo_exists():
             self.chart_window.update_ticker(ticker)
             self.chart_window.lift()
         else:
             # Pass async_run_bg so the chart window can fetch data without blocking the UI
-            self.chart_window = ChartWindow(self, ticker, self.async_run, self.async_run_bg)
+            self.chart_window = ChartWindow(
+                self, ticker, self.async_run, self.async_run_bg
+            )
             c_w = screen_width // 2
             c_h = usable_height // 2
             c_x = screen_width // 2
             c_y = usable_height // 2 + 20  # Add 10px gap
             self.chart_window.geometry(f"{c_w}x{c_h}+{c_x}+{c_y}")
-        
+
         # Research Window - Right Upper Quadrant
         if self.research_window and self.research_window.winfo_exists():
             self.research_window.update_ticker(ticker)
             self.research_window.lift()
         else:
-            self.research_window = ResearchWindow(self, ticker, self.async_run, self.async_run_bg, self.notifier, on_data_change=self.watchlist.refresh)
+            self.research_window = ResearchWindow(
+                self,
+                ticker,
+                self.async_run,
+                self.async_run_bg,
+                self.notifier,
+                on_data_change=self.watchlist.refresh,
+            )
             r_w = screen_width // 2
             r_h = usable_height // 2
             r_x = screen_width // 2
             r_y = 0
             self.research_window.geometry(f"{r_w}x{r_h}+{r_x}+{r_y}")
-    
+
     def on_action_log_notification(self, payload: str):
         """Handle action_log change notifications from PostgreSQL"""
         # Refresh watchlist when action_log changes
@@ -240,16 +281,23 @@ class CommandCenter(ttk.Window):
         if hasattr(self, "market_agent_process"):
             self.market_agent_process.terminate()
 
-        # 2. Schedule async cleanup and stop the loop
-        # We use async_run_bg so we don't block the main thread here.
-        async def cleanup_and_stop_loop():
-            if hasattr(self, "notifier"):
-                await self.notifier.stop_listening()
-            await DBEngine.close()
-            self.loop.stop()
+        # 2. Schedule async cleanup - run it synchronously to ensure completion
+        cleanup_future = asyncio.run_coroutine_threadsafe(
+            self._cleanup_services(), self.loop
+        )
+        try:
+            cleanup_future.result(timeout=10)  # Wait up to 10 seconds for cleanup
+        except Exception as e:
+            logging.getLogger(__name__).exception("Error during cleanup: %s", e)
 
-        asyncio.run_coroutine_threadsafe(cleanup_and_stop_loop(), self.loop)
-        self.destroy() # Destroy the window, allowing the mainloop to exit
+        self.loop.stop()
+        self.destroy()
+
+    async def _cleanup_services(self):
+        """Cleanup async services"""
+        if hasattr(self, "notifier"):
+            await self.notifier.stop_listening()
+        await DBEngine.close()
 
 
 if __name__ == "__main__":
