@@ -1,0 +1,101 @@
+2026-02-09 15:03:01,678 scripts.main INFO: Database pool initialized
+2026-02-09 15:03:01,678 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2026-02-09 15:03:01,678 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2026-02-09 15:03:01,678 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2026-02-09 15:03:01,678 scripts.main INFO: Notifier listener added
+2026-02-09 15:03:01,692 scripts.main INFO: AUTO_START_AGENT disabled; not starting market agent
+2026-02-09 15:03:01,965 asyncio ERROR: Task was destroyed but it is pending!
+task: <Task pending name='Task-21' coro=<DBNotifier._keep_alive() done, defined at c:\Users\Dion\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\core\db\notifier.py:72> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2026-02-09 15:03:02,863 scripts.main INFO: Selected: CSB.JO
+2026-02-09 15:03:03,006 components.deep_research_tab INFO: [DeepResearch] load_content called for CSB.JO, setting loading=True
+2026-02-09 15:03:03,007 components.deep_research_tab INFO: [DeepResearch] load_content complete for CSB.JO, setting loading=False
+2026-02-09 15:03:52,014 scripts.main INFO: Selected: ENX.JO
+2026-02-09 15:03:52,014 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ENX.JO
+2026-02-09 15:03:52,038 components.deep_research_tab INFO: [DeepResearch] load_content called for ENX.JO, setting loading=True
+2026-02-09 15:03:52,045 components.deep_research_tab INFO: [DeepResearch] load_content complete for ENX.JO, setting loading=False
+2026-02-09 15:04:53,201 scripts.main INFO: Selected: BYI.JO
+2026-02-09 15:04:53,201 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: BYI.JO
+2026-02-09 15:04:53,231 components.deep_research_tab INFO: [DeepResearch] load_content called for BYI.JO, setting loading=True
+2026-02-09 15:04:53,231 components.deep_research_tab INFO: [DeepResearch] load_content complete for BYI.JO, setting loading=False
+2026-02-09 15:05:03,561 scripts.main INFO: Selected: MRP.JO
+2026-02-09 15:05:03,561 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: MRP.JO
+2026-02-09 15:05:03,592 components.deep_research_tab INFO: [DeepResearch] load_content called for MRP.JO, setting loading=True
+2026-02-09 15:05:03,592 components.deep_research_tab INFO: [DeepResearch] load_content complete for MRP.JO, setting loading=False
+2026-02-09 15:05:48,005 scripts.main INFO: Selected: MSP.JO
+2026-02-09 15:05:48,005 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: MSP.JO
+2026-02-09 15:05:48,036 components.deep_research_tab INFO: [DeepResearch] load_content called for MSP.JO, setting loading=True
+2026-02-09 15:05:48,036 components.deep_research_tab INFO: [DeepResearch] load_content complete for MSP.JO, setting loading=False
+2026-02-09 15:06:12,419 scripts.main INFO: Selected: RBO.JO
+2026-02-09 15:06:12,419 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RBO.JO
+2026-02-09 15:06:12,456 components.deep_research_tab INFO: [DeepResearch] load_content called for RBO.JO, setting loading=True
+2026-02-09 15:06:12,456 components.deep_research_tab INFO: [DeepResearch] load_content complete for RBO.JO, setting loading=False
+2026-02-09 15:06:56,387 scripts.main INFO: Selected: IOC.JO
+2026-02-09 15:06:56,387 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: IOC.JO
+2026-02-09 15:06:56,422 components.deep_research_tab INFO: [DeepResearch] load_content called for IOC.JO, setting loading=True
+2026-02-09 15:06:56,422 components.deep_research_tab INFO: [DeepResearch] load_content complete for IOC.JO, setting loading=False
+2026-02-09 15:07:46,310 scripts.main INFO: Selected: WHL.JO
+2026-02-09 15:07:46,310 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: WHL.JO
+2026-02-09 15:07:46,338 components.deep_research_tab INFO: [DeepResearch] load_content called for WHL.JO, setting loading=True
+2026-02-09 15:07:46,338 components.deep_research_tab INFO: [DeepResearch] load_content complete for WHL.JO, setting loading=False
+2026-02-09 15:08:23,510 scripts.main INFO: Selected: CLH.JO
+2026-02-09 15:08:23,510 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: CLH.JO
+2026-02-09 15:08:23,543 components.deep_research_tab INFO: [DeepResearch] load_content called for CLH.JO, setting loading=True
+2026-02-09 15:08:23,543 components.deep_research_tab INFO: [DeepResearch] load_content complete for CLH.JO, setting loading=False
+2026-02-09 15:14:52,365 scripts.main INFO: Selected: RBX.JO
+2026-02-09 15:14:52,365 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: RBX.JO
+2026-02-09 15:14:52,426 components.deep_research_tab INFO: [DeepResearch] load_content called for RBX.JO, setting loading=True
+2026-02-09 15:14:52,426 components.deep_research_tab INFO: [DeepResearch] load_content complete for RBX.JO, setting loading=False
+2026-02-09 15:15:55,407 scripts.main INFO: Selected: ORN.JO
+2026-02-09 15:15:55,407 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ORN.JO
+2026-02-09 15:15:55,439 components.deep_research_tab INFO: [DeepResearch] load_content called for ORN.JO, setting loading=True
+2026-02-09 15:15:55,440 components.deep_research_tab INFO: [DeepResearch] load_content complete for ORN.JO, setting loading=False
+2026-02-09 15:16:05,794 scripts.main INFO: Selected: BVT.JO
+2026-02-09 15:16:05,794 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: BVT.JO
+2026-02-09 15:16:05,819 components.deep_research_tab INFO: [DeepResearch] load_content called for BVT.JO, setting loading=True
+2026-02-09 15:16:05,819 components.deep_research_tab INFO: [DeepResearch] load_content complete for BVT.JO, setting loading=False
+2026-02-09 15:17:27,488 scripts.main INFO: Selected: ITE.JO
+2026-02-09 15:17:27,488 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ITE.JO
+2026-02-09 15:17:27,536 components.deep_research_tab INFO: [DeepResearch] load_content called for ITE.JO, setting loading=True
+2026-02-09 15:17:27,536 components.deep_research_tab INFO: [DeepResearch] load_content complete for ITE.JO, setting loading=False
+2026-02-09 15:18:10,925 scripts.main INFO: Selected: JSE.JO
+2026-02-09 15:18:10,925 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: JSE.JO
+2026-02-09 15:18:10,968 components.deep_research_tab INFO: [DeepResearch] load_content called for JSE.JO, setting loading=True
+2026-02-09 15:18:10,969 components.deep_research_tab INFO: [DeepResearch] load_content complete for JSE.JO, setting loading=False
+2026-02-09 15:18:54,196 scripts.main INFO: Selected: WBC.JO
+2026-02-09 15:18:54,196 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: WBC.JO
+2026-02-09 15:18:54,238 components.deep_research_tab INFO: [DeepResearch] load_content called for WBC.JO, setting loading=True
+2026-02-09 15:18:54,238 components.deep_research_tab INFO: [DeepResearch] load_content complete for WBC.JO, setting loading=False
+2026-02-09 15:34:02,205 scripts.main INFO: Selected: ADH.JO
+2026-02-09 15:34:02,205 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ADH.JO
+2026-02-09 15:34:02,251 components.deep_research_tab INFO: [DeepResearch] load_content called for ADH.JO, setting loading=True
+2026-02-09 15:34:02,251 components.deep_research_tab INFO: [DeepResearch] load_content complete for ADH.JO, setting loading=False
+2026-02-09 15:34:47,339 scripts.main INFO: Selected: APF.JO
+2026-02-09 15:34:47,339 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: APF.JO
+2026-02-09 15:34:47,382 components.deep_research_tab INFO: [DeepResearch] load_content called for APF.JO, setting loading=True
+2026-02-09 15:34:47,382 components.deep_research_tab INFO: [DeepResearch] load_content complete for APF.JO, setting loading=False
+2026-02-09 15:35:37,077 scripts.main INFO: Selected: BWN.JO
+2026-02-09 15:35:37,079 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: BWN.JO
+2026-02-09 15:35:37,112 components.deep_research_tab INFO: [DeepResearch] load_content called for BWN.JO, setting loading=True
+2026-02-09 15:35:37,112 components.deep_research_tab INFO: [DeepResearch] load_content complete for BWN.JO, setting loading=False
+2026-02-09 15:36:24,848 scripts.main INFO: Selected: VAL.JO
+2026-02-09 15:36:24,864 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: VAL.JO
+2026-02-09 15:36:24,893 components.deep_research_tab INFO: [DeepResearch] load_content called for VAL.JO, setting loading=True
+2026-02-09 15:36:24,893 components.deep_research_tab INFO: [DeepResearch] load_content complete for VAL.JO, setting loading=False
