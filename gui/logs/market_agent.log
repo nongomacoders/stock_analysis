@@ -8075,3 +8075,560 @@ Fundamentals Update Summary:
 2026-02-14 08:01:14,978 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
 2026-02-14 08:10:15,071 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
 2026-02-14 08:10:15,247 modules.market_agent.agent INFO: Scheduler sleeping for 10 minutes...
+2026-02-16 08:38:56,987 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-02-16 08:39:00,082 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 08:39:01,043 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-16 08:39:13,862 yfinance ERROR: 
+33 Failed downloads:
+2026-02-16 08:39:13,863 yfinance ERROR: ['EXP.JO', 'ENX.JO', 'RTO.JO', 'MTNZF.JO', 'PPR.JO', 'TLM.JO', 'WEZ.JO', 'SOH.JO', 'TEX.JO', 'ISB.JO', 'VUN.JO', 'BRT.JO', 'CCC.JO', 'SZK.JO', 'SKA.JO', 'GRSP.JO', 'GTC.JO', 'MMP.JO', 'AOO.JO', 'ISA.JO', 'SLG.JO', 'CGR.JO', 'YRK.JO', 'PMV.JO', 'ANI.JO', 'OAO.JO', 'HET.JO', 'OAS.JO', 'NRL.JO', 'QFH.JO', 'CAC.JO', 'PWR.JO', 'XII.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2026-02-14 -> 2026-02-17)')
+2026-02-16 08:40:19,877 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2026-02-16 08:40:20,892 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2026-02-16 08:40:24,269 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 99.66 USD/t (as_of=2026-02-13 00:00:00)
+2026-02-16 08:40:29,558 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 5012.9 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 08:40:33,445 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.7726 USD/lb (as_of=2026-02-16 00:00:00)
+2026-02-16 08:40:33,445 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2026-02-16 08:40:33,446 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2026-02-16 08:40:38,208 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1715.0 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 08:40:43,987 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2064.0 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 08:40:43,987 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2026-02-16 08:40:43,988 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2026-02-16 08:40:47,134 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 10750.0 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 08:40:50,631 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 67.79 USD/bbl (as_of=2026-02-16 00:00:00)
+2026-02-16 08:40:56,277 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 15.9243 (as_of=None)
+2026-02-16 08:41:07,993 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.1868 (as_of=None)
+2026-02-16 08:41:23,072 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.36433 (as_of=None)
+2026-02-16 08:41:23,072 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2026-02-16 08:41:23,073 modules.market_agent.sens INFO: 
+[08:41] --- Running SENS Check ---
+2026-02-16 08:41:40,134 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-02-16 08:41:41,424 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2026-02-16 08:41:41,939 modules.market_agent.fundamentals INFO: CURRENT DATE: 2026-02-16
+2026-02-16 08:41:41,939 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-16 08:41:41,940 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-02-16 08:41:41,940 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2026-02-16 08:41:41,940 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-16 08:41:41,940 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO:     Current Date:      2026-02-16
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-02-16 08:41:41,941 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: ================================================================================
+
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-02-16 08:41:41,942 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2026-02-16 08:41:48,939 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-02-16 08:41:52,042 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-02-16 08:41:52,117 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-02-16 08:41:52,118 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-02-16 08:42:22,130 playwright_scraper.pw ERROR: [PW] GOTO failed (results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 102, in _goto_with_debug
+    response = await page.goto(url, wait_until=wait_until, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\async_api\_generated.py", line 8992, in goto
+    await self._impl_obj.goto(
+        url=url, timeout=timeout, waitUntil=wait_until, referer=referer
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_page.py", line 556, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 153, in goto
+    await self._channel.send(
+        "goto", self._navigation_timeout, locals_to_params(locals())
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE", waiting until "networkidle"
+
+2026-02-16 08:42:22,416 root ERROR: Error scraping CCD.JO
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 258, in scrape_ticker_fundamentals
+    await _goto_with_debug(page, target_url, label=f"results_{clean_ticker}", wait_until="networkidle", timeout=30000)
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\playwright_scraper\pw.py", line 102, in _goto_with_debug
+    response = await page.goto(url, wait_until=wait_until, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\async_api\_generated.py", line 8992, in goto
+    await self._impl_obj.goto(
+        url=url, timeout=timeout, waitUntil=wait_until, referer=referer
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_page.py", line 556, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 153, in goto
+    await self._channel.send(
+        "goto", self._navigation_timeout, locals_to_params(locals())
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE", waiting until "networkidle"
+
+2026-02-16 08:42:22,418 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2026-02-16 08:42:22,418 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2026-02-16 08:42:22,418 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2026-02-16 08:42:22,418 modules.market_agent.fundamentals INFO:   Failed: 1
+2026-02-16 08:42:22,418 modules.market_agent.fundamentals INFO:   Total periods: 0
+2026-02-16 08:42:22,418 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-02-16 08:57:22,422 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 08:57:23,607 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-16 08:57:52,398 yfinance ERROR: 
+34 Failed downloads:
+2026-02-16 08:57:52,399 yfinance ERROR: ['RTO.JO', 'PPR.JO', 'ENX.JO', 'EXP.JO', 'MTNZF.JO', 'TLM.JO', 'SOH.JO', 'WEZ.JO', 'TEX.JO', 'ISB.JO', 'VUN.JO', 'CCC.JO', 'BRT.JO', 'SZK.JO', 'SKA.JO', 'GRSP.JO', 'GTC.JO', 'MMP.JO', 'AOO.JO', 'ISA.JO', 'SLG.JO', 'YRK.JO', 'CGR.JO', 'PMV.JO', 'HET.JO', 'ANI.JO', 'OAO.JO', 'OAS.JO', 'NRL.JO', 'QFH.JO', 'CAC.JO', 'PWR.JO', 'XII.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2026-02-14 -> 2026-02-17)')
+2026-02-16 08:57:52,399 yfinance ERROR: ['ART.JO']: Timeout('Failed to perform, curl: (28) Operation timed out after 10005 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-02-16 08:58:27,192 modules.market_agent.sens INFO: 
+[08:58] --- Running SENS Check ---
+2026-02-16 08:58:33,799 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-02-16 08:58:33,801 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-02-16 09:13:33,817 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 09:13:35,398 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-16 09:14:16,621 yfinance ERROR: 
+33 Failed downloads:
+2026-02-16 09:14:16,621 yfinance ERROR: ['PPR.JO', 'MTNZF.JO', 'EXP.JO', 'ENX.JO', 'RTO.JO', 'SOH.JO', 'WEZ.JO', 'TLM.JO', 'TEX.JO', 'ISB.JO', 'VUN.JO', 'CCC.JO', 'BRT.JO', 'SZK.JO', 'SKA.JO', 'GRSP.JO', 'GTC.JO', 'MMP.JO', 'AOO.JO', 'ISA.JO', 'YRK.JO', 'SLG.JO', 'CGR.JO', 'PMV.JO', 'ANI.JO', 'HET.JO', 'OAO.JO', 'OAS.JO', 'NRL.JO', 'PWR.JO', 'CAC.JO', 'XII.JO', 'QFH.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2026-02-14 -> 2026-02-17)')
+2026-02-16 09:15:26,302 modules.market_agent.sens INFO: 
+[09:15] --- Running SENS Check ---
+2026-02-16 09:15:43,287 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-02-16 09:15:43,289 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-02-16 09:30:43,304 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 09:30:44,464 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-16 09:30:55,487 yfinance ERROR: 
+33 Failed downloads:
+2026-02-16 09:30:55,487 yfinance ERROR: ['ENX.JO', 'MTNZF.JO', 'RTO.JO', 'EXP.JO', 'PPR.JO', 'TLM.JO', 'SOH.JO', 'WEZ.JO', 'TEX.JO', 'ISB.JO', 'VUN.JO', 'CCC.JO', 'BRT.JO', 'SZK.JO', 'SKA.JO', 'GRSP.JO', 'GTC.JO', 'MMP.JO', 'AOO.JO', 'ISA.JO', 'SLG.JO', 'CGR.JO', 'YRK.JO', 'PMV.JO', 'HET.JO', 'ANI.JO', 'OAO.JO', 'OAS.JO', 'NRL.JO', 'QFH.JO', 'XII.JO', 'PWR.JO', 'CAC.JO']: YFPricesMissingError('possibly delisted; no price data found  (1d 2026-02-14 -> 2026-02-17)')
+2026-02-16 09:31:37,617 modules.market_agent.sens INFO: 
+[09:31] --- Running SENS Check ---
+2026-02-16 09:31:45,370 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-02-16 09:31:45,372 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-02-16 09:46:45,377 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 09:47:06,415 modules.market_agent.agent ERROR: CRITICAL AGENT ERROR
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\agent.py", line 51, in run_market_agent
+    await run_price_update()
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\prices.py", line 17, in run_price_update
+    last_row = await DBEngine.fetch("SELECT MAX(trade_date) as d FROM daily_stock_data")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\core\db\engine.py", line 39, in fetch
+    async with pool.acquire() as conn:
+               ~~~~~~~~~~~~^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 1056, in __aenter__
+    self.connection = await self.pool._acquire(self.timeout)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 896, in _acquire
+    return await _acquire_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 881, in _acquire_impl
+    proxy = await ch.acquire()  # type: PoolConnectionProxy
+            ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 161, in acquire
+    await self.connect()
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 153, in connect
+    self._con = await self._pool._get_new_connection()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 538, in _get_new_connection
+    con = await self._connect(
+          ^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connection.py", line 2443, in connect
+    return await connect_utils._connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<22 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1249, in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+    ...<2 lines>...
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1218, in _connect
+    conn = await _connect_addr(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1054, in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1099, in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 969, in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        host, port)
+        ^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1160, in create_connection
+    raise exceptions[0]
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1135, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+        exceptions, addrinfo, laddr_infos)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1038, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 726, in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 804, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 600, in finish_connect
+    ov.getresult()
+    ~~~~~~~~~~~~^^
+OSError: [WinError 121] The semaphore timeout period has expired
+2026-02-16 10:24:39,548 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-02-16 10:24:42,015 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 10:24:43,012 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-16 10:27:25,501 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2026-02-16 10:27:25,950 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2026-02-16 10:27:28,391 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 99.66 USD/t (as_of=2026-02-13 00:00:00)
+2026-02-16 10:27:30,473 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 5021.3 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 10:27:32,651 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.7694 USD/lb (as_of=2026-02-16 00:00:00)
+2026-02-16 10:27:32,652 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2026-02-16 10:27:32,652 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2026-02-16 10:27:34,887 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1701.0 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 10:27:36,940 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 2044.3 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 10:27:36,941 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2026-02-16 10:27:36,941 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2026-02-16 10:27:39,047 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 10750.0 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-16 10:27:41,130 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 67.59 USD/bbl (as_of=2026-02-16 00:00:00)
+2026-02-16 10:27:43,766 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 15.9061 (as_of=None)
+2026-02-16 10:27:46,107 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.1858 (as_of=None)
+2026-02-16 10:27:48,563 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.36424 (as_of=None)
+2026-02-16 10:27:48,563 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2026-02-16 10:27:48,564 modules.market_agent.sens INFO: 
+[10:27] --- Running SENS Check ---
+2026-02-16 10:27:55,227 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-02-16 10:27:56,768 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2026-02-16 10:27:57,034 modules.market_agent.fundamentals INFO: CURRENT DATE: 2026-02-16
+2026-02-16 10:27:57,034 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-16 10:27:57,035 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-02-16 10:27:57,035 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2026-02-16 10:27:57,035 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-16 10:27:57,035 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-02-16 10:27:57,035 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-02-16 10:27:57,036 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-02-16 10:27:57,036 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-02-16 10:27:57,036 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-02-16 10:27:57,036 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-02-16 10:27:57,036 modules.market_agent.fundamentals INFO:     Current Date:      2026-02-16
+2026-02-16 10:27:57,036 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-02-16 10:27:57,036 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: ================================================================================
+
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2026-02-16 10:27:57,037 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-02-16 10:27:57,038 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2026-02-16 10:28:05,074 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-02-16 10:28:06,852 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-02-16 10:28:06,939 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-02-16 10:28:06,940 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-02-16 10:28:16,544 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-02-16 10:28:26,596 root WARNING: Financial tables not found for CCD
+2026-02-16 10:28:26,860 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2026-02-16 10:28:26,860 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2026-02-16 10:28:26,861 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2026-02-16 10:28:26,861 modules.market_agent.fundamentals INFO:   Failed: 1
+2026-02-16 10:28:26,861 modules.market_agent.fundamentals INFO:   Total periods: 0
+2026-02-16 10:28:26,861 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-02-16 10:43:26,873 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 10:43:30,708 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-16 10:45:32,572 modules.market_agent.sens INFO: 
+[10:45] --- Running SENS Check ---
+2026-02-16 10:45:38,510 modules.market_agent.sens INFO: No new SENS announcements found.
+2026-02-16 10:45:38,511 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...
+2026-02-16 11:00:38,514 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 11:00:59,587 modules.market_agent.agent ERROR: CRITICAL AGENT ERROR
+Traceback (most recent call last):
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\agent.py", line 51, in run_market_agent
+    await run_price_update()
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\modules\market_agent\prices.py", line 17, in run_price_update
+    last_row = await DBEngine.fetch("SELECT MAX(trade_date) as d FROM daily_stock_data")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\core\db\engine.py", line 39, in fetch
+    async with pool.acquire() as conn:
+               ~~~~~~~~~~~~^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 1056, in __aenter__
+    self.connection = await self.pool._acquire(self.timeout)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 896, in _acquire
+    return await _acquire_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 881, in _acquire_impl
+    proxy = await ch.acquire()  # type: PoolConnectionProxy
+            ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 161, in acquire
+    await self.connect()
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 153, in connect
+    self._con = await self._pool._get_new_connection()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\pool.py", line 538, in _get_new_connection
+    con = await self._connect(
+          ^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connection.py", line 2443, in connect
+    return await connect_utils._connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<22 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1249, in _connect
+    raise last_error or exceptions.TargetServerAttributeNotMatched(
+    ...<2 lines>...
+    )
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1218, in _connect
+    conn = await _connect_addr(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1054, in _connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 1099, in __connect_addr
+    tr, pr = await connector
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\site-packages\asyncpg\connect_utils.py", line 969, in _create_ssl_connection
+    tr, pr = await loop.create_connection(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        host, port)
+        ^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1160, in create_connection
+    raise exceptions[0]
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1135, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+        exceptions, addrinfo, laddr_infos)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 1038, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 726, in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 804, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\diond\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 600, in finish_connect
+    ov.getresult()
+    ~~~~~~~~~~~~^^
+OSError: [WinError 121] The semaphore timeout period has expired
+2026-02-16 11:19:09,839 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-02-16 11:19:16,369 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-16 11:19:19,439 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-17 11:42:45,498 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-02-17 11:42:46,333 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-17 11:42:46,739 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-17 11:44:16,252 modules.market_agent.agent INFO: --- Market Agent Scheduler Started ---
+2026-02-17 11:44:16,861 modules.market_agent.prices INFO: +++ Running Price Update +++
+2026-02-17 11:44:17,204 modules.market_agent.prices INFO: Downloading for 237 tickers...
+2026-02-17 11:45:49,584 scripts_standalone.commodity_fx_scraper.runner INFO: Starting market data scraper (mode=all, DBEngine=core.db.engine)
+2026-02-17 11:45:50,137 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol IO62 not implemented for TradingEconomics yet; skipping.
+2026-02-17 11:45:52,445 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Iron Ore: 99.66 USD/t (as_of=2026-02-13 00:00:00)
+2026-02-17 11:45:54,493 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Gold: 4920.9 USD/oz (as_of=2026-02-17 00:00:00)
+2026-02-17 11:45:56,477 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Copper: 5.7115 USD/lb (as_of=2026-02-17 00:00:00)
+2026-02-17 11:45:56,478 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol NEWC not implemented for TradingEconomics yet; skipping.
+2026-02-17 11:45:56,478 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XCUUSD not implemented for TradingEconomics yet; skipping.
+2026-02-17 11:45:58,377 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Palladium: 1698.0 USD/oz (as_of=2026-02-17 00:00:00)
+2026-02-17 11:46:00,218 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Platinum: 1999.8 USD/oz (as_of=2026-02-17 00:00:00)
+2026-02-17 11:46:00,219 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XAGUSD not implemented for TradingEconomics yet; skipping.
+2026-02-17 11:46:00,219 scripts_standalone.commodity_fx_scraper.tradingeconomics WARNING: Symbol XRHUSD not implemented for TradingEconomics yet; skipping.
+2026-02-17 11:46:02,085 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Rhodium: 10700.0 USD/oz (as_of=2026-02-16 00:00:00)
+2026-02-17 11:46:04,085 scripts_standalone.commodity_fx_scraper.tradingeconomics INFO: Inserted Brent: 67.909 USD/bbl (as_of=2026-02-17 00:00:00)
+2026-02-17 11:46:06,486 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX USDZAR: 16.0212 (as_of=None)
+2026-02-17 11:46:08,698 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX EURUSD: 1.18466 (as_of=None)
+2026-02-17 11:46:11,018 scripts_standalone.commodity_fx_scraper.tradingeconomics_fx INFO: Inserted FX GBPUSD: 1.35928 (as_of=None)
+2026-02-17 11:46:11,019 scripts_standalone.commodity_fx_scraper.runner INFO: Market data scraper finished. failed=0
+2026-02-17 11:46:11,020 modules.market_agent.sens INFO: 
+[11:46] --- Running SENS Check ---
+2026-02-17 11:46:13,406 modules.market_agent.sens INFO:   -> NEW SENS: NED @ 2026-02-17 10:10:00
+2026-02-17 11:46:14,559 modules.market_agent.sens INFO:   -> NEW SENS: SRE @ 2026-02-17 09:00:00
+2026-02-17 11:46:15,624 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2026-02-17 09:00:00
+2026-02-17 11:46:16,862 modules.market_agent.sens INFO:   -> NEW SENS: PAN @ 2026-02-17 09:00:00
+2026-02-17 11:46:17,787 modules.market_agent.sens INFO:   -> NEW SENS: SOL @ 2026-02-17 08:00:00
+2026-02-17 11:46:18,728 modules.market_agent.sens INFO:   -> NEW SENS: ANH @ 2026-02-17 07:07:00
+2026-02-17 11:46:19,725 modules.market_agent.sens INFO:   -> NEW SENS: AFT @ 2026-02-17 07:05:00
+2026-02-17 11:46:21,619 modules.market_agent.sens INFO:   -> NEW SENS: SRE @ 2026-02-17 07:05:00
+2026-02-17 11:46:22,699 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2026-02-17 07:05:00
+2026-02-17 11:46:23,727 modules.market_agent.sens INFO:   -> NEW SENS: BHG @ 2026-02-17 07:05:00
+2026-02-17 11:46:25,018 modules.market_agent.sens INFO:   -> NEW SENS: RES @ 2026-02-16 17:30:00
+2026-02-17 11:46:26,142 modules.market_agent.sens INFO:   -> NEW SENS: PPR @ 2026-02-16 17:18:00
+2026-02-17 11:46:27,439 modules.market_agent.sens INFO:   -> NEW SENS: QLT @ 2026-02-16 17:00:00
+2026-02-17 11:46:28,584 modules.market_agent.sens INFO:   -> NEW SENS: FBR @ 2026-02-16 16:30:00
+2026-02-17 11:46:29,687 modules.market_agent.sens INFO:   -> NEW SENS: OUT @ 2026-02-16 16:30:00
+2026-02-17 11:46:30,710 modules.market_agent.sens INFO:   -> NEW SENS: AFT @ 2026-02-16 16:20:00
+2026-02-17 11:46:31,693 modules.market_agent.sens INFO:   -> NEW SENS: ARI @ 2026-02-16 15:50:00
+2026-02-17 11:46:32,686 modules.market_agent.sens INFO:   -> NEW SENS: KAL @ 2026-02-16 15:17:00
+2026-02-17 11:46:33,748 modules.market_agent.sens INFO:   -> NEW SENS: GCT @ 2026-02-16 12:41:00
+2026-02-17 11:46:34,787 modules.market_agent.sens INFO:   -> NEW SENS: SBK @ 2026-02-16 12:10:00
+2026-02-17 11:46:35,864 modules.market_agent.sens INFO:   -> NEW SENS: SPG @ 2026-02-16 12:05:00
+2026-02-17 11:46:37,039 modules.market_agent.sens INFO:   -> NEW SENS: SSK @ 2026-02-16 12:00:00
+2026-02-17 11:46:38,219 modules.market_agent.sens INFO:   -> NEW SENS: VIS @ 2026-02-16 10:55:00
+2026-02-17 11:46:39,199 modules.market_agent.sens INFO:   -> NEW SENS: RMH @ 2026-02-16 10:00:00
+2026-02-17 11:46:40,565 modules.market_agent.sens INFO:   -> NEW SENS: BTI @ 2026-02-16 09:00:00
+2026-02-17 11:46:41,759 modules.market_agent.sens INFO:   -> NEW SENS: TKG @ 2026-02-16 08:00:00
+2026-02-17 11:46:42,839 modules.market_agent.sens INFO:   -> NEW SENS: AFE @ 2026-02-16 07:05:00
+2026-02-17 11:46:44,848 modules.analysis.engine INFO: AI: Analyzing SENS for NED.JO...
+2026-02-17 11:46:50,522 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:47:03,478 modules.analysis.engine INFO: AI: SENS analysis saved for NED.JO.
+2026-02-17 11:47:03,479 modules.analysis.engine INFO: AI: Analyzing SENS for SRE.JO...
+2026-02-17 11:47:05,388 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:47:21,028 modules.analysis.engine INFO: AI: SENS analysis saved for SRE.JO.
+2026-02-17 11:47:21,028 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2026-02-17 11:47:26,462 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:47:40,339 modules.analysis.engine INFO: AI: SENS analysis saved for BTI.JO.
+2026-02-17 11:47:40,339 modules.analysis.engine INFO: AI: Analyzing SENS for PAN.JO...
+2026-02-17 11:47:42,650 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:47:52,402 modules.analysis.engine INFO: AI: SENS analysis saved for PAN.JO.
+2026-02-17 11:47:52,403 modules.analysis.engine INFO: AI: Analyzing SENS for SOL.JO...
+2026-02-17 11:47:55,736 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:48:10,034 modules.analysis.engine INFO: AI: SENS analysis saved for SOL.JO.
+2026-02-17 11:48:10,035 modules.analysis.engine INFO: AI: Analyzing SENS for ANH.JO...
+2026-02-17 11:48:12,061 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:48:18,992 modules.analysis.engine INFO: AI: SENS analysis saved for ANH.JO.
+2026-02-17 11:48:18,993 modules.analysis.engine INFO: AI: Analyzing SENS for AFT.JO...
+2026-02-17 11:48:23,514 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:48:33,229 modules.analysis.engine INFO: AI: SENS analysis saved for AFT.JO.
+2026-02-17 11:48:33,230 modules.analysis.engine INFO: AI: Analyzing SENS for SRE.JO...
+2026-02-17 11:48:37,448 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:48:53,959 modules.analysis.engine INFO: AI: SENS analysis saved for SRE.JO.
+2026-02-17 11:48:53,959 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2026-02-17 11:48:58,322 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:49:03,097 modules.analysis.engine INFO: AI: SENS analysis saved for BTI.JO.
+2026-02-17 11:49:03,097 modules.analysis.engine INFO: AI: Analyzing SENS for BHG.JO...
+2026-02-17 11:49:05,303 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:49:09,300 modules.analysis.engine INFO: AI: SENS analysis saved for BHG.JO.
+2026-02-17 11:49:09,301 modules.analysis.engine INFO: AI: Analyzing SENS for RES.JO...
+2026-02-17 11:49:11,549 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:49:21,142 modules.analysis.engine INFO: AI: SENS analysis saved for RES.JO.
+2026-02-17 11:49:21,143 modules.analysis.engine INFO: AI: Analyzing SENS for PPR.JO...
+2026-02-17 11:49:21,235 modules.analysis.engine WARNING: AI: No context found for PPR.JO
+2026-02-17 11:49:21,235 modules.analysis.engine INFO: AI: Analyzing SENS for QLT.JO...
+2026-02-17 11:49:24,653 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:49:32,614 modules.analysis.engine INFO: AI: SENS analysis saved for QLT.JO.
+2026-02-17 11:49:32,614 modules.analysis.engine INFO: AI: Analyzing SENS for FBR.JO...
+2026-02-17 11:49:37,014 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:49:41,822 modules.analysis.engine INFO: AI: SENS analysis saved for FBR.JO.
+2026-02-17 11:49:41,823 modules.analysis.engine INFO: AI: Analyzing SENS for OUT.JO...
+2026-02-17 11:49:43,967 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:49:49,620 modules.analysis.engine INFO: AI: SENS analysis saved for OUT.JO.
+2026-02-17 11:49:49,621 modules.analysis.engine INFO: AI: Analyzing SENS for AFT.JO...
+2026-02-17 11:49:51,374 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:50:00,785 modules.analysis.engine INFO: AI: SENS analysis saved for AFT.JO.
+2026-02-17 11:50:00,785 modules.analysis.engine INFO: AI: Analyzing SENS for ARI.JO...
+2026-02-17 11:50:03,399 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:50:12,760 modules.analysis.engine INFO: AI: SENS analysis saved for ARI.JO.
+2026-02-17 11:50:12,760 modules.analysis.engine INFO: AI: Analyzing SENS for KAL.JO...
+2026-02-17 11:50:22,032 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:50:27,811 modules.analysis.engine INFO: AI: SENS analysis saved for KAL.JO.
+2026-02-17 11:50:27,811 modules.analysis.engine INFO: AI: Analyzing SENS for GCT.JO...
+2026-02-17 11:50:27,970 modules.analysis.engine WARNING: AI: No context found for GCT.JO
+2026-02-17 11:50:27,970 modules.analysis.engine INFO: AI: Analyzing SENS for SBK.JO...
+2026-02-17 11:50:29,918 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:50:37,602 modules.analysis.engine INFO: AI: SENS analysis saved for SBK.JO.
+2026-02-17 11:50:37,602 modules.analysis.engine INFO: AI: Analyzing SENS for SPG.JO...
+2026-02-17 11:50:46,108 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:50:53,469 modules.analysis.engine INFO: AI: SENS analysis saved for SPG.JO.
+2026-02-17 11:50:53,470 modules.analysis.engine INFO: AI: Analyzing SENS for SSK.JO...
+2026-02-17 11:50:58,531 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:51:08,175 modules.analysis.engine INFO: AI: SENS analysis saved for SSK.JO.
+2026-02-17 11:51:08,175 modules.analysis.engine INFO: AI: Analyzing SENS for VIS.JO...
+2026-02-17 11:51:08,417 modules.analysis.engine WARNING: AI: No context found for VIS.JO
+2026-02-17 11:51:08,417 modules.analysis.engine INFO: AI: Analyzing SENS for RMH.JO...
+2026-02-17 11:51:09,083 modules.analysis.engine WARNING: AI: No context found for RMH.JO
+2026-02-17 11:51:09,083 modules.analysis.engine INFO: AI: Analyzing SENS for BTI.JO...
+2026-02-17 11:51:14,068 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:51:20,121 modules.analysis.engine INFO: AI: SENS analysis saved for BTI.JO.
+2026-02-17 11:51:20,121 modules.analysis.engine INFO: AI: Analyzing SENS for TKG.JO...
+2026-02-17 11:51:23,712 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:51:35,760 modules.analysis.engine INFO: AI: SENS analysis saved for TKG.JO.
+2026-02-17 11:51:35,760 modules.analysis.engine INFO: AI: Analyzing SENS for AFE.JO...
+2026-02-17 11:51:40,992 httpx INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-17 11:51:59,484 modules.analysis.engine INFO: AI: SENS analysis saved for AFE.JO.
+2026-02-17 11:51:59,485 modules.market_agent.fundamentals INFO: +++ Running Fundamentals Check +++
+2026-02-17 11:52:00,662 modules.market_agent.fundamentals INFO: CURRENT DATE: 2026-02-17
+2026-02-17 11:52:00,663 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-17 11:52:00,663 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-02-17 11:52:00,663 modules.market_agent.fundamentals INFO: TICKER: CCD.JO
+2026-02-17 11:52:00,663 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-17 11:52:00,663 modules.market_agent.fundamentals INFO:   [1] Most recent release:    None
+2026-02-17 11:52:00,663 modules.market_agent.fundamentals INFO:   [2] 2nd recent release:     None
+2026-02-17 11:52:00,664 modules.market_agent.fundamentals INFO:   [*] Last updated (scraped): None
+2026-02-17 11:52:00,664 modules.market_agent.fundamentals INFO: 
+  CALCULATION:
+2026-02-17 11:52:00,664 modules.market_agent.fundamentals INFO:     Next Expected = None (default +180 days)
+2026-02-17 11:52:00,664 modules.market_agent.fundamentals INFO: 
+  FILTER LOGIC:
+2026-02-17 11:52:00,664 modules.market_agent.fundamentals INFO:     Current Date:      2026-02-17
+2026-02-17 11:52:00,664 modules.market_agent.fundamentals INFO:     Next Expected:     None
+2026-02-17 11:52:00,665 modules.market_agent.fundamentals INFO:     Days Since Last:   None
+2026-02-17 11:52:00,665 modules.market_agent.fundamentals INFO: 
+  RESULT: [PASS] - No data, will be loaded
+2026-02-17 11:52:00,665 modules.market_agent.fundamentals INFO: ================================================================================
+2026-02-17 11:52:00,665 modules.market_agent.fundamentals INFO: 
+================================================================================
+2026-02-17 11:52:00,665 modules.market_agent.fundamentals INFO: SELECTED TICKERS (1): CCD.JO
+2026-02-17 11:52:00,665 modules.market_agent.fundamentals INFO: ================================================================================
+
+2026-02-17 11:52:00,665 modules.market_agent.fundamentals INFO: Starting raw fundamentals update...
+2026-02-17 11:52:00,666 modules.market_agent.fundamentals INFO: Processing 1 tickers: CCD.JO
+2026-02-17 11:52:00,666 modules.market_agent.fundamentals INFO: 
+============================================================
+2026-02-17 11:52:00,666 modules.market_agent.fundamentals INFO: Processing CCD.JO...
+2026-02-17 11:52:07,751 playwright_scraper.pw INFO: [PW] GOTO(home): https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-02-17 11:52:10,071 playwright_scraper.pw INFO: [PW] GOTO(home) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx final_url=https://www.sharedata.co.za/v2/Scripts/Home.aspx
+2026-02-17 11:52:10,144 playwright_scraper.pw INFO: [PW] Login button not visible; assuming already logged in.
+2026-02-17 11:52:10,145 playwright_scraper.pw INFO: [PW] GOTO(results_CCD): https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-02-17 11:52:16,743 playwright_scraper.pw INFO: [PW] GOTO(results_CCD) status=200 response_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE final_url=https://www.sharedata.co.za/v2/Scripts/Results.aspx?c=CCD&x=JSE
+2026-02-17 11:52:26,778 root WARNING: Financial tables not found for CCD
+2026-02-17 11:52:27,018 modules.market_agent.fundamentals INFO:   [ERROR] Failed to scrape data for CCD.JO
+2026-02-17 11:52:27,018 modules.market_agent.fundamentals INFO: 
+Fundamentals Update Summary:
+2026-02-17 11:52:27,018 modules.market_agent.fundamentals INFO:   Succeeded: 0
+2026-02-17 11:52:27,018 modules.market_agent.fundamentals INFO:   Failed: 1
+2026-02-17 11:52:27,018 modules.market_agent.fundamentals INFO:   Total periods: 0
+2026-02-17 11:52:27,018 modules.market_agent.agent INFO: Scheduler sleeping for 15 minutes...

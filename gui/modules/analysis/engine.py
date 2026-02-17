@@ -1,5 +1,6 @@
 from core.db.engine import DBEngine
 from modules.analysis.llm import query_ai
+from modules.analysis.openrouter_llm import query_ai as openrouter_query_ai
 from modules.analysis.prompts import (
     build_sens_prompt,
     build_price_prompt,
@@ -25,7 +26,7 @@ async def analyze_new_sens(ticker: str, content: str):
 
     # 2. Build Prompt & Query
     prompt = build_sens_prompt(row["research"], row["strategy"], content, current_price)
-    analysis = await query_ai(prompt)
+    analysis = await openrouter_query_ai(prompt)
 
     # 3. Extract significance from the response
     significance = None

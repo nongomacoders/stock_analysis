@@ -1,0 +1,765 @@
+URL Link [\Common\DDAP.SPRD.SENS.STORIES\SENS_20251204_S514445.pdf]
+
+
+Symbol [EPE]
+
+
+Unbundling of the Brait bonds, determination of tax base cost and cash payment in respect of fractional entitlements
+
+
+
+
+EPE CAPITAL PARTNERS LTD
+
+
+(INCORPORATED IN THE REPUBLIC OF MAURITIUS)
+
+
+(REGISTRATION NUMBER: C138883 C1/GBL)
+
+
+ISIN: MU0522S00005
+
+
+SHARE CODE: EPE
+
+
+("Ethos Capital" or the "Company")
+
+
+
+
+UNBUNDLING BY ETHOS CAPITAL OF THE BRAIT EXCHANGEABLE BONDS DETERMINATION
+
+
+OF TAX BASE COST FOR SOUTH AFRICAN INCOME TAX PURPOSES AND CASH PAYMENT IN
+
+
+RESPECT OF FRACTIONAL ENTITLEMENTS
+
+
+
+
+PLEASE SEE THE IMPORTANT NOTE AT THE END OF THIS ANNOUNCEMENT
+
+
+
+
+1.      INTRODUCTION
+
+
+
+
+1.1     Shareholders of Ethos Capital ("Ethos Capital Shareholders") are referred to various
+
+
+        announcements released by the Company on the Stock Exchange News Service
+
+
+        operated by JSE Limited ("SENS"), including the declaration announcement released
+
+
+        by the Company on Tuesday, 18 November 2025 (the "Declaration Announcement"),
+
+
+        wherein Ethos Capital Shareholders were advised that the board of directors of Ethos
+
+
+        Capital had decided (based on the recommendation of the Investment Advisor) to
+
+
+        unbundle the remaining portion of Ethos Capital's investment in Brait plc ("Brait"),
+
+
+        comprising of the senior unsecured exchangeable registered bonds in Brait Investment
+
+
+        Holdings Limited, a wholly owned subsidiary of Brait (the "Brait Bonds") to Ethos
+
+
+        Capital Shareholders (the "2025 Brait Unbundling").
+
+
+
+
+1.2     The purpose of this announcement is to notify Ethos Capital Shareholders of:
+
+
+
+
+1.2.1   the determination of the base cost of the unbundled Brait Bonds (the "Brait
+
+
+        Distribution Bonds") and Ethos Capital A Ordinary shares (the "Ethos Capital
+
+
+        Shares") pursuant to the 2025 Brait Unbundling; and
+
+
+
+
+1.2.2   the amounts which will be used to determine the cash payment in respect of
+
+
+        fractional entitlements to the Brait Distribution Bonds to which Ethos Capital
+
+
+        Shareholders may become entitled pursuant to the 2025 Brait Unbundling
+
+
+        ("Fractional Entitlements").
+
+
+
+
+1.3     The summary of the tax consequences of the 2025 Brait Unbundling, as set out below
+
+
+        and in the Declaration Announcement, represents general comments and does not
+
+
+        constitute a complete analysis of the tax consequences to Ethos Capital Shareholders
+
+
+        pursuant to the 2025 Brait Unbundling or the payment of Fractional Entitlements. It is
+
+
+        not intended to be, nor should it be interpreted to be, legal or tax advice. Neither Ethos
+
+
+        Capital, Brait nor its advisors, directors or employees can be held responsible for the
+
+
+        tax consequences of the 2025 Brait Unbundling. Ethos Capital Shareholders are advised
+
+
+        to consult their own professional tax advisors in this regard. The tax consequences of
+
+
+        the 2025 Brait Unbundling may also be different for non-resident shareholders based
+
+
+        on their country of residence. This includes the calculation of the costs of the Ethos
+
+
+        Capital Shares and the Brait Distribution Bonds for tax purposes going forward.
+
+
+
+
+1.4     All capitalised terms used but not defined in this announcement shall bear the meanings
+
+
+        ascribed to them in the Declaration Announcement.
+
+
+
+
+2.      ALLOCATION TAX PRINCIPLES
+
+
+
+
+2.1     The 2025 Brait Unbundling does not constitute an unbundling transaction for South
+
+
+        African tax purposes as set out in section 46 of the South African Income Tax Act, 57 of
+
+
+        1962 (the "Income Tax Act").
+
+
+
+
+2.2     For South African tax purposes, the 2025 Brait Unbundling will comprise a foreign return
+
+
+        of capital as defined in section 1 of the Income Tax Act and as such, no South African
+
+
+        dividend tax arises.
+
+
+
+
+2.3     In accordance with the Eighth Schedule to the Income Tax Act:
+
+
+
+
+2.3.1   where a foreign return of capital by way of a distribution of the Brait Distribution
+
+
+        Bonds is received by or accrues to a holder of an Ethos Capital Share, the Ethos
+
+
+        Capital Shareholder must reduce the base cost in respect of each Ethos Capital
+
+
+        Share by an amount equal to the market value of the Brait Distribution Bonds on
+
+
+        the date that each Brait Distribution Bond accrues to the Ethos Capital
+
+
+        Shareholder; and
+
+
+
+
+2.3.2   the Ethos Capital Shareholder is deemed to have acquired the Brait Distribution
+
+
+        Bonds for an amount equal to the market value thereof on the date that each Brait
+
+
+        Distribution Bond accrues to the Ethos Capital Shareholder for purposes of
+
+
+        determining the base cost thereof.
+
+
+
+
+2.4     Ethos Capital Shareholders are notified that the closing price of the Brait Bonds and the
+
+
+        Ethos Capital Shares respectively on the Johannesburg Stock Exchange on Friday,
+
+
+        5 December 2025, being the record date for the 2025 Brait Unbundling (the "Record
+
+
+        Date"), will be announced by Ethos Capital on Friday, 5 December 2025 in accordance
+
+
+        with the JSE Corporate Actions Timetable.
+
+
+
+
+2.5     The base cost of each Ethos Capital Share held by an Ethos Capital Shareholder that
+
+
+        qualified for the distribution will need to be reduced by the base cost apportionment
+
+
+        amount as set out under paragraph 3 below.
+
+
+
+
+3.      APPORTIONMENT FOR TAX PURPOSES
+
+
+
+
+3.1     As set out in the Declaration Announcement, each Ethos Capital Shareholder is entitled
+
+
+        to receive 0.00086 Brait Distribution Bonds for every one Ethos Capital Share held on
+
+
+        the Record Date (the "Distribution Ratio"). The current base cost in respect of each
+
+
+        Ethos Capital Share must be reduced by an amount that is derived from the market value
+
+
+        of the Brait Distribution Bonds on the date that each Brait Distribution Bond accrues to
+
+
+        the Ethos Capital Shareholder. For purposes of this announcement, Ethos Capital has
+
+
+        assumed that the market value will be the closing price of the Brait Bonds on the Record
+
+
+        Date (ie Friday, 5 December 2025).
+
+
+
+
+3.2     The base cost of each Ethos Capital Share must therefore be reduced by an amount in
+
+
+        Rand that is based on the Distribution Ratio multiplied by the closing price of the Brait
+
+
+        Bonds on the Record Date.
+
+
+
+
+3.3     Ethos Capital will announce this amount along with the closing price of the Brait Bonds
+
+
+        and the Ethos Capital Shares respectively on SENS on Friday, 5 December 2024.
+
+
+
+
+4.      FRACTIONAL ENTITLEMENTS
+
+
+
+
+4.1     Where an Ethos Capital Shareholder's entitlement to the Brait Distribution Bonds in
+
+
+        terms of the 2025 Brait Unbundling, calculated in accordance with the Distribution Ratio,
+
+
+        gives rise to a fraction of any Brait Distribution Bonds, such allocation must be rounded
+
+
+        down to the nearest whole number, resulting in allocations of whole Brait Distribution
+
+
+        Bonds and a cash payment in respect of the fraction to such shareholder(s). As indicated
+
+
+        in the Declaration Announcement, the aggregated excess fractional entitlements to the
+
+
+        Brait Distribution Bonds to which Ethos Capital Shareholders would otherwise be
+
+
+        entitled will not be transferred to Ethos Capital Shareholders, but will instead be sold
+
+
+        on behalf of and at the risk of the relevant Ethos Capital Shareholders in the market as
+
+
+        soon as practicable following the implementation of the 2025 Brait Unbundling, thereby
+
+
+        resulting in the cash payment to Ethos Capital Shareholders contemplated herein.
+
+
+
+
+4.2     In accordance with the JSE Listings Requirements, Fractional Entitlements payments to
+
+
+        shareholders will be calculated based on the volume weighted average traded price of
+
+
+        the Brait Bonds on the LDT+1, being Wednesday, 3 December 2025 ("VWAP on
+
+
+        LDT+1"), less 10%, as detailed below ?
+
+
+
+
+                  VWAP on LDT+1                   Amount that will be used to determine
+
+
+                                                    the cash payment for the Fractional
+
+
+  an Ethos Capital Share, the Ethos
+
+
+        Capital Shareholder must reduce the base cost in respect of each Ethos Capital
+
+
+        Share by an amount equal to the market value of the Brait Distribution Bonds on
+
+
+        the date that each Brait Distribution Bond accrues to the Ethos Capital
+
+
+        Shareholder; and
+
+
+
+
+2.3.2   the Ethos Capital Shareholder is deemed to have acquired the Brait Distribution
+
+
+        Bonds for an amount equal to the market value thereof on the date that each Brait
+
+
+        Distribution Bond accrues to the Ethos Capital Shareholder for purposes of
+
+
+        determining the base cost thereof.
+
+
+
+
+2.4     Ethos Capital Shareholders are notified that the closing price of the Brait Bonds and the
+
+
+        Ethos Capital Shares respectively on the Johannesburg Stock Exchange on Friday,
+
+
+        5 December 2025, being the record date for the 2025 Brait Unbundling (the "Record
+
+
+        Date"), will be announced by Ethos Capital on Friday, 5 December 2025 in accordance
+
+
+        with the JSE Corporate Actions Timetable.
+
+
+
+
+2.5     The base cost of each Ethos Capital Share held by an Ethos Capital Shareholder that
+
+
+        qualified for the distribution will need to be reduced by the base cost apportionment
+
+
+        amount as set out under paragraph 3 below.
+
+
+
+
+3.      APPORTIONMENT FOR TAX PURPOSES
+
+
+
+
+3.1     As set out in the Declaration Announcement, each Ethos Capital Shareholder is entitled
+
+
+        to receive 0.00086 Brait Distribution Bonds for every one Ethos Capital Share held on
+
+
+        the Record Date (the "Distribution Ratio"). The current base cost in respect of each
+
+
+        Ethos Capital Share must be reduced by an amount that is derived from the market value
+
+
+        of the Brait Distribution Bonds on the date that each Brait Distribution Bond accrues to
+
+
+        the Ethos Capital Shareholder. For purposes of this announcement, Ethos Capital has
+
+
+        assumed that the market value will be the closing price of the Brait Bonds on the Record
+
+
+        Date (ie Friday, 5 December 2025).
+
+
+
+
+3.2     The base cost of each Ethos Capital Share must therefore be reduced by an amount in
+
+
+        Rand that is based on the Distribution Ratio multiplied by the closing price of the Brait
+
+
+        Bonds on the Record Date.
+
+
+
+
+3.3     Ethos Capital will announce this amount along with the closing price of the Brait Bonds
+
+
+        and the Ethos Capital Shares respectively on SENS on Friday, 5 December 2024.
+
+
+
+
+4.      FRACTIONAL ENTITLEMENTS
+
+
+
+
+4.1     Where an Ethos Capital Shareholder's entitlement to the Brait Distribution Bonds in
+
+
+        terms of the 2025 Brait Unbundling, calculated in accordance with the Distribution Ratio,
+
+
+        gives rise to a fraction of any Brait Distribution Bonds, such allocation must be rounded
+
+
+        down to the nearest whole number, resulting in allocations of whole Brait Distribution
+
+
+        Bonds and a cash payment in respect of the fraction to such shareholder(s). As indicated
+
+
+        in the Declaration Announcement, the aggregated excess fractional entitlements to the
+
+
+        Brait Distribution Bonds to which Ethos Capital Shareholders would otherwise be
+
+
+        entitled will not be transferred to Ethos Capital Shareholders, but will instead be sold
+
+
+        on behalf of and at the risk of the relevant Ethos Capital Shareholders in the market as
+
+
+        soon as practicable following the implementation of the 2025 Brait Unbundling, thereby
+
+
+        resulting in the cash payment to Ethos Capital Shareholders contemplated herein.
+
+
+
+
+4.2     In accordance with the JSE Listings Requirements, Fractional Entitlements payments to
+
+
+        shareholders will be calculated based on the volume weighted average traded price of
+
+
+        the Brait Bonds on the LDT+1, being Wednesday, 3 December 2025 ("VWAP on
+
+
+        LDT+1"), less 10%, as detailed below ?
+
+
+
+
+                  VWAP on LDT+1                   Amount that will be used to determine
+
+
+                                                    the cash payment for the Fractional
+
+
+                                                    Entitlements (ie VWAP on LDT+1 less
+
+
+                                                                                   10%)
+
+
+
+
+             77,520.97660 cents                                      69,768.87894 cents
+
+
+
+
+4.3     Cash payments in respect of the Fractional Entitlements are expected to be made on
+
+
+        Monday, 8 December 2025 to the CSDP or broker accounts of dematerialised Ethos
+
+
+        Capital Shareholders or to the bank accounts of certificated Ethos Capital Shareholders.
+
+
+
+
+4.4     Certificated Ethos Capital Shareholders whose bank account details are not held by the
+
+
+        transfer secretaries, should provide such details to the transfer secretaries to enable
+
+
+        payment of the cash amount due. Should no details be on record, the funds will be held
+
+
+        by the Company in trust in terms of the provisions of the Constitution of the Company
+
+
+        until such time as the details have been provided, whereafter the cash entitlement will
+
+
+        be paid to the shareholder upon its request.
+
+
+
+
+4.5     Shareholders are informed that, as far as the tax implications of the cash payment in
+
+
+        respect of the Fractional Entitlements is concerned, to the extent that Cash Proceeds
+
+
+        exceed that tax base cost of such Fractional Entitlements, the receipt of the cash
+
+
+        payment by shareholders will typically be subject to capital gains tax for shareholders
+
+
+        holding Ethos Capital Shares as capital assets.
+
+
+
+
+Ebene, Mauritius (with simultaneous circulation in Johannesburg)
+
+
+
+
+4 December 2025
+
+
+
+
+Sponsor
+
+
+RAND MERCHANT BANK (A division of FirstRand Bank Limited)
+
+
+
+
+Important Note
+
+
+Ethos Capital Shareholders are referred to the Declaration Announcement referenced in this
+
+
+announcement (and accessible on Ethos Capital's website via the following link:
+
+
+https://ethoscapital.mu/sens/sens-voluntary-nav-navps-and-cautionary-update-proceedings-at-the-
+
+
+agm-and-declaration-of-brait-exchangeable-bonds-unbundling/) for the full disclaimers which apply
+
+
+to this announcement (including the information contained herein) and are incorporated by
+
+
+reference in full in this announcement, as if specifically stated.
+
+
+
+
+Date: 04-12-2025 11:25:00
+
+
+Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited ('JSE').
+
+
+The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
+
+
+ the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
+
+
+indirect, incidental or consequential loss or damage of any kind or nature, howsoever arising, from the use of SENS or the use of, or reliance on,
+
+
+ information disseminated through SENS.                                                  Entitlements (ie VWAP on LDT+1 less
+
+
+                                                                                   10%)
+
+
+
+
+             77,520.97660 cents                                      69,768.87894 cents
+
+
+
+
+4.3     Cash payments in respect of the Fractional Entitlements are expected to be made on
+
+
+        Monday, 8 December 2025 to the CSDP or broker accounts of dematerialised Ethos
+
+
+        Capital Shareholders or to the bank accounts of certificated Ethos Capital Shareholders.
+
+
+
+
+4.4     Certificated Ethos Capital Shareholders whose bank account details are not held by the
+
+
+        transfer secretaries, should provide such details to the transfer secretaries to enable
+
+
+        payment of the cash amount due. Should no details be on record, the funds will be held
+
+
+        by the Company in trust in terms of the provisions of the Constitution of the Company
+
+
+        until such time as the details have been provided, whereafter the cash entitlement will
+
+
+        be paid to the shareholder upon its request.
+
+
+
+
+4.5     Shareholders are informed that, as far as the tax implications of the cash payment in
+
+
+        respect of the Fractional Entitlements is concerned, to the extent that Cash Proceeds
+
+
+        exceed that tax base cost of such Fractional Entitlements, the receipt of the cash
+
+
+        payment by shareholders will typically be subject to capital gains tax for shareholders
+
+
+        holding Ethos Capital Shares as capital assets.
+
+
+
+
+Ebene, Mauritius (with simultaneous circulation in Johannesburg)
+
+
+
+
+4 December 2025
+
+
+
+
+Sponsor
+
+
+RAND MERCHANT BANK (A division of FirstRand Bank Limited)
+
+
+
+
+Important Note
+
+
+Ethos Capital Shareholders are referred to the Declaration Announcement referenced in this
+
+
+announcement (and accessible on Ethos Capital's website via the following link:
+
+
+https://ethoscapital.mu/sens/sens-voluntary-nav-navps-and-cautionary-update-proceedings-at-the-
+
+
+agm-and-declaration-of-brait-exchangeable-bonds-unbundling/) for the full disclaimers which apply
+
+
+to this announcement (including the information contained herein) and are incorporated by
+
+
+reference in full in this announcement, as if specifically stated.
+
+
+
+
+Date: 04-12-2025 11:25:00
+
+
+Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited ('JSE').
+
+
+The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
+
+
+ the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
+
+
+indirect, incidental or consequential loss or damage of any kind or nature, howsoever arising, from the use of SENS or the use of, or reliance on,
+
+
+ information disseminated through SENS.

@@ -7,6 +7,8 @@ Symbol [EPE]
 Results for the year ended 30 June 2025 and availability of Integrated Annual Report and B-BBEE Compliance Report
 
 
+
+
 EPE CAPITAL PARTNERS LTD
 
 
@@ -25,10 +27,16 @@ SHARE CODE: EPE
 ("ETHOS CAPITAL" OR "THE COMPANY" OR "THE GROUP")
 
 
+
+
 ANNUAL FINANCIAL RESULTS FOR THE YEAR ENDED 30 JUNE 2025 AND AVAILABILITY OF INTEGRATED ANNUAL REPORT AND B-BBEE COMPLIANCE REPORT
 
 
+
+
 INTRODUCTION
+
+
 
 
 EPE Capital Partners Ltd is an investment holding company, registered, and incorporated in Mauritius and listed on the Johannesburg Stock Exchange ("JSE").
@@ -43,6 +51,8 @@ Company with largely indirect exposure to a portfolio of unlisted private equity
 Company's Investment Advisor.
 
 
+
+
 Due to the nature of the business conducted by the Group, the Group's performance is measured by growth in the net asset value ("NAV") and NAV per share
 
 
@@ -50,6 +60,8 @@ Due to the nature of the business conducted by the Group, the Group's performanc
 
 
 years and has been approved by the JSE.
+
+
 
 
 The NAV of each Fund is derived from the fair values of the underlying Portfolio Companies which are prepared in accordance with International Private
@@ -70,16 +82,26 @@ the enterprise value of the investment that is then adjusted for surplus assets 
 shareholders.
 
 
+
+
 RESULTS ANNOUNCEMENT
+
+
 
 
 Key highlights over the year and as at 30 June 2025
 
 
+
+
 - NAVPs growth and Share price
 
 
+
+
                 30 June 2024     30 June 2025      Growth
+
+
 
 
 Adjusted NAVPS         R6.58 (1)        R8.57       30.2%
@@ -88,13 +110,21 @@ Adjusted NAVPS         R6.58 (1)        R8.57       30.2%
 Reported NAVPS         R7.03            R8.57       21.9%
 
 
+
+
 Implied NAVPS          R7.03           R11.29 (2)   60.6%
+
+
 
 
 Share price            R4.21            R6.65       58.0%
 
 
+
+
 Discount (3)             40%              22%
+
+
 
 
 (1) Adjusted NAVPS: excluding 30 June 2024 value of Brait ordinary shares that were unbundled in July 2024
@@ -104,6 +134,8 @@ Discount (3)             40%              22%
 
 
 (3) Share price discount to reported NAVPS
+
+
 
 
 - Adjusted NAVPS growth: increased by 30% from R6.58 (30 June 2024) to R8.57
@@ -121,7 +153,11 @@ Discount (3)             40%              22%
   - Listed portfolio: contributed strongly with a 36% return for the year
 
 
+
+
 - Reported NAVPS growth: increased by 22% from R7.03 (30 June 2024) to R8.57
+
+
 
 
 - Liquidity and debt
@@ -131,6 +167,8 @@ Discount (3)             40%              22%
 
 
   - Enabled R440 million debt reduction (down to R82 million at 30 June 2025)
+
+
 
 
 - Return of capital to shareholders
@@ -151,10 +189,16 @@ Discount (3)             40%              22%
   - Unbundling of Brait exchangeable bonds (R175.5 million at 30 June 2025) approved by the board, scheduled to be concluded in November 2025
 
 
+
+
 - The Board remains committed to value creation and accelerating further returns
 
 
+
+
 Overview
+
+
 
 
 The past year has been defined by strong delivery against our stated objectives, with tangible outcomes across both our unlisted and listed portfolios. The
@@ -163,10 +207,14 @@ The past year has been defined by strong delivery against our stated objectives,
 combination of disciplined portfolio management, successful realisations, and return of capital to shareholders translated into material value creation.
 
 
+
+
 The Ethos Capital adjusted NAVPS increased from R6.58 at 30 June 2024 (on a like-for-like comparison, excluding the unbundled Brait ordinary shares) to
 
 
 R8.57 at 30 June 2025, representing a 30% return.
+
+
 
 
 This was largely driven by the unlisted portfolio that achieved a pleasing gross return of 31%, with reported last-12-months ("LTM") sales and EBITDA of the
@@ -178,10 +226,14 @@ unlisted Portfolio Companies increasing by 38% and 40% respectively. The main co
 over 50% of total assets, that grew its LTM EBITDA by 55%. Further notable increases were achieved from Vertice, e4 and Primedia.
 
 
+
+
 The listed portfolio returned 36% over the year, resulting from increases in the values of the Brait exchangeable bonds, as well as a significant increase
 
 
 in the investment in MTN Zakhele Futhi that was largely realised in cash post the year-end.
+
+
 
 
 The NAVPS is after providing for the performance participation payable to the Investment Advisor for the 3-year measurement period ended 30 June 2025. This
@@ -193,6 +245,8 @@ relates to the incentive scheme, implemented at the Ethos Capital listing, that 
 excess of an average 10% growth over each measurement period.
 
 
+
+
 During the year, nearly R606 million of proceeds were distributed by the TRG Funds to Ethos Capital, that included the realisation proceeds from Synerlytic
 
 
@@ -202,16 +256,22 @@ in August 2024 and a partial realisation of Optasia in April 2025, at a signific
 reduce the Group's debt by R440 million to R82 million at 30 June 2025.
 
 
+
+
 The proceeds also enabled share repurchases during the year, totalling R27 million. In April 2025, The Board approved a further share buyback programme of
 
 
 R40 million, of which R2 million has been completed to date. The intention is to resume the repurchase program post the closed period.
 
 
+
+
 The Ethos Capital share price grew by 58% over the year to R6.65 at 30 June 2025, with the share price discount to NAVPS reducing to 22% (30 June 2024:
 
 
 40%).
+
+
 
 
 In July 2024, the Company unbundled its investment in the Brait ordinary shares for R121 million.  The unbundling was followed by the Brait rights issue,
@@ -229,16 +289,24 @@ Capital shareholders exercised the underlying rights and remained invested in th
 in NAVPS would have been 61%.
 
 
+
+
 The Board  approved the unbundling of the Brait exchangeable bonds (R175.5 million at 30 June 2025) to Ethos Capital shareholders that should conclude in
 
 
 November 2025, subject to exchange control approvals. Further details will be provided via the stock exchange news service in due course.
 
 
+
+
 The Board remains committed to maximise value from the remaining portfolio and return capital to shareholders in a responsible and efficient manner.
 
 
+
+
 FINANCIAL POSITION AND INVESTMENT PORTFOLIO
+
+
 
 
 SUMMARISED STATEMENT OF FINANCIAL POSITION
@@ -253,6 +321,8 @@ SUMMARISED STATEMENT OF FINANCIAL POSITION
                                                             R'million                 R'million
 
 
+
+
 ASSETS
 
 
@@ -262,10 +332,14 @@ Non-current assets
 Unlisted investments at fair value                            2,371.2                   2,309.2
 
 
+
+
 Current assets                                                   23.4                      19.1
 
 
 TOTAL ASSETS                                                  2,394.6                   2,328.3
+
+
 
 
 EQUITY AND LIABILITIES
@@ -274,10 +348,16 @@ EQUITY AND LIABILITIES
 Total Ordinary shareholders' equity                           2,193.6                   1,784.4
 
 
+
+
 Total Liabilities                                               201.0                     543.9
 
 
+
+
 TOTAL EQUITY AND LIABILITIES                                  2,394.6                   2,328.3
+
+
 
 
 NET ASSET VALUE                                               2,193.6                   1,784.4
@@ -289,10 +369,16 @@ Net Asset Value per share (Rand)                                
 Attributable shares in issue  ('000)                          255,985                   253,885
 
 
+
+
 TOP 10 UNDERLYING PORTFOLIO COMPANIES - AT 30 JUNE 2025
 
 
+
+
 Name                                       Business description        Year*  % of Total assets
+
+
 
 
 Optasia                                    FinTech service provider     2018               50.7
@@ -343,7 +429,11 @@ Total assets                                             �
 * Initial acquisition date by TRG SA Fund
 
 
+
+
 AVAILABLE OF AUDITED ANNUAL FINANCIAL STATEMENTS
+
+
 
 
 The audited Annual Financial Statements, alongside the Integrated Annual Report, are available from today at the below JSE cloudlink,
@@ -358,10 +448,14 @@ and both are published on the Company's website at,
 https://ethoscapital.mu/investors/reports-results/
 
 
+
+
 Deloitte & Touche, the Group's independent auditor, has audited the Consolidated and Company Annual Financial Statements and has expressed an unmodified
 
 
 audit opinion thereon.
+
+
 
 
 The results announcement does not provide full or all of the details and therefore any investment decision should be based on a consideration of the Annual
@@ -370,7 +464,11 @@ The results announcement does not provide full or all of the details and therefo
 Financial Statements as a whole, which is available for viewing from today at the links as set out above.
 
 
+
+
 PRESENTATION
+
+
 
 
 Ethos Capital will host a webcast presentation at 10h00 on Thursday 25 September 2025 covering the results relating to the year ended 30 June 2025, and
@@ -382,13 +480,19 @@ outlook. A copy of the presentation will be available for download on the Compan
 https://ethoscapital.mu/investors/reports-results/
 
 
+
+
 Participants can obtain access via the following link:
 
 
 https://www.diamondpass.net/2751123
 
 
+
+
 UPDATE ON THE INVESTMENT ADVISOR
+
+
 
 
 The Rohatyn Group ("TRG"), a global private markets asset manager focussed on emerging markets and real assets, acquired the business of Ethos Private Equity
@@ -409,7 +513,11 @@ TRG decided that the team would be better positioned as an independent business 
 reestablish it under the Ethos brand. This transaction remains subject to certain closing conditions and is expected to be completed in October 2025.
 
 
+
+
 AVAILABILITY OF B-BBEE COMPLIANCE REPORT
+
+
 
 
 Shareholders are advised that the annual compliance report in terms of Section 13G(2) of the Broad-Based Black Economic Empowerment Amendment Act No.46 of
@@ -421,7 +529,11 @@ Shareholders are advised that the annual compliance report in terms of Section 1
 https://ethoscapital.mu/investors/governance/
 
 
+
+
 CORPORATE INFORMATION
+
+
 
 
 Directors
@@ -442,6 +554,8 @@ Peter Hayward-Butt
 Yuvraj Juwaheer
 
 
+
+
 Senior Advisors (Officers)
 
 
@@ -449,6 +563,8 @@ Anthonie de Beer (CEO)
 
 
 Jean-Pierre van Onselen (CFO)
+
+
 
 
 Investment Advisor
@@ -467,6 +583,8 @@ Office Level 3
 
 
 Rosebank, 2196
+
+
 
 
 Company Secretary and Registered Office
@@ -490,6 +608,8 @@ Ebene
 Mauritius
 
 
+
+
 Auditors
 
 
@@ -508,6 +628,8 @@ Ebene
 Mauritius
 
 
+
+
 Deloitte & Touche
 
 
@@ -518,6 +640,8 @@ Waterfall City
 
 
 Johannesburg, 2090
+
+
 
 
 Listing
@@ -535,6 +659,8 @@ JSE code: EPE
 Sector:  Financials - Closed End Investments
 
 
+
+
 Transfer Secretaries
 
 
@@ -545,6 +671,8 @@ Computershare Investor Services Proprietary Limited
 
 
 Rosebank, 2196
+
+
 
 
 Sponsor
@@ -562,10 +690,14 @@ Cnr Fredman Drive & Rivonia Road
 Sandton, 2196
 
 
+
+
 Disclaimer
 
 
 This announcement is extracted from the audited financial statements but is itself not audited
+
+
 
 
 Ebene, Mauritius (with simultaneous circulation in Johannesburg)
@@ -574,4 +706,249 @@ Ebene, Mauritius (with simultaneous circulation in Johannesburg)
 25 September 2025
 
 
+
+
 Date: 25-09-2025 07:30:00
+
+
+Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited ('JSE').
+
+
+The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
+
+
+ the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
+
+
+indirect, incidental or consequential loss or damage of any kind or nature, howsoever arising, from the use of SENS or the use of, or reliance on,
+
+
+ information disseminated through SENS.ng markets and real assets, acquired the business of Ethos Private Equity
+
+
+("Ethos") in 2023 to leverage Ethos' presence in the African market and to expand Ethos' multi-asset-class capabilities across emerging markets. TRG SA became
+
+
+the Company's Investment Advisor as note above. However, market dynamics have changed and, over the past two years, capital allocators to African private markets
+
+
+have exhibited a strong preference for niche, geographically specialised firms with independent and localized corporate infrastructure. As a result, Ethos and
+
+
+TRG decided that the team would be better positioned as an independent business and the partners in the Africa business have agreed to acquire TRG SA and
+
+
+reestablish it under the Ethos brand. This transaction remains subject to certain closing conditions and is expected to be completed in October 2025.
+
+
+
+
+AVAILABILITY OF B-BBEE COMPLIANCE REPORT
+
+
+
+
+Shareholders are advised that the annual compliance report in terms of Section 13G(2) of the Broad-Based Black Economic Empowerment Amendment Act No.46 of
+
+
+2013, is available on the Company's website at
+
+
+https://ethoscapital.mu/investors/governance/
+
+
+
+
+CORPORATE INFORMATION
+
+
+
+
+Directors
+
+
+Yvonne Stillhart (Chairperson)
+
+
+Kevin Allagapen
+
+
+Michael Pfaff
+
+
+Peter Hayward-Butt
+
+
+Yuvraj Juwaheer
+
+
+
+
+Senior Advisors (Officers)
+
+
+Anthonie de Beer (CEO)
+
+
+Jean-Pierre van Onselen (CFO)
+
+
+
+
+Investment Advisor
+
+
+TRG Management South Africa (Pty) Ltd
+
+
+Rosebank Towers
+
+
+15 Biermann Avenue
+
+
+Office Level 3
+
+
+Rosebank, 2196
+
+
+
+
+Company Secretary and Registered Office
+
+
+Ocorian
+
+
+6th Floor, Tower A
+
+
+1 Exchange Square
+
+
+Wall Street
+
+
+Ebene
+
+
+Mauritius
+
+
+
+
+Auditors
+
+
+Deloitte & Touche
+
+
+Level 7, Standard Chartered Tower
+
+
+19 Cybercity
+
+
+Ebene
+
+
+Mauritius
+
+
+
+
+Deloitte & Touche
+
+
+5 Magwa Crescent
+
+
+Waterfall City
+
+
+Johannesburg, 2090
+
+
+
+
+Listing
+
+
+JSE Limited
+
+
+Abbreviated name: ETHOSCAP
+
+
+JSE code: EPE
+
+
+Sector:  Financials - Closed End Investments
+
+
+
+
+Transfer Secretaries
+
+
+Computershare Investor Services Proprietary Limited
+
+
+15 Biermann Avenue
+
+
+Rosebank, 2196
+
+
+
+
+Sponsor
+
+
+Rand Merchant Bank (A division of FirstRand Bank Limited)
+
+
+1 Merchant Place
+
+
+Cnr Fredman Drive & Rivonia Road
+
+
+Sandton, 2196
+
+
+
+
+Disclaimer
+
+
+This announcement is extracted from the audited financial statements but is itself not audited
+
+
+
+
+Ebene, Mauritius (with simultaneous circulation in Johannesburg)
+
+
+25 September 2025
+
+
+
+
+Date: 25-09-2025 07:30:00
+
+
+Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited ('JSE').
+
+
+The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
+
+
+ the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
+
+
+indirect, incidental or consequential loss or damage of any kind or nature, howsoever arising, from the use of SENS or the use of, or reliance on,
+
+
+ information disseminated through SENS.
