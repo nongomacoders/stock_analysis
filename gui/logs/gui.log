@@ -1,0 +1,16 @@
+2026-02-18 14:54:28,730 scripts.main INFO: Database pool initialized
+2026-02-18 14:54:28,730 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2026-02-18 14:54:28,823 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2026-02-18 14:54:28,926 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2026-02-18 14:54:28,926 scripts.main INFO: Notifier listener added
+2026-02-18 14:54:28,927 scripts.main INFO: AUTO_START_AGENT disabled; not starting market agent
+2026-02-18 14:54:29,207 asyncio ERROR: Task was destroyed but it is pending!
+task: <Task pending name='Task-22' coro=<DBNotifier._keep_alive() done, defined at c:\Users\diond\Desktop\Projects\GITHUBPROJECTS\stock_analysis\gui\core\db\notifier.py:72> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2026-02-18 14:54:51,162 scripts.main INFO: Selected: CLH.JO
+2026-02-18 14:54:52,464 components.deep_research_tab INFO: [DeepResearch] load_content called for CLH.JO, setting loading=True
+2026-02-18 14:54:52,465 components.deep_research_tab INFO: [DeepResearch] load_content complete for CLH.JO, setting loading=False
+2026-02-18 15:00:42,951 scripts.main INFO: Closing application...
+2026-02-18 15:00:42,977 core.db.notifier INFO: Notifier: Released connection for listener.
+2026-02-18 15:00:42,977 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'
+2026-02-18 15:00:42,977 core.db.notifier WARNING: Notifier: Failed to release connection: Pool.release() received invalid connection: <PoolConnectionProxy <asyncpg.connection.Connection object at 0x000002B1E719C5F0> 0x2b1e5f8f370> is not a member of this pool
+2026-02-18 15:00:42,978 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
