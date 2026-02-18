@@ -66,11 +66,21 @@ async def analyze_price_change(ticker: str, new_price: float, level_hit: float):
 
 async def generate_master_research(ticker: str, deep_research=None):
     import logging
+    import time
     logger = logging.getLogger(__name__)
     logger.info("AI: Generating Research Summary for %s...", ticker)
+    
     # 1. Generate
+    start_time = time.time()
     prompt = build_research_prompt(deep_research)
-    return await query_ai(prompt)
+    logger.info("AI: Research prompt length for %s: %d characters", ticker, len(prompt))
+    
+    result = await query_ai(prompt)
+    
+    duration = time.time() - start_time
+    logger.info("AI: Research generation for %s took %.2f seconds", ticker, duration)
+    
+    return result
 
 
 async def estimate_spot_price(ticker: str):

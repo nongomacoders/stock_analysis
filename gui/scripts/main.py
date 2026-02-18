@@ -153,14 +153,14 @@ class CommandCenter(ttk.Window):
         asyncio.set_event_loop(self.loop)
         self.loop.run_forever()
 
-    def async_run(self, coro, timeout=30):
+    def async_run(self, coro, timeout=120):
         """Helper to run async coroutines from sync code (with timeout to prevent freezing)"""
         future = asyncio.run_coroutine_threadsafe(coro, self.loop)
         try:
             return future.result(timeout=timeout)
         except Exception as e:
             logging.getLogger(__name__).exception(
-                "async_run timed out or failed: %s", e
+                "async_run timed out or failed after %d seconds: %s", timeout, e
             )
             return None
 
