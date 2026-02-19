@@ -23,6 +23,7 @@ async def fetch_watchlist_data():
             w.reward_risk_ratio,
             sa.strategy,
             sa.deepresearch,
+            sa.deepresearch_date,
             lv.peg_ratio_historical as peg_ratio,
             (SELECT trigger_content FROM action_log a 
                 WHERE a.ticker = w.ticker AND a.trigger_type = 'SENS' AND a.is_read = false

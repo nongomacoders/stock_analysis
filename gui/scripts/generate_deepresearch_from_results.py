@@ -148,6 +148,86 @@ async def _fetch_category_name(ticker: str) -> str | None:
         return None
 
 
+async def _fetch_existing_deepresearch(ticker: str) -> str | None:
+    """Return the current deepresearch text for *ticker*, or None."""
+    from core.db.engine import DBEngine
+
+    q = """
+        SELECT deepresearch
+        FROM stock_analysis
+        WHERE ticker = $1
+          AND deepresearch IS NOT NULL
+          AND BTRIM(deepresearch) <> ''
+        LIMIT 1
+    """
+    rows = await DBEngine.fetch(q, ticker)
+    if not rows:
+        return None
+    val = rows[0].get("deepresearch") if hasattr(rows[0], "get") else rows[0]["deepresearch"]
+    return val if val and str(val).strip() else None
+
+
+async def _fetch_last_results_date(ticker: str):
+    """Return the most recent results_release_date for *ticker*, or None."""
+    from core.db.engine import DBEngine
+
+    q = """
+        SELECT results_release_date
+        FROM raw_stock_valuations
+        WHERE ticker = $1
+        ORDER BY results_release_date DESC
+        LIMIT 1
+    """
+    rows = await DBEngine.fetch(q, ticker)
+    if not rows:
+        return None
+    return rows[0].get("results_release_date") if hasattr(rows[0], "get") else rows[0]["results_release_date"]
+
+
+async def _fetch_commodity_fx_averages(
+    since_date,
+) -> tuple[list[tuple[str, float, int]], list[tuple[str, float, int]]]:
+    """Fetch per-commodity and per-FX averages since *since_date*.
+
+    Returns (commodity_avgs, fx_avgs) where each is a list of (name, avg, count).
+    Mirrors the logic in engine.estimate_spot_price.
+    """
+    from core.db.engine import DBEngine
+
+    commodity_avgs: list[tuple[str, float, int]] = []
+    fx_avgs: list[tuple[str, float, int]] = []
+
+    q1 = """
+        SELECT commodity, AVG(price) AS avg_price, COUNT(*) AS cnt
+        FROM commodity_prices
+        WHERE collected_ts >= $1
+        GROUP BY commodity
+        ORDER BY cnt DESC
+    """
+    rows1 = await DBEngine.fetch(q1, since_date)
+    for r in (rows1 or []):
+        try:
+            commodity_avgs.append((r["commodity"], float(r["avg_price"]), int(r["cnt"])))
+        except Exception:
+            continue
+
+    q2 = """
+        SELECT pair, AVG(rate) AS avg_rate, COUNT(*) AS cnt
+        FROM fx_rates
+        WHERE collected_ts >= $1
+        GROUP BY pair
+        ORDER BY cnt DESC
+    """
+    rows2 = await DBEngine.fetch(q2, since_date)
+    for r in (rows2 or []):
+        try:
+            fx_avgs.append((r["pair"], float(r["avg_rate"]), int(r["cnt"])))
+        except Exception:
+            continue
+
+    return commodity_avgs, fx_avgs
+
+
 def _load_results_text(results_root: Path, canon_ticker: str, *, max_chars: int | None) -> tuple[str, list[Path]]:
     ticker_dir = results_root / canon_ticker
     if not ticker_dir.exists():
@@ -226,7 +306,17 @@ def _gemini_resource_name(raw: str, *, max_len: int = 40, fallback_prefix: str =
     return out[:max_len].strip("-") or digest
 
 
-def _build_llm_prompt(prompt_template: str, *, ticker: str, price: float | None, payload: str) -> str:
+def _build_llm_prompt(
+    prompt_template: str,
+    *,
+    ticker: str,
+    price: float | None,
+    payload: str,
+    previous_report: str | None = None,
+    commodity_avgs: list[tuple[str, float, int]] | None = None,
+    fx_avgs: list[tuple[str, float, int]] | None = None,
+    results_date: str | None = None,
+) -> str:
     today = date.today().isoformat()
     # DB stores close_price in ZAR cents (ZARc). Convert to ZAR for the model.
     price_zar = None if price is None else (float(price) / 100.0)
@@ -237,9 +327,47 @@ def _build_llm_prompt(prompt_template: str, *, ticker: str, price: float | None,
     txt = txt.replace("<today's date>", today)
     txt = txt.replace("[Insert Price]", price_str)
 
+    # Optional: include previous deep research report for change comparison.
+    prev_block = ""
+    if previous_report:
+        prev_block = (
+            "\n\n[PREVIOUS DEEP RESEARCH REPORT]\n"
+            + previous_report.strip()
+            + "\n[END PREVIOUS REPORT]\n\n"
+            + "IMPORTANT: Your response MUST include a section titled \"## Summary of Changes\"\n"
+            + "at the end that summarises the key differences between this new report and the\n"
+            + "previous report above. Highlight changes in financials, outlook, risks, and any\n"
+            + "new developments.\n"
+        )
+
+    # Optional: inject commodity and FX average prices.
+    commodity_block = ""
+    if commodity_avgs or fx_avgs:
+        parts: list[str] = ["\n[CURRENT COMMODITY PRICES]"]
+        if results_date:
+            parts.append(f"Average prices since last reporting period ({results_date}):")
+        else:
+            parts.append("Recent average commodity prices:")
+        if commodity_avgs:
+            for c, avg, cnt in commodity_avgs[:10]:
+                parts.append(f"  {c}: {avg:.2f} (samples={cnt})")
+        if fx_avgs:
+            parts.append("FX rates (averages):")
+            for p, avg, cnt in fx_avgs[:10]:
+                parts.append(f"  {p}: {avg:.4f} (samples={cnt})")
+        parts.append("[END COMMODITY PRICES]")
+        parts.append("")
+        parts.append(
+            "IMPORTANT: Use the commodity prices and FX rates above for your HEPS equation "
+            "and valuation calculations. Do NOT use hypothetical or web-searched prices."
+        )
+        commodity_block = "\n".join(parts)
+
     # Provide a consistent preamble, then include payload.
     return (
         txt.rstrip()
+        + prev_block
+        + commodity_block
         + "\n\n"
         + f"TICKER: {ticker}\n"
         + f"LATEST CLOSE PRICE (ZAR): {price_str}\n"
@@ -340,6 +468,60 @@ def _query_ai_with_pdfs(*, prompt: str, pdf_paths: list[Path], display_name_pref
     return getattr(response, "text", "") or ""
 
 
+_MIN_RESPONSE_CHARS = 500
+
+_ERROR_PREFIXES = (
+    "error",
+    "i cannot",
+    "i'm unable",
+    "i am unable",
+    "sorry",
+    "unfortunately",
+    "as an ai",
+    "i don't have",
+    "i do not have",
+    "quota exceeded",
+    "rate limit",
+)
+
+
+def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bool:
+    """Return True if *response* looks like a valid deep-research report."""
+    if not response or not response.strip():
+        logger.warning("SKIP %s — empty response from LLM", ticker)
+        return False
+
+    stripped = response.strip()
+
+    # Too short to be real research.
+    if len(stripped) < _MIN_RESPONSE_CHARS:
+        logger.warning(
+            "SKIP %s — response too short (%d chars, min %d)",
+            ticker, len(stripped), _MIN_RESPONSE_CHARS,
+        )
+        return False
+
+    # Starts with a known error pattern.
+    lower = stripped.lower()
+    for prefix in _ERROR_PREFIXES:
+        if lower.startswith(prefix):
+            logger.warning(
+                "SKIP %s — response looks like an error: %.120s...",
+                ticker, stripped[:120],
+            )
+            return False
+
+    # A valid report typically contains markdown headings.
+    if "#" not in stripped and len(stripped) < 2000:
+        logger.warning(
+            "SKIP %s — response has no headings and is only %d chars; likely not a real report",
+            ticker, len(stripped),
+        )
+        return False
+
+    return True
+
+
 async def _save_deepresearch(ticker: str, content: str) -> None:
     from core.db.engine import DBEngine
 
@@ -416,15 +598,52 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         prompt_file = _select_prompt_file(prompts_dir, category)
         prompt_template = prompt_file.read_text(encoding="utf-8", errors="ignore")
 
+        # Fetch any existing deep research so the LLM can produce a change summary.
+        existing_dr = None
+        try:
+            existing_dr = await _fetch_existing_deepresearch(t)
+        except Exception:
+            logger.debug("Could not fetch existing deepresearch for %s", t)
+
+        # For commodity-type tickers, fetch average commodity/FX prices since last reporting period.
+        commodity_avgs = None
+        fx_avgs = None
+        results_date_str = None
+        is_commodity = prompt_file.name.lower().startswith("commodity")
+        if is_commodity:
+            try:
+                rd = await _fetch_last_results_date(t)
+                if rd is not None:
+                    results_date_str = str(rd)
+                    commodity_avgs, fx_avgs = await _fetch_commodity_fx_averages(rd)
+                    logger.info(
+                        "Commodity data: %d commodity avg(s), %d FX avg(s) since %s",
+                        len(commodity_avgs), len(fx_avgs), results_date_str,
+                    )
+                else:
+                    logger.info("No results_release_date found for %s; skipping commodity data", t)
+            except Exception:
+                logger.exception("Failed to fetch commodity/FX averages for %s", t)
+
         logger.info(
-            "Category: %s | Prompt: %s | Txt files: %d | Pdf files: %d",
+            "Category: %s | Prompt: %s | Txt files: %d | Pdf files: %d | Has previous DR: %s",
             category or "(none)",
             prompt_file.name,
             len(used_files),
             len(pdfs),
+            bool(existing_dr),
         )
 
-        llm_prompt = _build_llm_prompt(prompt_template, ticker=t, price=price, payload=payload)
+        llm_prompt = _build_llm_prompt(
+            prompt_template,
+            ticker=t,
+            price=price,
+            payload=payload,
+            previous_report=existing_dr,
+            commodity_avgs=commodity_avgs,
+            fx_avgs=fx_avgs,
+            results_date=results_date_str,
+        )
 
         if pdfs:
             llm_prompt = (
@@ -456,8 +675,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
             )
         else:
             response = await query_ai(llm_prompt)
-        if not response or response.strip().lower().startswith("error generating ai response"):
-            logger.warning("LLM returned an error-like response for %s", t)
+        if not _validate_response(response, t, logger):
             continue
 
         try:
@@ -465,6 +683,23 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
             logger.info("Saved deepresearch for %s (len=%d)", t, len(response))
         except Exception:
             logger.exception("Failed to save deepresearch for %s", t)
+            continue
+
+        # Clean up results folder now that deep research is saved.
+        ticker_dir = results_root / canon
+        if ticker_dir.exists() and ticker_dir.is_dir():
+            removed = 0
+            for f in list(ticker_dir.iterdir()):
+                try:
+                    f.unlink()
+                    removed += 1
+                except Exception:
+                    logger.warning("Could not delete %s", f)
+            try:
+                ticker_dir.rmdir()  # only succeeds if empty
+            except Exception:
+                pass
+            logger.info("Cleaned up %d file(s) from %s", removed, ticker_dir)
 
         # Gentle pacing.
         await asyncio.sleep(1)

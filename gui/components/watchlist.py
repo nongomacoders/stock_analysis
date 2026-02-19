@@ -35,6 +35,9 @@ class WatchlistWidget(ttk.Frame):
         # without re-querying the DB.
         self._watchlist_last_data = []
 
+        # Tickers whose new-deepresearch highlight has been acknowledged (clicked).
+        self._dr_acknowledged: set[str] = set()
+
         self.create_widgets()
 
         # Note: Initial data load is triggered by main.py after DB is ready
@@ -174,7 +177,8 @@ class WatchlistWidget(ttk.Frame):
         self.tree.tag_configure("holding", background="#d1e7dd", foreground="black")
         self.tree.tag_configure("pretrade", background="#E6E6FA", foreground="black")
         self.tree.tag_configure("unread", background="#ffcccc", foreground="black")
-        self.tree.tag_configure("no_research", background="#EDF16E", foreground="black")  # Light pink for missing deep research
+        self.tree.tag_configure("no_research", background="#EDF16E", foreground="black")  # Yellow for missing deep research
+        self.tree.tag_configure("new_deepresearch", background="#FF0000", foreground="white")  # Bright red for freshly generated deep research
 
         self.tree.bind("<<TreeviewSelect>>", self._on_row_click)
         self.tree.bind("<Double-Button-1>", self._on_double_click)
@@ -265,8 +269,22 @@ class WatchlistWidget(ttk.Frame):
 
             # 2. Background Tag
             row_tag = ""
+            # Check if deep research was generated today.
+            dr_date = row.get("deepresearch_date")
+            dr_is_new = False
+            if dr_date is not None:
+                try:
+                    if hasattr(dr_date, "date"):
+                        dr_is_new = dr_date.date() == today
+                    else:
+                        dr_is_new = dr_date == today
+                except Exception:
+                    pass
+
             if row.get("unread_log_count", 0) > 0:
                 row_tag = "unread"
+            elif dr_is_new and row["ticker"] not in self._dr_acknowledged:
+                row_tag = "new_deepresearch"
             elif row["is_holding"]:
                 row_tag = "holding"
             elif row["status"] == "Pre-Trade":
@@ -385,6 +403,12 @@ class WatchlistWidget(ttk.Frame):
         if sel:
             item = self.tree.item(sel[0])
             ticker = item["values"][0]
+
+            # Dismiss bright-red deep-research highlight on click.
+            if "new_deepresearch" in (item.get("tags") or ()):
+                self._dr_acknowledged.add(ticker)
+                self.tree.item(sel[0], tags=())
+
             self.on_select(ticker)
 
     def _on_double_click(self, event):
