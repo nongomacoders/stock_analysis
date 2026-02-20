@@ -10,9 +10,9 @@ Workflow:
   - Save response into stock_analysis.deepresearch (and deepresearch_date).
 
 Run examples (from repo root):
-  python scripts/generate_deepresearch_from_results.py --dry-run --limit 3
-  python scripts/generate_deepresearch_from_results.py --ticker NPN.JO --dry-run
-  python scripts/generate_deepresearch_from_results.py --limit 10
+  python gui/scripts/generate_deepresearch_from_results.py --dry-run --limit 3
+  python gui/scripts/generate_deepresearch_from_results.py --ticker ***.JO
+  python gui/scripts/generate_deepresearch_from_results.py --limit 10
 
 Notes:
 - Requires DB access (core.db.engine.DBEngine) and GOOGLE_API_KEY for Gemini.
