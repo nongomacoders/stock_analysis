@@ -1,0 +1,66 @@
+# ---- Python (general) ----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test / type / lint caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ---- OS / editor ----
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# ---- App-specific generated output ----
+# Generated analysis outputs (often large)
+/gui/results/
+
+# Runtime logs
+/gui/logs/
+*.log
+
+# Playwright auth state (contains session cookies/tokens)
+/gui/playwright_scraper/auth.json
+
+# ---- Local secrets / config ----
+.env
+.env.*
+!.env.example
+
+# ---- Local databases / dumps ----
+*.sqlite
+*.sqlite3
+*.db
+
+# Ignore database backups / exports if you generate them
+*pgbackup*.sql
+*backup*.sql
+
+# Local scratch / temp
+*.tmp
+*.bak
+*.swp
