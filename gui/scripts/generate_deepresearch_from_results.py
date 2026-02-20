@@ -10,9 +10,9 @@ Workflow:
   - Save response into stock_analysis.deepresearch (and deepresearch_date).
 
 Run examples (from repo root):
-  python gui/scripts/generate_deepresearch_from_results.py --dry-run --limit 3
-  python gui/scripts/generate_deepresearch_from_results.py --ticker NPN.JO --dry-run
-  python gui/scripts/generate_deepresearch_from_results.py --limit 10
+  python scripts/generate_deepresearch_from_results.py --dry-run --limit 3
+  python scripts/generate_deepresearch_from_results.py --ticker NPN.JO --dry-run
+  python scripts/generate_deepresearch_from_results.py --limit 10
 
 Notes:
 - Requires DB access (core.db.engine.DBEngine) and GOOGLE_API_KEY for Gemini.
@@ -546,7 +546,7 @@ async def _save_deepresearch(ticker: str, content: str) -> None:
 async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars: int | None) -> int:
     from scripts_standalone.results_scraper.watchlist import resolve_tickers_to_process
     from scripts_standalone.results_scraper.utils import sanitize_ticker
-    from modules.analysis.llm import query_ai
+    from modules.analysis.selector import managed_query_ai
 
     logger = logging.getLogger(__name__)
 
@@ -674,7 +674,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
                 display_name_prefix=f"{canon}-{int(time.time())}",
             )
         else:
-            response = await query_ai(llm_prompt)
+            response = await managed_query_ai("deep_research", llm_prompt)
         if not _validate_response(response, t, logger):
             continue
 

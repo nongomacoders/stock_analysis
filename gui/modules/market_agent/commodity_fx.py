@@ -11,8 +11,8 @@ async def run_market_data_update(mode: str = "all") -> int:
     Uses the same process/event loop as the market agent.
     """
     try:
-        # Ensure the GUI root (which contains `scripts_standalone/`) is on sys.path.
-        # This allows imports like `scripts_standalone.*` to work regardless of
+        # Ensure the GUI root (which contains `standalone_scripts/`) is on sys.path.
+        # This allows imports like `standalone_scripts.*` to work regardless of
         # whether the process was started from the repository root or elsewhere.
         _gui_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
         if _gui_root not in sys.path:

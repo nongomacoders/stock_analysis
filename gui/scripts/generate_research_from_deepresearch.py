@@ -80,7 +80,7 @@ async def _fetch_tickers_to_process(*, ticker: str | None, limit: int | None) ->
 
 
 async def run(*, ticker: str | None, limit: int | None, dry_run: bool) -> int:
-    from modules.analysis.llm import query_ai
+    from modules.analysis.selector import managed_query_ai
     from modules.analysis.prompts import build_research_prompt
     from modules.data.research import save_research_data
 
@@ -107,7 +107,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool) -> int:
             logger.info("Dry-run: would send %d chars to LLM", len(prompt))
             continue
 
-        response = await query_ai(prompt)
+        response = await managed_query_ai("research_extraction", prompt)
         if not response or response.strip().lower().startswith("error generating ai response"):
             logger.warning("LLM returned an error-like response for %s", t)
             continue

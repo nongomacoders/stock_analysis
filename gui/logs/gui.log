@@ -1,0 +1,54 @@
+2026-02-20 09:28:11,910 core.db.notifier INFO: Notifier: Started listening on channel 'daily_todos_changes'
+2026-02-20 09:28:11,990 core.db.notifier INFO: Notifier: Started listening on channel 'action_log_changes'
+2026-02-20 09:28:12,154 scripts.main INFO: Database pool initialized
+2026-02-20 09:28:12,154 scripts.main INFO: Notifier listener added
+2026-02-20 09:28:12,155 scripts.main INFO: AUTO_START_AGENT disabled; not starting market agent
+2026-02-20 09:28:17,291 scripts.main INFO: Selected: NPH.JO
+2026-02-20 09:28:17,469 components.deep_research_tab INFO: [DeepResearch] load_content called for NPH.JO, setting loading=True
+2026-02-20 09:28:17,470 components.deep_research_tab INFO: [DeepResearch] load_content complete for NPH.JO, setting loading=False
+2026-02-20 09:29:30,288 components.technical_analysis_window INFO: [TechAnalysis] Saving analysis: Entry=300.0, Target=465.0, Stop=260.0, IsLong=True
+2026-02-20 09:29:36,846 scripts.main INFO: Selected: WHL.JO
+2026-02-20 09:29:36,846 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: WHL.JO
+2026-02-20 09:29:37,043 components.deep_research_tab INFO: [DeepResearch] load_content called for WHL.JO, setting loading=True
+2026-02-20 09:29:37,044 components.deep_research_tab INFO: [DeepResearch] load_content complete for WHL.JO, setting loading=False
+2026-02-20 09:29:39,040 scripts.main INFO: Selected: ABG.JO
+2026-02-20 09:29:39,040 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: ABG.JO
+2026-02-20 09:29:39,128 components.deep_research_tab INFO: [DeepResearch] load_content called for ABG.JO, setting loading=True
+2026-02-20 09:29:39,128 components.deep_research_tab INFO: [DeepResearch] load_content complete for ABG.JO, setting loading=False
+2026-02-20 09:29:49,465 scripts.main INFO: Selected: WBC.JO
+2026-02-20 09:29:49,465 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: WBC.JO
+2026-02-20 09:29:50,138 components.deep_research_tab INFO: [DeepResearch] load_content called for WBC.JO, setting loading=True
+2026-02-20 09:29:50,140 components.deep_research_tab INFO: [DeepResearch] load_content complete for WBC.JO, setting loading=False
+2026-02-20 09:29:56,783 scripts.main INFO: Selected: LHC.JO
+2026-02-20 09:29:56,783 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: LHC.JO
+2026-02-20 09:29:57,045 components.deep_research_tab INFO: [DeepResearch] load_content called for LHC.JO, setting loading=True
+2026-02-20 09:29:57,046 components.deep_research_tab INFO: [DeepResearch] load_content complete for LHC.JO, setting loading=False
+2026-02-20 09:30:03,046 scripts.main INFO: Selected: AGL.JO
+2026-02-20 09:30:03,046 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: AGL.JO
+2026-02-20 09:30:03,178 components.deep_research_tab INFO: [DeepResearch] load_content called for AGL.JO, setting loading=True
+2026-02-20 09:30:03,179 components.deep_research_tab INFO: [DeepResearch] load_content complete for AGL.JO, setting loading=False
+2026-02-20 11:22:10,632 scripts.main INFO: Selected: INL.JO
+2026-02-20 11:22:10,634 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: INL.JO
+2026-02-20 11:22:12,004 components.deep_research_tab INFO: [DeepResearch] load_content called for INL.JO, setting loading=True
+2026-02-20 11:22:12,005 components.deep_research_tab INFO: [DeepResearch] load_content complete for INL.JO, setting loading=False
+2026-02-20 11:22:20,658 scripts.main INFO: Selected: LSK.JO
+2026-02-20 11:22:20,658 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: LSK.JO
+2026-02-20 11:22:20,935 components.deep_research_tab INFO: [DeepResearch] load_content called for LSK.JO, setting loading=True
+2026-02-20 11:22:20,935 components.deep_research_tab INFO: [DeepResearch] load_content complete for LSK.JO, setting loading=False
+2026-02-20 11:22:21,534 scripts.main INFO: Selected: SSW.JO
+2026-02-20 11:22:21,535 components.chart_window INFO: 
+[ChartWindow] Updating to ticker: SSW.JO
+2026-02-20 11:22:21,593 components.deep_research_tab INFO: [DeepResearch] load_content called for SSW.JO, setting loading=True
+2026-02-20 11:22:21,594 components.deep_research_tab INFO: [DeepResearch] load_content complete for SSW.JO, setting loading=False
+2026-02-20 11:51:10,398 scripts.main INFO: Closing application...
+2026-02-20 11:51:10,399 core.db.notifier WARNING: Notifier: Failed to release connection: Pool.release() received invalid connection: <PoolConnectionProxy <asyncpg.connection.Connection object at 0x0000025EFA10C320> 0x25efa101480> is not a member of this pool
+2026-02-20 11:51:10,405 core.db.notifier INFO: Notifier: Stopped listening on channel 'daily_todos_changes'
+2026-02-20 11:51:10,405 core.db.notifier WARNING: Notifier: Failed to release connection: Pool.release() received invalid connection: <PoolConnectionProxy <asyncpg.connection.Connection object at 0x0000025EFA10C6E0> 0x25ef8eff910> is not a member of this pool
+2026-02-20 11:51:10,405 core.db.notifier INFO: Notifier: Stopped listening on channel 'action_log_changes'

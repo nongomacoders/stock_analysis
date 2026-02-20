@@ -14,7 +14,7 @@ else:
     genai.configure(api_key=API_KEY)
 
 
-async def query_ai(prompt: str):
+async def query_ai(prompt: str, model: str = "gemini-3-flash-preview"):
     """Sends a prompt to Gemini and returns the text response asynchronously."""
     import time
     import asyncio
@@ -28,8 +28,8 @@ async def query_ai(prompt: str):
         logging.error("GOOGLE_API_KEY is missing or empty in query_ai")
         return "Error: GOOGLE_API_KEY not configured. Check your .env file."
 
-    # Using gemini-3-flash-preview as requested
-    model_name = "gemini-3-flash-preview"
+    # Use specified model
+    model_name = model
     
     # Attempt the call with retries and exponential backoff
     for attempt in range(3):

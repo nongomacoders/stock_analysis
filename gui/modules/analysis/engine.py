@@ -1,6 +1,5 @@
 from core.db.engine import DBEngine
-from modules.analysis.llm import query_ai
-from modules.analysis.openrouter_llm import query_ai as openrouter_query_ai
+from modules.analysis.selector import managed_query_ai
 from modules.analysis.prompts import (
     build_sens_prompt,
     build_price_prompt,
@@ -26,7 +25,7 @@ async def analyze_new_sens(ticker: str, content: str):
 
     # 2. Build Prompt & Query
     prompt = build_sens_prompt(row["research"], row["strategy"], content, current_price)
-    analysis = await openrouter_query_ai(prompt)
+    analysis = await managed_query_ai("sens", prompt)
 
     # 3. Extract significance from the response
     significance = None
@@ -57,7 +56,7 @@ async def analyze_price_change(ticker: str, new_price: float, level_hit: float):
     prompt = build_price_prompt(
         row["research"], row["strategy"], ticker, new_price, level_hit
     )
-    analysis = await query_ai(prompt)
+    analysis = await managed_query_ai("price_change", prompt)
 
     trigger = f"Price crossed {level_hit}c, closing at {new_price}c."
     await _save_log(ticker, "Price Level", trigger, analysis)
@@ -75,7 +74,7 @@ async def generate_master_research(ticker: str, deep_research=None):
     prompt = build_research_prompt(deep_research)
     logger.info("AI: Research prompt length for %s: %d characters", ticker, len(prompt))
     
-    result = await query_ai(prompt)
+    result = await managed_query_ai("research_summary", prompt)
     
     duration = time.time() - start_time
     logger.info("AI: Research generation for %s took %.2f seconds", ticker, duration)
@@ -152,7 +151,7 @@ async def estimate_spot_price(ticker: str):
     try:
         prompt = build_spot_price_prompt(deep, ticker, str(report_date), commodity_avgs, fx_avgs)
         logger.info("Spot price: querying AI for %s (report_date=%s)", ticker, report_date)
-        analysis = await query_ai(prompt)
+        analysis = await managed_query_ai("spot_price", prompt)
     except Exception:
         logger.exception("AI query failed for spot price %s", ticker)
         analysis = "Error generating AI response for spot price."
