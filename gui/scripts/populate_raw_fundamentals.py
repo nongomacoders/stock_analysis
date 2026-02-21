@@ -2,6 +2,10 @@ import asyncio
 import sys
 import os
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (now in project root)
+load_dotenv()
 
 # --- PATH FIX ---
 # This allows the script to import from 'core' and 'modules'

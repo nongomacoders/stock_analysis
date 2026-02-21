@@ -27,9 +27,13 @@ import hashlib
 import logging
 import sys
 import time
+import os
 from datetime import date
 from pathlib import Path
+from dotenv import load_dotenv
 
+# Load environment variables from .env file (now in project root)
+load_dotenv()
 
 def _ensure_repo_root_on_syspath() -> Path:
     """Allow running from either repo root or gui/ directory."""
@@ -437,7 +441,7 @@ def _query_ai_with_pdfs(*, prompt: str, pdf_paths: list[Path], display_name_pref
             op = client.operations.get(op)
 
     response = client.models.generate_content(
-        model="gemini-3-pro-preview",
+        model="gemini-3-flash-preview",#this is free and comparable to gemini 2.5 pro
         contents=prompt,
         config=types.GenerateContentConfig(
             tools=[

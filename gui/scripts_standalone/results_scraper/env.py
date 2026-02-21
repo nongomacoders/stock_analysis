@@ -14,8 +14,8 @@ class Credentials:
 
 
 def load_credentials(script_dir: Path) -> Credentials:
-    """Loads OST credentials from a `.env` file located next to the entry script."""
-    load_dotenv(dotenv_path=script_dir / ".env")
+    """Loads OST credentials from a `.env` file located in the project root."""
+    load_dotenv(dotenv_path=script_dir.parent.parent / ".env")
 
     username = os.getenv("OST_USERNAME")
     password = os.getenv("OST_PASSWORD")

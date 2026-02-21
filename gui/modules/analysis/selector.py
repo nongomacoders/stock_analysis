@@ -28,7 +28,7 @@ TASK_MAP = {
     },
     "deep_research": {
         "provider": "gemini",
-        "model": "gemini-3-pro-preview", # Using a strong gemini model for deep research
+        "model": "gemini-3-flash-preview", # free and comparable to gemini 2.5 pro, which is what we used for the original research generation; flash-preview is more cost-effective for research tasks that don't require the absolute best quality        
     },
 }
 

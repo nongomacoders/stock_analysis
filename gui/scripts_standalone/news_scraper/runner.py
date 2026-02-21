@@ -407,7 +407,7 @@ async def run(
             else:
                 logger.warning(
                     "Skipping login: OST_USERNAME/OST_PASSWORD not set (or placeholders). "
-                    "Create a .env next to the script with OST_USERNAME and OST_PASSWORD, or set env vars."
+                    "Create a .env in the project root with OST_USERNAME and OST_PASSWORD, or set env vars."
                 )
 
             logger.info(

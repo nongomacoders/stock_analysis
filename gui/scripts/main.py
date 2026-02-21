@@ -7,6 +7,10 @@ import sys
 import os
 import logging
 from logging import FileHandler
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (now in project root)
+load_dotenv()
 
 # Minimal, centralized logging configuration for the GUI application.
 # - Default level INFO, configurable via environment variable LOG_LEVEL.

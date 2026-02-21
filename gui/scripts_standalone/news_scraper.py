@@ -1,7 +1,7 @@
 """Standalone entrypoint for the News Playwright scraper.
 
 Run:
-  python "scripts_standalone/news_scraper.py" [--ticker TICKER] [--list-only] [--limit N]
+  python "gui/scripts_standalone/news_scraper.py" --ticker ***.JO
 
 Implementation lives in `scripts_standalone/news_scraper/`.
 """

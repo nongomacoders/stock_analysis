@@ -3,6 +3,10 @@ import sys
 import os
 import logging
 from logging import FileHandler
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (now in project root)
+load_dotenv()
 
 # Configure logging for the market_agent subprocess separately. We prefer
 # using the environment variable LOG_LEVEL to allow users to control verbosity

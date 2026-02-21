@@ -22,8 +22,12 @@ import argparse
 import asyncio
 import logging
 import sys
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+# Load environment variables from .env file (now in project root)
+load_dotenv()
 
 def _ensure_repo_root_on_syspath() -> Path:
     """Allow running from either repo root or gui/ directory."""

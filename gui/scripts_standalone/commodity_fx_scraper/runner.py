@@ -3,8 +3,12 @@ from __future__ import annotations
 import argparse
 import asyncio
 import logging
+import os
 from typing import List, Optional
+from dotenv import load_dotenv
 
+# Load environment variables from .env file (now in project root)
+load_dotenv()
 
 # DBEngine import (same fallback style used elsewhere in your project)
 def _try_import_dbengine():
