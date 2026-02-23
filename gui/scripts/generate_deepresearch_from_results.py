@@ -382,95 +382,96 @@ def _build_llm_prompt(
         + "\n"
     )
 
-
 def _query_ai_with_pdfs(*, prompt: str, pdf_paths: list[Path], display_name_prefix: str) -> str:
-    """Generate content using Gemini's file_search tool over uploaded PDFs.
-
-    Uses google-genai (google.genai) because it supports FileSearchStore + citations.
-    """
-
     from google import genai
     from google.genai import types
+    import requests, time, os,logging
+
+    # Fix NameError: Define logger inside function scope
+    logger = logging.getLogger(__name__)
 
     client = genai.Client()
+    API_KEY = os.getenv("GOOGLE_API_KEY")
+    STORE_ID = os.getenv("GEMINI_MASTER_STORE_ID")
+    BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 
-    store = client.file_search_stores.create(
-        config={"display_name": f"{display_name_prefix}-pdf-store"}
-    )
+    uploaded_file_names = []
+    import_ops = []
 
-    store_name = getattr(store, "name", None)
-    if not store_name:
-        raise RuntimeError("Failed to create file search store (missing name)")
-
-    operations = []
-    uploaded_file_names: list[str] = []
-
+    # 1. Upload & Import into the SINGLE PERMANENT store
     for pdf_path in pdf_paths:
-        # Resource name must be a slug; display_name can be the real filename for citations.
-        resource_name = _gemini_resource_name(
-            f"{display_name_prefix}-{pdf_path.stem}",
-            max_len=40,
-            fallback_prefix=display_name_prefix,
-        )
         uploaded = client.files.upload(
             file=str(pdf_path),
-            config={
-                "name": resource_name,
-                "display_name": pdf_path.name,
-            },
+            config={"display_name": pdf_path.name},
         )
-        uploaded_name = getattr(uploaded, "name", None)
-        if not uploaded_name:
-            raise RuntimeError(f"Failed to upload {pdf_path.name} (missing uploaded file name)")
+        if uploaded.name:
+            uploaded_file_names.append(uploaded.name)
+            op = client.file_search_stores.import_file(
+                file_search_store_name=STORE_ID,
+                file_name=uploaded.name,
+            )
+            import_ops.append(op)
 
-        uploaded_file_names.append(uploaded_name)
-
-        op = client.file_search_stores.import_file(
-            file_search_store_name=store_name,
-            file_name=uploaded_name,
-        )
-        operations.append(op)
-
-    # Wait for all imports to finish (bounded).
-    deadline = time.time() + 10 * 60
-    for op in operations:
+    # 2. Wait for all imports
+    for op in import_ops:
         while not op.done:
-            if time.time() > deadline:
-                raise TimeoutError("Timed out waiting for PDF import into file search store")
-            time.sleep(5)
+            time.sleep(2)
             op = client.operations.get(op)
 
-    response = client.models.generate_content(
-        model="gemini-3-flash-preview",#this is free and comparable to gemini 2.5 pro
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            tools=[
-                types.Tool(
-                    file_search=types.FileSearch(
-                        file_search_store_names=[store_name]
-                    )
-                )
-            ]
-        ),
-    )
-
-    # Best-effort: do not hard-fail if deletion APIs differ across versions.
-    # Keeping artifacts is acceptable; they are referenced by name for citations.
+    # 3. Query the Master Store
     try:
-        for n in uploaded_file_names:
+        response = client.models.generate_content(
+            model="gemini-3-flash-preview", 
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                tools=[types.Tool(file_search=types.FileSearch(
+                    file_search_store_names=[STORE_ID]
+                ))]
+            ),
+        )
+        return getattr(response, "text", "") or ""
+    finally:
+            logger.info(f"--- ANTIGRAVITY FORCE FLUSH: {STORE_ID} ---")
+            
+            # 1. Clean up Global Files (expire in 48h anyway, but good to be tidy)
+            for n in uploaded_file_names:
+                try:
+                    client.files.delete(name=n)
+                    logger.debug(f"  Deleted global file: {n}")
+                except Exception as e:
+                    logger.warning(f"  Failed to delete global file {n}: {e}")
+
+            # 2. Force Purge Internal Documents (The Quota Reclaimer)
+            # We use raw requests here to utilize the 'force=true' parameter
             try:
-                client.files.delete(name=n)
-            except Exception:
-                pass
-        try:
-            client.file_search_stores.delete(name=store_name)
-        except Exception:
-            pass
-    except Exception:
-        pass
+                params = {'key': API_KEY, 'force': 'true'}
+                list_url = f"{BASE_URL}/{STORE_ID}/documents"
+                
+                # Fetch the current list of internal documents
+                list_res = requests.get(list_url, params={'key': API_KEY})
+                if list_res.status_code == 200:
+                    docs_data = list_res.json()
+                    internal_docs = docs_data.get('documents', [])
+                    
+                    if not internal_docs:
+                        logger.info("  Store already empty. No documents to purge.")
+                    
+                    for doc in internal_docs:
+                        doc_name = doc['name']
+                        logger.info(f"  [FORCE] Purging document index: {doc_name}")
+                        
+                        del_res = requests.delete(f"{BASE_URL}/{doc_name}", params=params)
+                        if del_res.status_code in [200, 204]:
+                            logger.info(f"  ✅ Successfully purged: {doc_name}")
+                        else:
+                            logger.error(f"  ❌ Force purge failed for {doc_name}: {del_res.text}")
+                else:
+                    logger.error(f"  Could not list documents for flushing: {list_res.text}")
 
-    return getattr(response, "text", "") or ""
+            except Exception as cleanup_err:
+                logger.error(f"  CRITICAL: Cleanup loop encountered an exception: {cleanup_err}")
 
+            logger.info("--- FLUSH COMPLETE ---")
 
 _MIN_RESPONSE_CHARS = 500
 
