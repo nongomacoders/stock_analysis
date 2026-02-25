@@ -42,6 +42,12 @@ class ChartWindow(ttk.Toplevel):
                          child.configure(text=f"{self.ticker} - Historical Price Charts")
                          break
         
+        # Reset info labels
+        if hasattr(self, 'range_label'):
+            self.range_label.configure(text="Range: N/A")
+        if hasattr(self, 'price_val_label'):
+            self.price_val_label.configure(text="N/A")
+
         # Reload data for the new ticker
         logging.getLogger(__name__).debug("[ChartWindow] Triggering chart load.")
         self.load_charts()
@@ -55,6 +61,21 @@ class ChartWindow(ttk.Toplevel):
             text=f"{self.ticker} - Historical Price Charts",
             font=("Helvetica", 16, "bold"),
         ).pack()
+
+        # Info row (Range & Latest Price)
+        info_frame = ttk.Frame(self)
+        info_frame.pack(side=TOP, fill=X, padx=10, pady=(0, 10))
+        
+        # Centering the info frame content
+        inner_info = ttk.Frame(info_frame)
+        inner_info.pack(expand=True)
+        
+        self.range_label = ttk.Label(inner_info, text="Range: N/A", font=("Helvetica", 11))
+        self.range_label.pack(side=LEFT, padx=(0, 20))
+        
+        ttk.Label(inner_info, text="Latest Price: ", font=("Helvetica", 11)).pack(side=LEFT)
+        self.price_val_label = ttk.Label(inner_info, text="N/A", font=("Helvetica", 11, "bold"))
+        self.price_val_label.pack(side=LEFT)
 
         # Create Notebook for tabs
         self.notebook = ttk.Notebook(self, bootstyle="primary")
@@ -204,6 +225,10 @@ class ChartWindow(ttk.Toplevel):
                     except Exception:
                         pass
                     chart.plot(data, period_key)
+                    if period_key == "3M" and chart.df_display is not None:
+                        df = chart.df_display
+                        min_p, max_p = df["Low"].min(), df["High"].max()
+                        self.range_label.configure(text=f"Range: R{min_p:.2f} - R{max_p:.2f}")
 
             # Load metrics using fetched metrics
             self.load_metrics(metrics=result.get("metrics"))
@@ -239,9 +264,14 @@ class ChartWindow(ttk.Toplevel):
                         except Exception:
                             pass
                         chart.plot(data, period_key)
+                        if period_key == "3M" and chart.df_display is not None:
+                            df = chart.df_display
+                            min_p, max_p = df["Low"].min(), df["High"].max()
+                            self.range_label.configure(text=f"Range: R{min_p:.2f} - R{max_p:.2f}")
                 self.load_metrics()
             except Exception:
                 logging.getLogger(__name__).warning("[ChartWindow]   -> Failed to load charts (fallback): %s", exc_info=True)
+
     def load_metrics(self, metrics=None):
         """Load and display stock metrics. If metrics are provided, use them; otherwise fetch asynchronously."""
         # Clear existing items
@@ -264,6 +294,12 @@ class ChartWindow(ttk.Toplevel):
             # Current Price
             price = metrics.get('current_price')
             add_row("Current Price", price/100 if price else None, "R {:.2f}")
+            
+            # Update the top info label
+            if price:
+                self.price_val_label.configure(text=f"R {price/100:.2f}")
+            else:
+                self.price_val_label.configure(text="N/A")
 
             # P/E Ratio
             add_row("P/E Ratio", metrics.get('pe_ratio'), "{:.2f}")

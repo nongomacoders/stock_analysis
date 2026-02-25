@@ -109,6 +109,7 @@ async def save_research_data(ticker: str, content: str):
         raise
 
 
+
 async def save_deep_research_data(ticker: str, content: str):
     """Upsert deepresearch for a ticker (insert or update).
     
@@ -119,11 +120,42 @@ async def save_deep_research_data(ticker: str, content: str):
         raise ValueError(f"Cannot save empty deep research content for {ticker}")
     
     query = """
-        INSERT INTO stock_analysis (ticker, deepresearch)
-        VALUES ($1, $2)
-        ON CONFLICT (ticker) DO UPDATE SET deepresearch = EXCLUDED.deepresearch
+        INSERT INTO stock_analysis (ticker, deepresearch, deepresearch_date)
+        VALUES ($1, $2, CURRENT_DATE)
+        ON CONFLICT (ticker) DO UPDATE SET 
+            deepresearch = EXCLUDED.deepresearch,
+            deepresearch_date = EXCLUDED.deepresearch_date
     """
     await DBEngine.execute(query, ticker, content)
+
+
+async def get_latest_deepresearch_with_notes(limit=50):
+    """Fetch the latest deep research entries along with full names and notes."""
+    query = """
+        SELECT 
+            sa.ticker, 
+            sd.full_name,
+            sa.deepresearch_date, 
+            w.notes
+        FROM stock_analysis sa
+        LEFT JOIN stock_details sd ON sa.ticker = sd.ticker
+        LEFT JOIN watchlist w ON sa.ticker = w.ticker
+        WHERE sa.deepresearch IS NOT NULL AND sa.deepresearch != ''
+        ORDER BY sa.deepresearch_date DESC NULLS LAST, sa.ticker ASC
+        LIMIT $1
+    """
+    rows = await DBEngine.fetch(query, limit)
+    return [dict(row) for row in rows]
+
+
+async def save_watchlist_notes(ticker: str, notes: str):
+    """Update the notes for a given ticker in the watchlist."""
+    query = """
+        UPDATE watchlist 
+        SET notes = $1 
+        WHERE ticker = $2
+    """
+    await DBEngine.execute(query, notes, ticker)
 
 
 

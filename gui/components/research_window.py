@@ -90,6 +90,7 @@ class ResearchWindow(ttk.Toplevel):
         self.master_strategy_tab.ticker = ticker
         self.master_research_tab.ticker = ticker
         self.action_log_tab.ticker = ticker
+        self.sens_tab.ticker = ticker
 
         self.load_research()
 
@@ -124,7 +125,7 @@ class ResearchWindow(ttk.Toplevel):
         self.notebook.add(self.master_strategy_tab, text="Strategy")
         self.notebook.add(self.master_research_tab, text="Research")
 
-        self.sens_tab = SensTab(self.notebook)
+        self.sens_tab = SensTab(self.notebook, self.ticker, self.async_run, self.async_run_bg)
         self.notebook.add(self.sens_tab, text="SENS")
 
         self.action_log_tab = ActionLogTab(self.notebook, self.ticker, self.async_run, self.async_run_bg)
