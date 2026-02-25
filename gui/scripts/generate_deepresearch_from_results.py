@@ -552,6 +552,8 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
     from scripts_standalone.results_scraper.watchlist import resolve_tickers_to_process
     from scripts_standalone.results_scraper.utils import sanitize_ticker
     from modules.analysis.selector import managed_query_ai
+    from modules.analysis.engine import generate_master_research
+    from modules.data.research import save_research_data
 
     logger = logging.getLogger(__name__)
 
@@ -689,6 +691,18 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         except Exception:
             logger.exception("Failed to save deepresearch for %s", t)
             continue
+
+        # AUTOMATION: Trigger master research generation
+        try:
+            logger.info("Auto-triggering master research for %s...", t)
+            master_research = await generate_master_research(t, deep_research=response)
+            if master_research:
+                await save_research_data(t, master_research)
+                logger.info("Saved master research for %s (len=%d)", t, len(master_research))
+            else:
+                logger.warning("Master research generation returned empty for %s", t)
+        except Exception:
+            logger.exception("Failed to auto-generate master research for %s", t)
 
         # Clean up results folder now that deep research is saved.
         ticker_dir = results_root / canon
