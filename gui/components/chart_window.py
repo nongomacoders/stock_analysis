@@ -1,5 +1,17 @@
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import TOP, X, BOTH, NONE, W, E, VERTICAL, LEFT, RIGHT, Y, END
+from ttkbootstrap.constants import (
+    TOP,
+    X,
+    BOTH,
+    NONE,
+    W,
+    E,
+    VERTICAL,
+    LEFT,
+    RIGHT,
+    Y,
+    END,
+)
 import matplotlib.pyplot as plt
 import logging
 from datetime import date
@@ -30,23 +42,29 @@ class ChartWindow(ttk.Toplevel):
 
     def update_ticker(self, ticker):
         """Update the window with a new ticker"""
-        logging.getLogger(__name__).info("\n[ChartWindow] Updating to ticker: %s", ticker)
+        logging.getLogger(__name__).info(
+            "\n[ChartWindow] Updating to ticker: %s", ticker
+        )
         self.ticker = ticker
         self.title(f"{ticker} - Price Charts")
-        
+
         # Update title label
         for widget in self.winfo_children():
-            if isinstance(widget, ttk.Frame) and str(widget).endswith("frame"): # Find title frame
-                 for child in widget.winfo_children():
-                     if isinstance(child, ttk.Label):
-                         child.configure(text=f"{self.ticker} - Historical Price Charts")
-                         break
-        
+            if isinstance(widget, ttk.Frame) and str(widget).endswith(
+                "frame"
+            ):  # Find title frame
+                for child in widget.winfo_children():
+                    if isinstance(child, ttk.Label):
+                        child.configure(text=f"{self.ticker} - Historical Price Charts")
+                        break
+
         # Reset info labels
-        if hasattr(self, 'range_label'):
+        if hasattr(self, "range_label"):
             self.range_label.configure(text="Range: N/A")
-        if hasattr(self, 'price_val_label'):
+        if hasattr(self, "price_val_label"):
             self.price_val_label.configure(text="N/A")
+        if hasattr(self, "upside_label"):
+            self.upside_label.configure(text="")
 
         # Reload data for the new ticker
         logging.getLogger(__name__).debug("[ChartWindow] Triggering chart load.")
@@ -65,17 +83,28 @@ class ChartWindow(ttk.Toplevel):
         # Info row (Range & Latest Price)
         info_frame = ttk.Frame(self)
         info_frame.pack(side=TOP, fill=X, padx=10, pady=(0, 10))
-        
+
         # Centering the info frame content
         inner_info = ttk.Frame(info_frame)
         inner_info.pack(expand=True)
-        
-        self.range_label = ttk.Label(inner_info, text="Range: N/A", font=("Helvetica", 11))
+
+        self.range_label = ttk.Label(
+            inner_info, text="Range: N/A", font=("Helvetica", 11)
+        )
         self.range_label.pack(side=LEFT, padx=(0, 20))
-        
-        ttk.Label(inner_info, text="Latest Price: ", font=("Helvetica", 11)).pack(side=LEFT)
-        self.price_val_label = ttk.Label(inner_info, text="N/A", font=("Helvetica", 11, "bold"))
+
+        ttk.Label(inner_info, text="Latest Price: ", font=("Helvetica", 11)).pack(
+            side=LEFT
+        )
+        self.price_val_label = ttk.Label(
+            inner_info, text="N/A", font=("Helvetica", 11, "bold")
+        )
         self.price_val_label.pack(side=LEFT)
+
+        self.upside_label = ttk.Label(
+            inner_info, text="", font=("Helvetica", 22, "bold")
+        )
+        self.upside_label.pack(side=LEFT, padx=(10, 0))
 
         # Create Notebook for tabs
         self.notebook = ttk.Notebook(self, bootstyle="primary")
@@ -89,7 +118,7 @@ class ChartWindow(ttk.Toplevel):
         self.chart_tab.grid_rowconfigure(1, weight=1)
         self.chart_tab.grid_columnconfigure(0, weight=1)
         self.chart_tab.grid_columnconfigure(1, weight=1)
-        
+
         self.create_chart_widgets(self.chart_tab)
 
         # Metrics Tab
@@ -102,57 +131,61 @@ class ChartWindow(ttk.Toplevel):
         # Single Chart: 3 Months
         period_key = "3M"
         period_label = "3 Months"
-        
-        chart_frame = ttk.Labelframe(parent_frame, text=period_label, bootstyle="primary")
+
+        chart_frame = ttk.Labelframe(
+            parent_frame, text=period_label, bootstyle="primary"
+        )
         chart_frame.pack(fill=BOTH, expand=True, padx=5, pady=5)
-        
+
         chart_widget = BaseChart(chart_frame, period_label)
         chart_widget.pack(fill=BOTH, expand=True)
-        
+
         self.charts[period_key] = chart_widget
 
     def create_metrics_tab(self):
         """Create the metrics tab with key stock metrics"""
         frame = ttk.Frame(self.notebook)
-        
+
         # Create a container frame that will be centered
         center_container = ttk.Frame(frame)
         center_container.pack(expand=True, fill=NONE, padx=10, pady=10)
-        
+
         # Configure style for larger font
         style = ttk.Style()
         style.configure("Metrics.Treeview", font=("Helvetica", 14), rowheight=30)
         style.configure("Metrics.Treeview.Heading", font=("Helvetica", 15, "bold"))
-        
+
         # Create Treeview
         columns = ("metric", "value")
         self.metrics_tree = ttk.Treeview(
-            center_container, 
-            columns=columns, 
-            show="headings", 
+            center_container,
+            columns=columns,
+            show="headings",
             style="Metrics.Treeview",
-            height=10  # Set a reasonable height
+            height=10,  # Set a reasonable height
         )
-        
+
         # Define headings
         self.metrics_tree.heading("metric", text="Metric")
         self.metrics_tree.heading("value", text="Value")
-        
+
         # Define columns with fixed widths
         self.metrics_tree.column("metric", width=200, anchor=W)
         self.metrics_tree.column("value", width=150, anchor=E)
 
         # Highlight tags
         self.metrics_tree.tag_configure("soon_release", foreground="red")
-        
+
         # Add scrollbar
-        scrollbar = ttk.Scrollbar(center_container, orient=VERTICAL, command=self.metrics_tree.yview)
+        scrollbar = ttk.Scrollbar(
+            center_container, orient=VERTICAL, command=self.metrics_tree.yview
+        )
         self.metrics_tree.configure(yscrollcommand=scrollbar.set)
-        
+
         # Pack side-by-side in the centered container
         self.metrics_tree.pack(side=LEFT, fill=Y)
         scrollbar.pack(side=RIGHT, fill=Y)
-        
+
         return frame
 
     def load_charts(self):
@@ -186,20 +219,28 @@ class ChartWindow(ttk.Toplevel):
                         saved_levels.append((price_r, "blue", f"Entry: R{price_r:.2f}"))
                     if raw_stop is not None:
                         price_r = float(raw_stop) / 100.0
-                        saved_levels.append((price_r, "red", f"Stop Loss: R{price_r:.2f}"))
+                        saved_levels.append(
+                            (price_r, "red", f"Stop Loss: R{price_r:.2f}")
+                        )
                     if raw_target is not None:
                         price_r = float(raw_target) / 100.0
-                        saved_levels.append((price_r, "green", f"Target: R{price_r:.2f}"))
+                        saved_levels.append(
+                            (price_r, "green", f"Target: R{price_r:.2f}")
+                        )
 
                     for p in raw_supports:
                         if p is not None:
                             price_r = float(p) / 100.0
-                            saved_levels.append((price_r, "green", f"Support: R{price_r:.2f}"))
+                            saved_levels.append(
+                                (price_r, "green", f"Support: R{price_r:.2f}")
+                            )
 
                     for p in raw_resistances:
                         if p is not None:
                             price_r = float(p) / 100.0
-                            saved_levels.append((price_r, "red", f"Resistance: R{price_r:.2f}"))
+                            saved_levels.append(
+                                (price_r, "red", f"Resistance: R{price_r:.2f}")
+                            )
             except Exception:
                 saved_levels = []
 
@@ -212,10 +253,23 @@ class ChartWindow(ttk.Toplevel):
             # Fetch metrics
             metrics = await get_stock_metrics(self.ticker)
 
-            return {"saved_levels": saved_levels, "periods": period_results, "metrics": metrics}
+            return {
+                "saved_levels": saved_levels,
+                "periods": period_results,
+                "metrics": metrics,
+            }
 
         def _on_loaded(result):
             saved_levels = result.get("saved_levels", [])
+            target_price = None
+            entry_price = None
+
+            for level in saved_levels:
+                if "Target" in level[2]:
+                    target_price = level[0]
+                elif "Entry" in level[2]:
+                    entry_price = level[0]
+
             for period_key, data in result.get("periods", {}).items():
                 chart = self.charts.get(period_key)
                 if chart:
@@ -228,7 +282,27 @@ class ChartWindow(ttk.Toplevel):
                     if period_key == "3M" and chart.df_display is not None:
                         df = chart.df_display
                         min_p, max_p = df["Low"].min(), df["High"].max()
-                        self.range_label.configure(text=f"Range: R{min_p:.2f} - R{max_p:.2f}")
+                        self.range_label.configure(
+                            text=f"Range: R{min_p:.2f} - R{max_p:.2f}"
+                        )
+
+                        current_price = df["Close"].iloc[-1]
+                        if target_price and target_price > current_price:
+                            upside = (
+                                (target_price - current_price) / current_price
+                            ) * 100
+                            self.upside_label.configure(
+                                text=f"↑{upside:.1f}% upside", foreground="green"
+                            )
+                        elif entry_price and current_price < entry_price:
+                            downside = (
+                                (entry_price - current_price) / entry_price
+                            ) * 100
+                            self.upside_label.configure(
+                                text=f"↓{downside:.1f}% downside", foreground="red"
+                            )
+                        else:
+                            self.upside_label.configure(text="")
 
             # Load metrics using fetched metrics
             self.load_metrics(metrics=result.get("metrics"))
@@ -267,10 +341,15 @@ class ChartWindow(ttk.Toplevel):
                         if period_key == "3M" and chart.df_display is not None:
                             df = chart.df_display
                             min_p, max_p = df["Low"].min(), df["High"].max()
-                            self.range_label.configure(text=f"Range: R{min_p:.2f} - R{max_p:.2f}")
+                            self.range_label.configure(
+                                text=f"Range: R{min_p:.2f} - R{max_p:.2f}"
+                            )
                 self.load_metrics()
             except Exception:
-                logging.getLogger(__name__).warning("[ChartWindow]   -> Failed to load charts (fallback): %s", exc_info=True)
+                logging.getLogger(__name__).warning(
+                    "[ChartWindow]   -> Failed to load charts (fallback): %s",
+                    exc_info=True,
+                )
 
     def load_metrics(self, metrics=None):
         """Load and display stock metrics. If metrics are provided, use them; otherwise fetch asynchronously."""
@@ -280,48 +359,56 @@ class ChartWindow(ttk.Toplevel):
 
         def _render_metrics(metrics):
             if not metrics:
-                self.metrics_tree.insert("", END, values=("Status", "No metrics data available"))
+                self.metrics_tree.insert(
+                    "", END, values=("Status", "No metrics data available")
+                )
                 return
 
             # Helper to format and insert
             def add_row(label, value, fmt="{}", tags=None):
                 display_val = fmt.format(value) if value is not None else "N/A"
                 if tags:
-                    self.metrics_tree.insert("", END, values=(label, display_val), tags=tags)
+                    self.metrics_tree.insert(
+                        "", END, values=(label, display_val), tags=tags
+                    )
                 else:
                     self.metrics_tree.insert("", END, values=(label, display_val))
 
             # Current Price
-            price = metrics.get('current_price')
-            add_row("Current Price", price/100 if price else None, "R {:.2f}")
-            
+            price = metrics.get("current_price")
+            add_row("Current Price", price / 100 if price else None, "R {:.2f}")
+
             # Update the top info label
             if price:
-                self.price_val_label.configure(text=f"R {price/100:.2f}")
+                self.price_val_label.configure(text=f"R {price / 100:.2f}")
             else:
                 self.price_val_label.configure(text="N/A")
 
             # P/E Ratio
-            add_row("P/E Ratio", metrics.get('pe_ratio'), "{:.2f}")
+            add_row("P/E Ratio", metrics.get("pe_ratio"), "{:.2f}")
 
             # Dividend Yield
-            add_row("Dividend Yield", metrics.get('div_yield_perc'), "{:.2f}%")
+            add_row("Dividend Yield", metrics.get("div_yield_perc"), "{:.2f}%")
 
             # PEG Ratio (Historical)
-            add_row("PEG Ratio (Hist)", metrics.get('peg_ratio_historical'), "{:.2f}")
+            add_row("PEG Ratio (Hist)", metrics.get("peg_ratio_historical"), "{:.2f}")
 
             # Graham Fair Value
-            gfv = metrics.get('graham_fair_value')
-            add_row("Graham Fair Value", gfv/100 if gfv else None, "R {:.2f}")
+            gfv = metrics.get("graham_fair_value")
+            add_row("Graham Fair Value", gfv / 100 if gfv else None, "R {:.2f}")
 
             # Valuation Premium
-            add_row("Valuation Premium", metrics.get('valuation_premium_perc'), "{:.2f}%")
+            add_row(
+                "Valuation Premium", metrics.get("valuation_premium_perc"), "{:.2f}%"
+            )
 
             # Historical Growth CAGR
-            add_row("Hist. Growth CAGR", metrics.get('historical_growth_cagr'), "{:.2f}%")
-            
+            add_row(
+                "Hist. Growth CAGR", metrics.get("historical_growth_cagr"), "{:.2f}%"
+            )
+
             # Financials Date
-            add_row("Financials Date", metrics.get('financials_date'), "{}")
+            add_row("Financials Date", metrics.get("financials_date"), "{}")
 
         if metrics is not None:
             _render_metrics(metrics)
@@ -330,8 +417,10 @@ class ChartWindow(ttk.Toplevel):
         # Fetch metrics asynchronously
         try:
             # Prefer background runner if available
-            if hasattr(self, 'async_run_bg') and self.async_run_bg:
-                self.async_run_bg(get_stock_metrics(self.ticker), callback=_render_metrics)
+            if hasattr(self, "async_run_bg") and self.async_run_bg:
+                self.async_run_bg(
+                    get_stock_metrics(self.ticker), callback=_render_metrics
+                )
             else:
                 # Fallback to synchronous fetch if background runner is not available
                 metrics = self.async_run(get_stock_metrics(self.ticker))

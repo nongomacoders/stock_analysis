@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import TOP, X, HORIZONTAL, BOTH, VERTICAL, LEFT, RIGHT, Y, WORD, END, NORMAL, DISABLED
 from modules.analysis.engine import analyze_new_sens
+from modules.analysis.sens_processor import process_sens_for_deepresearch
 from components.button_utils import run_bg_with_button
 
 
@@ -29,6 +30,15 @@ class SensTab(ttk.Frame):
             state=DISABLED
         )
         self.analyze_btn.pack(side=LEFT, padx=5)
+
+        self.deep_research_btn = ttk.Button(
+            toolbar,
+            text="Create DeepResearch from SENS",
+            bootstyle="info",
+            command=self.on_deep_research_clicked,
+            state=DISABLED
+        )
+        self.deep_research_btn.pack(side=LEFT, padx=5)
 
         paned = ttk.Panedwindow(self, orient=HORIZONTAL)
         paned.pack(fill=BOTH, expand=True, padx=5, pady=5)
@@ -71,6 +81,7 @@ class SensTab(ttk.Frame):
         self.sens_map.clear()
         self.current_selection_content = None
         self.analyze_btn.config(state=DISABLED)
+        self.deep_research_btn.config(state=DISABLED)
 
         self.text_widget.config(state=NORMAL)
         self.text_widget.delete("1.0", END)
@@ -93,6 +104,7 @@ class SensTab(ttk.Frame):
         if not selection:
             self.current_selection_content = None
             self.analyze_btn.config(state=DISABLED)
+            self.deep_research_btn.config(state=DISABLED)
             return
 
         item_id = selection[0]
@@ -101,10 +113,12 @@ class SensTab(ttk.Frame):
         if not content:
             self.current_selection_content = None
             self.analyze_btn.config(state=DISABLED)
+            self.deep_research_btn.config(state=DISABLED)
             return
 
         self.current_selection_content = content
         self.analyze_btn.config(state=NORMAL)
+        self.deep_research_btn.config(state=NORMAL)
 
         self.text_widget.config(state=NORMAL)
         self.text_widget.delete("1.0", END)
@@ -121,4 +135,14 @@ class SensTab(ttk.Frame):
             self.analyze_btn,
             self.async_run_bg,
             analyze_new_sens(self.ticker, self.current_selection_content)
+        )
+    def on_deep_research_clicked(self):
+        """Saves current SENS to results/ticker and runs deep research."""
+        if not self.current_selection_content or not self.ticker:
+            return
+
+        run_bg_with_button(
+            self.deep_research_btn,
+            self.async_run_bg,
+            process_sens_for_deepresearch(self.ticker, self.current_selection_content)
         )

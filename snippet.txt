@@ -1,0 +1,6 @@
+﻿        # Fallback: run synchronously on event loop and show result
+        try:
+            res = self.async_run(estimate_spot_price(self.ticker))
+            Messagebox.show_info("Share Price at Spot", res or "(no result)", parent=self)
+        except Exception:
+            logger.exception("Failed to compute or show spot price")

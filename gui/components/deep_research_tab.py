@@ -1,5 +1,6 @@
-from modules.data.research import save_deep_research_data
+﻿from modules.data.research import save_deep_research_data
 from components.base_text_tab import BaseTextTab
+from scripts.generate_deepresearch_from_results import run as run_deepresearch
 import logging
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import RIGHT
@@ -31,6 +32,18 @@ class DeepResearchTab(BaseTextTab):
             self.spot_btn.pack(side=RIGHT, padx=5)
         except Exception:
             logger.exception("Failed to create spot price button")
+
+        # Add 'Rerun DeepResearch' button to the toolbar
+        try:
+            self.rerun_btn = ttk.Button(
+                self.toolbar,
+                text="Rerun AI DeepResearch",
+                bootstyle="success",
+                command=self._on_rerun_clicked,
+            )
+            self.rerun_btn.pack(side=RIGHT, padx=5)
+        except Exception:
+            logger.exception("Failed to create rerun deepresearch button")
 
     def save_content(self):
         """Saves the content of the text widget to the database."""
@@ -121,3 +134,22 @@ class DeepResearchTab(BaseTextTab):
             Messagebox.show_info("Share Price at Spot", res or "(no result)", parent=self)
         except Exception:
             logger.exception("Failed to compute or show spot price")
+
+    def _on_rerun_clicked(self):
+        """Handler for the 'Rerun AI DeepResearch' button.
+
+        Triggers the generate_deepresearch_from_results script for the current ticker.
+        """
+        if not self.ticker:
+            return
+
+        if hasattr(self, "async_run_bg") and self.async_run_bg:
+            run_bg_with_button(
+                self.rerun_btn,
+                self.async_run_bg,
+                run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000)
+            )
+        else:
+            self.async_run(run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000))
+
+

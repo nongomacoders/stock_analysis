@@ -382,96 +382,139 @@ def _build_llm_prompt(
         + "\n"
     )
 
-def _query_ai_with_pdfs(*, prompt: str, pdf_paths: list[Path], display_name_prefix: str) -> str:
+
+def _query_ai_with_pdfs(
+    *, prompt: str, pdf_paths: list[Path], display_name_prefix: str
+) -> str:
+    import logging
+    import requests
+    import time
+    import os
     from google import genai
     from google.genai import types
-    import requests, time, os,logging
 
-    # Fix NameError: Define logger inside function scope
     logger = logging.getLogger(__name__)
-
     client = genai.Client()
     API_KEY = os.getenv("GOOGLE_API_KEY")
-    STORE_ID = os.getenv("GEMINI_MASTER_STORE_ID")
     BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 
+    # Initialize variables at the top so 'finally' can always see them
+    store_name = None
     uploaded_file_names = []
-    import_ops = []
+    response_text = ""
 
-    # 1. Upload & Import into the SINGLE PERMANENT store
-    for pdf_path in pdf_paths:
-        uploaded = client.files.upload(
-            file=str(pdf_path),
-            config={"display_name": pdf_path.name},
-        )
-        if uploaded.name:
-            uploaded_file_names.append(uploaded.name)
-            op = client.file_search_stores.import_file(
-                file_search_store_name=STORE_ID,
-                file_name=uploaded.name,
-            )
-            import_ops.append(op)
-
-    # 2. Wait for all imports
-    for op in import_ops:
-        while not op.done:
-            time.sleep(2)
-            op = client.operations.get(op)
-
-    # 3. Query the Master Store
-    try:
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview", 
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                tools=[types.Tool(file_search=types.FileSearch(
-                    file_search_store_names=[STORE_ID]
-                ))]
-            ),
-        )
-        return getattr(response, "text", "") or ""
-    finally:
-            logger.info(f"--- ANTIGRAVITY FORCE FLUSH: {STORE_ID} ---")
-            
-            # 1. Clean up Global Files (expire in 48h anyway, but good to be tidy)
-            for n in uploaded_file_names:
-                try:
-                    client.files.delete(name=n)
-                    logger.debug(f"  Deleted global file: {n}")
-                except Exception as e:
-                    logger.warning(f"  Failed to delete global file {n}: {e}")
-
-            # 2. Force Purge Internal Documents (The Quota Reclaimer)
-            # We use raw requests here to utilize the 'force=true' parameter
+    def scorched_earth_purge():
+        """The Infinite Loop Purge with a deletion counter."""
+        logger.info("🧨 SEARCH & DESTROY: Purging all project stores...")
+        total_deleted = 0
+        while True:
             try:
-                params = {'key': API_KEY, 'force': 'true'}
-                list_url = f"{BASE_URL}/{STORE_ID}/documents"
-                
-                # Fetch the current list of internal documents
-                list_res = requests.get(list_url, params={'key': API_KEY})
-                if list_res.status_code == 200:
-                    docs_data = list_res.json()
-                    internal_docs = docs_data.get('documents', [])
-                    
-                    if not internal_docs:
-                        logger.info("  Store already empty. No documents to purge.")
-                    
-                    for doc in internal_docs:
-                        doc_name = doc['name']
-                        logger.info(f"  [FORCE] Purging document index: {doc_name}")
-                        
-                        del_res = requests.delete(f"{BASE_URL}/{doc_name}", params=params)
-                        if del_res.status_code in [200, 204]:
-                            logger.info(f"  ✅ Successfully purged: {doc_name}")
-                        else:
-                            logger.error(f"  ❌ Force purge failed for {doc_name}: {del_res.text}")
-                else:
-                    logger.error(f"  Could not list documents for flushing: {list_res.text}")
+                res = requests.get(
+                    f"{BASE_URL}/fileSearchStores", params={"key": API_KEY}
+                )
+                stores = res.json().get("fileSearchStores", [])
 
-            except Exception as cleanup_err:
-                logger.error(f"  CRITICAL: Cleanup loop encountered an exception: {cleanup_err}")
+                if not stores:
+                    if total_deleted > 0:
+                        logger.info(
+                            f"✨ Purge complete. Total stores deleted: {total_deleted}"
+                        )
+                    else:
+                        logger.info("✨ Project was already 100% clean.")
+                    break
 
-            logger.info("--- FLUSH COMPLETE ---")
+                for store in stores:
+                    s_name = store["name"]
+                    # 1. Force Purge internal docs
+                    docs_res = requests.get(
+                        f"{BASE_URL}/{s_name}/documents", params={"key": API_KEY}
+                    )
+                    for doc in docs_res.json().get("documents", []):
+                        requests.delete(
+                            f"{BASE_URL}/{doc['name']}",
+                            params={"key": API_KEY, "force": "true"},
+                        )
+
+                    # 2. Delete the container
+                    del_res = requests.delete(
+                        f"{BASE_URL}/{s_name}", params={"key": API_KEY}
+                    )
+                    if del_res.status_code in [200, 204]:
+                        total_deleted += 1
+
+                time.sleep(1)
+            except Exception as e:
+                logger.error(f"Purge error: {e}")
+                break
+
+    # --- PHASE 1: PRE-FLIGHT PURGE ---
+    scorched_earth_purge()
+
+    # --- WRAP EVERYTHING IN ONE TRY BLOCK ---
+    try:
+        # PHASE 2: FRESH START
+        store = client.file_search_stores.create(
+            config={"display_name": f"tmp-{display_name_prefix}"}
+        )
+        store_name = store.name
+
+        # PHASE 3: UPLOAD & IMPORT
+        import_ops = []
+        for pdf_path in pdf_paths:
+            try:
+                uploaded = client.files.upload(
+                    file=str(pdf_path), config={"display_name": pdf_path.name}
+                )
+                if uploaded.name:
+                    uploaded_file_names.append(uploaded.name)
+                    op = client.file_search_stores.import_file(
+                        file_search_store_name=store_name, file_name=uploaded.name
+                    )
+                    import_ops.append(op)
+            except Exception as e:
+                logger.error(f"Upload failed for {pdf_path}: {e}")
+
+        for op in import_ops:
+            while not op.done:
+                time.sleep(2)
+                op = client.operations.get(op)
+
+        # PHASE 4: QUERY
+        try:
+            response = client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    tools=[
+                        types.Tool(
+                            file_search=types.FileSearch(
+                                file_search_store_names=[store_name]
+                            )
+                        )
+                    ]
+                ),
+            )
+            response_text = getattr(response, "text", "") or ""
+        except Exception as e:
+            logger.error(f"LLM Query failed: {e}")
+
+    except Exception as e:
+        logger.error(f"Main execution block failed: {e}")
+
+    # --- PHASE 5: FINAL SCORCHED EARTH ---
+    finally:
+        # 1. Clean up the global file objects
+        for n in uploaded_file_names:
+            try:
+                client.files.delete(name=n)
+            except:
+                pass
+
+        # 2. Run the infinite loop purge
+        scorched_earth_purge()
+
+    return response_text
+
 
 _MIN_RESPONSE_CHARS = 500
 
