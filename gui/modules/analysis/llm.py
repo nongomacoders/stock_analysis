@@ -15,48 +15,78 @@ else:
 
 
 async def query_ai(prompt: str, model: str = "gemini-3-flash-preview"):
-    """Sends a prompt to Gemini and returns the text response asynchronously."""
+    """
+    Sends a prompt to Gemini via Vertex AI only and returns the full response object.
+    
+    Args:
+        prompt: The text prompt to send.
+        model: The Gemini model ID to use (e.g., 'gemini-3-flash-preview').
+        
+    Returns:
+        The GenerativeModel response object or an error string.
+    """
     import time
     import asyncio
     import os
     from google.api_core import exceptions as google_exceptions
+    from google import genai
+    
     start_time = time.time()
     
-    # Ensure API key is present
-    api_key = os.getenv("GOOGLE_API_KEY")
-    if not api_key:
-        logging.error("GOOGLE_API_KEY is missing or empty in query_ai")
-        return "Error: GOOGLE_API_KEY not configured. Check your .env file."
-
-    # Use specified model
-    model_name = model
+    # 1. Check Vertex Credentials
+    project_id = os.getenv("VERTEX_PROJECT_ID")
+    location = os.getenv("VERTEX_LOCATION", "global")
     
+    if not project_id:
+        logging.error("VERTEX_PROJECT_ID is missing from .env")
+        return "Error: Vertex AI not configured. Check your .env file."
+
     # Attempt the call with retries and exponential backoff
     for attempt in range(3):
         try:
-            logging.info("Querying AI model: %s (Prompt length: %d, Attempt: %d)", model_name, len(prompt), attempt + 1)
+            logging.info("Querying Vertex AI model: %s (Prompt length: %d, Attempt: %d)", model, len(prompt), attempt + 1)
             
-            # Use default configuration
-            genai.configure(api_key=api_key)
-            model = genai.GenerativeModel(model_name)
+            # Use the google-genai Vertex AI Client
+            # Note: Uses GOOGLE_APPLICATION_CREDENTIALS for auth
+            client = genai.Client(
+                vertexai=True, 
+                project=project_id, 
+                location=location
+            )
             
-            # Use generate_content_async with a substantial timeout
-            # We wrap it carefully to handle the case where the SDK might return a non-awaitable
-            request = model.generate_content_async(prompt)
+            # Vertex endpoints require the full publisher path
+            v_model = f"publishers/google/models/{model}"
             
-            if not asyncio.iscoroutine(request) and not hasattr(request, "__await__"):
-                logging.error("SDK Error: generate_content_async returned a non-awaitable %s", type(request))
-                # Fallback to sync if needed, but this should not happen with gRPC
-                response = request
-            else:
-                response = await asyncio.wait_for(request, timeout=120.0)
+            # Run the synchronous client call in a thread to keep the event loop responsive
+            response = await asyncio.wait_for(
+                asyncio.to_thread(client.models.generate_content, model=v_model, contents=prompt),
+                timeout=120.0
+            )
             
             duration = time.time() - start_time
             logging.info("AI response received in %.2f seconds", duration)
             
-            return response.text
+            return response
 
         except asyncio.TimeoutError:
+            duration = time.time() - start_time
+            logging.error("Vertex query timed out after %.2f seconds", duration)
+            if attempt < 2:
+                logging.info("Retrying after timeout...")
+                continue
+            return "Error: Vertex AI generation timed out."
+
+        except Exception as e:
+            duration = time.time() - start_time
+            logging.exception("Vertex AI ERROR after %.2f seconds: %s", duration, e)
+            
+            if attempt < 2:
+                wait_time = (attempt + 1) * 2
+                logging.info("Retrying in %ds...", wait_time)
+                await asyncio.sleep(wait_time)
+                continue
+            
+            return f"Error generating Vertex AI response: {e}"
             duration = time.time() - start_time
             logging.error("AI query timed out after %.2f seconds", duration)
             if attempt < 2:

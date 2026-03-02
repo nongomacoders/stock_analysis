@@ -31,6 +31,7 @@ import os
 from datetime import date
 from pathlib import Path
 from dotenv import load_dotenv
+from matplotlib import ticker
 
 # Load environment variables from .env file (now in project root)
 load_dotenv()
@@ -62,6 +63,47 @@ def _normalize_category(value: str) -> str:
     v = "_".join([p for p in v.split() if p])
     v = v.replace("__", "_")
     return v.strip("_")
+
+
+async def log_ai_cost(ticker, model_name, usage, display_name="manual_call"):
+    """
+    Unified helper to log costs to the ai_cost_log table.
+    Usage rates based on Gemini 3 Flash Preview (Feb 2026).
+    """
+    from core.db.engine import DBEngine
+
+    if not usage:
+        return
+
+    p_tokens = usage.prompt_token_count
+    c_tokens = usage.candidates_token_count
+
+    # Pricing: $0.50 per 1M in, $3.00 per 1M out
+    in_cost = (p_tokens / 1_000_000) * 0.50
+    out_cost = (c_tokens / 1_000_000) * 3.00
+    total = in_cost + out_cost
+
+    q = """
+        INSERT INTO ai_cost_log 
+        (ticker, model_name, prompt_tokens, completion_tokens, input_cost_usd, output_cost_usd, total_cost_usd, display_name_prefix)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    """
+    try:
+        await DBEngine.execute(
+            q,
+            ticker,
+            model_name,
+            p_tokens,
+            c_tokens,
+            in_cost,
+            out_cost,
+            total,
+            display_name,
+        )
+    except Exception as e:
+        import logging
+
+        logging.getLogger(__name__).error(f"Failed to log AI cost for {ticker}: {e}")
 
 
 def _select_prompt_file(prompts_dir: Path, category: str | None) -> Path:
@@ -268,48 +310,6 @@ def _find_result_pdfs(results_root: Path, canon_ticker: str) -> list[Path]:
         return []
     return sorted([p for p in ticker_dir.glob("*.pdf") if p.is_file()])
 
-
-def _gemini_file_name_slug(value: str) -> str:
-    """Create a Gemini file resource name slug.
-
-    Constraint from API error:
-    - lowercase alphanumeric or dashes
-    - cannot begin or end with a dash
-    """
-
-    raw = (value or "").strip().lower()
-    out: list[str] = []
-    prev_dash = False
-    for ch in raw:
-        if ch.isalnum():
-            out.append(ch)
-            prev_dash = False
-        else:
-            if not prev_dash:
-                out.append("-")
-                prev_dash = True
-    slug = "".join(out).strip("-")
-    return slug or "file"
-
-
-def _gemini_resource_name(raw: str, *, max_len: int = 40, fallback_prefix: str = "file") -> str:
-    """Return a Gemini Files API resource name (File ID) within the API constraints.
-
-    Constraint (from API error): file name (ID, excluding 'files/') must be <= 40 chars.
-    Also must be lowercase alphanumeric or dashes, and cannot start/end with a dash.
-    """
-
-    slug = _gemini_file_name_slug(raw)
-    if len(slug) <= max_len:
-        return slug
-
-    # Keep stable uniqueness while staying short.
-    digest = hashlib.sha1(raw.encode("utf-8", errors="ignore")).hexdigest()[:12]
-    prefix = _gemini_file_name_slug(fallback_prefix)[: max(1, max_len - (1 + len(digest)))]
-    out = f"{prefix}-{digest}".strip("-")
-    return out[:max_len].strip("-") or digest
-
-
 def _build_llm_prompt(
     prompt_template: str,
     *,
@@ -387,131 +387,66 @@ def _query_ai_with_pdfs(
     *, prompt: str, pdf_paths: list[Path], display_name_prefix: str
 ) -> str:
     import logging
-    import requests
-    import time
     import os
     from google import genai
     from google.genai import types
 
     logger = logging.getLogger(__name__)
-    client = genai.Client()
-    API_KEY = os.getenv("GOOGLE_API_KEY")
-    BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 
-    # Initialize variables at the top so 'finally' can always see them
-    store_name = None
-    uploaded_file_names = []
+    # --- INITIALIZE VERTEX CLIENT ---
+    # These must be set in your .env file
+    PROJECT_ID = os.getenv("VERTEX_PROJECT_ID")
+    LOCATION = os.getenv("VERTEX_LOCATION", "us-central1")
+
+    # Preferred model from your saved context
+    target_model = "publishers/google/models/gemini-3-flash-preview"
+
+    # CRITICAL: We do NOT pass api_key here when vertexai=True.
+    # The SDK will automatically use the JSON key pointed to by
+    # the GOOGLE_APPLICATION_CREDENTIALS environment variable.
+    client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
+
     response_text = ""
 
-    def scorched_earth_purge():
-        """The Infinite Loop Purge with a deletion counter."""
-        logger.info("🧨 SEARCH & DESTROY: Purging all project stores...")
-        total_deleted = 0
-        while True:
-            try:
-                res = requests.get(
-                    f"{BASE_URL}/fileSearchStores", params={"key": API_KEY}
-                )
-                stores = res.json().get("fileSearchStores", [])
-
-                if not stores:
-                    if total_deleted > 0:
-                        logger.info(
-                            f"✨ Purge complete. Total stores deleted: {total_deleted}"
-                        )
-                    else:
-                        logger.info("✨ Project was already 100% clean.")
-                    break
-
-                for store in stores:
-                    s_name = store["name"]
-                    # 1. Force Purge internal docs
-                    docs_res = requests.get(
-                        f"{BASE_URL}/{s_name}/documents", params={"key": API_KEY}
-                    )
-                    for doc in docs_res.json().get("documents", []):
-                        requests.delete(
-                            f"{BASE_URL}/{doc['name']}",
-                            params={"key": API_KEY, "force": "true"},
-                        )
-
-                    # 2. Delete the container
-                    del_res = requests.delete(
-                        f"{BASE_URL}/{s_name}", params={"key": API_KEY}
-                    )
-                    if del_res.status_code in [200, 204]:
-                        total_deleted += 1
-
-                time.sleep(1)
-            except Exception as e:
-                logger.error(f"Purge error: {e}")
-                break
-
-    # --- PHASE 1: PRE-FLIGHT PURGE ---
-    scorched_earth_purge()
-
-    # --- WRAP EVERYTHING IN ONE TRY BLOCK ---
     try:
-        # PHASE 2: FRESH START
-        store = client.file_search_stores.create(
-            config={"display_name": f"tmp-{display_name_prefix}"}
-        )
-        store_name = store.name
+        # PHASE 1: PREPARE INLINE CONTENT
+        contents = [prompt]
 
-        # PHASE 3: UPLOAD & IMPORT
-        import_ops = []
         for pdf_path in pdf_paths:
-            try:
-                uploaded = client.files.upload(
-                    file=str(pdf_path), config={"display_name": pdf_path.name}
-                )
-                if uploaded.name:
-                    uploaded_file_names.append(uploaded.name)
-                    op = client.file_search_stores.import_file(
-                        file_search_store_name=store_name, file_name=uploaded.name
-                    )
-                    import_ops.append(op)
-            except Exception as e:
-                logger.error(f"Upload failed for {pdf_path}: {e}")
+            logger.info(f"Reading {pdf_path.name} for Vertex (Credits Tier)...")
+            pdf_bytes = pdf_path.read_bytes()
 
-        for op in import_ops:
-            while not op.done:
-                time.sleep(2)
-                op = client.operations.get(op)
-
-        # PHASE 4: QUERY
-        try:
-            response = client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    tools=[
-                        types.Tool(
-                            file_search=types.FileSearch(
-                                file_search_store_names=[store_name]
-                            )
-                        )
-                    ]
-                ),
+            # Using Inline bytes avoids the "Developer Client" upload restriction
+            pdf_part = types.Part.from_bytes(
+                data=pdf_bytes, mime_type="application/pdf"
             )
-            response_text = getattr(response, "text", "") or ""
-        except Exception as e:
-            logger.error(f"LLM Query failed: {e}")
+            contents.append(pdf_part)
+
+        # PHASE 2: GENERATE CONTENT
+        logger.info(f"Querying {target_model} via Vertex AI...")
+        response = client.models.generate_content(
+            model=target_model,
+            contents=contents,
+            config=types.GenerateContentConfig(
+                temperature=0.2,  # Low temperature for factual financial analysis
+            ),
+        )
+
+        # PHASE 3: USAGE REPORTING
+        return {
+            "text": getattr(response, "text", "") or "",
+            "usage": response.usage_metadata,
+            "model": target_model,
+        }
+
+        response_text = getattr(response, "text", "") or ""
 
     except Exception as e:
-        logger.error(f"Main execution block failed: {e}")
-
-    # --- PHASE 5: FINAL SCORCHED EARTH ---
-    finally:
-        # 1. Clean up the global file objects
-        for n in uploaded_file_names:
-            try:
-                client.files.delete(name=n)
-            except:
-                pass
-
-        # 2. Run the infinite loop purge
-        scorched_earth_purge()
+        logger.error(f"Vertex Execution failed: {e}")
+        if "credentials" in str(e).lower():
+            logger.error(
+                "TIP: Ensure GOOGLE_APPLICATION_CREDENTIALS is set to your JSON key path."
+            )
 
     return response_text
 
@@ -717,14 +652,32 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
 
         if pdfs:
             # Use Gemini file_search for PDFs; run in a thread to avoid blocking the event loop.
-            response = await asyncio.to_thread(
+            res_obj = await asyncio.to_thread(
                 _query_ai_with_pdfs,
                 prompt=llm_prompt,
                 pdf_paths=pdfs,
                 display_name_prefix=f"{canon}-{int(time.time())}",
             )
+            response = res_obj.get("text", "")
+            usage = res_obj.get("usage")
+            query_model = res_obj.get("model", "gemini-3-flash-preview")
         else:
-            response = await managed_query_ai("deep_research", llm_prompt)
+            res_obj = await managed_query_ai("deep_research", llm_prompt)
+            if isinstance(res_obj, str) and res_obj.startswith("Error"):
+                response = res_obj
+                usage = None
+                query_model = "gemini-3-flash-preview"
+            else:
+                response = getattr(res_obj, "text", "")
+                usage = getattr(res_obj, "usage_metadata", None)
+                # Fetch model name from TASK_MAP in selector or default
+                from modules.analysis.selector import TASK_MAP, DEFAULT_TASK
+                query_model = TASK_MAP.get("deep_research", DEFAULT_TASK).get("model", "gemini-3-flash-preview")
+
+        # LOG THE COST DATA to the database
+        if usage:
+            await log_ai_cost(t, query_model, usage, display_name=f"{canon}-deepresearch")
+
         if not _validate_response(response, t, logger):
             continue
 

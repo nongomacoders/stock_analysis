@@ -8,6 +8,28 @@ from modules.analysis.prompts import (
 )
 
 
+async def _log_ai_cost_wrapper(ticker, task_name, response_obj):
+    """Internal helper to log cost and return text."""
+    from scripts.generate_deepresearch_from_results import log_ai_cost
+    from modules.analysis.selector import TASK_MAP, DEFAULT_TASK
+
+    # Check the provider for the current task
+    config = TASK_MAP.get(task_name, DEFAULT_TASK)
+    provider = config.get("provider", "gemini")
+
+    # Only log cost if the provider is gemini (Vertex AI)
+    if provider == "gemini":
+        usage = getattr(response_obj, "usage_metadata", None)
+        if usage:
+            model_name = config.get("model", "unknown")
+            await log_ai_cost(ticker, model_name, usage, display_name=f"engine-{task_name}")
+
+    # Return text differently based on whether it's a response object or a string
+    if isinstance(response_obj, str):
+        return response_obj
+    return getattr(response_obj, "text", str(response_obj))
+
+
 async def analyze_new_sens(ticker: str, content: str):
     import logging
     logger = logging.getLogger(__name__)
@@ -25,7 +47,8 @@ async def analyze_new_sens(ticker: str, content: str):
 
     # 2. Build Prompt & Query
     prompt = build_sens_prompt(row["research"], row["strategy"], content, current_price)
-    analysis = await managed_query_ai("sens", prompt)
+    res_obj = await managed_query_ai("sens", prompt)
+    analysis = await _log_ai_cost_wrapper(ticker, "sens", res_obj)
 
     # 3. Extract significance from the response
     significance = None
@@ -56,7 +79,8 @@ async def analyze_price_change(ticker: str, new_price: float, level_hit: float):
     prompt = build_price_prompt(
         row["research"], row["strategy"], ticker, new_price, level_hit
     )
-    analysis = await managed_query_ai("price_change", prompt)
+    res_obj = await managed_query_ai("price_change", prompt)
+    analysis = await _log_ai_cost_wrapper(ticker, "price_change", res_obj)
 
     trigger = f"Price crossed {level_hit}c, closing at {new_price}c."
     await _save_log(ticker, "Price Level", trigger, analysis)
@@ -74,7 +98,8 @@ async def generate_master_research(ticker: str, deep_research=None):
     prompt = build_research_prompt(deep_research)
     logger.info("AI: Research prompt length for %s: %d characters", ticker, len(prompt))
     
-    result = await managed_query_ai("research_summary", prompt)
+    res_obj = await managed_query_ai("research_summary", prompt)
+    result = await _log_ai_cost_wrapper(ticker, "research_summary", res_obj)
     
     duration = time.time() - start_time
     logger.info("AI: Research generation for %s took %.2f seconds", ticker, duration)
@@ -151,7 +176,8 @@ async def estimate_spot_price(ticker: str):
     try:
         prompt = build_spot_price_prompt(deep, ticker, str(report_date), commodity_avgs, fx_avgs)
         logger.info("Spot price: querying AI for %s (report_date=%s)", ticker, report_date)
-        analysis = await managed_query_ai("spot_price", prompt)
+        res_obj = await managed_query_ai("spot_price", prompt)
+        analysis = await _log_ai_cost_wrapper(ticker, "spot_price", res_obj)
     except Exception:
         logger.exception("AI query failed for spot price %s", ticker)
         analysis = "Error generating AI response for spot price."

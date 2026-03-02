@@ -17,6 +17,7 @@ from components.technical_analysis_window import TechnicalAnalysisWindow
 from components.todo_widget import TodoWidget
 from components.notification_widget import NotificationWidget
 from components.latest_dr_widget import LatestDeepResearchWidget
+from components.billing_tab import BillingTab
 # Sorting logic is implemented in `components.watchlist_sorting` to reduce the
 # size of this module and make sorting reusable across the project.
 
@@ -76,6 +77,10 @@ class WatchlistWidget(ttk.Frame):
         # --- TAB 2: DAILY TODO ---
         todo_frame = TodoWidget(self.notebook, self.async_run, self.async_run_bg, self.notifier)
         self.notebook.add(todo_frame, text="Todo")
+
+        # --- TAB 2.5: BILLING ---
+        billing_frame = BillingTab(self.notebook, self.async_run_bg)
+        self.notebook.add(billing_frame, text="Billing")
 
         # --- TAB 3: LATEST DEEP RESEARCH ---
         latest_dr_frame = LatestDeepResearchWidget(

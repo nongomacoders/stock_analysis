@@ -11,12 +11,12 @@ TASK_MAP = {
         "model": "stepfun/step-3.5-flash:free",
     },
     "price_change": {
-        "provider": "gemini",
-        "model": "gemini-3-flash-preview", # Upgrade from flash-preview
+        "provider": "openrouter",
+        "model": "stepfun/step-3.5-flash:free",
     },
     "research_summary": {
-        "provider": "gemini",
-        "model": "gemini-3-flash-preview",
+        "provider": "openrouter",
+        "model": "stepfun/step-3.5-flash:free",
     },
     "spot_price": {
         "provider": "openrouter",
@@ -28,13 +28,13 @@ TASK_MAP = {
     },
     "deep_research": {
         "provider": "gemini",
-        "model": "gemini-3-flash-preview", # free and comparable to gemini 2.5 pro, which is what we used for the original research generation; flash-preview is more cost-effective for research tasks that don't require the absolute best quality        
+        "model": "gemini-3-flash-preview",  # free and comparable to gemini 2.5 pro, which is what we used for the original research generation; flash-preview is more cost-effective for research tasks that don't require the absolute best quality
     },
 }
 
 DEFAULT_TASK = {
-    "provider": "gemini",
-    "model": "gemini-2.0-flash",
+    "provider": "openrouter",
+    "model": "stepfun/step-3.5-flash:free",
 }
 
 async def managed_query_ai(task_name: str, prompt: str, **kwargs) -> str:

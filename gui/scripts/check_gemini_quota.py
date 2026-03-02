@@ -52,8 +52,8 @@ def check_detailed_quotas():
             print(f"   Storage Used:   {total_bytes / (1024*1024):.2f} MB / 1000 MB")
 
         print("\n📋 Model Constraints (Free Tier):")
-        print("   Gemini 3 Flash (2.0): ~20 Requests / Day")
-        print("   Gemini 1.5 Flash:     ~15 Requests / Minute | 1,500 Requests / Day")
+        print("   Gemini 3 Flash : ~20 Requests / Day")
+     
 
     except Exception as e:
         print(f"❌ Diagnostic failed: {e}")

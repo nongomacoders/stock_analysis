@@ -64,3 +64,6 @@ Desktop.ini
 *.tmp
 *.bak
 *.swp
+/service_account_key.json
+# Secrets
+service_account_key.json
