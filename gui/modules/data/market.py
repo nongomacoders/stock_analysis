@@ -36,3 +36,10 @@ async def insert_price_hit_log(ticker, level):
     except Exception:
         logger.exception("DB ERROR: Failed to insert price hit log")
         return False
+
+
+async def get_all_tickers_and_names():
+    """Fetch all tickers and their full names from stock_details."""
+    query = "SELECT ticker, full_name FROM stock_details ORDER BY ticker ASC"
+    rows = await DBEngine.fetch(query)
+    return [dict(row) for row in rows]

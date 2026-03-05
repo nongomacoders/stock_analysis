@@ -8,16 +8,20 @@ from datetime import date
 async def get_todos():
     """Fetch all TODOs, ordered by priority and status."""
     query = """
-        SELECT id, task_date, title, description, ticker, priority, status, sort_order
-        FROM daily_todos
+        SELECT 
+            t.id, t.task_date, t.title, t.description, t.ticker, t.priority, t.status, t.sort_order,
+            v.current_price, w.target_price, w.entry_price
+        FROM daily_todos t
+        LEFT JOIN v_live_valuations v ON t.ticker = v.ticker
+        LEFT JOIN watchlist w ON t.ticker = w.ticker
         ORDER BY
             -- Active tasks first
-            CASE status WHEN 'active' THEN 1 ELSE 2 END,
+            CASE t.status WHEN 'active' THEN 1 ELSE 2 END,
             -- High priority first
-            CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END,
+            CASE t.priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END,
             -- Then by manual sort order (if used), then creation time
-            sort_order ASC,
-            created_at ASC
+            t.sort_order ASC,
+            t.created_at ASC
     """
     rows = await DBEngine.fetch(query)
     return [dict(row) for row in rows]
@@ -74,4 +78,28 @@ async def delete_todo(todo_id: int):
         return True
     except Exception:
         logger.exception("Error deleting TODO")
+        return False
+
+
+async def update_todo(todo_id: int, title: str, ticker: str, priority: str):
+    """
+    Update the basic fields of a TODO item.
+    """
+    query = """
+        UPDATE daily_todos
+        SET 
+            title = $2,
+            ticker = $3,
+            priority = $4,
+            updated_at = NOW()
+        WHERE id = $1
+    """
+    # Use a default for ticker if it's empty
+    ticker_val = ticker if ticker and ticker.strip() else None
+
+    try:
+        await DBEngine.execute(query, todo_id, title, ticker_val, priority)
+        return True
+    except Exception:
+        logger.exception("Error updating TODO")
         return False

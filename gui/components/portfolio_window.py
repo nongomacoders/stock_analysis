@@ -24,13 +24,14 @@ class PortfolioWindow(ttk.Toplevel):
     async_run_bg: function to run coroutine in background and call callback when done
     """
 
-    def __init__(self, parent, async_run, async_run_bg):
+    def __init__(self, parent, async_run, async_run_bg, on_ticker_double_click=None):
         super().__init__(parent)
         self.title("Portfolio Manager")
         # Larger default size - more space for holdings
         self.geometry("1600x700")
         self.async_run = async_run
         self.async_run_bg = async_run_bg
+        self.on_ticker_double_click = on_ticker_double_click
 
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
@@ -72,6 +73,7 @@ class PortfolioWindow(ttk.Toplevel):
         # attach Treeview to the `right` frame so layout behaves correctly
         # columns: ticker, qty, avg (stored in cents), cost_value (R), latest (R), pl (R), pct (P/L %)
         self.holdings_widget = HoldingsWidget(right, select_callback=self.on_holding_select)
+        self.holdings_widget.on_ticker_double_click = self.on_ticker_double_click
         self.holdings_widget.pack(fill=BOTH, expand=True, pady=(6, 8))
 
         # tags to color-code P/L: positive -> green, negative -> red, zero/none -> default

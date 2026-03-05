@@ -46,6 +46,19 @@ class HoldingsWidget(ttk.Frame):
 
         if select_callback:
             self.tree.bind("<<TreeviewSelect>>", select_callback)
+        
+        # Double-click to trigger a ticker-specific action (e.g. open research)
+        self.tree.bind("<Double-1>", self._on_double_click)
+        self.on_ticker_double_click = None
+
+    def _on_double_click(self, event):
+        iid = self.tree.identify_row(event.y)
+        if iid:
+            values = self.tree.item(iid, 'values')
+            if values and len(values) > 0:
+                ticker = values[0]
+                if ticker and self.on_ticker_double_click:
+                    self.on_ticker_double_click(ticker)
 
     def set_holdings(self, rows: List[Dict]):
         # Clear existing rows

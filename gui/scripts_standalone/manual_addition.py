@@ -47,6 +47,12 @@ import asyncio
 import pandas as pd
 import queue
 
+# Missing import for AI analysis
+try:
+    from modules.analysis.engine import analyze_new_sens
+except ImportError:
+    analyze_new_sens = None
+
 
 
 
@@ -243,13 +249,35 @@ class StockEditorApp:
         """Synchronously run `DBEngine.fetch`. Raises if DBEngine unavailable."""
         if DBEngine is None:
             raise RuntimeError("DBEngine not available")
-        return asyncio.run(DBEngine.fetch(query, *args))
+        
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
+        if loop.is_running():
+            # If the loop is already running, we can't use run_until_complete
+            # We would need a different approach, but for now let's hope it's not
+            return asyncio.run_coroutine_threadsafe(DBEngine.fetch(query, *args), loop).result()
+        
+        return loop.run_until_complete(DBEngine.fetch(query, *args))
 
     def _execute_sync(self, query, *args):
         """Synchronously run `DBEngine.execute`. Raises if DBEngine unavailable."""
         if DBEngine is None:
             raise RuntimeError("DBEngine not available")
-        return asyncio.run(DBEngine.execute(query, *args))
+        
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
+        if loop.is_running():
+            return asyncio.run_coroutine_threadsafe(DBEngine.execute(query, *args), loop).result()
+        
+        return loop.run_until_complete(DBEngine.execute(query, *args))
 
     def format_ticker(self, ticker_str):
         """Ensures ticker is in the correct .JO format."""
@@ -538,8 +566,45 @@ class StockEditorApp:
                 return
             # --- END NEW DEBUG CHECK ---
 
-            # Use the async saver (run in this background thread)
-            records_saved, _ = asyncio.run(self._process_and_save_new_data(data, [ticker]))
+            # Use helper to run async in this thread
+            def run_saver():
+                print(f"DEBUG (DOWNLOAD): Spawning local event loop for saver thread ({ticker})")
+                
+                # CRITICAL: Create connection pool INSIDE the new event loop 
+                # This bypasses the global pool which is bound to the main thread loop
+                async def run_standalone_save():
+                    from core.config import DB_CONFIG
+                    import asyncpg
+                    
+                    conn = await asyncpg.connect(
+                        host=DB_CONFIG["host"],
+                        database=DB_CONFIG["dbname"],
+                        user=DB_CONFIG["user"],
+                        password=DB_CONFIG["password"]
+                    )
+                    try:
+                        print(f"DEBUG (DB_SAVE): Standalone connection {id(conn)} opened for {ticker}")
+                        return await self._process_and_save_new_data(data, [ticker], conn=conn)
+                    finally:
+                        await conn.close()
+                        print(f"DEBUG (DB_SAVE): Standalone connection {id(conn)} closed")
+
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    result = loop.run_until_complete(run_standalone_save())
+                    print(f"DEBUG (DOWNLOAD): Saver completed for {ticker}")
+                    return result
+                except Exception as e:
+                    import traceback
+                    print(f"ERROR (DOWNLOAD): Async saver failed for {ticker}: {e}")
+                    traceback.print_exc()
+                    raise
+                finally:
+                    loop.close()
+                    print(f"DEBUG (DOWNLOAD): Event loop closed for {ticker}")
+
+            records_saved, _ = run_saver()
 
             self.download_queue.put((
                 "SUCCESS",
@@ -574,22 +639,24 @@ class StockEditorApp:
 
     # In manual_addition.py
 
-    async def _process_and_save_new_data(self, data, all_tickers):
-        """Async helper: process the DataFrame and save rows using DBEngine only.
-
-        Raises RuntimeError if `DBEngine` is not importable.
+    async def _process_and_save_new_data(self, data, all_tickers, conn=None):
+        """Async helper: process the DataFrame and save rows.
+        
+        If `conn` is provided, use that connection directly.
+        Otherwise, attempt to use DBEngine pool.
         """
-        if DBEngine is None:
-            raise RuntimeError("DBEngine not available")
-
+        ticker_val = all_tickers[0]
+        print(f"DEBUG (DB_SAVE): _process_and_save_new_data started for {ticker_val}")
+        
         try:
             # Simplify MultiIndex columns if present
             if isinstance(data.columns, pd.MultiIndex):
+                print("DEBUG (DB_SAVE): Flattening MultiIndex columns")
                 data.columns = data.columns.droplevel(1)
                 data.columns.name = None
 
             df = data.reset_index()
-            df["ticker"] = all_tickers[0]
+            df["ticker"] = ticker_val
 
             df.rename(
                 columns={
@@ -614,8 +681,10 @@ class StockEditorApp:
                     "volume",
                 ]
             ]
+            print(f"DEBUG (DB_SAVE): DataFrame prepared with {len(df)} records.")
 
             df.dropna(subset=["close_price", "open_price", "high_price", "low_price"], inplace=True)
+            print(f"DEBUG (DB_SAVE): Records after dropping NaNs: {len(df)}")
 
             insert_q_async = (
                 "INSERT INTO daily_stock_data (ticker, trade_date, open_price, high_price, low_price, close_price, volume)"
@@ -627,19 +696,57 @@ class StockEditorApp:
             )
 
             count = 0
-            for _, row in df.iterrows():
-                await DBEngine.execute(
-                    insert_q_async,
-                    row["ticker"],
-                    row["trade_date"].date(),
-                    int(row["open_price"]),
-                    int(row["high_price"]),
-                    int(row["low_price"]),
-                    int(row["close_price"]),
-                    int(row["volume"]) if not pd.isna(row["volume"]) else 0,
-                )
-                count += 1
+            
+            # Use provided connection or acquire from pool
+            should_release = False
+            if conn is None:
+                if DBEngine is None:
+                    raise RuntimeError("DBEngine not available")
+                pool = await DBEngine.get_pool()
+                print(f"DEBUG (DB_SAVE): Acquiring connection from pool {id(pool)}...")
+                conn = await pool.acquire()
+                should_release = True
 
+            try:
+                print(f"DEBUG (DB_SAVE): Connection {id(conn)} active. Using copy_records_to_table for bulk import...")
+                
+                records = [
+                    (
+                        row["ticker"],
+                        row["trade_date"].date(),
+                        int(row["open_price"]),
+                        int(row["high_price"]),
+                        int(row["low_price"]),
+                        int(row["close_price"]),
+                        int(row["volume"]) if not pd.isna(row["volume"]) else 0
+                    )
+                    for _, row in df.iterrows()
+                ]
+                
+                try:
+                    import asyncpg
+                    await conn.copy_records_to_table(
+                        'daily_stock_data',
+                        records=records,
+                        columns=['ticker', 'trade_date', 'open_price', 'high_price', 'low_price', 'close_price', 'volume']
+                    )
+                    count = len(records)
+                except asyncpg.UniqueViolationError:
+                    print("DEBUG (DB_SAVE): Bulk copy failed due to unique constraint. Falling back to individual UPSERTs...")
+                    async with conn.transaction():
+                        for ticker_val_iter, date_val, o, h, l, c, v in records:
+                            await conn.execute(insert_q_async, ticker_val_iter, date_val, o, h, l, c, v)
+                            count += 1
+                            if count % 200 == 0:
+                                print(f"DEBUG (DB_SAVE): ...upserted {count} records")
+
+                print(f"DEBUG (DB_SAVE): Finished saving {count} records.")
+            finally:
+                if should_release:
+                    print(f"DEBUG (DB_SAVE): Releasing connection {id(conn)} back to pool.")
+                    await pool.release(conn)
+
+            print(f"DEBUG (DB_SAVE): Successfully completed save for {ticker_val}. Total: {count}")
             return count, {}
 
         except KeyError as e:
@@ -686,10 +793,23 @@ class StockEditorApp:
 
         # 4. Start threaded analysis
         try:
+            if analyze_new_sens is None:
+                messagebox.showerror("Import Error", "AI analysis engine (modules.analysis.engine) could not be loaded.")
+                return
+
             print(f"     ==> Spawning AI thread for {ticker} from GUI...")
+            
+            # Helper to run the async analysis in the thread's event loop
+            def run_async_analysis():
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    loop.run_until_complete(analyze_new_sens(ticker, content))
+                finally:
+                    loop.close()
+
             threading.Thread(
-                target=analysis_engine.analyze_new_sens,
-                args=(ticker, content),  # Pass the .JO ticker
+                target=run_async_analysis,
                 daemon=True,
             ).start()
 

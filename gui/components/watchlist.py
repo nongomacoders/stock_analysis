@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import BOTH, TOP, X, LEFT, RIGHT, VERTICAL, Y, W, E, CENTER, END
 from datetime import date, datetime
+import logging
 
 # --- UPDATED IMPORTS ---
 # 1. Utilities moved to core
@@ -8,6 +9,7 @@ from core.utils.trading import get_proximity_status
 
 # 2. Data fetching moved to modules
 from modules.data.watchlist import fetch_watchlist_data
+from modules.market_agent.prices import run_price_update
 from components.watchlist_sorting import sort_watchlist_records, sort_treeview_column
 
 # 3. Child windows (Note: These will need refactoring next)
@@ -75,7 +77,7 @@ class WatchlistWidget(ttk.Frame):
         self.create_watchlist_tab(watchlist_frame)
 
         # --- TAB 2: DAILY TODO ---
-        todo_frame = TodoWidget(self.notebook, self.async_run, self.async_run_bg, self.notifier)
+        todo_frame = TodoWidget(self.notebook, self.async_run, self.async_run_bg, self.notifier, on_select_callback=self.on_select)
         self.notebook.add(todo_frame, text="Todo")
 
         # --- TAB 2.5: BILLING ---
@@ -119,6 +121,14 @@ class WatchlistWidget(ttk.Frame):
             text="Refresh",
             command=self.refresh,
             bootstyle="success-outline",
+        ).pack(side=LEFT, padx=(6, 0))
+
+        # --- Download Prices Button ---
+        ttk.Button(
+            toolbar,
+            text="Download Prices",
+            command=self.download_prices,
+            bootstyle="primary-outline",
         ).pack(side=LEFT, padx=(6, 0))
 
         # --- Filter dropdown (client-side only; does not change DB/query) ---
@@ -216,6 +226,17 @@ class WatchlistWidget(ttk.Frame):
             self._render_watchlist()
 
         self.async_run_bg(fetch_watchlist_data(), callback=on_data_loaded)
+
+    def download_prices(self):
+        """Download latest prices from Yahoo Finance (non-blocking)."""
+        logger = logging.getLogger(__name__)
+
+        def on_complete(_):
+            logger.info("Prices updated successfully.")
+            self.refresh()
+
+        logger.info("Downloading latest prices...")
+        self.async_run_bg(run_price_update(), callback=on_complete)
 
     def _get_filtered_watchlist_rows(self, rows):
         """Apply the toolbar dropdown filter to watchlist rows."""

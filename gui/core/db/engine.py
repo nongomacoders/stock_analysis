@@ -36,12 +36,10 @@ class DBEngine:
     async def fetch(cls, query, *args):
         """Helper for running SELECT queries quickly."""
         pool = await cls.get_pool()
-        async with pool.acquire() as conn:
-            return await conn.fetch(query, *args)
+        return await pool.fetch(query, *args)
             
     @classmethod
     async def execute(cls, query, *args):
         """Helper for running INSERT/UPDATE queries."""
         pool = await cls.get_pool()
-        async with pool.acquire() as conn:
-            return await conn.execute(query, *args)
+        return await pool.execute(query, *args)
