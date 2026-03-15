@@ -655,8 +655,14 @@ class TechnicalAnalysisWindow(ttk.Toplevel):
                         else:
                             gain = (cp - self.target_price) / cp * 100
 
-                        upside_str = f"Upside: {abs(float(gain)):.1f}%"
-                        self.upside_label.config(text=upside_str)
+                        # Calculate color and prefix based on whether gain is positive or negative
+                        # For long positions, gain is positive if target > current price
+                        # For short positions, gain is positive if current price > target
+                        color = "#4CAF50" if gain >= 0 else "#F44336"
+                        prefix = "" if gain >= 0 else "-"
+                        
+                        upside_str = f"Upside: {prefix}{abs(float(gain)):.1f}%"
+                        self.upside_label.config(text=upside_str, foreground=color)
                     else:
                         self.upside_label.config(text="")
 

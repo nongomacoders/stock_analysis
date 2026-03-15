@@ -287,17 +287,24 @@ class ChartWindow(ttk.Toplevel):
                         )
 
                         current_price = df["Close"].iloc[-1]
-                        if target_price and target_price > current_price:
-                            upside = (
-                                (target_price - current_price) / current_price
-                            ) * 100
+                        
+                        # --- Logic for displaying upside (positive or negative) ---
+                        if target_price:
+                            # For consistency with other windows, we check if target > current
+                            # assuming a long position by default for these labels.
+                            upside_perc = ((target_price - current_price) / current_price) * 100
+                            
+                            color = "green" if upside_perc >= 0 else "red"
+                            arrow = "↑" if upside_perc >= 0 else "↓"
+                            label_type = "upside" if upside_perc >= 0 else "downside"
+                            
                             self.upside_label.configure(
-                                text=f"↑{upside:.1f}% upside", foreground="green"
+                                text=f"{arrow}{abs(upside_perc):.1f}% {label_type}", 
+                                foreground=color
                             )
                         elif entry_price and current_price < entry_price:
-                            downside = (
-                                (entry_price - current_price) / entry_price
-                            ) * 100
+                            # Fallback to existing entry-based logic if no target is found
+                            downside = ((entry_price - current_price) / entry_price) * 100
                             self.upside_label.configure(
                                 text=f"↓{downside:.1f}% downside", foreground="red"
                             )

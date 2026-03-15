@@ -404,7 +404,9 @@ class WatchlistWidget(ttk.Frame):
                         gain = (target_val - price_val) / price_val * 100
                     else:
                         gain = (price_val - target_val) / price_val * 100
-                    upside_str = f"{abs(float(gain)):.2f}%"
+                    
+                    sign = "+" if gain >= 0 else "-"
+                    upside_str = f"{sign}{abs(float(gain)):.2f}%"
             except Exception:
                 upside_str = "-"
 
