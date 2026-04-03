@@ -46,25 +46,33 @@ async def analyze_new_sens(ticker: str, content: str):
     current_price = price_row[0]["close_price"] if price_row else None
 
     # 2. Build Prompt & Query
-    prompt = build_sens_prompt(row["research"], row["strategy"], content, current_price)
-    res_obj = await managed_query_ai("sens", prompt)
-    analysis = await _log_ai_cost_wrapper(ticker, "sens", res_obj)
-
-    # 3. Extract significance from the response
-    significance = None
     try:
-        # Parse "Significance: <Low / Medium / High>" from the response
-        import re
-        match = re.search(r'Significance:\s*(Low|Medium|High)', analysis, re.IGNORECASE)
-        if match:
-            significance = match.group(1).capitalize()
-    except Exception:
-        logger.debug("Could not extract significance from SENS analysis for %s", ticker)
+        prompt = build_sens_prompt(row["research"], row["strategy"], content, current_price)
+        res_obj = await managed_query_ai("sens", prompt)
+        analysis = await _log_ai_cost_wrapper(ticker, "sens", res_obj)
 
-    # 4. Save Log
-    headline = (content[:200] + "...") if len(content) > 200 else content
-    await _save_log(ticker, "SENS", headline, analysis, significance=significance)
-    logger.info("AI: SENS analysis saved for %s.", ticker)
+        # 3. Extract significance from the response
+        significance = None
+        try:
+            # Parse "Significance: <Low / Medium / High>" from the response
+            import re
+            match = re.search(r'Significance:\s*(Low|Medium|High)', analysis, re.IGNORECASE)
+            if match:
+                significance = match.group(1).capitalize()
+        except Exception:
+            logger.debug("Could not extract significance from SENS analysis for %s", ticker)
+
+        # 4. Save Log
+        headline = (content[:200] + "...") if len(content) > 200 else content
+        await _save_log(ticker, "SENS", headline, analysis, significance=significance)
+        logger.info("AI: SENS analysis saved for %s.", ticker)
+        
+        # 5. Return success to allow the caller to mark SENS as done
+        return True
+    except Exception as e:
+        logger.error("AI: Failed to analyze SENS for %s: %s", ticker, e)
+        # Raising let's the caller know it failed
+        raise
 
 
 async def analyze_price_change(ticker: str, new_price: float, level_hit: float):
