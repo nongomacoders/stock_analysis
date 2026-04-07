@@ -14,7 +14,7 @@ LIST_URL = f"{BASE_URL}/tools-and-data/moneyweb-sens/"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 
-async def run_sens_check():
+async def run_sens_check() -> None:
     """Main SENS scraping logic."""
     logger.info("\n[%s] --- Running SENS Check ---", datetime.now().strftime('%H:%M'))
 
@@ -67,6 +67,16 @@ async def run_sens_check():
                 link = BASE_URL + link
 
             content = _fetch_content(link)
+            if not content:
+                logger.info("  -> NO CONTENT for %s @ %s (skipping)", ticker, pub_date)
+                continue
+
+            # Check if this specific SENS already exists in DB (to avoid double AI calls)
+            check_q = "SELECT 1 FROM SENS WHERE ticker = $1 AND publication_datetime = $2 AND md5(content) = md5($3)"
+            exists = await DBEngine.fetch(check_q, f"{ticker}.JO", pub_date, content)
+            if exists:
+                logger.info("  -> SENS ALREADY EXISTS: %s @ %s (skipping)", ticker, pub_date)
+                continue
 
             # Trigger AI FIRST
             import modules.analysis.engine as ai_engine
@@ -76,7 +86,12 @@ async def run_sens_check():
                 await ai_engine.analyze_new_sens(f"{ticker}.JO", content)
                 
                 # If AI was successful, NOW insert into SENS
-                ins_q = "INSERT INTO SENS (ticker, publication_datetime, content) VALUES ($1, $2, $3)"
+                # Use ON CONFLICT DO NOTHING as a final safety check
+                ins_q = """
+                    INSERT INTO SENS (ticker, publication_datetime, content) 
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT DO NOTHING
+                """
                 await DBEngine.execute(ins_q, f"{ticker}.JO", pub_date, content)
 
                 logger.info("  -> NEW SENS PROCESSED: %s @ %s", ticker, pub_date)
@@ -91,7 +106,7 @@ async def run_sens_check():
         logger.info("No new SENS announcements found.")
 
 
-def _parse_date(elem):
+def _parse_date(elem) -> datetime | None:
     # Try datetime attribute first (ISO 8601)
     if elem.has_attr("datetime"):
         try:
@@ -106,15 +121,19 @@ def _parse_date(elem):
         # Use separator=" " to ensure "Date Time" not "DateTime"
         text = elem.get_text(separator=" ", strip=True)
         return datetime.strptime(text, "%d.%m.%y %H:%M")
-    except:
+    except Exception:
         return None
 
 
-def _fetch_content(url):
+def _fetch_content(url: str) -> str | None:
     try:
         resp = requests.get(url, headers=HEADERS, timeout=10)
         soup = BeautifulSoup(resp.content, "html.parser")
         div = soup.find("div", id="sens-content")
-        return div.get_text(separator="\n", strip=True) if div else "No content"
+        if not div:
+            return None
+        content = div.get_text(separator="\n", strip=True)
+        return content if content else None
     except Exception as e:
-        return str(e)
+        logger.error("Error fetching SENS content from %s: %s", url, e)
+        return None

@@ -1,6 +1,6 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import BOTH, VERTICAL, Y, RIGHT, LEFT, TOP, BOTTOM, X, W, END, NORMAL, WORD, DISABLED
-from modules.data.research import get_latest_deepresearch_with_notes, save_watchlist_notes
+from modules.data.research import get_latest_deepresearch_with_upside, save_watchlist_notes
 import logging
 
 logger = logging.getLogger(__name__)
@@ -18,11 +18,16 @@ class LatestDeepResearchWidget(ttk.Frame):
         self.refresh_data()
 
     def create_widgets(self):
+        # Configure style for larger font (approx 30% increase from standard 10pt -> 13pt)
+        style = ttk.Style()
+        style.configure("LatestDR.Treeview", font=("Segoe UI", 13))
+        style.configure("LatestDR.Treeview.Heading", font=("Segoe UI", 13, "bold"))
+
         # Toolbar
         toolbar = ttk.Frame(self)
         toolbar.pack(side=TOP, fill=X, padx=5, pady=5)
 
-        ttk.Label(toolbar, text="Latest Deep Research", font=("Segoe UI", 11, "bold")).pack(side=LEFT, padx=5)
+        ttk.Label(toolbar, text="Latest Deep Research", font=("Segoe UI", 14, "bold")).pack(side=LEFT, padx=5)
 
         self.refresh_btn = ttk.Button(
             toolbar,
@@ -44,17 +49,17 @@ class LatestDeepResearchWidget(ttk.Frame):
         self.notes_btn.pack(side=RIGHT, padx=5)
 
         # Treeview
-        cols = ("Ticker", "Name", "Date", "Notes")
-        self.tree = ttk.Treeview(self, columns=cols, show="headings")
+        cols = ("Ticker", "Name", "Date", "Upside")
+        self.tree = ttk.Treeview(self, columns=cols, show="headings", style="LatestDR.Treeview")
         self.tree.heading("Ticker", text="Ticker")
         self.tree.heading("Name", text="Name")
         self.tree.heading("Date", text="Date")
-        self.tree.heading("Notes", text="Notes")
+        self.tree.heading("Upside", text="Upside")
 
-        self.tree.column("Ticker", width=100, anchor=W, stretch=False)
-        self.tree.column("Name", width=200, anchor=W, stretch=False)
-        self.tree.column("Date", width=150, anchor=W, stretch=False)
-        self.tree.column("Notes", width=400, anchor=W, stretch=True)
+        self.tree.column("Ticker", width=120, anchor=W, stretch=False)
+        self.tree.column("Name", width=250, anchor=W, stretch=False)
+        self.tree.column("Date", width=180, anchor=W, stretch=False)
+        self.tree.column("Upside", width=120, anchor=W, stretch=True)
 
         scrollbar = ttk.Scrollbar(self, orient=VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
@@ -77,6 +82,13 @@ class LatestDeepResearchWidget(ttk.Frame):
                 dr_date = row.get("deepresearch_date")
                 date_str = str(dr_date) if dr_date else "-"
                 
+                upside = row.get("calculated_upside")
+                if upside is not None:
+                    arrow = "↑" if upside >= 0 else "↓"
+                    upside_str = f"{arrow}{abs(upside):.1f}%"
+                else:
+                    upside_str = "-"
+                
                 self.tree.insert(
                     "",
                     "end",
@@ -84,12 +96,12 @@ class LatestDeepResearchWidget(ttk.Frame):
                         row.get("ticker", ""),
                         row.get("full_name", "") or "-",
                         date_str,
-                        row.get("notes", "") or "-"
+                        upside_str
                     )
                 )
 
         try:
-            self.async_run_bg(get_latest_deepresearch_with_notes(), callback=on_loaded)
+            self.async_run_bg(get_latest_deepresearch_with_upside(), callback=on_loaded)
         except Exception:
             logger.exception("Failed to refresh LatestDeepResearchWidget data")
 

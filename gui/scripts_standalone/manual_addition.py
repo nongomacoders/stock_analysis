@@ -498,6 +498,14 @@ class StockEditorApp:
 
         # 5. Save to Database
         try:
+            # Check if this SENS already exists
+            check_q = "SELECT 1 FROM SENS WHERE ticker = $1 AND publication_datetime = $2 AND md5(content) = md5($3)"
+            exists = self._fetch_sync(check_q, ticker, pub_datetime, content)
+            if exists:
+                messagebox.showwarning("Duplicate Entry", f"This SENS announcement for {ticker} at {pub_datetime} already exists in the database.")
+                print("DEBUG: add_sens: Aborted, duplicate entry detected.")
+                return
+
             query = "INSERT INTO SENS (ticker, publication_datetime, content) VALUES ($1, $2, $3)"
             print(
                 f"DEBUG: add_sens: Executing query with ({ticker}, {pub_datetime}, [content])"
@@ -509,7 +517,9 @@ class StockEditorApp:
         except Exception as e:
             print(f"DEBUG: add_sens: FAILED (Exception): {e}")
             msg = str(e).lower()
-            if "violates foreign key constraint" in msg or "foreign key" in msg:
+            if "duplicate" in msg or "unique" in msg:
+                 messagebox.showwarning("Duplicate Entry", "This SENS announcement already exists in the database.")
+            elif "violates foreign key constraint" in msg or "foreign key" in msg:
                 messagebox.showerror(
                     "Database Error",
                     f"Error: Ticker '{ticker}' does not exist in the stock_details table. Please add it first.",

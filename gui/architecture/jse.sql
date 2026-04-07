@@ -73,6 +73,9 @@ CREATE TABLE IF NOT EXISTS public.sens
     CONSTRAINT sens_pkey PRIMARY KEY (sens_id)
 );
 
+CREATE UNIQUE INDEX IF NOT EXISTS uq_sens_ticker_date_content_hash 
+    ON public.sens (ticker, publication_datetime, md5(content));
+
 CREATE TABLE IF NOT EXISTS public.stock_analysis
 (
     analysis_id serial NOT NULL,

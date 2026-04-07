@@ -129,14 +129,15 @@ async def save_deep_research_data(ticker: str, content: str):
     await DBEngine.execute(query, ticker, content)
 
 
-async def get_latest_deepresearch_with_notes(limit=50):
-    """Fetch the latest deep research entries along with full names and notes."""
+async def get_latest_deepresearch_with_upside(limit=50):
+    """Fetch the latest deep research entries along with full names and target price for upside calculation."""
     query = """
         SELECT 
             sa.ticker, 
             sd.full_name,
-            sa.deepresearch_date, 
-            w.notes
+            sa.deepresearch_date,
+            w.target_price,
+            (SELECT close_price FROM daily_stock_data dsd WHERE dsd.ticker = sa.ticker ORDER BY trade_date DESC LIMIT 1) as current_price
         FROM stock_analysis sa
         LEFT JOIN stock_details sd ON sa.ticker = sd.ticker
         LEFT JOIN watchlist w ON sa.ticker = w.ticker
@@ -145,7 +146,22 @@ async def get_latest_deepresearch_with_notes(limit=50):
         LIMIT $1
     """
     rows = await DBEngine.fetch(query, limit)
-    return [dict(row) for row in rows]
+    
+    results = []
+    for row in rows:
+        d = dict(row)
+        target = d.get("target_price")
+        current = d.get("current_price")
+        
+        upside = None
+        if target and current:
+            # target is in cents, current is in cents
+            upside = ((float(target) - float(current)) / float(current)) * 100
+            
+        d["calculated_upside"] = upside
+        results.append(d)
+        
+    return results
 
 
 async def save_watchlist_notes(ticker: str, notes: str):
