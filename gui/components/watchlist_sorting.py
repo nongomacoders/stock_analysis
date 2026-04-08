@@ -96,13 +96,14 @@ def sort_treeview_column(tree, col, reverse=False):
 
         def upside_key(item):
             val = item[0]
-            if val is None or val == "" or str(val).strip() == "-":
-                return float("inf")
+            if val is None or val == "" or str(val).strip() in ("-", "–"):
+                return float("-inf") if reverse else float("inf")
             try:
-                s = str(val).strip().replace('%', '')
+                # Handle arrows ↑/↓ and percent signs
+                s = str(val).strip().replace('%', '').replace('↑', '').replace('↓', '')
                 return float(s)
             except Exception:
-                return float("inf")
+                return float("-inf") if reverse else float("inf")
 
         l.sort(key=upside_key, reverse=reverse)
     elif col == "Proximity":
@@ -149,3 +150,14 @@ def proximity_key(item):
         except Exception:
             return float("inf")
     return float("inf")
+
+
+def setup_treeview_sorting(tree):
+    """Automatically bind all current columns of a ttk.Treeview to sort_treeview_column.
+    
+    This function iterates through all columns defined in the tree and sets their
+    heading command to trigger sorting.
+    """
+    for col in tree["columns"]:
+        # Use a default argument in lambda to capture the current value of 'col'
+        tree.heading(col, command=lambda c=col: sort_treeview_column(tree, c, False))
