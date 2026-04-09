@@ -12,7 +12,7 @@ MODELS = {
     ],
     "gemini": [
         "gemini-3-flash-preview",          # Index 0
-        "gemini-3-pro"                   # Index 1
+        "gemini-3.1-flash-lite-preview"                   # Index 1
     ],
     "openrouter": [
         "google/gemma-4-26b-a4b-it:free",         # Index 0
@@ -23,7 +23,7 @@ MODELS = {
 # 2. Task mapping using the new structure
 # This is much cleaner and shows exactly which "tier" of a provider you are using.
 TASK_MAP = {
-    "sens":                {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "sens":                {"p": "gemini",     "m": MODELS["gemini"][1]},
     "price_change":        {"p": "ollama",     "m": MODELS["ollama"][0]},
     "research_summary":    {"p": "ollama",     "m": MODELS["ollama"][0]},
     "spot_price":          {"p": "ollama",     "m": MODELS["ollama"][0]},

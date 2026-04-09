@@ -12,48 +12,84 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST")
 
 logger = logging.getLogger(__name__)
 
-async def query_ai(prompt: str, model: str = "gemma3") -> str:
+# Global state for concurrency control
+# Using a semaphore of 1 is safest for local models on standard hardware
+_ollama_semaphore = None
+_ollama_client = None
+
+def _get_ollama_resources():
+    """Lazily initialize global semaphore and client."""
+    global _ollama_semaphore, _ollama_client
+    if _ollama_semaphore is None:
+        _ollama_semaphore = asyncio.Semaphore(1)
+    if _ollama_client is None:
+        _ollama_client = AsyncClient(host=OLLAMA_HOST)
+    return _ollama_semaphore, _ollama_client
+
+async def query_ai(
+    prompt: str, 
+    model: str = "jse-analyst", #we created this in ollama create jse-analyst -f analyst.Modelfile
+    system_prompt: str | None = None, 
+    json_mode: bool = False
+) -> str:
     """
-    Sends a prompt to a local Ollama instance and returns the response text.
+    Sends a prompt to a local Ollama instance with optimized parameters for financial analysis.
+    Uses a semaphore to prevent overloading the local hardware with concurrent requests.
+    """
+    semaphore, client = _get_ollama_resources()
     
-    Args:
-        prompt: The text prompt to send.
-        model: The Ollama model name to use (e.g., 'gemma3', 'llama3').
-        
-    Returns:
-        The text response from the model or an error message.
-    """
-    try:
-        client = AsyncClient(host=OLLAMA_HOST)
-        
-        message = {'role': 'user', 'content': prompt}
-        
-        logger.info("Querying Ollama model: %s (Prompt length: %d)", model, len(prompt))
-        
-        # chat() returns a mapping with 'message', 'done', etc.
-        response = await client.chat(model=model, messages=[message])
-        
-        content = response.get('message', {}).get('content', '')
-        
-        if not content:
-            logger.warning("Ollama returned an empty response.")
-            return "Error: Empty response from Ollama."
+    async with semaphore:
+        try:
+            messages = []
+            if system_prompt:
+                messages.append({'role': 'system', 'content': system_prompt})
             
-        return content
+            messages.append({'role': 'user', 'content': prompt})
+            
+            # Configuration for strict instruction following
+            options = {
+                "temperature": 0.0,           # Forces deterministic output
+                "stop": ["###", "---"],      # Prevents the model from rambling
+                "num_predict": 1000,         # Safety limit for token generation
+            }
 
-    except ConnectionError as e:
-        logger.error("Failed to connect to Ollama at %s: %s", OLLAMA_HOST or "localhost:11434", e)
-        return f"Error: Could not connect to Ollama. Ensure it is running at {OLLAMA_HOST or 'localhost:11434'}."
-    
-    except Exception as e:
-        logger.exception("Unexpected error during Ollama query: %s", e)
-        return f"Error querying Ollama: {e}"
+            logger.info("Querying Ollama model: %s (JSON: %s, User prompt length: %d)", 
+                        model, "Yes" if json_mode else "No", len(prompt))
+            
+            # Call the Ollama API with formatting and options
+            response = await client.chat(
+                model=model, 
+                messages=messages,
+                format="json" if json_mode else "",
+                options=options
+            )
+            
+            content = response.get('message', {}).get('content', '')
+            
+            if not content:
+                logger.warning("Ollama returned an empty response.")
+                raise RuntimeError("Empty response from Ollama.")
+                
+            return content.strip()
 
-# Optional: Simple main for testing
+        except ConnectionError as e:
+            msg = f"Failed to connect to Ollama at {OLLAMA_HOST or 'localhost:11434'}: {e}"
+            logger.error(msg)
+            raise RuntimeError(msg)
+        
+        except Exception as e:
+            logger.exception("Unexpected error during Ollama query: %s", e)
+            raise RuntimeError(f"Error querying Ollama: {e}")
+
+# Simple main for testing the new configuration
 if __name__ == "__main__":
     async def test():
         logging.basicConfig(level=logging.INFO)
-        res = await query_ai("Why is the sky blue?")
-        print(f"Response: {res}")
+        # Testing with the new custom model
+        res = await query_ai(
+            prompt="Significance: Low\nExplanation: Test run.", 
+            model="jse-analyst"
+        )
+        print(f"Response:\n{res}")
     
     asyncio.run(test())
