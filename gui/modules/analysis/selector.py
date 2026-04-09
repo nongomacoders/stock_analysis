@@ -1,62 +1,52 @@
 import logging
-from modules.analysis import llm, openrouter_llm
+from modules.analysis import gemini_vertex_llm, openrouter_llm, ollama_llm
 
 logger = logging.getLogger(__name__)
 
-# Task mapping to provider and model
-# Format: "task_name": {"provider": "gemini" | "openrouter", "model": "model_name"}
-TASK_MAP = {
-    "sens": {
-        "provider": "openrouter",
-        "model": "stepfun/step-3.5-flash:free",
-    },
-    "price_change": {
-        "provider": "openrouter",
-        "model": "stepfun/step-3.5-flash:free",
-    },
-    "research_summary": {
-        "provider": "openrouter",
-        "model": "stepfun/step-3.5-flash:free",
-    },
-    "spot_price": {
-        "provider": "openrouter",
-        "model": "stepfun/step-3.5-flash:free",
-    },
-    "research_extraction": {
-        "provider": "openrouter",
-        "model": "stepfun/step-3.5-flash:free",
-    },
-    "deep_research": {
-        "provider": "gemini",
-        "model": "gemini-3-flash-preview",  # free and comparable to gemini 2.5 pro, which is what we used for the original research generation; flash-preview is more cost-effective for research tasks that don't require the absolute best quality
-    },
+# 1. Define Model Groups
+# Access these via MODELS["ollama"][0], etc.
+MODELS = {
+    "ollama": [
+        "gemma4:e4b",  # Index 0
+        "qwen3:8b"               # Index 1
+    ],
+    "gemini": [
+        "gemini-3-flash-preview",          # Index 0
+        "gemini-3-pro"                   # Index 1
+    ],
+    "openrouter": [
+        "google/gemma-4-26b-a4b-it:free",         # Index 0
+        "nvidia/nemotron-3-super-120b-a12b:free" # Index 1
+    ]
 }
 
-DEFAULT_TASK = {
-    "provider": "openrouter",
-    "model": "stepfun/step-3.5-flash:free",
+# 2. Task mapping using the new structure
+# This is much cleaner and shows exactly which "tier" of a provider you are using.
+TASK_MAP = {
+    "sens":                {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "price_change":        {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "research_summary":    {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "spot_price":          {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "research_extraction": {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "deep_research":       {"p": "gemini",     "m": MODELS["gemini"][0]},
 }
+
+DEFAULT_TASK = {"p": "ollama", "m": MODELS["ollama"][0]}
 
 async def managed_query_ai(task_name: str, prompt: str, **kwargs) -> str:
-    """
-    Centralized router for AI queries.
-    
-    Args:
-        task_name: Key in TASK_MAP (e.g., 'sens', 'spot_price')
-        prompt: The text prompt to send
-        **kwargs: Additional arguments to pass to the underlying provider
-    """
     config = TASK_MAP.get(task_name, DEFAULT_TASK)
-    provider = config["provider"]
-    model = config["model"]
+    provider = config["p"]
+    model = config["m"]
 
-    logger.info("Routing task '%s' to provider '%s' using model '%s'", task_name, provider, model)
+    logger.info(f"Routing task '{task_name}' to {provider} using {model}")
 
+    # Routing logic remains clean
     if provider == "openrouter":
         return await openrouter_llm.query_ai(prompt, model=model)
     elif provider == "gemini":
-        # Pass the model name to our gemini wrapper
-        return await llm.query_ai(prompt, model=model)
-    else:
-        logger.error("Unknown provider '%s' for task '%s'", provider, task_name)
-        return f"Error: Unknown provider {provider}"
+        return await gemini_vertex_llm.query_ai(prompt, model=model)
+    elif provider == "ollama":
+        return await ollama_llm.query_ai(prompt, model=model)
+    
+    logger.error(f"Unknown provider '{provider}'")
+    return f"Error: Unknown provider {provider}"
