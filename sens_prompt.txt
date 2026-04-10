@@ -1,0 +1,323 @@
+
+You are a professional JSE financial analyst.
+
+--- MARKET CONTEXT ---
+Current Share Price: 205.00c
+
+--- END CONTEXT ---
+
+--- MY RESEARCH ---
+
+--- END RESEARCH ---
+
+--- MY STRATEGY ---
+
+--- END STRATEGY ---
+
+--- NEW SENS ANNOUNCEMENT ---
+Unaudited condensed consolidated interim financial results for the six months ended 28 February 2026
+PURPLE GROUP LIMITED
+Incorporated in the Republic of South Africa
+(Registration number: 1998/013637/06)
+ISIN: ZAE000185526
+SHARE CODE: PPE
+(‘Purple Group’ or ‘the Company’ or ‘the Group’)
+UNAUDITED CONDENSED CONSOLIDATED INTERIM FINANCIAL RESULTS FOR THE SIX MONTHS ENDED 28 FEBRUARY 2026
+GROUP FINANCIAL HIGHLIGHTS
+•   Group revenue increased by 8.8% to R258.5 million in the current period (2025 YTD:
+R237.5million);
+•   Group operating expenses increased by 0.5% to R161.1 million in the current period (2025 YTD:
+R160.3 million);
+•   Group profit before tax increased from R59.0 million to R78.7 million in the current period,
+representing an increase of 33.3%;
+•   Group basic and headline earnings per share increased by 21.0% to 2.86 cents compared to 2.36
+cents per share in 2025 YTD;
+•   Profit attributable to ordinary shareholders amounted to R40.6 million in the current period,
+compared to R33.5 million in 2025 YTD, an increase of 21.2%; and
+•   The Group’s net asset value per share increased by 14.9% from 45.35 cents in 2025 YTD to 52.10
+cents in the current period.
+EASY GROUP FINANCIAL HIGHLIGHTS
+•   Easy Group revenue increased by 18.5% to R256.5 million in the current period (2025 YTD: R216.4
+million);
+•   Easy Group operating expenses increased by 1.6% to R146.4 million in the current period (2025
+YTD: R144.1 million);
+•   Easy Group profit before tax increased by 66.3% to R90.5 million in the current period (2025 YTD:
+R54.4 million);
+•   Active clients increased by 21.9% to 1,244,996 in the current period (2025 YTD: 1,021,620);
+•   Client assets increased by 41.2% to R94.93 billion in the current period (2025 YTD: R67.24 billion);
+•   Retail inflows increased by 51.0% to R8.02 billion in the current period (2025 YTD: R5.31);
+•   Retail revenue increased by 28.7% to R189.1 million in the current period (2025 YTD: R146.9
+million); and
+•   Activity based revenue increased by 23.4% to R121.5 million in the current period (2025 YTD:
+R98.4 million).
+LETTER FROM THE CEO
+Well Out In Front
+The numbers are doing the talking.
+The question coming into FY2026 was simple. After a record FY2025, could we compound off it? The
+six months ended 28 February 2026 answers that clearly.
+For years we said the operating leverage was coming. You can see it now in every line of the highlights.
+Revenue up 8.8%.
+Costs up 0.5%. That gap is not an accident. It is the result of a decade of building a platform designed
+to scale, and a client base that deepens its engagement year after year. The consolidated result is the
+headline. Easy Group is the story behind it.
+Operating leverage is not a theory. It is extending.
+Revenue grew eleven times faster than costs. Within these numbers, the Easy Group continues to do
+exactly what it was built to do. Revenue up 18.5%. Costs up 1.6%. Profit before tax up 66.3%. In six
+months, Easy Group generated 84% of what it delivered in the full FY2025. That is not just growth. It is
+acceleration.
+Our strategy has always been simple, and it is worth repeating because it is now showing up clearly in
+the results: acquire clients efficiently, retain them through experience, help them grow their assets, and
+expand their participation across products. Do that consistently and the system starts to work for you.
+That is exactly what we are seeing.
+We are not just growing the top of the funnel. We are converting more effectively, onboarding real
+investors at scale, and doing it at a lower cost. More clients. Better conversion. Lower cost. Stronger
+behaviour.
+Operating leverage is not emerging. It is extending rapidly. Revenue grew eleven times faster than
+costs in the period. The retail efficiency ratio improved from 59% to 52%. Three years ago, that ratio
+was 87%.
+Activity-based revenue, comprising investing and foreign exchange transfer income, grew 23.4% to
+R121.5 million. Non-activity-based revenue, the recurring AUM-linked income from asset management,
+administration, and platform and loyalty fees, grew 14.4% to R135 million and now represents 52.6%
+of total Easy Group revenue. With both streams growing and the recurring component the larger of the
+two, earnings are less sensitive to any single market cycle.
+Clients arrive, stay and keep building.
+1.245 million active clients. R27.7 billion more in assets. Every cohort deepening.
+Total client assets reached R94.9 billion, up 41.2%, representing growth of R27.7 billion in twelve
+months. Retail inflows of R8.0 billion, up 51%, already represent 72% of the full-year FY2025 total in
+just six months. Net inflows as a percentage of average client assets rose to 7.53% from 5.93%. Clients
+from every cohort continue to deepen their engagement, stacking assets year on year, across products,
+through market cycles. That behaviour compounds, and when it does, so does the business.
+EasyRetire Retail is the standout. EasyRetire Retail Client Assets were R0.7 billion three years ago.
+R2.1 billion today. Up 97% in this period alone. The retirement opportunity is just getting started. The
+engine behind it is our 1% transfer campaign, which gives clients a direct financial incentive to bring
+their retirement assets home to EasyEquities. Transfer clients have been arriving at seven times the
+assets of the average EasyEquities retail client. That is not just growth. That is high-quality,
+compounding growth. South Africa has an enormous pool of retirement assets sitting in incumbent
+funds. We are early in a very large opportunity.
+EasyTrader: Behind the hedging loss.
+The financial impact is isolated and resolved. The business underneath it grew strongly.
+At a consolidated level, the EasyTrader result requires context. The segment reported a loss driven
+entirely by a net hedging loss of R21.3 million. This arose from an unusual market condition that broke
+the correlation assumptions within the hedging model. In response, the risk management policy and
+hedging model have been updated to implement like-for-like hedging, eliminating correlation risk
+entirely. Hedging capacity and counterparty arrangements have also been expanded to ensure
+redundancy and increased liquidity. Performance has normalised post period. March 2026 EasyTrader
+revenue came in above R5.7 million, consistent with normal run-rates.
+What matters is what sits underneath that. Funded clients increased 270%. Trades increased 84%.
+Nominal traded value increased 291%. Trading revenue increased 74.4%. The business is scaling
+strongly.
+EasyTrader 2.0 and a partnership-driven entry into prediction markets are both planned for the second
+half, which will diversify revenue further and reduce the hedging book’s weight in the overall result.
+Funded clients: 6,842 (+270%) | Trades: 1.9 million (+84%) | Nominal value traded: R935 billion
+(+291%) | Trading revenue: R20.0 million (+74.4%)
+Easy Asset Management & EasyETFs
+Distribution is the engine. Superior returns the fuel.
+R2 billion in AUM in under eighteen months. And we are still so early.
+Easy Asset Management grew AUM 96.1% to R2.18 billion. EasyETFs passed R2 billion in assets
+under management in March 2026, a milestone reached in under eighteen months of operations.
+These numbers deserve their own space, because what is being built here is more than an asset
+management capability sitting inside a brokerage. It is the beginning of something structurally
+significant.
+Distribution is the engine that powers growth in asset management. Superior returns are the fuel that
+attracts investors. We have both. EasyEquities brings 1.245 million active clients and decades of earned
+trust to the distribution side of that equation. Easy Asset Management and EasyETFs bring the product.
+The combination is rare, and it is ours.
+The opportunity is a trillion-rand industry still largely held in the old world of unit trusts, opaque fee
+structures, and legacy platforms that have not had to compete on transparency. That world is
+transforming. Listed ETFs are pulling assets toward clarity, lower cost, and accessibility at a pace that
+is only accelerating. EasyETFs is positioned at the front of that shift, not chasing it.
+What makes this moment particularly interesting is how early it still is. R2 billion in AUM is a milestone
+worth celebrating. It is also a rounding error relative to where this goes. The pipeline of product, the
+depth of our client relationships, and the scale of the distribution platform we already operate mean the
+trajectory from here is compelling. The old world of asset management did not lack product. It lacked
+access. We are fixing that, one listed ETF at a time.
+Retail deposits. A new and growing baseline. Record after record.
+Then March broke them all again. After crossing the R1 billion mark in monthly retail deposits for the
+first time in February last year, month after month through the second half of 2025, the momentum built.
+January broke October’s record at R1.52 billion, and February went further still at R1.6 billion. Then
+March arrived, in a more volatile global environment, and broke every record in the Company’s history.
+Total deposits exceeded R2.5 billion and retail deposits exceeded R1.9 billion, both all-time records.
+Retail fell just short of the R2 billion milestone, landing more than R270 million above February. The
+direction is clear.
+Deposits represent the point of our growth spear and as such is the most powerful indicator of the health
+of our growth strategies.
+Clear eyes going into the second half.
+The world shifted after February. Here is what changed and what did not.
+Two things have shifted since February, and both matter. Geopolitical risk has increased. Markets are
+more volatile and sentiment is more cautious. At the same time, the interest rate cutting cycle that
+supported flow through 2025 has moved to neutral. The period we are reporting benefited from that
+tailwind however it is unlikely that the second half will. Importantly, interest rates are the lead indicator
+for the propensity for retail investors to make deposits and are worth keeping an eye on when reflecting
+on future periods’ growth.
+We are not planning for a better environment, nor are we dependent on it. Our focus is squarely on the
+things we can control and continue to build even when the noise is loud.
+Philippines – zero in the numbers, everything in the upside. Platform Live.
+Regulatory relationship strong. 500,000 users in sight.
+EasyEquities Philippines is now live in a regulated sandbox with early users transacting in production.
+The country has 115 million people. Our partner GCash has over 97 million registered users, over 80
+million of whom are active, the dominant financial infrastructure of the market.
+The path to scale is 1,000 users in April, 10,000 in May, then approximately 10,000 incremental users
+per month from there. The working assumption is 500,000 active users before the end of 2027. None
+of that is in the current numbers. It is entirely incremental.
+ZARU – the Rand goes global.
+South Africa’s first institutional-grade rand-backed stablecoin.
+On 3 February 2026, EasyEquities became a founding distribution partner for ZARU, South Africa’s first
+institutional-grade rand-backed stablecoin. The collaboration brings together Luno, Sanlam Specialised
+Asset Management, EasyEquities, and Lesaka. Every ZARU coin is backed one-to-one by high-quality
+rand-denominated assets, including cash, bank deposits, and South African government bonds, held
+at Standard Bank and audited monthly by Moore Johannesburg. The reserves stay in South Africa. The
+coin moves anywhere in the world, instantly, at any hour.
+The problem ZARU solves is real. Cross-border payments involving the rand have historically been
+slowed by banking hours, delays, and fees. ZARU operates on a blockchain, enabling 24/7 instant
+settlement while keeping the underlying rand assets anchored in the South African financial system,
+and creating new global demand for rand-denominated holdings in the process.
+For our clients, ZARU opens a genuinely useful new way to hold, transfer, and deploy rand-
+denominated value at internet speed.
+For EasyEquities, it places us at the intersection of traditional investment infrastructure and the
+emerging digital economy, exactly where we want to be.
+Building AI Into Our Bones
+Between 3x and 20x better in the teams that went first. Now we go further.
+Purple Group’s board has approved the acquisition of an AI technology business, subject to due
+diligence currently underway. Over the past two years, we have seen productivity improvements of
+between 3x and 20x in areas where AI has been adopted effectively. This acquisition accelerates that
+across the Group.
+All signs point to this transaction completing. Until it does, we won’t pre-empt it. What we will say is this:
+the capability it brings enables genuinely personalised investment journeys at scale, shaped by each
+client’s actual behaviour, goals, and context; intelligent automation of client service interactions, raising
+consistency and quality without adding headcount; faster engineering cycles, which is the direct path to
+the platform modernisation our clients deserve; and proactive, behaviour-linked engagement that
+deepens the client relationship over time, the direction Thrive has been pointing toward since launch.
+Whether this specific transaction completes or not, our future is AI. Beyond this acquisition, there are
+numerous other exciting opportunities actively in play. Detail as it unfolds through our investor
+communications, media, the EasyBlog, and our socials.
+Speed. Platform. Five Stars.
+Not negotiable.
+We set the standard in Q1. Here is where we are.
+In the FY2025 annual report we set out a framework for the decade: move with speed, deepen client
+engagement, expand product breadth, and unlock the scale advantages we have spent ten years
+building. Coming into FY2026, we added three execution focus areas: Cadence and Speed, Platform
+Experience, and Client Service. Here is an honest account of where we are.
+Easy was built on speed. The teams that embraced AI-assisted development earliest are showing
+visible improvement in cadence, and those results are real. Momentum is growing across the
+organisation. The mandate stands: remove friction, shorten cycles, default to delivery.
+Our platform sits between the architecture of our past and the microservices future we are building. The
+second half needs to show visible improvement in what our 1.245 million clients actually experience
+day to day. We owe them a platform that feels unmistakably Easy, and that is the standard we hold
+ourselves to, every day.
+The client service standard is simple: five stars, every client, every time. Financial dignity begins with
+how we treat people, and that responsibility belongs to every team and every dependency. The
+expectation for year-end is that this is measurably better than it is today.
+Outlook: we build wherever we are.
+The Company is on-track for a strong full-year result.
+Easy Group is also on track for a strong full-year result. The trajectory into FY2027 remains compelling,
+driven by the organic compounding of the existing client base, the Philippines scaling into a revenue
+contributor, and second-half product launches adding incremental earnings. None of that depends on
+a rate cut or a particular macro outcome. It is built on the platform and the behaviour of the clients on
+it.
+We go into the second half with momentum, but also with discipline and realism about the environment.
+There is still work to do. But the direction is clear.
+To every person in this organisation, what you built in these six months shows. Thank you.
+To our clients, partners, shareholders and the Board, your trust is what this is built on.
+Take it Easy,
+Charles Savage, CEO
+SHORT-FORM ANNOUNCEMENT
+This short-form announcement is the responsibility of the directors and is only a summary of the
+information contained in the unaudited condensed consolidated interim financial results for the six
+months ended 28 February 2026 (‘Full Interims’) and does not contain full or complete details. Any
+investment decision should be based on the Full Interims, which is available on our website at
+https://www.purplegroup.co.za/our-financials.html or on the JSE cloudlink at
+https://senspdf.jse.co.za/documents/2026/JSE/ISSE/PPE/PPEInt2026.pdf
+This announcement has not been audited nor reviewed by the Company’s external auditors. Any
+forward-looking statement has not been reviewed or reported on by the Company’s external auditors.
+8 April 2026
+Rosebank
+Sponsor
+Valeo Capital (Pty) Ltd
+Executive directors: Charles Savage (Chief Executive Officer), Gary van Dyk (Chief Financial Officer).
+Non-executive directors: Happy Ntshingila* (Chairman), Arnold Forman*, Craig Carter*, William
+Bassie Maisela*, Bonang Mohale, Mark Barnes, Paul Rutherford (*Independent). Company Secretary:
+CTSE Registry Services Proprietary Limited. Registered office:1F, 173 Oxford Road, Rosebank,
+Johannesburg, 2196.PO Box 411449, Craighall, 2024. Auditors: BDO South Africa Incorporated,
+Registered Auditors, Wanderers OfficePark, 52 Corlett Drive, Illovo, 2196. Share registrars: CTSE
+Registry Services Proprietary Limited. Sponsors: Valeo Capital Proprietary Limited. Unit G02 Skyfall
+Building, De Beers Avenue, Paardevlei, Somerset West, 7130. Purple Group Limited (Incorporated in
+the Republic of South Africa) (Registration number: 1998/013637/06) Share code: PPE ISIN:
+ZAE000185526 (‘Purple Group’ or ‘the Company’ or ‘the Group’) Tax number: 9552/065/64/2.
+Date: 08-04-2026 09:00:00
+Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited (‘JSE’).
+The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
+the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
+indirect, incidental or consequential loss or damage of any kind or nature, howsoever arising, from the use of SENS or the use of, or reliance on,
+information disseminated through SENS.
+--- END SENS ---
+
+INSTRUCTIONS:
+
+1. Significance Classification:
+Classify the SENS announcement into ONE of the following levels ONLY:
+
+- Low:
+Administrative or procedural announcements unlikely to influence valuation or investor behaviour.
+Examples include director dealings, shareholder notifications, share scheme adjustments, or meeting notices.
+
+- Medium:
+Operational or corporate updates that may influence sentiment but are unlikely to materially change valuation.
+Examples include trading updates without large earnings deviations, minor acquisitions/disposals, operational updates, or strategy commentary.
+
+- High:
+Material valuation-impacting announcements likely to influence share price meaningfully.
+Examples include:
+• Results releases (interim or annual)
+• Trading statements with large HEPS deviations
+• Dividends or capital returns
+• M&A transactions
+• Capital raises or debt refinancing
+• Major operational disruptions or production guidance changes
+• Regulatory rulings with earnings impact
+
+2. Significance Explanation:
+Explain WHY the announcement falls into that classification.
+Relate your reasoning to:
+- Key metrics in my research
+- Earnings impact
+- Balance sheet impact
+- Valuation impact
+- Current share price attractiveness or risk
+
+3. Market Impact:
+State whether the news is:
+Positive, Negative, or Neutral
+
+Also explain:
+- Whether the news is likely already priced in
+- Whether current valuation now appears attractive or expensive
+
+4. Action Plan:
+Provide ONE of the following:
+Buy, Sell, Hold, Watchlist
+
+Explicitly reference:
+- Current share price
+- My strategy
+- Whether this SENS changes the investment thesis
+
+5. Research Update Requirement:
+If the announcement contains NEW hard financial data (HEPS, EPS, dividends, guidance, production metrics, balance sheet metrics) respond:
+"Required"
+
+Otherwise respond:
+"Not required"
+
+OUTPUT FORMAT (STRICT):
+
+Significance: <Low / Medium / High>
+Explanation: <text>
+
+Impact: <Positive / Negative / Neutral>
+Impact Explanation: <text>
+
+Action Plan: <Buy / Sell / Hold / Watchlist>
+Action Rationale: <text>
+
+Research Update: <Required / Not required>
+

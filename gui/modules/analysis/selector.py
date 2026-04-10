@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 # Access these via MODELS["ollama"][0], etc.
 MODELS = {
     "ollama": [
-        "gemma4:e4b",  # Index 0
+        "gemma4:e4b-it-q8_0",  # Index 0
         "qwen3:8b"               # Index 1
     ],
     "gemini": [

@@ -1,9 +1,9 @@
 def build_sens_prompt(
-    research, strategy, sens_content, current_price: float | None = None
-):
+    research: str, strategy: str, sens_content: str, current_price: float | None = None
+) -> str:
     price_info = f"Current Share Price: {current_price}c\n" if current_price else ""
 
-    return f"""
+    prompt = f"""
 You are a professional JSE financial analyst.
 
 --- MARKET CONTEXT ---
@@ -93,6 +93,16 @@ Action Rationale: <text>
 Research Update: <Required / Not required>
 
 """
+    # Save a copy of the built prompt to sens_prompt.txt
+    try:
+        with open("sens_prompt.txt", "w", encoding="utf-8") as f:
+            f.write(prompt)
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning("Failed to save sens_prompt.txt: %s", e)
+
+    return prompt
+
 
 
 def build_price_prompt(research, strategy, ticker, new_price, price_level):
