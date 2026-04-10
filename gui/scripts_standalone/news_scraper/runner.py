@@ -17,7 +17,7 @@ from scripts_standalone.results_scraper.watchlist import DBENGINE_IMPORT_PATH, W
 
 from .navigation import click_news
 from .db import DBENGINE_IMPORT_PATH as NEWS_DBENGINE_IMPORT_PATH
-from .db import fetch_max_results_release_datetime
+from .db import fetch_max_results_release_datetime, save_news_item_to_db
 
 
 _NEWS_DATE_RE = re.compile(
@@ -504,6 +504,20 @@ async def run(
 
                         if content_text:
                             txt_path.write_text(content_text + "\n", encoding="utf-8")
+                            logger.info("[%d/%d] Saved text file: %s", downloaded + 1, len(news_items), base_name)
+
+                            # Save to Database
+                            db_saved = await save_news_item_to_db(canon, published, content_text)
+                            if db_saved:
+                                try:
+                                    import modules.analysis.engine as ai_engine
+                                    # Ensure ticker has .JO suffix for the analysis engine
+                                    analyze_ticker = canon if canon.upper().endswith(".JO") else f"{canon}.JO"
+                                    # This triggers AI analysis and saves to action_log
+                                    await ai_engine.analyze_new_sens(analyze_ticker, content_text)
+                                except Exception as ai_ex:
+                                    logger.error("AI Analysis failed for %s: %s", canon, ai_ex)
+
                             downloaded += 1
                         else:
                             logger.warning("No td.NC content extracted from %s", article_url)
@@ -533,7 +547,16 @@ async def run(
                 pass
 
             if not page.is_closed():
-                await close_event.wait()
+                # If we processed items, don't hang forever in CLI mode.
+                # Wait a few seconds for visual confirmation then exit.
+                if tickers_to_process and not list_only:
+                    logger.info("Processing complete. Closing browser in 5 seconds...")
+                    try:
+                        await asyncio.wait_for(close_event.wait(), timeout=5.0)
+                    except asyncio.TimeoutError:
+                        pass
+                else:
+                    await close_event.wait()
 
             logger.info("Detected browser/page close — exiting.")
             await browser.close()

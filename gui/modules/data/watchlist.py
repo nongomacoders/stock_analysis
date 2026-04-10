@@ -45,6 +45,7 @@ async def fetch_watchlist_data():
             SELECT close_price FROM daily_stock_data 
             WHERE ticker = w.ticker ORDER BY trade_date DESC LIMIT 1
         ) p ON true
+        WHERE sd.ticker != 'ZAR_CASH'
         ORDER BY 
             CASE WHEN sd.priority = 'A' THEN 1 
                  WHEN sd.priority = 'B' THEN 2 
@@ -86,6 +87,7 @@ async def select_tickers_for_valuation(limit=None):
                     LIMIT 1) as last_updated_at
             FROM watchlist w
             JOIN stock_details sd ON w.ticker = sd.ticker
+            WHERE sd.ticker != 'ZAR_CASH'
         )
         SELECT ticker, next_expected_date, most_recent_date, second_recent_date, last_updated_at, CURRENT_DATE as today
         FROM ticker_valuation_status
@@ -156,8 +158,8 @@ async def select_tickers_for_valuation(limit=None):
             FROM watchlist w
             JOIN stock_details sd ON w.ticker = sd.ticker
         )
-        SELECT ticker FROM ticker_valuation_status
-        WHERE next_expected_date IS NULL OR next_expected_date <= CURRENT_DATE
+        WHERE (next_expected_date IS NULL OR next_expected_date <= CURRENT_DATE)
+          AND ticker != 'ZAR_CASH'
         ORDER BY last_valuation_date ASC NULLS FIRST, in_portfolio DESC, priority, ticker
     """
     if limit:

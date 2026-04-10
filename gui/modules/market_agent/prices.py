@@ -36,7 +36,7 @@ async def run_price_update():
     logger.debug("Download params: %s", params)
 
     # 2. Get Tickers
-    rows = await DBEngine.fetch("SELECT ticker FROM stock_details")
+    rows = await DBEngine.fetch("SELECT ticker FROM stock_details WHERE ticker != 'ZAR_CASH'")
     tickers = [r["ticker"] for r in rows]
     if not tickers:
         logger.debug("No tickers found in DB.")

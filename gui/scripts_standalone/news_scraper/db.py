@@ -104,3 +104,41 @@ async def fetch_max_results_release_datetime(ticker: str) -> datetime | None:
 
     logger.info("No results_release_date found for %s", db_ticker)
     return None
+
+
+async def save_news_item_to_db(ticker: str, published: datetime, content: str) -> bool:
+    """Save a news item to the SENS table.
+
+    Returns True if inserted, False if it already exists or failed.
+    """
+    logger = logging.getLogger(__name__)
+
+    if not DBEngine:
+        logger.warning("DBEngine not available; cannot save news item")
+        return False
+
+    if not content or not content.strip():
+        logger.warning("Empty content for %s @ %s; skipping", ticker, published)
+        return False
+
+    db_ticker = _normalize_db_ticker(ticker)
+
+    try:
+        # Check for existence using MD5 of content to avoid duplicates with same timestamp
+        check_q = "SELECT 1 FROM SENS WHERE ticker = $1 AND publication_datetime = $2 AND md5(content) = md5($3)"
+        exists = await DBEngine.fetch(check_q, db_ticker, published, content)
+        if exists:
+            logger.info("SENS already exists: %s @ %s", db_ticker, published)
+            return False
+
+        ins_q = """
+            INSERT INTO SENS (ticker, publication_datetime, content)
+            VALUES ($1, $2, $3)
+            ON CONFLICT DO NOTHING
+        """
+        await DBEngine.execute(ins_q, db_ticker, published, content)
+        logger.info("Saved news item to DB: %s @ %s", db_ticker, published)
+        return True
+    except Exception as e:
+        logger.error("Failed to save news item to DB for %s: %s", db_ticker, e)
+        return False

@@ -19,7 +19,7 @@ async def run_sens_check() -> None:
     logger.info("\n[%s] --- Running SENS Check ---", datetime.now().strftime('%H:%M'))
 
     # 1. Fetch Tickers
-    q_tickers = "SELECT ticker FROM stock_details"
+    q_tickers = "SELECT ticker FROM stock_details WHERE ticker != 'ZAR_CASH'"
     rows = await DBEngine.fetch(q_tickers)
     db_tickers = {r["ticker"].replace(".JO", "") for r in rows}
 
