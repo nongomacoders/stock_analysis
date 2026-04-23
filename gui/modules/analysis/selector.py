@@ -25,9 +25,9 @@ MODELS = {
 TASK_MAP = {
     "sens":                {"p": "gemini",     "m": MODELS["gemini"][1]},
     "price_change":        {"p": "ollama",     "m": MODELS["ollama"][0]},
-    "research_summary":    {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "research_summary":    {"p": "gemini",     "m": MODELS["gemini"][1]},
     "spot_price":          {"p": "ollama",     "m": MODELS["ollama"][0]},
-    "research_extraction": {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "research_extraction": {"p": "gemini",     "m": MODELS["gemini"][1]},
     "deep_research":       {"p": "gemini",     "m": MODELS["gemini"][0]},
 }
 
