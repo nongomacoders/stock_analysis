@@ -24,14 +24,14 @@ MODELS = {
 # This is much cleaner and shows exactly which "tier" of a provider you are using.
 TASK_MAP = {
     "sens":                {"p": "gemini",     "m": MODELS["gemini"][1]},
-    "price_change":        {"p": "ollama",     "m": MODELS["ollama"][0]},
-    "research_summary":    {"p": "ollama",     "m": MODELS["ollama"][0]},
-    "spot_price":          {"p": "ollama",     "m": MODELS["ollama"][0]},
-    "research_extraction": {"p": "ollama",     "m": MODELS["ollama"][0]},
+    "price_change":        {"p": "gemini",     "m": MODELS["gemini"][1]},
+    "research_summary":    {"p": "gemini",     "m": MODELS["gemini"][1]},
+    "spot_price":          {"p": "gemini",     "m": MODELS["gemini"][1]},
+    "research_extraction": {"p": "gemini",     "m": MODELS["gemini"][0]},
     "deep_research":       {"p": "gemini",     "m": MODELS["gemini"][0]},
 }
 
-DEFAULT_TASK = {"p": "ollama", "m": MODELS["ollama"][0]}
+DEFAULT_TASK = {"p": "gemini", "m": MODELS["gemini"][1]}
 
 async def managed_query_ai(task_name: str, prompt: str, **kwargs) -> str:
     config = TASK_MAP.get(task_name, DEFAULT_TASK)

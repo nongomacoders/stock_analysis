@@ -253,10 +253,27 @@ class ChartWindow(ttk.Toplevel):
             # Fetch metrics
             metrics = await get_stock_metrics(self.ticker)
 
+            # Fetch next results release date (2nd most recent + 1 year)
+            next_event_date = None
+            try:
+                next_release_q = """
+                    SELECT (results_release_date + interval '1 year')::date AS next_event_date
+                    FROM raw_stock_valuations
+                    WHERE ticker = $1
+                    ORDER BY results_release_date DESC
+                    LIMIT 1 OFFSET 1
+                """
+                nr_rows = await DBEngine.fetch(next_release_q, self.ticker)
+                if nr_rows:
+                    next_event_date = nr_rows[0].get("next_event_date")
+            except Exception:
+                pass
+
             return {
                 "saved_levels": saved_levels,
                 "periods": period_results,
                 "metrics": metrics,
+                "next_event_date": next_event_date,
             }
 
         def _on_loaded(result):
@@ -311,8 +328,8 @@ class ChartWindow(ttk.Toplevel):
                         else:
                             self.upside_label.configure(text="")
 
-            # Load metrics using fetched metrics
-            self.load_metrics(metrics=result.get("metrics"))
+            # Load metrics using fetched metrics and next release date
+            self.load_metrics(metrics=result.get("metrics"), next_event_date=result.get("next_event_date"))
 
         try:
             self.async_run_bg(_fetch(), callback=_on_loaded)
@@ -358,19 +375,13 @@ class ChartWindow(ttk.Toplevel):
                     exc_info=True,
                 )
 
-    def load_metrics(self, metrics=None):
+    def load_metrics(self, metrics=None, next_event_date=None):
         """Load and display stock metrics. If metrics are provided, use them; otherwise fetch asynchronously."""
         # Clear existing items
         for item in self.metrics_tree.get_children():
             self.metrics_tree.delete(item)
 
         def _render_metrics(metrics):
-            if not metrics:
-                self.metrics_tree.insert(
-                    "", END, values=("Status", "No metrics data available")
-                )
-                return
-
             # Helper to format and insert
             def add_row(label, value, fmt="{}", tags=None):
                 display_val = fmt.format(value) if value is not None else "N/A"
@@ -381,82 +392,51 @@ class ChartWindow(ttk.Toplevel):
                 else:
                     self.metrics_tree.insert("", END, values=(label, display_val))
 
-            # Current Price
-            price = metrics.get("current_price")
-            add_row("Current Price", price / 100 if price else None, "R {:.2f}")
-
-            # Update the top info label
-            if price:
-                self.price_val_label.configure(text=f"R {price / 100:.2f}")
-            else:
-                self.price_val_label.configure(text="N/A")
-
-            # P/E Ratio
-            add_row("P/E Ratio", metrics.get("pe_ratio"), "{:.2f}")
-
-            # Dividend Yield
-            add_row("Dividend Yield", metrics.get("div_yield_perc"), "{:.2f}%")
-
-            # PEG Ratio (Historical)
-            add_row("PEG Ratio (Hist)", metrics.get("peg_ratio_historical"), "{:.2f}")
-
-            # Graham Fair Value
-            gfv = metrics.get("graham_fair_value")
-            add_row("Graham Fair Value", gfv / 100 if gfv else None, "R {:.2f}")
-
-            # Valuation Premium
-            add_row(
-                "Valuation Premium", metrics.get("valuation_premium_perc"), "{:.2f}%"
-            )
-
-            # Historical Growth CAGR
-            add_row(
-                "Hist. Growth CAGR", metrics.get("historical_growth_cagr"), "{:.2f}%"
-            )
-
-            # Financials Date
-            add_row("Financials Date", metrics.get("financials_date"), "{}")
-
-        if metrics is not None:
-            _render_metrics(metrics)
-            return
-
-        # Fetch metrics asynchronously
-        try:
-            # Prefer background runner if available
-            if hasattr(self, "async_run_bg") and self.async_run_bg:
-                self.async_run_bg(
-                    get_stock_metrics(self.ticker), callback=_render_metrics
+            if not metrics:
+                self.metrics_tree.insert(
+                    "", END, values=("Status", "No metrics data available")
                 )
             else:
-                # Fallback to synchronous fetch if background runner is not available
-                metrics = self.async_run(get_stock_metrics(self.ticker))
-                _render_metrics(metrics)
-        except Exception:
-            try:
-                metrics = self.async_run(get_stock_metrics(self.ticker))
-            except Exception:
-                metrics = None
-            _render_metrics(metrics)
-        # Next results release date (estimated): same logic as fetch_watchlist_data
-        # Uses the 2nd most recent results_release_date + 1 year.
-        try:
-            next_release_q = """
-                SELECT (results_release_date + interval '1 year')::date AS next_event_date
-                FROM raw_stock_valuations
-                WHERE ticker = $1
-                ORDER BY results_release_date DESC
-                LIMIT 1 OFFSET 1
-            """
-            rows = self.async_run(DBEngine.fetch(next_release_q, self.ticker))
-            next_event_date = None
-            if rows:
-                next_event_date = rows[0].get("next_event_date")
+                # Current Price
+                price = metrics.get("current_price")
+                add_row("Current Price", price / 100 if price else None, "R {:.2f}")
 
+                # Update the top info label
+                if price:
+                    self.price_val_label.configure(text=f"R {price / 100:.2f}")
+                else:
+                    self.price_val_label.configure(text="N/A")
+
+                # P/E Ratio
+                add_row("P/E Ratio", metrics.get("pe_ratio"), "{:.2f}")
+
+                # Dividend Yield
+                add_row("Dividend Yield", metrics.get("div_yield_perc"), "{:.2f}%")
+
+                # PEG Ratio (Historical)
+                add_row("PEG Ratio (Hist)", metrics.get("peg_ratio_historical"), "{:.2f}")
+
+                # Graham Fair Value
+                gfv = metrics.get("graham_fair_value")
+                add_row("Graham Fair Value", gfv / 100 if gfv else None, "R {:.2f}")
+
+                # Valuation Premium
+                add_row(
+                    "Valuation Premium", metrics.get("valuation_premium_perc"), "{:.2f}%"
+                )
+
+                # Historical Growth CAGR
+                add_row(
+                    "Hist. Growth CAGR", metrics.get("historical_growth_cagr"), "{:.2f}%"
+                )
+
+                # Financials Date
+                add_row("Financials Date", metrics.get("financials_date"), "{}")
+
+            # Next Release Date (always shown, uses pre-fetched value)
             soon_tags = None
             try:
                 if next_event_date is not None:
-                    # DB typically returns datetime.date here
                     next_d = next_event_date
                     if hasattr(next_event_date, "date"):
                         next_d = next_event_date.date()
@@ -465,10 +445,24 @@ class ChartWindow(ttk.Toplevel):
                         soon_tags = ("soon_release",)
             except Exception:
                 soon_tags = None
-
             add_row("Next Release Date", next_event_date, "{}", tags=soon_tags)
+
+        if metrics is not None:
+            _render_metrics(metrics)
+            return
+
+        # Fetch metrics asynchronously (only reached when metrics weren't pre-fetched)
+        try:
+            if hasattr(self, "async_run_bg") and self.async_run_bg:
+                self.async_run_bg(
+                    get_stock_metrics(self.ticker), callback=_render_metrics
+                )
+            else:
+                fetched = self.async_run(get_stock_metrics(self.ticker))
+                _render_metrics(fetched)
         except Exception:
-            logging.getLogger(__name__).exception(
-                "[ChartWindow] Failed to load next release date for %s", self.ticker
-            )
-            add_row("Next Release Date", None, "{}")
+            try:
+                fetched = self.async_run(get_stock_metrics(self.ticker))
+            except Exception:
+                fetched = None
+            _render_metrics(fetched)
