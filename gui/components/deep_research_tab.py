@@ -144,10 +144,28 @@ class DeepResearchTab(BaseTextTab):
             return
 
         if hasattr(self, "async_run_bg") and self.async_run_bg:
+            def _on_generated(result):
+                """Refresh the UI after the AI generation finishes."""
+                try:
+                    from modules.data.research import get_research_data
+                    
+                    async def _reload():
+                        data = await get_research_data(self.ticker)
+                        if data and data.get("deepresearch"):
+                            self.load_content(data["deepresearch"])
+                        else:
+                            logger.warning(f"No deepresearch data found for {self.ticker} after rerun")
+
+                    self.async_run_bg(_reload())
+                    logger.info(f"AI DeepResearch complete for {self.ticker}; refresh triggered")
+                except Exception:
+                    logger.exception("Failed to refresh DeepResearchTab after AI generation")
+
             run_bg_with_button(
                 self.rerun_btn,
                 self.async_run_bg,
-                run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000)
+                run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000),
+                callback=_on_generated
             )
         else:
             self.async_run(run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000))
