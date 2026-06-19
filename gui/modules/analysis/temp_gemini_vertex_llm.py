@@ -30,6 +30,7 @@ async def query_ai(prompt: str, model: str = "gemini-3-flash-preview"):
     import os
     from google.api_core import exceptions as google_exceptions
     from google import genai
+    from google.genai import types
     
     start_time = time.time()
     
@@ -51,7 +52,8 @@ async def query_ai(prompt: str, model: str = "gemini-3-flash-preview"):
             client = genai.Client(
                 vertexai=True, 
                 project=project_id, 
-                location=location
+                location=location,
+                http_options=types.HttpOptions(api_version=os.getenv("VERTEX_API_VERSION", "v1beta1"))
             )
             
             # Vertex endpoints require the full publisher path

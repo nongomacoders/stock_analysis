@@ -2,6 +2,7 @@ import os
 import logging
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 
 # Setup logging and environment
 load_dotenv()
@@ -21,7 +22,8 @@ def list_vertex_models():
     client = genai.Client(
         vertexai=True,
         project=project_id,
-        location=location
+        location=location,
+        http_options=types.HttpOptions(api_version=os.getenv("VERTEX_API_VERSION", "v1beta1"))
     )
 
     print(f"\n--- Available Models in {location} for {project_id} ---\n")

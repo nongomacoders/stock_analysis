@@ -1,5 +1,9 @@
 import os
+from dotenv import load_dotenv
 from google import genai
+from google.genai import types
+
+load_dotenv()
 
 # Manually set the path so the SDK can find your "identity"
 # Ensure the filename matches exactly what you downloaded
@@ -8,7 +12,10 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = (
 )
 
 client = genai.Client(
-    vertexai=True, project="gen-lang-client-0567329878", location="us-central1"
+    vertexai=True,
+    project="gen-lang-client-0567329878",
+    location="us-central1",
+    http_options=types.HttpOptions(api_version=os.getenv("VERTEX_API_VERSION", "v1beta1"))
 )
 
 print("--- Available Models ---")

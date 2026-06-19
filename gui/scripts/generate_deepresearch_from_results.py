@@ -401,10 +401,12 @@ def _query_ai_with_pdfs(
     # Preferred model from your saved context
     target_model = "publishers/google/models/gemini-3-flash-preview"
 
-    # CRITICAL: We do NOT pass api_key here when vertexai=True.
-    # The SDK will automatically use the JSON key pointed to by
-    # the GOOGLE_APPLICATION_CREDENTIALS environment variable.
-    client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
+    client = genai.Client(
+        vertexai=True,
+        project=PROJECT_ID,
+        location=LOCATION,
+        http_options=types.HttpOptions(api_version=os.getenv("VERTEX_API_VERSION", "v1beta1"))
+    )
 
     response_text = ""
 

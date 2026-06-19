@@ -16,7 +16,8 @@ LOCATION = os.getenv("VERTEX_LOCATION", "us-central1")
 client = genai.Client(
     vertexai=True,
     project=PROJECT_ID,
-    location=LOCATION
+    location=LOCATION,
+    http_options=types.HttpOptions(api_version=os.getenv("VERTEX_API_VERSION", "v1beta1"))
 )
 
 async def query_ai(
@@ -32,7 +33,8 @@ async def query_ai(
     client = genai.Client(
         vertexai=True,
         project=os.getenv("VERTEX_PROJECT_ID"),
-        location=os.getenv("VERTEX_LOCATION", "us-central1")
+        location=os.getenv("VERTEX_LOCATION", "us-central1"),
+        http_options=types.HttpOptions(api_version=os.getenv("VERTEX_API_VERSION", "v1beta1"))
     )
 
     config = types.GenerateContentConfig(

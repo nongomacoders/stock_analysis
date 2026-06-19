@@ -2,31 +2,39 @@
 You are a professional JSE financial analyst.
 
 --- MARKET CONTEXT ---
-Current Share Price: 20165.00c
+Current Share Price: 18402.00c
 
 --- END CONTEXT ---
 
 --- MY RESEARCH ---
 PRICE LEVELS & TARGETS
-Report Date Share Price: ZAR 179.20
-Report 12-Month Target: ZAR 220.00
-Consensus Target: Not specified
-Valuation Floor (NAV): ZAR 292.34
+Report Date Share Price: ZAR 223.62
+Report 12-Month Target: ZAR 285.00
+Consensus Target: Not provided
+Valuation Floor (NAV): Not provided
 
 CATALYSTS & RISKS
 Positive:
-- Stronger than expected operational recovery in Heineken Beverages and Mediclinic.
-- High probability of further special dividends or share buybacks given liquidity.
-- Potential unbundling of RCL Foods to simplify the group structure.
+- Secured multi-year nickel concentrate off-take agreement with Boliden for Nkomati restart
+- Sustained recovery in PGM basket prices improving segment margins
+- Strong net cash position and consistent dividend flow from Assmang joint venture
+- Completion of solar plant for platinum operations by Q2 F2026
+- Weakening USDZAR providing translational tailwind for export revenues
 
 Negative:
-- Persistent macro-economic headwinds in South Africa impacting consumer-facing assets.
-- Regulatory hurdles or tax leakages during further portfolio restructuring.
-- Market skepticism regarding the valuation of unlisted infrastructure assets (CIVH).
+- Operational costs associated with Beeshoek Mine care and maintenance and retrenchments
+- Logistical constraints on the iron ore export line impacting Khumani volumes
+- Volatility in thermal coal prices impacting ARM Coal profitability
+- Increased cost of imported capital equipment for the Bokoni ramp-up
+- Cessation of sales to ArcelorMittal South Africa
 
 KEY DATES
-Debt / Facilities Maturing: Not specified
-Project Timelines / Milestones: Not specified
+Debt / Facilities Maturing:
+- Not provided
+
+Project Timelines / Milestones:
+- Beeshoek Mine care and maintenance commencement: October 2025
+- Completion of solar plant for platinum operations: Q2 F2026
 --- END RESEARCH ---
 
 --- MY STRATEGY ---
@@ -34,408 +42,37 @@ Project Timelines / Milestones: Not specified
 --- END STRATEGY ---
 
 --- NEW SENS ANNOUNCEMENT ---
-Dealings in securities by executive directors, prescribed officers and the company secretary
-Remgro Limited
+Acquisition of Securities by clients of Allan Gray Proprietary Limited
+African Rainbow Minerals Limited
 (Incorporated in the Republic of South Africa)
-(Registration number 1968/006415/06)
-(ISIN: ZAE000026480)
-(JSE and A2X Share code: REM)
-(‘Remgro’ or ‘the Company’)
-DEALINGS IN SECURITIES BY EXECUTIVE DIRECTORS, PRESCRIBED OFFICERS AND THE
-COMPANY SECRETARY
-In compliance with paragraphs 6.77 to 6.80 of the JSE Limited Listings
-Requirements, the following information is disclosed.
-The Executive Directors and Prescribed Officers of Remgro have traded the
-first tranche of the 2022 ordinary shares with performance conditions under
-the Conditional Share Plan (‘Performance CSPs’), the second tranche of the
-2021 Performance CSP’s as well as the third tranche of the 2020 Performance
-CSPs, awarded on 5 December 2022, 5 December 2021 and 5 December 2020,
-respectively, which vested on 5 December 2025.In addition,       previously
-vested Performance Share Appreciation Rights (‘SARs’)were exercised.
-The Company Secretary of Remgro has traded the first tranche of the 2022
-Retention Conditional Share Plan Awards (‘Retention CSPs’), the second
-tranche of the 2021 Retention CSPs and the third tranche of the 2020
-Retention CSPs, allocated on 5 December 2022, 5 December 2021 and 5 December
-2020, which vested on 5 December 2025.
-The vesting of the awards was subject to the satisfaction of the Performance
-Conditions, where applicable, and the Employment Conditions as determined
-by the Remuneration and Nomination Committee. The Performance Conditions
-comprise the achievement of certain Company financial measures, which
-include Growth in Intrinsic Net Asset Value, Growth in Free Cash Flow at
-the Centre, Environmental, Social & Governance measures, as well as non-
-financial Individual Performance Conditions.
-1. Dealings in securities by Executive Directors and Prescribed Officers
-Director                              :   Mr J J Durand
-Company                               :   Remgro Limited
-Nature of transactions                :   Off-market vesting of Performance
-CSPs and the subsequent on-market
-sale of shares.
-Date of award                         :   5 December 2020
-Vesting period                        :   5 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   73%
-Annual number of vested awards        :   64 145
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R12 062 467.25
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   64 145
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R191.46
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R12 281 201.70
-Date of award                         :   5 December 2021
-Vesting period                        :   4 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   89.02%
-Annual number of vested awards        :   59 839
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R11 252 723.95
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   59 839
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R191.46
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R11 456 774.94
-Date of award                         :   5 December 2022
-Vesting period                        :   3 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   83.7%
-Annual number of vested awards        :   51 722
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R9 726 322.10
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   51 722
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R191.46
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R9 902 694.12
-Nature of interest                    :   Direct beneficial
-Clearance obtained                    :   Yes
-Director                              :   Mr N J Williams
-Company                               :   Remgro Limited
-Nature of transactions                :   Off-market vesting of Performance
-CSPs and the subsequent on-market
-sale of a portion of the shares to
-settle the tax liability.
-Date of award                         :   5 December 2020
-Vesting period                        :   5 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   73%
-Annual number of vested awards        :   19 650
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R 3 695 182.50
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   9 070
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R190.31
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R1 726 111.70
-Number of vested shares transferred       10 580
-Date of award                         :   5 December 2021
-Vesting period                        :   4 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   89.02%
-Annual number of vested awards        :   18 335
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R3 447 896.75
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   8 466
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R190.31
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R1 611 164.46
-Number of vested shares transferred       9 869
-Date of award                         :   5 December 2022
-Vesting period                        :   3 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   83.7%
-Annual number of vested awards        :   17 613
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R3 312 124.65
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   17 613
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R191.46
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R3 372 184.98
-Nature of interest                    :   Direct beneficial
-Clearance obtained                    :   Yes
-Director                              :   Ms M Lubbe
-Company                               :   Remgro Limited
-Nature of transactions                :   Off-market vesting of
-Performance CSPs and the
-subsequent on-market sale of a
-portion of the shares to settle
-the tax liability. Off-market
-exercise of Performance SARs and
-the subsequent on-market sale of
-resultant shares.
-Date of award                         :   5 December 2020
-Vesting period                        :   5 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   73%
-Annual number of vested awards        :   12 657
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R 2 380 148.85
-Date of sale of shares                :   8 April 2026
-Number of shares sold                 :   5 449
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R197.48
-Highest sale price                    :   R198.47
-Lowest sale price                     :   R195.82
-Total value of transaction            :   R1 076 068.52
-Number of vested shares transferred       7 208
-Date of award                         :   5 December 2021
-Vesting period                        :   4 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   89.02%
-Annual number of vested awards        :   11 813
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R2 221 434.65
-Date of sale of shares                :   8 April 2026
-Number of shares sold                 :   5 085
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R197.48
-Highest sale price                    :   R198.47
-Lowest sale price                     :   R195.82
-Total value of transaction            :   R1 004 185.80
-Number of vested shares transferred       6 728
-Date of award                         :   5 December 2022
-Vesting period                        :   3 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   83.7%
-Annual number of vested awards        :   11 351
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R2 134 555.55
-Date of sale of shares                :   8 April 2026
-Number of shares sold                 :   4 885
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R197.48
-Highest sale price                    :   R198.47
-Lowest sale price                     :   R195.82
-Total value of transaction            :   R964 689.80
-Number of vested shares transferred       6 466
-Date of award                         :   5 December 2020
-Percentage of awards vested           :   71%
-Date of exercise of Performance SARs  :   7 April 2026
-Number    and   offer    price    of  :   9 249 @ R86.17
-Performance SARs exercised
-Exercise price                        :   R188.05
-Total growth value of exercise        :   R942 318.55
-Number of resultant shares received   :   5 011
-in respect of Performance SARs
-exercised
-Date of sale of shares                :   8 April 2026
-Number of shares sold                 :   5 011
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R196.69
-Highest sale price                    :   R198.47
-Lowest sale price                     :   R195.82
-Total value of transaction            :   R985 613.59
-Nature of interest                    :   Direct beneficial
-Clearance obtained                    :   Yes
-Prescribed officer                    :   Mr P R Louw
-Company                               :   Remgro Limited
-Nature of transactions                :   Off-market vesting of
-Performance CSPs and the
-subsequent on-market sale of a
-portion of the shares to settle
-the tax liability.
-Off-market exercise of
-Performance SARs and the
-subsequent on-market sale of a
-portion of the resultant shares
-to settle the tax liability.
-Date of award                         :   5 December 2020
-Vesting period                        :   5 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   73%
-Annual number of vested awards        :   12 657
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R 2 380 148.85
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   5 696
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R190.26
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R1 083 720.96
-Number of vested shares transferred       6 961
-Date of award                         :   5 December 2021
-Vesting period                        :   4 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   89.02%
-Annual number of vested awards        :   11 813
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R2 221 434.65
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   5 456
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R190.31
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R1 038 331.36
-Number of vested shares transferred       6 357
-Date of award                         :   5 December 2022
-Vesting period                        :   3 years from date of award
-Date of vesting                       :   5 December 2025
-Percentage of award vested            :   83.7%
-Annual number of vested awards        :   11 351
-*Exercise price                       :   R188.05
-Total value of vested awards          :   R2 134 555.55
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   5 108
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R190.26
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R971 848.08
-Number of vested shares transferred   :   6 243
-Date of award                             5 December 2020
-Percentage of awards vested           :   73%
-Date of exercise of Performance SARs  :   7 April 2026
-Number    and   offer    price    of  :   11 302 @ R86.63
-Performance SARs exercised
-Exercise price                        :   R188.05
-Total growth value of exercise        :   R1 146 352.80
-Number of shares received in respect  :   6 096
-of Performance SARs exercised
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   2 724
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R190.24
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R518 213.76
-Number of vested shares transferred   :   3 372
-Date of award                             5 December 2021
-Percentage of awards vested           :   89.02%
-Date of exercise of Performance SARs  :   7 April 2026
-Number    and   offer    price    of  :   10 622 @ R118.38
-Performance SARs exercised
-Exercise price                        :   R188.05
-Total growth value of exercise        :   R740 164.80
-Number of shares received in respect  :   3 936
-of Performance SARs exercised
-Date of sale of shares                :   7 April 2026
-Number of shares sold                 :   3 936
-Class of securities                   :   Ordinary shares
-Volume weighted average sale price    :   R191.46
-Highest sale price                    :   R192.96
-Lowest sale price                     :   R189.00
-Total value of transaction            :   R753 586.56
-Nature of interest                    :   Direct beneficial
-Clearance obtained                    :   Yes
-2. Dealings in securities by Company Secretary
-Company Secretary                     :   Mr L J Joubert
-Company                               :   Remgro Limited
-Nature of transactions                :   Off-market vesting of awards in
-terms of the Retention CSPs and
-shares received pursuant to the
-respective unbundling of
-Grindrod Limited and eMedia
-Holdings, the subsequent on-
-market sale of shares as well as
-shares sold in his private
-capacity.
-Date of award                        :   5 December 2020
-Vesting period                       :   5 years from date of awards
-Date of vesting                      :   5 December 2025
-Number of awards vested              :   3 835
-*Exercise price                      :   R188.05
-Total value of vested awards         :   R721 171.75
-Date of sale of shares               :   7 April 2026
-Number of shares sold                :   3 835
-Class of securities                  :   Ordinary shares
-Volume weighted average sale price   :   R191.46
-Highest sale price                   :   R192.96
-Lowest sale price                    :   R189.00
-Total value of transaction           :   R734 249.10
-Date of award                        :   5 December 2021
-Vesting period                       :   4 years from date of award
-Date of vesting                      :   5 December 2025
-Number of awards vested              :   2 934
-*Exercise price                      :   R188.05
-Total value of vested awards         :   R551 738.70
-Date of sale of shares               :   7 April 2026
-Number of shares sold                :   2 934
-Class of securities                  :   Ordinary shares
-Volume weighted average sale price   :   R191.46
-Highest sale price                   :   R192.96
-Lowest sale price                    :   R189.00
-Total value of transaction           :   R561 743.64
-Date of award                        :   12 October 2022
-Vesting period                       :   3 years from date of award
-Date of vesting                      :   5 December 2025
-Number of awards vested              :   147
-*Exercise price                      :   R188.05
-Total value of vested awards         :   R27 643.35
-Date of sale of shares               :   7 April 2026
-Number of shares sold                :   147
-Class of securities                  :   Ordinary shares
-Volume weighted average sale price   :   R191.46
-Highest sale price                   :   R192.96
-Lowest sale price                    :   R189.00
-Total value of transaction           :   R28 144.62
-Date of award                        :   5 December 2022
-Vesting period                       :   3 years from date of award
-Date of vesting                      :   5 December 2025
-Number of awards vested              :   3 453
-*Exercise price                      :   R188.05
-Total value of vested awards         :   R649 336.65
-Date of sale of shares               :   7 April 2026
-Number of shares sold                :   3 453
-Class of securities                  :   Ordinary shares
-Volume weighted average sale price   :   R191.46
-Highest sale price                   :   R192.96
-Lowest sale price                    :   R189.00
-Total value of transaction           :   R661 111.38
-Date of award                        :   5 December 2023
-Vesting period                       :   2 years from date of award
-Date of vesting                      :   5 December 2025
-Number of awards vested              :   1 268
-*Exercise price                      :   R188.05
-Total value of vested awards         :   R238 447.40
-Date of sale of shares               :   7 April 2026
-Number of shares sold                :   1 268
-Class of securities                  :   Ordinary shares
-Volume weighted average sale price   :   R191.46
-Highest sale price                   :   R192.96
-Lowest sale price                    :   R189.00
-Total value of transaction           :   R242 771.28
-Date of award                        :   13 October 2025
-Vesting period                       :   1 years from date of award
-Date of vesting                      :   5 December 2025
-Number of awards vested              :   71
-*Exercise price                      :   R188.05
-Total value of vested awards         :   R13 351.55
-Date of sale of shares               :   7 April 2026
-Number of shares sold                :   71
-Class of securities                  :   Ordinary shares
-Volume weighted average sale price   :   R191.46
-Highest sale price                   :   R192.96
-Lowest sale price                    :   R189.00
-Total value of transaction           :   R13 593.66
-Date of sale of shares               :   7 April 2026
-Number of private shares sold        :   6 607
-Class of securities                  :   Ordinary shares
-Volume weighted average sale price   :   191.00
-Total value of transaction           :   R1 261 937.00
-Nature of interest                   :   Direct beneficial
-Clearance obtained                   :   Yes
-* based on the 5-day volume weighted average Remgro share price as at close
-of business 2 April 2026.
-Stellenbosch
-10 April 2026
-Sponsor
-RAND MERCHANT BANK (a division of FirstRand Bank Limited)
-Date: 10-04-2026 05:42:00
+(Registration number 1933/004580/06)
+JSE Share code: ARI
+ISIN: ZAE000054045
+(‘ARM’ or ‘the Company’)
+ACQUISITION OF SECURITIES BY CLIENTS OF ALLAN GRAY PROPRIETARY LIMITED (‘Allan Gray’)
+In accordance with section 122(3)(b) of the Companies Act, No. 71 of 2008, as amended (the
+‘Companies Act’), and paragraph 6.54 of the JSE Limited Listings Requirements, shareholders are
+hereby advised that ARM has received formal notification that clients of Allan Gray, in aggregate,
+acquired an interest in the ordinary shares of the Company, such that the total interest in the ordinary
+shares of the Company held by Allan Gray’s clients now amounts to 5.08% of the total issued ordinary
+shares of the Company.
+The Company has filed the requisite notice with the Takeover Regulation Panel, per section 122(3)(a)
+of the Companies Act. Further, as required in terms of section 122(3A) of the Companies Act, the
+Company has filed the requisite notice with the Companies and Intellectual Property Commission.
+The board of directors of the Company accepts responsibility for the information contained in this
+announcement and confirms that, to the best of their knowledge and belief, such information is true,
+and this announcement does not omit anything likely to affect the importance of the information
+included.
+ENDS
+For all investor relations queries, please contact:
+Thabang Thlaku
+Executive: Investor relations and new business development
+Office: +27 11 779 1300 | Email: thabang.thlaku@arm.co.za
+Sandton
+19 June 2026
+Sponsor:
+Investec Bank Limited
+Date: 19-06-2026 09:55:00
 Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited (‘JSE’).
 The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
 the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
