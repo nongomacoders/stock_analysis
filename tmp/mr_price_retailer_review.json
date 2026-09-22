@@ -1,0 +1,27 @@
+{
+  "ticker": "MRP.JO",
+  "report_version_id": "211a29ee-a8f4-4d30-b4fa-c799d6c7034b",
+  "deepresearch_date": "2026-07-26",
+  "plan_status": "draft",
+  "plan_saved_to_database": false,
+  "forecast_periods": [],
+  "assumptions": [],
+  "engine_mapping": null,
+  "valuation_status": "NOT_CALCULABLE",
+  "target_price": null,
+  "reason": [
+    "No typed current-report DCF evidence or approved annual retailer forecast plan"
+  ],
+  "typed_financial_metrics_in_database": 0,
+  "latest_raw_sharedata_observation": {
+    "results_period_end": "2026-03-09",
+    "results_period_label": "Mar 2026Final (12m)5 Jun 2026",
+    "results_release_date": "2026-06-05",
+    "source": "sharedata",
+    "heps_12m_zarc": "1453.9000",
+    "dividend_12m_zarc": "916.0000",
+    "cash_gen_ps_zarc": "3055.1000",
+    "nav_ps_zarc": "3732.0000"
+  },
+  "data_quality_note": "Stored results_period_end is 2026-03-09 while label says Mar 2026 Final; fiscal dates were not inferred."
+}

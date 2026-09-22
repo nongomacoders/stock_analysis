@@ -1,0 +1,20 @@
+{
+  "label": "SYNTHETIC RETAILER TEST ONLY - NOT MR PRICE",
+  "status": "PASS",
+  "valuation_date": "2026-06-30",
+  "year_count": 5,
+  "first_year": {
+    "period_end": "2027-06-30",
+    "revenue": "1000",
+    "ebitda": "350",
+    "ebit": "300",
+    "fcf": "205.00"
+  },
+  "enterprise_value": "3189.654452624446050205015870",
+  "equity_value": "3109.654452624446050205015870",
+  "forward_shares": "100",
+  "target_price_zar": "31.10",
+  "mining_bridge_used": false,
+  "terminal_growth": "0.03",
+  "wacc": "0.116"
+}

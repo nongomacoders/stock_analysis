@@ -268,6 +268,10 @@ def validate_candidate(c: ValuationInputCandidate, metrics: list[FinancialMetric
         add("UNRESOLVED_ASSUMPTION", Severity.ERROR, "Provenance or classification is unresolved.")
     if base and m.assumption_type == AssumptionType.PREVIOUS_REPORT:
         add("PREVIOUS_REPORT_BASE", Severity.ERROR, "Previous-report value needs current revalidation.")
+    if base and m.assumption_type == AssumptionType.HISTORICAL_ACTUAL and f in {
+            ValuationField.REVENUE, ValuationField.OPERATING_MARGIN}:
+        add("HISTORICAL_FORWARD_ASSUMPTION", Severity.ERROR,
+            "Historical revenue or margin is calibration evidence, not an approved forward forecast.")
     if c.selected_value is None:
         add("MISSING_VALUE", Severity.ERROR, "No selected numeric value is established.")
     if m.unit is None or c.normalized_unit is None:

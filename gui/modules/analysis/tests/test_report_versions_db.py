@@ -45,6 +45,9 @@ def test_migration_versions_manual_edits_and_failed_attempts(monkeypatch, tmp_pa
             valuation_migration = Path(__file__).resolve().parents[3] / "core/db/migrations/add_deterministic_valuations.sql"
             await connection.execute(valuation_migration.read_text(encoding="utf-8"))
             await connection.execute(valuation_migration.read_text(encoding="utf-8"))
+            forecast_migration = Path(__file__).resolve().parents[3] / "core/db/migrations/add_forecast_plans.sql"
+            await connection.execute(forecast_migration.read_text(encoding="utf-8"))
+            await connection.execute(forecast_migration.read_text(encoding="utf-8"))
             old_id = await connection.fetchval("SELECT current_report_id FROM stock_analysis")
             assert old_id
             assert await connection.fetchval("SELECT count(*) FROM deepresearch_versions") == 1
@@ -95,7 +98,8 @@ def test_migration_versions_manual_edits_and_failed_attempts(monkeypatch, tmp_pa
                 valuation_date=date(2026, 9, 18), status=ValuationStatus.PASS,
                 target_price=Decimal(10), reconciliation=reconciled)
             await save_valuation_result(calculated)
-            assert await connection.fetchval("SELECT published_at IS NOT NULL FROM deterministic_valuations WHERE valuation_id=$1::uuid", calculated.valuation_id)
+            assert await connection.fetchval("SELECT publication_state FROM deterministic_valuations WHERE valuation_id=$1::uuid", calculated.valuation_id) == "draft"
+            assert await connection.fetchval("SELECT published_at FROM deterministic_valuations WHERE valuation_id=$1::uuid", calculated.valuation_id) is None
             assert await connection.fetchval("SELECT deepresearch FROM stock_analysis") == "New report"
             assert str(await connection.fetchval("SELECT current_report_id FROM stock_analysis")) == archive.report_id
             assert await connection.fetchval("SELECT report_content FROM deepresearch_versions WHERE report_id=$1", old_id) == "Original legacy report"

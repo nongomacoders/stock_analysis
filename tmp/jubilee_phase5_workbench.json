@@ -1,0 +1,93 @@
+{
+  "forecast_plan_id": "1c773a50-370e-4bda-841a-8204731a562e",
+  "plan_version": 1,
+  "status": "draft",
+  "source_report_version_id": "4ba90b6a-4e37-4741-a3d3-ad183249c9a4",
+  "legacy_target": "1.70",
+  "assumptions": 0,
+  "fiscal_periods": 0,
+  "engine_mapping": false,
+  "deterministic_target": null,
+  "deterministic_status": "NOT_CALCULABLE",
+  "evidence": [
+    {
+      "name": "production_contained_metal",
+      "value": null,
+      "low": 2850,
+      "high": 3150,
+      "unit": "tonnes_contained_metal",
+      "operation": "Roan",
+      "classification": "formal_guidance",
+      "source": "sens:5513",
+      "source_date": "2026-09-14"
+    },
+    {
+      "name": "production_rom_feed",
+      "value": 10000,
+      "low": null,
+      "high": null,
+      "unit": "tonnes_rom_per_month",
+      "operation": "Molefe",
+      "classification": "management_target",
+      "source": "sens:5513",
+      "source_date": "2026-09-14"
+    },
+    {
+      "name": "production_contained_metal",
+      "value": 1740,
+      "low": null,
+      "high": null,
+      "unit": "tonnes_contained_metal",
+      "operation": "Molefe",
+      "classification": "management_target",
+      "source": "sens:5513",
+      "source_date": "2026-09-14"
+    },
+    {
+      "name": "production_contained_metal",
+      "value": 3739,
+      "low": null,
+      "high": null,
+      "unit": "tonnes_contained_metal",
+      "operation": "Roan/Molefe combined",
+      "classification": "historical_actual",
+      "source": "sens:5513",
+      "source_date": "2026-09-14"
+    },
+    {
+      "name": "production_saleable_product",
+      "value": 2120,
+      "low": null,
+      "high": null,
+      "unit": "tonnes_saleable_product",
+      "operation": "Roan/Molefe combined",
+      "classification": "historical_actual",
+      "source": "sens:5513",
+      "source_date": "2026-09-14"
+    },
+    {
+      "name": "issued_shares_current",
+      "value": 3381330240,
+      "low": null,
+      "high": null,
+      "unit": "shares",
+      "operation": null,
+      "classification": "historical_actual",
+      "source": "sens:4955",
+      "source_date": "2026-08-11"
+    }
+  ],
+  "missing": [
+    "analyst-selected fiscal periods",
+    "Molefe recovery and ramp",
+    "saleable conversion",
+    "commodity-price forecast",
+    "FX forecast",
+    "operating/corporate costs",
+    "sustaining/growth capex",
+    "working capital",
+    "WACC components",
+    "terminal assumptions or sourced SOTP values",
+    "equity bridge"
+  ]
+}

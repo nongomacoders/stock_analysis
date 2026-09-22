@@ -18,6 +18,7 @@ from components.strategy_tab import StrategyTab
 from components.research_tab import ResearchTab
 from components.sens_tab import SensTab
 from components.action_log_tab import ActionLogTab
+from components.valuation_workbench_tab import ValuationWorkbenchTab
 
 
 class ResearchWindow(ttk.Toplevel):
@@ -91,6 +92,7 @@ class ResearchWindow(ttk.Toplevel):
         self.master_research_tab.ticker = ticker
         self.action_log_tab.ticker = ticker
         self.sens_tab.ticker = ticker
+        self.valuation_workbench_tab.update_ticker(ticker)
 
         self.load_research()
 
@@ -127,6 +129,9 @@ class ResearchWindow(ttk.Toplevel):
 
         self.sens_tab = SensTab(self.notebook, self.ticker, self.async_run, self.async_run_bg)
         self.notebook.add(self.sens_tab, text="SENS")
+
+        self.valuation_workbench_tab = ValuationWorkbenchTab(self.notebook, self.ticker, self.async_run_bg)
+        self.notebook.add(self.valuation_workbench_tab, text="Valuation")
 
         self.action_log_tab = ActionLogTab(self.notebook, self.ticker, self.async_run, self.async_run_bg)
         self.notebook.add(self.action_log_tab, text="Action Log")

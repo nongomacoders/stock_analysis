@@ -335,7 +335,8 @@ def _operational_revenue(spec: OperationalRevenueSpec, period_end: date,
                        "cash_flow_currency": currency, "revenue_in_cash_flow_currency": str(converted)}
 
 
-def _year(spec: YearInputSpec, resolver: Resolver, case: str, currency: str) -> ForecastYear:
+def _year(spec: YearInputSpec, resolver: Resolver, case: str, currency: str,
+          forecast_start: date) -> ForecastYear:
     missing = [field for field in YEAR_FIELDS if field not in spec.inputs
                and not (field == "revenue" and spec.operational_revenue)
                and not (field == "operating_cost" and spec.cost_components)]
@@ -362,13 +363,13 @@ def _year(spec: YearInputSpec, resolver: Resolver, case: str, currency: str) -> 
                         "other_operating": "other_operating_cost"}
             costs = {name: resolver.get(ref, required_case=case,
                                         expected_field=expected[name], currency=currency,
-                                        forecast_period_start=spec.operational_revenue.period_start if spec.operational_revenue else None)
+                                        forecast_period_start=spec.operational_revenue.period_start if spec.operational_revenue else forecast_start)
                      for name, ref in spec.cost_components.items()}
             values[field] = cost_bridge(CostSchedule(**costs))["operating_cost"]
         else:
             values[field] = resolver.get(spec.inputs[field], required_case=case, expected_field=field,
                                          fraction=field == "tax_rate", currency=None if field == "tax_rate" else currency,
-                                         forecast_period_start=spec.operational_revenue.period_start if spec.operational_revenue else None)
+                                         forecast_period_start=spec.operational_revenue.period_start if spec.operational_revenue else forecast_start)
     accounting = earnings_bridge(revenue=values["revenue"], operating_cost=values["operating_cost"],
                                  corporate_cost=values["corporate_cost"], depreciation=values["depreciation"],
                                  net_finance_cost=values["net_finance_cost"], tax_rate=values["tax_rate"])
@@ -415,7 +416,10 @@ def _dcf(spec: DcfSpec | None, resolver: Resolver, case: str) -> ValuationMethod
     try:
         if not spec.years:
             raise MissingInput("explicit forecast years")
-        years = [_year(y, resolver, case, spec.cash_flow_currency) for y in spec.years]
+        years = [_year(y, resolver, case, spec.cash_flow_currency,
+                       spec.valuation_date + timedelta(days=1) if i == 0
+                       else spec.years[i - 1].period_end + timedelta(days=1))
+                 for i, y in enumerate(spec.years)]
         wacc = _wacc(spec.wacc, resolver, case)
         g = None; multiple = None; terminal_metric = None
         if spec.terminal_method == TerminalMethod.PERPETUITY_GROWTH:
