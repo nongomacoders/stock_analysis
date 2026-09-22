@@ -146,39 +146,14 @@ async def estimate_spot_price(ticker: str):
     commodity_avgs = []
     fx_avgs = []
     try:
-        q1 = "SELECT commodity, AVG(price) AS avg_price, COUNT(*) AS cnt FROM commodity_prices WHERE collected_ts >= $1 GROUP BY commodity ORDER BY cnt DESC"
-        rows1 = await DBEngine.fetch(q1, report_date)
-        if rows1:
-            for r in rows1:
-                try:
-                    commodity_avgs.append((r["commodity"], float(r["avg_price"]), int(r["cnt"])))
-                except Exception:
-                    continue
-
-        q2 = "SELECT pair, AVG(rate) AS avg_rate, COUNT(*) AS cnt FROM fx_rates WHERE collected_ts >= $1 GROUP BY pair ORDER BY cnt DESC"
-        rows2 = await DBEngine.fetch(q2, report_date)
-        if rows2:
-            for r in rows2:
-                try:
-                    fx_avgs.append((r["pair"], float(r["avg_rate"]), int(r["cnt"])))
-                except Exception:
-                    continue
-
-        # Also compute an overall weighted average (fallback)
-        total_comm = sum(avg * cnt for (_, avg, cnt) in commodity_avgs) if commodity_avgs else 0.0
-        total_comm_cnt = sum(cnt for (_, _, cnt) in commodity_avgs) if commodity_avgs else 0
-        avg_comm = (total_comm / total_comm_cnt) if total_comm_cnt else None
-
-        total_fx = sum(avg * cnt for (_, avg, cnt) in fx_avgs) if fx_avgs else 0.0
-        total_fx_cnt = sum(cnt for (_, _, cnt) in fx_avgs) if fx_avgs else 0
-        avg_fx = (total_fx / total_fx_cnt) if total_fx_cnt else None
-
+        from modules.analysis.market_context import fetch_market_averages
+        commodity_avgs, fx_avgs = await fetch_market_averages(report_date)
+        # Keep this auxiliary estimate's existing six-decimal prompt precision.
+        for item in commodity_avgs + fx_avgs:
+            item["supplied_value"] = f"{item['value']:.6f}"
     except Exception:
         logger.exception("Failed to compute averages for %s", ticker)
-        commodity_avgs = []
-        fx_avgs = []
-        avg_comm = None
-        avg_fx = None
+        commodity_avgs, fx_avgs = [], []
 
     # 3) Build prompt and query AI
     try:

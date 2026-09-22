@@ -37,6 +37,9 @@ async def managed_query_ai(task_name: str, prompt: str, **kwargs) -> str:
     config = TASK_MAP.get(task_name, DEFAULT_TASK)
     provider = config["p"]
     model = config["m"]
+    trace = kwargs.get("request_trace")
+    if trace is not None:
+        trace.update(provider=provider, model=model, temperature=None)
 
     logger.info(f"Routing task '{task_name}' to {provider} using {model}")
 
@@ -44,7 +47,10 @@ async def managed_query_ai(task_name: str, prompt: str, **kwargs) -> str:
     if provider == "openrouter":
         return await openrouter_llm.query_ai(prompt, model=model)
     elif provider == "gemini":
-        return await gemini_vertex_llm.query_ai(prompt, model=model)
+        return await gemini_vertex_llm.query_ai(
+            prompt, model=model, request_trace=trace,
+            trace_callback=kwargs.get("trace_callback"),
+        )
     elif provider == "ollama":
         return await ollama_llm.query_ai(prompt, model=model)
     

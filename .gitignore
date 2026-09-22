@@ -38,6 +38,7 @@ Desktop.ini
 # ---- App-specific generated output ----
 # Generated analysis outputs (often large)
 /gui/results/
+/gui/report_evidence/
 
 # Runtime logs
 /gui/logs/

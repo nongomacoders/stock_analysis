@@ -33,7 +33,8 @@ async def get_research_data(ticker: str):
             strategy,
             research,
             deepresearch,
-            deepresearch_date
+            deepresearch_date,
+            current_report_id
         FROM stock_analysis
         WHERE ticker = $1
     """
@@ -119,14 +120,9 @@ async def save_deep_research_data(ticker: str, content: str):
     if not content or content.strip() == "" or content == "No data available.":
         raise ValueError(f"Cannot save empty deep research content for {ticker}")
     
-    query = """
-        INSERT INTO stock_analysis (ticker, deepresearch, deepresearch_date)
-        VALUES ($1, $2, CURRENT_DATE)
-        ON CONFLICT (ticker) DO UPDATE SET 
-            deepresearch = EXCLUDED.deepresearch,
-            deepresearch_date = EXCLUDED.deepresearch_date
-    """
-    await DBEngine.execute(query, ticker, content)
+    from modules.data.report_versions import save_manual_report
+    return await save_manual_report(ticker, content)
+
 
 
 async def get_latest_deepresearch_with_upside(limit=50):

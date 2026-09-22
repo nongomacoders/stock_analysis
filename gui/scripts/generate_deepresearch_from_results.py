@@ -28,7 +28,7 @@ import logging
 import sys
 import time
 import os
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
 from matplotlib import ticker
@@ -160,11 +160,11 @@ def _select_prompt_file(prompts_dir: Path, category: str | None) -> Path:
     return fallback if fallback.exists() else prompt_files[0]
 
 
-async def _fetch_latest_close_price(ticker: str) -> float | None:
+async def _fetch_latest_close_price(ticker: str, *, with_metadata=False):
     from core.db.engine import DBEngine
 
     q = """
-        SELECT close_price
+        SELECT close_price, trade_date
         FROM daily_stock_data
         WHERE ticker = $1
           AND trade_date = (SELECT max(trade_date) FROM daily_stock_data WHERE ticker = $1)
@@ -179,7 +179,8 @@ async def _fetch_latest_close_price(ticker: str) -> float | None:
     except Exception:
         v = None
     try:
-        return float(v) if v is not None else None
+        value = float(v) if v is not None else None
+        return {"value": value, "source_date": str(r0["trade_date"]), "source": "daily_stock_data"} if with_metadata else value
     except Exception:
         return None
 
@@ -230,48 +231,9 @@ async def _fetch_last_results_date(ticker: str):
     return rows[0].get("results_release_date") if hasattr(rows[0], "get") else rows[0]["results_release_date"]
 
 
-async def _fetch_commodity_fx_averages(
-    since_date,
-) -> tuple[list[tuple[str, float, int]], list[tuple[str, float, int]]]:
-    """Fetch per-commodity and per-FX averages since *since_date*.
-
-    Returns (commodity_avgs, fx_avgs) where each is a list of (name, avg, count).
-    Mirrors the logic in engine.estimate_spot_price.
-    """
-    from core.db.engine import DBEngine
-
-    commodity_avgs: list[tuple[str, float, int]] = []
-    fx_avgs: list[tuple[str, float, int]] = []
-
-    q1 = """
-        SELECT commodity, AVG(price) AS avg_price, COUNT(*) AS cnt
-        FROM commodity_prices
-        WHERE collected_ts >= $1
-        GROUP BY commodity
-        ORDER BY cnt DESC
-    """
-    rows1 = await DBEngine.fetch(q1, since_date)
-    for r in (rows1 or []):
-        try:
-            commodity_avgs.append((r["commodity"], float(r["avg_price"]), int(r["cnt"])))
-        except Exception:
-            continue
-
-    q2 = """
-        SELECT pair, AVG(rate) AS avg_rate, COUNT(*) AS cnt
-        FROM fx_rates
-        WHERE collected_ts >= $1
-        GROUP BY pair
-        ORDER BY cnt DESC
-    """
-    rows2 = await DBEngine.fetch(q2, since_date)
-    for r in (rows2 or []):
-        try:
-            fx_avgs.append((r["pair"], float(r["avg_rate"]), int(r["cnt"])))
-        except Exception:
-            continue
-
-    return commodity_avgs, fx_avgs
+async def _fetch_commodity_fx_averages(since_date):
+    from modules.analysis.market_context import fetch_market_averages
+    return await fetch_market_averages(since_date)
 
 
 def _load_results_text(results_root: Path, canon_ticker: str, *, max_chars: int | None) -> tuple[str, list[Path]]:
@@ -317,10 +279,12 @@ def _build_llm_prompt(
     price: float | None,
     payload: str,
     previous_report: str | None = None,
-    commodity_avgs: list[tuple[str, float, int]] | None = None,
-    fx_avgs: list[tuple[str, float, int]] | None = None,
+    commodity_avgs: list[dict] | None = None,
+    fx_avgs: list[dict] | None = None,
     results_date: str | None = None,
 ) -> str:
+    from modules.analysis.market_context import format_market_context
+    from modules.analysis.valuation_audit import HISTORICAL_CONTEXT, AUDIT_INSTRUCTIONS
     today = date.today().isoformat()
     # DB stores close_price in ZAR cents (ZARc). Convert to ZAR for the model.
     price_zar = None if price is None else (float(price) / 100.0)
@@ -335,7 +299,7 @@ def _build_llm_prompt(
     prev_block = ""
     if previous_report:
         prev_block = (
-            "\n\n[PREVIOUS DEEP RESEARCH REPORT]\n"
+            "\n\n[PREVIOUS DEEP RESEARCH REPORT: UNVERIFIED HISTORICAL CONTEXT]\n"
             + previous_report.strip()
             + "\n[END PREVIOUS REPORT]\n\n"
             + "IMPORTANT: Your response MUST include a section titled \"## Summary of Changes\"\n"
@@ -347,18 +311,8 @@ def _build_llm_prompt(
     # Optional: inject commodity and FX average prices.
     commodity_block = ""
     if commodity_avgs or fx_avgs:
-        parts: list[str] = ["\n[CURRENT COMMODITY PRICES]"]
-        if results_date:
-            parts.append(f"Average prices since last reporting period ({results_date}):")
-        else:
-            parts.append("Recent average commodity prices:")
-        if commodity_avgs:
-            for c, avg, cnt in commodity_avgs[:10]:
-                parts.append(f"  {c}: {avg:.2f} (samples={cnt})")
-        if fx_avgs:
-            parts.append("FX rates (averages):")
-            for p, avg, cnt in fx_avgs[:10]:
-                parts.append(f"  {p}: {avg:.4f} (samples={cnt})")
+        parts: list[str] = ["\n[COMMODITY AND FX HISTORICAL AVERAGES]"]
+        parts.append(format_market_context(commodity_avgs, fx_avgs))
         parts.append("[END COMMODITY PRICES]")
         parts.append("")
         parts.append(
@@ -379,12 +333,12 @@ def _build_llm_prompt(
         + "\n"
         + "[PASTE RESULTS / SENS ANNOUNCEMENTS BELOW THIS LINE]\n"
         + payload.strip()
-        + "\n"
+        + "\n\n" + HISTORICAL_CONTEXT + "\n" + AUDIT_INSTRUCTIONS
     )
 
 
 def _query_ai_with_pdfs(
-    *, prompt: str, pdf_paths: list[Path], display_name_prefix: str
+    *, prompt: str, pdf_paths: list[Path], display_name_prefix: str, request_trace=None, trace_callback=None
 ) -> str:
     import logging
     import os
@@ -408,8 +362,11 @@ def _query_ai_with_pdfs(
         http_options=types.HttpOptions(api_version=os.getenv("VERTEX_API_VERSION", "v1beta1"))
     )
 
-    response_text = ""
-
+    if request_trace is not None:
+        request_trace.update(provider="gemini", model=target_model, temperature=0.2,
+                             system_prompt=None, attempts=[{"model": target_model, "temperature": 0.2, "attempt": 1}])
+        if trace_callback:
+            trace_callback(request_trace)
     try:
         # PHASE 1: PREPARE INLINE CONTENT
         contents = [prompt]
@@ -434,23 +391,34 @@ def _query_ai_with_pdfs(
             ),
         )
 
+        # Preserve the complete SDK response, not just response.text.
+        from modules.data.report_versions import raw_response
+        if request_trace is not None:
+            request_trace["response_model_version"] = getattr(response, "model_version", None)
+            request_trace["attempts"][-1]["status"] = "succeeded"
+            if trace_callback:
+                trace_callback(request_trace)
         # PHASE 3: USAGE REPORTING
         return {
             "text": getattr(response, "text", "") or "",
             "usage": response.usage_metadata,
             "model": target_model,
+            "raw_response": raw_response(response),
         }
 
-        response_text = getattr(response, "text", "") or ""
 
     except Exception as e:
+        if request_trace is not None:
+            request_trace["attempts"][-1].update(status="failed", error=str(e))
+            if trace_callback:
+                trace_callback(request_trace)
         logger.error(f"Vertex Execution failed: {e}")
         if "credentials" in str(e).lower():
             logger.error(
                 "TIP: Ensure GOOGLE_APPLICATION_CREDENTIALS is set to your JSON key path."
             )
 
-    return response_text
+    raise RuntimeError("Vertex PDF generation failed; see archived request trace")
 
 
 _MIN_RESPONSE_CHARS = 500
@@ -507,25 +475,6 @@ def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bo
     return True
 
 
-async def _save_deepresearch(ticker: str, content: str) -> None:
-    from core.db.engine import DBEngine
-
-    # Prefer upsert with deepresearch_date when column exists.
-    q = """
-        INSERT INTO stock_analysis (ticker, deepresearch, deepresearch_date)
-        VALUES ($1, $2, NOW())
-        ON CONFLICT (ticker) DO UPDATE
-        SET deepresearch = EXCLUDED.deepresearch,
-            deepresearch_date = EXCLUDED.deepresearch_date
-    """
-    try:
-        await DBEngine.execute(q, ticker, content)
-        return
-    except Exception:
-        # Fallback if deepresearch_date doesn't exist.
-        from modules.data.research import save_deep_research_data
-
-        await save_deep_research_data(ticker, content)
 
 
 async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars: int | None) -> int:
@@ -534,6 +483,11 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
     from modules.analysis.selector import managed_query_ai
     from modules.analysis.engine import generate_master_research
     from modules.data.research import save_research_data
+    from modules.data.report_versions import (
+        EvidenceArchive, get_previous_report, fetch_audit_sources, register_generation,
+        finish_generation, raw_response, write_json,
+    )
+    from modules.analysis.valuation_audit import audit_report, extract_share_disclosures, render_audit
 
     logger = logging.getLogger(__name__)
 
@@ -567,10 +521,12 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
             payload = "[NO TEXT FILES FOUND FOR THIS TICKER]\n"
 
         price = None
+        price_metadata = {}
         try:
             # Prefer ticker with .JO for prices.
             price_ticker = t if t.upper().endswith(".JO") else (t + ".JO")
-            price = await _fetch_latest_close_price(price_ticker)
+            price_metadata = await _fetch_latest_close_price(price_ticker, with_metadata=True) or {}
+            price = price_metadata.get("value")
         except Exception:
             logger.exception("Failed to fetch latest close_price for %s", t)
 
@@ -586,11 +542,9 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         prompt_template = prompt_file.read_text(encoding="utf-8", errors="ignore")
 
         # Fetch any existing deep research so the LLM can produce a change summary.
-        existing_dr = None
-        try:
-            existing_dr = await _fetch_existing_deepresearch(t)
-        except Exception:
-            logger.debug("Could not fetch existing deepresearch for %s", t)
+        # Missing schema/previous context must not silently discard lineage.
+        previous = await get_previous_report(t)
+        existing_dr = previous.get("deepresearch")
 
         # For commodity-type tickers, fetch average commodity/FX prices since last reporting period.
         commodity_avgs = None
@@ -637,7 +591,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
                 llm_prompt.rstrip()
                 + "\n\n"
                 + "[PDF ATTACHMENTS]\n"
-                + "There are PDF attachments available via file search. Use them as primary sources when relevant and cite them.\n"
+                + "The attached PDFs are supplied inline. Use them as primary sources when relevant and cite their Source IDs.\n"
                 + "Prefer facts found in the PDFs over speculation.\n"
             )
 
@@ -652,48 +606,119 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
                 logger.info("Dry-run: would send %d chars to LLM", len(llm_prompt))
             continue
 
-        if pdfs:
-            # Use Gemini file_search for PDFs; run in a thread to avoid blocking the event loop.
-            res_obj = await asyncio.to_thread(
-                _query_ai_with_pdfs,
-                prompt=llm_prompt,
-                pdf_paths=pdfs,
-                display_name_prefix=f"{canon}-{int(time.time())}",
-            )
-            response = res_obj.get("text", "")
-            usage = res_obj.get("usage")
-            query_model = res_obj.get("model", "gemini-3-flash-preview")
-        else:
-            res_obj = await managed_query_ai("deep_research", llm_prompt)
-            if isinstance(res_obj, str) and res_obj.startswith("Error"):
-                response = res_obj
-                usage = None
-                query_model = "gemini-3-flash-preview"
-            else:
-                response = getattr(res_obj, "text", "")
-                usage = getattr(res_obj, "usage_metadata", None)
-                # Fetch model name from TASK_MAP in selector or default
-                from modules.analysis.selector import TASK_MAP, DEFAULT_TASK
-                query_model = TASK_MAP.get("deep_research", DEFAULT_TASK).get("model", "gemini-3-flash-preview")
-
-        # LOG THE COST DATA to the database
-        if usage:
-            await log_ai_cost(t, query_model, usage, display_name=f"{canon}-deepresearch")
-
-        if not _validate_response(response, t, logger):
-            continue
-
+        # Snapshot before inference. PDFs are sent from these immutable copies;
+        # text is rebuilt from the snapshots so the evidence matches the prompt.
+        archive = EvidenceArchive(t)
+        sources = archive.snapshot_sources(used_files + pdfs)
+        source_errors = []
         try:
-            await _save_deepresearch(t, response)
-            logger.info("Saved deepresearch for %s (len=%d)", t, len(response))
+            audit_sources = await fetch_audit_sources(t, until=archive.generated_at)
+        except Exception as exc:
+            audit_sources = []
+            source_errors.append(f"Company disclosures unavailable for stale-share check: {exc}")
+        for source in sources:
+            for disclosure in audit_sources:
+                if source["text"].strip() and source["text"].strip() == (disclosure.get("text") or "").strip():
+                    source.update(source_date=disclosure["source_date"], date_basis="SENS publication",
+                                  sens_id=disclosure["source_id"])
+                    break
+        # Recover PDF release metadata when the downloader retained it.
+        try:
+            from core.db.engine import DBEngine
+            downloads = await DBEngine.fetch("SELECT * FROM results_downloads WHERE ticker=$1", t)
+            for source in sources:
+                matches = [dict(d) for d in downloads if Path(d["pdf_path"] or "").name == source["name"]]
+                if len(matches) == 1:
+                    source["download_record"] = matches[0]
+                    if matches[0].get("release_date"):
+                        source.update(source_date=str(matches[0]["release_date"]), date_basis="results_downloads.release_date")
+        except Exception as exc:
+            source_errors.append(f"Download metadata unavailable: {exc}")
+        payload = "".join(f"\n\n===== FILE: {x['name']} =====\n\n{x['text'].strip()}\n"
+                          for x in sources if Path(x['name']).suffix.lower() == '.txt').strip()
+        if not payload:
+            payload = "[NO TEXT FILES FOUND FOR THIS TICKER]\n"
+        llm_prompt = _build_llm_prompt(
+            prompt_template, ticker=t, price=price, payload=payload, previous_report=existing_dr,
+            commodity_avgs=commodity_avgs, fx_avgs=fx_avgs, results_date=results_date_str,
+        )
+        llm_prompt += "\nSOURCE CATALOG (dates may be unresolved; never infer dates):\n"
+        llm_prompt += "\n".join(f"Source ID: {x['source_id']} | Filename: {x['name']} | "
+                                f"Source date: {x.get('source_date') or 'unresolved'} | "
+                                f"Date basis: {x.get('date_basis') or 'unresolved'}" for x in sources)
+        archived_pdfs = [Path(x["archive_path"]) for x in sources if Path(x["name"]).suffix.lower() == ".pdf"]
+        if archived_pdfs:
+            llm_prompt += "\nPDFs are attached inline in SOURCE CATALOG order. Cite their Source IDs.\n"
+        from modules.analysis.selector import TASK_MAP, DEFAULT_TASK
+        config = TASK_MAP.get("deep_research", DEFAULT_TASK)
+        trace = {"provider": "gemini" if archived_pdfs else config['p'],
+                 "model": "publishers/google/models/gemini-3-flash-preview" if archived_pdfs else config['m'],
+                 "temperature": 0.2 if archived_pdfs else (0.7 if config['p'] == 'gemini' else None)}
+        inputs = archive.save_inputs({
+            "prompt": llm_prompt, "request": dict(trace), "sources": sources,
+            "source_set_id": archive.report_id, "audit_only_sources": audit_sources,
+            "source_warnings": source_errors,
+            "previous_report": existing_dr,
+            "previous_report_id": str(previous["current_report_id"]) if previous.get("current_report_id") else None,
+            "previous_report_date": previous.get("deepresearch_date"),
+            "commodities_supplied": (commodity_avgs or [])[:10], "fx_supplied": (fx_avgs or [])[:10],
+            "share_price": {**price_metadata, "value_zarc": price, "value_zar_supplied": f"{price / 100:.2f}" if price is not None else None,
+                            "currency": "ZAR", "unit": "per share"},
+            "template": {"path": str(prompt_file.resolve()), "text": prompt_template,
+                         "sha256": hashlib.sha256(prompt_template.encode('utf-8')).hexdigest()},
+        })
+        await register_generation(archive, inputs)
+        trace_callback = lambda value: write_json(archive.path / "request_trace.json", value)
+        result = {"request": trace}
+        try:
+            if archived_pdfs:
+                res_obj = await asyncio.to_thread(
+                    _query_ai_with_pdfs, prompt=llm_prompt, pdf_paths=archived_pdfs,
+                    display_name_prefix=archive.report_id, request_trace=trace, trace_callback=trace_callback,
+                )
+                response = res_obj.get("text", "")
+                usage = res_obj.get("usage")
+                result["raw_response"] = res_obj["raw_response"]
+            else:
+                res_obj = await managed_query_ai("deep_research", llm_prompt, request_trace=trace, trace_callback=trace_callback)
+                response = res_obj if isinstance(res_obj, str) else (getattr(res_obj, "text", "") or "")
+                usage = getattr(res_obj, "usage_metadata", None)
+                result["raw_response"] = raw_response(res_obj)
+            result.update(response_text=response, status="pending")
+            archive.save_result(result)
+        except Exception as exc:
+            result.update(status="failed", error=str(exc))
+            await finish_generation(archive, result)
+            logger.exception("Generation failed; evidence retained as %s", archive.report_id)
+            continue
+        if usage:
+            await log_ai_cost(t, trace["model"], usage, display_name=archive.report_id)
+        if not _validate_response(response, t, logger):
+            result["status"] = "rejected"
+            await finish_generation(archive, result, report_content=response)
+            continue
+        try:
+            from modules.analysis.market_context import market_audit_sources
+            audit = audit_report(response, sources=sources + market_audit_sources(commodity_avgs, fx_avgs), previous_report=existing_dr,
+                                 share_disclosures=extract_share_disclosures(sources + audit_sources))
+        except Exception as exc:
+            # Audit failures are visible and advisory; retain the raw report.
+            audit = {"assumptions": [], "warnings": [{"code": "audit_failed", "assumption": None,
+                       "message": str(exc)}], "blocking": False}
+        audit['warnings'].extend({"code": "source_metadata_unavailable", "assumption": None, "message": x} for x in source_errors)
+        result["audit"] = audit
+        published_report = response + "\n\n" + render_audit(audit, archive.report_id)
+        try:
+            await finish_generation(archive, result, report_content=published_report, publish=True)
+            logger.info("Saved deepresearch %s for %s (%d advisory warnings)", archive.report_id, t, len(audit['warnings']))
         except Exception:
-            logger.exception("Failed to save deepresearch for %s", t)
+            logger.exception("Could not publish report %s; evidence retained", archive.report_id)
             continue
 
         # AUTOMATION: Trigger master research generation
         try:
             logger.info("Auto-triggering master research for %s...", t)
-            master_research = await generate_master_research(t, deep_research=response)
+            master_research = await generate_master_research(t, deep_research=published_report)
             if master_research:
                 await save_research_data(t, master_research)
                 logger.info("Saved master research for %s (len=%d)", t, len(master_research))
@@ -702,21 +727,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         except Exception:
             logger.exception("Failed to auto-generate master research for %s", t)
 
-        # Clean up results folder now that deep research is saved.
-        ticker_dir = results_root / canon
-        if ticker_dir.exists() and ticker_dir.is_dir():
-            removed = 0
-            for f in list(ticker_dir.iterdir()):
-                try:
-                    f.unlink()
-                    removed += 1
-                except Exception:
-                    logger.warning("Could not delete %s", f)
-            try:
-                ticker_dir.rmdir()  # only succeeds if empty
-            except Exception:
-                pass
-            logger.info("Cleaned up %d file(s) from %s", removed, ticker_dir)
+        # Retain sources. Archived copies remain independent of scraper staging cleanup.
 
         # Gentle pacing.
         await asyncio.sleep(1)
