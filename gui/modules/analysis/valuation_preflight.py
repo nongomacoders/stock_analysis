@@ -332,6 +332,8 @@ def validate_candidate(c: ValuationInputCandidate, metrics: list[FinancialMetric
             add("STALE_FORWARD_SHARES", Severity.ERROR, "Newer comparable issued shares exist.")
         if base and m.share_count_type is None:
             add("SHARE_BASIS_UNKNOWN", Severity.ERROR, "Share-count basis is unresolved.")
+    if base and f == ValuationField.OWNERSHIP_PERCENTAGE and m.source_date and (date.today() - m.source_date).days > 365:
+        add("STALE_OWNERSHIP", Severity.WARNING, "Ownership source is more than one year old; revalidate against a current disclosure.")
     if base and f == ValuationField.WACC and not (m.notes and "derived" in m.notes.lower() and m.source):
         add("WACC_UNSUPPORTED", Severity.ERROR, "WACC needs documented components or explicit override.")
     if base and f in {ValuationField.EXIT_MULTIPLE, ValuationField.TERMINAL_GROWTH, ValuationField.PRODUCTION_GROWTH} and not m.source:

@@ -81,6 +81,8 @@ class Unit(str, Enum):
     ZAR = "ZAR"
     ZAR_CENTS = "ZAR_cents"
     USD = "USD"
+    HKD = "HKD"
+    EUR = "EUR"
     SHARES = "shares"
     PERCENTAGE = "percentage"
     MULTIPLE = "multiple"

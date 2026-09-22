@@ -107,6 +107,7 @@ class ComponentSpec(BaseModel):
     disposed_boundary_id: str | None = None
     risk_basis: str | None = None
     risk_in_discount_rate: bool = False
+    included_boundary_ids: set[str] = Field(default_factory=set)
     fx_rate: InputRef | None = None
     fx_pair: str | None = None
 
@@ -469,8 +470,8 @@ def _sotp(spec: SotpSpec | None, resolver: Resolver, case: str,
     try:
         components = []
         for item in spec.components:
-            gross = resolver.get(item.gross_value, required_case=case, expected_field="asset_value", currency=item.currency)
-            gross = _convert(gross, item.currency, item.fx_rate, item.fx_pair, resolver, case, currency)
+            native_gross = resolver.get(item.gross_value, required_case=case, expected_field="asset_value", currency=item.currency)
+            gross = _convert(native_gross, item.currency, item.fx_rate, item.fx_pair, resolver, case, currency)
             ownership = resolver.get(item.ownership, required_case=case, expected_field="ownership_percentage", fraction=True)
             probability = resolver.get(item.probability, required_case=case, expected_field="probability", fraction=True) if item.probability else Decimal(1)
             discount = resolver.get(item.discount_factor, required_case=case, expected_field="discount_factor", fraction=True) if item.discount_factor else Decimal(1)
@@ -481,6 +482,13 @@ def _sotp(spec: SotpSpec | None, resolver: Resolver, case: str,
                                             risk_basis=item.risk_basis, risk_in_discount_rate=item.risk_in_discount_rate,
                                             value_kind=item.value_kind,
                                             disposed_boundary_id=item.disposed_boundary_id,
+                                            included_boundary_ids=item.included_boundary_ids,
+                                            value_source_date=resolver.metric(item.gross_value).source_date,
+                                            ownership_source_date=resolver.metric(item.ownership).source_date,
+                                            fx_source_date=resolver.metric(item.fx_rate).source_date if item.fx_rate else None,
+                                            native_currency=item.currency, native_gross_value=native_gross,
+                                            fx_rate_applied=resolver.get(item.fx_rate, required_case=case, expected_field="fx_rate") if item.fx_rate else None,
+                                            fx_pair=item.fx_pair,
                                             source_input_ids=[str(r.metric_id) for r in _refs(item)]))
         if spec.deferred_payments:
             if not spec.selected_settlement_scenario:
@@ -637,6 +645,8 @@ def run_valuation(*, ticker: str, report_version_id: UUID | str,
                      case_plan.group_dcf_boundaries)
         methods = {"DCF": dcf, "SOTP": sotp}
         selected = methods[case_plan.primary_method]
+        if case_name == "base" and selected.warnings:
+            base_warnings.extend(selected.warnings)
         if selected.status != MethodStatus.PASS:
             case_results[case_name] = {"status": selected.status.value,
                                        "missing_inputs": selected.missing_inputs,
