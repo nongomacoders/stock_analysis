@@ -25,6 +25,7 @@ import argparse
 import asyncio
 import hashlib
 import logging
+import re
 import sys
 import time
 import os
@@ -272,6 +273,35 @@ def _find_result_pdfs(results_root: Path, canon_ticker: str) -> list[Path]:
         return []
     return sorted([p for p in ticker_dir.glob("*.pdf") if p.is_file()])
 
+PHASE4_RESEARCH_ONLY = (
+    "PHASE 4 RESEARCH ROLE: Extract and explain source-backed facts, catalysts and risks. "
+    "Python alone calculates valuation and target prices after extraction. "
+    "Do not calculate or state a new target price, DCF, SOTP, WACC, implied upside, "
+    "spot HEPS or HEPS proxy. Treat conflicting template instructions as superseded. "
+    "If no Python valuation is supplied, say deterministic valuation is pending. "
+    "Previous Gemini targets may be mentioned only as unverified historical context.\n"
+)
+
+
+def _research_only_template(template: str) -> str:
+    """Remove old template requests for invented targets and commodity-margin HEPS."""
+    banned = re.compile(
+        r"report target price|12.month target price|<target price>|<your calculated|"
+        r"implied upside|spot heps equation|equation format: heps|variable [abc]\s*\(|"
+        r"example calculation: calculate the heps|search web for latest spot prices to use in heps|"
+        r"discount rate \(wacc\):|exit multiple:|growth rate:|total expected return", re.I)
+    return "\n".join(line for line in template.splitlines() if not banned.search(line))
+
+
+def _contains_gemini_target(response: str) -> bool:
+    line_target = re.search(
+        r"(?im)^\s*-?\s*(?:[\w-]+\s+){0,2}(?:target\s+price|price\s+target|fair\s+value(?:\s+per\s+share)?)\s*:\s*(?:ZAR|R\s*\d|\d)",
+        response,
+    )
+    prose_target = re.search(r"(?i)\btarget\s+price\s+(?:of|is|at)\s+(?:ZAR|R\s*\d)", response)
+    return bool(line_target or prose_target)
+
+
 def _build_llm_prompt(
     prompt_template: str,
     *,
@@ -291,7 +321,7 @@ def _build_llm_prompt(
     price_str = "UNKNOWN" if price_zar is None else f"{price_zar:.2f}"
 
     # Some prompts include placeholders like [Insert Price]; best-effort fill.
-    txt = prompt_template
+    txt = _research_only_template(prompt_template)
     txt = txt.replace("<today's date>", today)
     txt = txt.replace("[Insert Price]", price_str)
 
@@ -316,14 +346,14 @@ def _build_llm_prompt(
         parts.append("[END COMMODITY PRICES]")
         parts.append("")
         parts.append(
-            "IMPORTANT: Use the commodity prices and FX rates above for your HEPS equation "
-            "and valuation calculations. Do NOT use hypothetical or web-searched prices."
+            "These are research context with explicit units. Python will decide if and how "
+            "they enter a valuation. Do not calculate HEPS or a target price."
         )
         commodity_block = "\n".join(parts)
 
     # Provide a consistent preamble, then include payload.
     return (
-        txt.rstrip()
+        PHASE4_RESEARCH_ONLY + "\n" + txt.rstrip()
         + prev_block
         + commodity_block
         + "\n\n"
@@ -445,6 +475,9 @@ def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bo
         return False
 
     stripped = response.strip()
+    if _contains_gemini_target(stripped):
+        logger.warning("SKIP %s ? Gemini supplied a numeric target in a Python-only valuation flow", ticker)
+        return False
 
     # Too short to be real research.
     if len(stripped) < _MIN_RESPONSE_CHARS:
@@ -711,6 +744,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         metrics, metric_warnings = structure_report_metrics(t, archive.report_id, audit)
         result["structured_metrics"] = [metric_json(metric) for metric in metrics]
         result["metric_warnings"] = metric_warnings
+        proposals = []
         try:
             from modules.analysis.valuation_preflight import propose_report_candidates, run_preflight
             proposals, unmapped = propose_report_candidates(metrics, archive.report_id)
@@ -731,11 +765,18 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
                                       "message": "Python valuation input preflight could not be completed: " + str(exc)})
         audit["warnings"].extend({"code": warning["code"], "assumption": warning.get("name"),
                                   "message": warning["message"]} for warning in metric_warnings)
+        from modules.analysis.valuation import run_valuation
+        from modules.analysis.valuation.engine import render_valuation_result
+        deterministic = run_valuation(ticker=t, report_version_id=archive.report_id,
+                                      candidates=proposals, metrics=metrics,
+                                      valuation_date=date.today())
+        result["deterministic_valuation"] = deterministic.model_dump(mode="json")
         result["audit"] = audit
-        published_report = response + "\n\n" + render_audit(audit, archive.report_id)
+        published_report = response + "\n\n" + render_audit(audit, archive.report_id) + "\n\n" + render_valuation_result(deterministic)
         try:
             await finish_generation(archive, result, report_content=published_report, publish=True,
-                                    metrics=metrics, metric_warnings=metric_warnings)
+                                    metrics=metrics, metric_warnings=metric_warnings,
+                                    valuation_result=deterministic)
             logger.info("Saved deepresearch %s for %s (%d advisory warnings)", archive.report_id, t, len(audit['warnings']))
         except Exception:
             logger.exception("Could not publish report %s; evidence retained", archive.report_id)

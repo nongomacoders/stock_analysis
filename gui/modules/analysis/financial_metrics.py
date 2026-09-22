@@ -132,6 +132,7 @@ class FinancialMetric(BaseModel):
     normalized_unit: Unit | None = None
     conversion: str | None = None
     evidence_quote: str | None = None
+    evidence_verified: bool = False
     source_id: str | None = None
     intended_use: str | None = None
 

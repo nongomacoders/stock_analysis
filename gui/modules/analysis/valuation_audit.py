@@ -23,7 +23,7 @@ ASSUMPTION AUDIT (additional required section; keep the existing valuation metho
 Append a JSON array between ASSUMPTION_AUDIT_JSON_BEGIN and ASSUMPTION_AUDIT_JSON_END.
 Include every applicable assumption, using multiple entries for different assets/scenarios:
 production, commodity_price, production_cost (cash cost/AISC), shares, tax, wacc,
-growth, terminal_growth, exit_multiple, net_debt_cash, target_price.
+growth, terminal_growth, exit_multiple, net_debt_cash, target_price (historical target only; never calculate a new target).
 Each entry must contain: assumption, value, unit, source, source_date, classification,
 evidence_quote, supporting_inputs, calculation. Use null for unknown fields.
 Also include unit_code, currency, period_start, period_end, source_type,

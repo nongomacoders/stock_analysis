@@ -120,7 +120,8 @@ def structure_report_metrics(ticker: str, report_id: str | UUID, audit: dict) ->
                 production_stage=stage, share_count_type=share_type, annualised=item.get("annualised"),
                 notes=item.get("notes"), raw_value=str(raw) if raw is not None else None,
                 raw_unit=str(raw_unit) if raw_unit is not None else None,
-                evidence_quote=item.get("evidence_quote"), source_id=item.get("source_id") or item.get("source"),
+                evidence_quote=item.get("evidence_quote"), evidence_verified=bool(item.get("evidence_verified")),
+                source_id=item.get("source_id") or item.get("source"),
                 intended_use=item.get("intended_use"),
             )
             metrics.append(normalize_metric(metric))

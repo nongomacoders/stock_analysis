@@ -1,0 +1,255 @@
+{
+  "synthetic_only": true,
+  "not_jubilee": true,
+  "currency": "ZAR",
+  "base_enterprise_value": "3500.271502931492647601867495",
+  "sensitivity": {
+    "wacc_terminal_growth": [
+      {
+        "wacc": "0.10",
+        "terminal_growth": "0.02",
+        "status": "PASS",
+        "value": "3937.756876163109567441344166"
+      },
+      {
+        "wacc": "0.10",
+        "terminal_growth": "0.03",
+        "status": "PASS",
+        "value": "4500.293572757839505647250476"
+      },
+      {
+        "wacc": "0.10",
+        "terminal_growth": "0.04",
+        "status": "PASS",
+        "value": "5250.342501550812756588458888"
+      },
+      {
+        "wacc": "0.12",
+        "terminal_growth": "0.02",
+        "status": "PASS",
+        "value": "3150.244352638343382841680745"
+      },
+      {
+        "wacc": "0.12",
+        "terminal_growth": "0.03",
+        "status": "PASS",
+        "value": "3500.271502931492647601867495"
+      },
+      {
+        "wacc": "0.12",
+        "terminal_growth": "0.04",
+        "status": "PASS",
+        "value": "3937.805440797929228552100932"
+      },
+      {
+        "wacc": "0.14",
+        "terminal_growth": "0.02",
+        "status": "PASS",
+        "value": "2625.235430946365620717407236"
+      },
+      {
+        "wacc": "0.14",
+        "terminal_growth": "0.03",
+        "status": "PASS",
+        "value": "2863.893197396035222600807894"
+      },
+      {
+        "wacc": "0.14",
+        "terminal_growth": "0.04",
+        "status": "PASS",
+        "value": "3150.282517135638744860888683"
+      }
+    ],
+    "operating_factors": [
+      {
+        "price_factor": "0.9",
+        "volume_factor": "0.9",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "2708.543424887464548739540324"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "0.9",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "2333.514335287661765067911663"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "0.9",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "1958.485245687858981396283003"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "1",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "3083.572514487267332411168983"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "1",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "2666.873526043042017220470473"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "1",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "2250.174537598816702029771961"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "1.1",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "3458.601604087070116082797644"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "1.1",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "3000.232716798422269373029282"
+      },
+      {
+        "price_factor": "0.9",
+        "volume_factor": "1.1",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "2541.863829509774422663260919"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "0.9",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "3458.601604087070116082797644"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "0.9",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "3083.572514487267332411168983"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "0.9",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "2708.543424887464548739540324"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "1",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "3916.970491375717962792566007"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "1",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "3500.271502931492647601867495"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "1",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "3083.572514487267332411168983"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "1.1",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "4375.339378664365809502334369"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "1.1",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "3916.970491375717962792566007"
+      },
+      {
+        "price_factor": "1",
+        "volume_factor": "1.1",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "3458.601604087070116082797644"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "0.9",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "4208.659783286675683426054964"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "0.9",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "3833.630693686872899754426304"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "0.9",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "3458.601604087070116082797644"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "1",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "4750.368468264168593173963029"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "1",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "4333.669479819943277983264517"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "1",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "3916.970491375717962792566007"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "1.1",
+        "cost_factor": "0.9",
+        "fx_factor": "1",
+        "value": "5292.077153241661502921871094"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "1.1",
+        "cost_factor": "1",
+        "fx_factor": "1",
+        "value": "4833.708265953013656212102731"
+      },
+      {
+        "price_factor": "1.1",
+        "volume_factor": "1.1",
+        "cost_factor": "1.1",
+        "fx_factor": "1",
+        "value": "4375.339378664365809502334369"
+      }
+    ]
+  }
+}

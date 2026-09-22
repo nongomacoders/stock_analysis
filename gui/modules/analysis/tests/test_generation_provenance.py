@@ -13,12 +13,13 @@ from modules.analysis.valuation_audit import HISTORICAL_CONTEXT
 from modules.data import report_versions
 
 
-def test_generation_prompt_revalidation_and_unchanged_formula():
+def test_generation_prompt_revalidation_and_python_only_target():
     template = Path(generator.GUI_ROOT / "prompts/commodity_prompt.txt").read_text(encoding="utf-8")
     prompt = generator._build_llm_prompt(template, ticker="JBL.JO", price=45, payload="Source", previous_report="Old report")
     assert HISTORICAL_CONTEXT in prompt
     assert "ASSUMPTION_AUDIT_JSON_BEGIN" in prompt
-    assert "HEPS = [(Spot Price - AISC) * Production * (1 - Tax Rate)] / Shares" in prompt
+    assert "HEPS = [(Spot Price - AISC) * Production * (1 - Tax Rate)] / Shares" not in prompt
+    assert "Python alone calculates valuation and target prices" in prompt
     assert "LATEST CLOSE PRICE (ZAR): 0.45" in prompt
 
 
@@ -51,8 +52,10 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
     monkeypatch.setattr(report_versions, "finish_generation", finish)
     monkeypatch.setattr(engine, "generate_master_research", AsyncMock(return_value="Summary"))
     monkeypatch.setattr(research, "save_research_data", AsyncMock())
+    from modules.data import valuation_results
+    monkeypatch.setattr(valuation_results, "save_valuation_result", AsyncMock())
     monkeypatch.setattr(generator.asyncio, "sleep", AsyncMock())
-    report = "Report target price: ZAR 1.70\n" + "Report details. " * 150
+    report = "Research findings. " * 150
     async def query(task, prompt, **kwargs):
         manifests = list((tmp_path / "evidence").rglob("inputs.json"))
         assert len(manifests) == 1  # Already durable before inference.
@@ -78,7 +81,8 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
         assert result["valuation_preflight"]["status"] == "FAIL"
         assert result["valuation_preflight"]["target_reconciliation"] in {"unresolved", "carried_forward"}
         assert options["report_content"].startswith(report)
-        assert "target_not_reproducible" in options["report_content"]
+        assert result["deterministic_valuation"]["status"] == "NOT_CALCULABLE"
+        assert "Deterministic target price: NOT_CALCULABLE" in options["report_content"]
 
 
 def test_gemini_fallback_trace_keeps_actual_model_and_temperature(monkeypatch):
@@ -130,3 +134,13 @@ def test_legacy_inspection_uses_original_report_date(monkeypatch):
     result = asyncio.run(inspection.inspect("JBL.JO", "legacy-id"))
     assert result["report_date"] == date(2026, 9, 18)
     assert sources.call_args.kwargs["until"].date() == date(2026, 9, 18)
+
+
+def test_all_sector_templates_remove_gemini_target_requests():
+    for template in (generator.GUI_ROOT / "prompts").glob("*_prompt.txt"):
+        prompt = generator._build_llm_prompt(template.read_text(encoding="utf-8"),
+                                              ticker="TEST.JO", price=100, payload="Current source")
+        assert "<Your calculated 12-month target>" not in prompt, template.name
+        assert "<Target Price>" not in prompt, template.name
+        assert "HEPS = [(Spot Price - AISC)" not in prompt, template.name
+        assert "Python alone calculates valuation and target prices" in prompt

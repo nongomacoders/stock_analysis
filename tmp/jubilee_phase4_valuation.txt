@@ -1,0 +1,23 @@
+DETERMINISTIC VALUATION: PYTHON
+Engine version: 1.0
+Status: NOT_CALCULABLE
+Deterministic target price: NOT_CALCULABLE
+Reason: Roan: no source-backed saleable-output/recovery and realization bridge for the FY2027 contained-copper guidance
+Reason: Forecast: no complete year-by-year revenue, operating/corporate cost, sustaining/growth capex and working-capital schedule
+Reason: Discounting: no eligible currency-consistent WACC components or documented permitted override
+Reason: Terminal value: no supported long-term growth or EBITDA/exit-multiple basis
+Reason: SOTP: Roan, Molefe and Project G lack complete distinct attributable asset values and risk/timing schedules
+Reason: LWP consideration: $35m staged and $30m accelerated alternatives lack final payment dates and completion/counterparty probabilities
+Reason: South African disposal: deferred instalments require an updated outstanding balance, payment schedule and probability after $25m cash received
+Reason: Equity bridge: no verified valuation-date cash, debt, leases, minorities and central adjustments
+Reason: Commodity/FX: no eligible long-term price/realization and matching forecast currency treatment
+Historical Gemini target (not used): ZAR 1.70
+
+JUBILEE COMPONENT AVAILABILITY
+Roan: NOT_CALCULABLE ? saleable conversion, realization, forecast cost/capex and FCF
+Molefe: NOT_CALCULABLE ? sourced saleable ramp, capex, operating cost and risked NPV
+Project G: NOT_CALCULABLE ? resource-backed production, development timing/capex and project economics
+Large Waste Project: NOT_CALCULABLE ? final payment dates, probabilities and selected settlement structure
+South African disposal receivable: NOT_CALCULABLE ? verified remaining amount, exact future dates and probability
+Cash/debt: NOT_CALCULABLE ? current consolidated cash, debt and lease position
+Corporate/central: NOT_CALCULABLE ? forecast central cost, liabilities and equity adjustments

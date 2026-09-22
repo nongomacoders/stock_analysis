@@ -136,7 +136,7 @@ async def register_generation(archive, inputs):
 
 
 async def finish_generation(archive, result, *, report_content=None, publish=False, manual=False,
-                            metrics=(), metric_warnings=()):
+                            metrics=(), metric_warnings=(), valuation_result=None):
     """Publish report + current pointer in one transaction, retaining every version."""
     from core.db.engine import DBEngine
     pending_result = dict(result, status="pending")
@@ -182,6 +182,11 @@ async def finish_generation(archive, result, *, report_content=None, publish=Fal
                 """, metric.metric_id, archive.ticker, archive.report_id,
                     json_text(metric.model_dump(mode="json")),
                     json_text([w for w in metric_warnings if w.get("metric_id") == str(metric.metric_id)]))
+            if valuation_result is not None:
+                if str(valuation_result.report_version_id) != archive.report_id:
+                    raise ValueError("Valuation result must reference this report version")
+                from modules.data.valuation_results import insert_valuation_result
+                await insert_valuation_result(connection, valuation_result)
             if publish:
                 await connection.execute("""
                     UPDATE stock_analysis SET deepresearch=$2, deepresearch_date=CURRENT_DATE,

@@ -16,7 +16,10 @@
     "production_stage": "contained_metal",
     "annualised": true,
     "notes": "FY2027 Roan copper unit forecast; not group-wide saleable output.",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "source_id": "sens:5513",
+    "evidence_quote": "output for FY2027 of between 2 850t and 3 150t of Cu",
+    "evidence_verified": true
   },
   {
     "name": "production_rom_feed",
@@ -32,7 +35,10 @@
     "annualised": false,
     "notes": "Target ROM deliveries before end CY2026; not copper production.",
     "intended_use": "base_production",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "source_id": "sens:5513",
+    "evidence_quote": "10 000tpm at a grade of 1.45% Cu.",
+    "evidence_verified": true
   },
   {
     "name": "production_contained_metal",
@@ -47,7 +53,10 @@
     "production_stage": "contained_metal",
     "annualised": true,
     "notes": "Approximate indicated annual contained copper potential, not formal guidance.",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "source_id": "sens:5513",
+    "evidence_quote": "approximately 1 740tpa of contained Cu in HG ROM to Sable",
+    "evidence_verified": true
   },
   {
     "name": "production_contained_metal",
@@ -64,7 +73,10 @@
     "production_stage": "contained_metal",
     "annualised": false,
     "notes": "FY2026 production prior to refining; not final saleable output.",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "source_id": "sens:5513",
+    "evidence_quote": "3 739t of copper (Cu) for FY2026",
+    "evidence_verified": true
   },
   {
     "name": "production_saleable_product",
@@ -81,7 +93,10 @@
     "production_stage": "saleable_product",
     "annualised": false,
     "notes": "FY2026 copper cathode; additional concentrate produced for sale is separate and not quantified here.",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "source_id": "sens:5513",
+    "evidence_quote": "2 120t of Cu\nin FY2026",
+    "evidence_verified": true
   },
   {
     "name": "issued_shares_current",
@@ -105,7 +120,10 @@
     "assumption_type": "historical_actual",
     "share_count_type": "issued_shares_current",
     "notes": "Newer issued share disclosure.",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "source_id": "sens:4955",
+    "evidence_quote": "3 381 330 240 ordinary\nshares.",
+    "evidence_verified": true
   },
   {
     "name": "production_cost_per_tonne",
