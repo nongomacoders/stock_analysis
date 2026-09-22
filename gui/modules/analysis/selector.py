@@ -11,8 +11,8 @@ MODELS = {
         "qwen3:8b"               # Index 1
     ],
     "gemini": [
-        "gemini-3.5-flash",          # Index 0
-        "gemini-3.1-flash-lite"                   # Index 1
+        "gemini-3.8-flash",          # Index 0
+        "gemini-3.6-flash"                   # Index 1
     ],
     "openrouter": [
         "google/gemma-4-26b-a4b-it:free",         # Index 0

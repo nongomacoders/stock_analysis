@@ -2,77 +2,104 @@
 You are a professional JSE financial analyst.
 
 --- MARKET CONTEXT ---
-Current Share Price: 18402.00c
+Current Share Price: 91871.00c
 
 --- END CONTEXT ---
 
 --- MY RESEARCH ---
 PRICE LEVELS & TARGETS
-Report Date Share Price: ZAR 223.62
-Report 12-Month Target: ZAR 285.00
-Consensus Target: Not provided
-Valuation Floor (NAV): Not provided
+Report Date Share Price: 97,661c
+Report 12-Month Target: 112,000c
+Consensus Target: Not mentioned
+Valuation Floor (NAV): Not mentioned
 
 CATALYSTS & RISKS
 Positive:
-- Secured multi-year nickel concentrate off-take agreement with Boliden for Nkomati restart
-- Sustained recovery in PGM basket prices improving segment margins
-- Strong net cash position and consistent dividend flow from Assmang joint venture
-- Completion of solar plant for platinum operations by Q2 F2026
-- Weakening USDZAR providing translational tailwind for export revenues
+- Faster deleveraging and higher-than-expected cash conversion supporting accelerated buybacks
+- Stronger ZAR supporting translation into ZAR price and improving sentiment for offshore earners
+- Better-than-expected New Categories profitability mix, supporting a re-rating
 
 Negative:
-- Operational costs associated with Beeshoek Mine care and maintenance and retrenchments
-- Logistical constraints on the iron ore export line impacting Khumani volumes
-- Volatility in thermal coal prices impacting ARM Coal profitability
-- Increased cost of imported capital equipment for the Bokoni ramp-up
-- Cessation of sales to ArcelorMittal South Africa
+- Regulatory and excise/tax tightening across key markets, pressuring volumes/pricing
+- Illicit trade growth undermining legal industry volumes, especially in high-tax markets
+- Litigation and policy shocks (including US menthol-type actions) impacting combustibles economics
 
 KEY DATES
 Debt / Facilities Maturing:
-- Not provided
+- Not mentioned
 
 Project Timelines / Milestones:
-- Beeshoek Mine care and maintenance commencement: October 2025
-- Completion of solar plant for platinum operations: Q2 F2026
+- Not mentioned
 --- END RESEARCH ---
 
 --- MY STRATEGY ---
-
+wait for pullback to R950
 --- END STRATEGY ---
 
 --- NEW SENS ANNOUNCEMENT ---
-Acquisition of Securities by clients of Allan Gray Proprietary Limited
-African Rainbow Minerals Limited
-(Incorporated in the Republic of South Africa)
-(Registration number 1933/004580/06)
-JSE Share code: ARI
-ISIN: ZAE000054045
-(‘ARM’ or ‘the Company’)
-ACQUISITION OF SECURITIES BY CLIENTS OF ALLAN GRAY PROPRIETARY LIMITED (‘Allan Gray’)
-In accordance with section 122(3)(b) of the Companies Act, No. 71 of 2008, as amended (the
-‘Companies Act’), and paragraph 6.54 of the JSE Limited Listings Requirements, shareholders are
-hereby advised that ARM has received formal notification that clients of Allan Gray, in aggregate,
-acquired an interest in the ordinary shares of the Company, such that the total interest in the ordinary
-shares of the Company held by Allan Gray’s clients now amounts to 5.08% of the total issued ordinary
-shares of the Company.
-The Company has filed the requisite notice with the Takeover Regulation Panel, per section 122(3)(a)
-of the Companies Act. Further, as required in terms of section 122(3A) of the Companies Act, the
-Company has filed the requisite notice with the Companies and Intellectual Property Commission.
-The board of directors of the Company accepts responsibility for the information contained in this
-announcement and confirms that, to the best of their knowledge and belief, such information is true,
-and this announcement does not omit anything likely to affect the importance of the information
-included.
-ENDS
-For all investor relations queries, please contact:
-Thabang Thlaku
-Executive: Investor relations and new business development
-Office: +27 11 779 1300 | Email: thabang.thlaku@arm.co.za
-Sandton
-19 June 2026
-Sponsor:
-Investec Bank Limited
-Date: 19-06-2026 09:55:00
+Quarterly Dividends for the Year Ended 31 December 2025:  Payment No. 3 – November 2026 (the “November 2026 Dividend”)  South Africa Branch Register Finalisation Information
+British American Tobacco p.l.c.
+Incorporated in England and Wales
+(Registration number: 03407696)
+Short name: BATS
+Share code: BTI
+ISIN number: GB0002875804
+British American Tobacco p.l.c. (the “Company”)
+Quarterly Dividends for the year ended 31 December 2025:
+Payment No. 3 – November 2026 (the “November 2026 Dividend”)
+South Africa Branch Register Finalisation Information
+On 12 February 2026, the Company announced that the Board had declared an interim dividend of
+245.04p per ordinary s hare of 25p, payable in four equal quarterly instalments of 61.26p per
+ordinary share in May 2026, August 2026, November 2026 and February 2027.
+The November 2026 Dividend will be payable on 6 November 2026 to shareholders registered on
+either the UK main register or the South Africa branch register on 2 October 2026 (the record date).
+In accordance with the JSE Limited (“JSE”) Listing Requirements, the finalisation information for the
+November 2026 Dividend relating to shareholders registered on the South Africa branch register is
+set out in the paragraphs below.
+The salient dates and other dividend declaration information announced on 12 February 2026 remain
+unchanged for the November 2026 Dividend.
+South Africa Branch Register: Dividend Rate
+The British American Tobacco Group reports in sterling, therefore dividends are declared and
+payable in sterling except for shareholders on the branch register in South Africa whose dividends
+are payable in rand. A rate of exchange of £:R=21.7167 as at 17 September 2026 (the closing rate on
+that date as quoted by Bloomberg), results in an equivalent November 2026 Dividend of
+1,330.36504 SA cents per ordinary share.
+South Africa Branch Register: Dividends Tax Information
+South Africa Dividends Tax (at a rate of 20%), equivalent to 266.07301 cents per ordinary share, will
+be withheld from the gross November 2026 Dividend paid to shareholders on the South Africa
+branch register, unless a shareholder qualifies for an exemption. After Dividends Tax has been
+withheld, the net dividend will be 1,064.29203 cents per ordinary share. The November 2026
+Dividend is regarded as a ‘foreign dividend’ for the purposes of the South Africa Dividends Tax. For
+the purposes of South Africa Dividends Tax reporting, the source of income for the payment of the
+November 2026 Dividend is the United Kingdom.
+At the close of business on 17 September 2026 (the latest practicable date prior to the date of the
+declaration of the South African rand equivalent of the November 2026 Dividend), the Company had
+a total of 2,158,780,081 ordinary shares in issue (excluding treasury shares). The Company held
+132,648,864 ordinary shares in treasury giving a total issued share capital of 2,291,428,945 ordinary
+shares.
+British American Tobacco p.l.c. is registered with the South African Revenue Service (SARS) with tax
+reference number 9378193172.
+For the avoidance of doubt, Dividends Tax and the information provided above is of only direct
+application to shareholders on the South Africa branch register. Shareholders on the South Africa
+branch register should direct any questions regarding the application of Dividends Tax to
+Computershare Investor Services Proprietary Limited, contact details for which are given below:
+Computershare Investor Services Proprietary Limited
+Private Bag, X9000, Saxonwold, 2132
+tel: 0861 100 634; +27 11 870 8216
+email enquiries: web.queries@computershare.co.za
+Name of duly authorised officer of issuer responsible for making notification:
+Christopher Worlock
+Assistant Secretary
+British American Tobacco p.l.c.
+21 September 2026
+Enquiries:
+Media Centre
+press_office@bat.com | @BATplc
+Investor Relations
+Victoria Buxton | IR_team@bat.com
+21 September 2026
+Sponsor: Merrill Lynch South Africa (Pty) Ltd t/a BofA Securities
+Date: 21/09/2026 08:00:00
 Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited (‘JSE’).
 The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
 the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
