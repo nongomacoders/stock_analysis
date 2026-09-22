@@ -706,10 +706,18 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
             audit = {"assumptions": [], "warnings": [{"code": "audit_failed", "assumption": None,
                        "message": str(exc)}], "blocking": False}
         audit['warnings'].extend({"code": "source_metadata_unavailable", "assumption": None, "message": x} for x in source_errors)
+        from modules.analysis.metric_extraction import structure_report_metrics
+        from modules.analysis.financial_metrics import metric_json
+        metrics, metric_warnings = structure_report_metrics(t, archive.report_id, audit)
+        result["structured_metrics"] = [metric_json(metric) for metric in metrics]
+        result["metric_warnings"] = metric_warnings
+        audit["warnings"].extend({"code": warning["code"], "assumption": warning.get("name"),
+                                  "message": warning["message"]} for warning in metric_warnings)
         result["audit"] = audit
         published_report = response + "\n\n" + render_audit(audit, archive.report_id)
         try:
-            await finish_generation(archive, result, report_content=published_report, publish=True)
+            await finish_generation(archive, result, report_content=published_report, publish=True,
+                                    metrics=metrics, metric_warnings=metric_warnings)
             logger.info("Saved deepresearch %s for %s (%d advisory warnings)", archive.report_id, t, len(audit['warnings']))
         except Exception:
             logger.exception("Could not publish report %s; evidence retained", archive.report_id)

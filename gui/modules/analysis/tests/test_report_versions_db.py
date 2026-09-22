@@ -15,6 +15,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from core.config import DB_CONFIG
 from core.db.engine import DBEngine
+from modules.analysis.financial_metrics import FinancialMetric, Unit
 from modules.data.report_versions import (
     EvidenceArchive, register_generation, finish_generation, save_manual_report,
 )
@@ -38,6 +39,9 @@ def test_migration_versions_manual_edits_and_failed_attempts(monkeypatch, tmp_pa
             migration = Path(__file__).resolve().parents[3] / "core/db/migrations/add_deepresearch_versions.sql"
             await connection.execute(migration.read_text(encoding="utf-8"))
             await connection.execute(migration.read_text(encoding="utf-8"))
+            metrics_migration = Path(__file__).resolve().parents[3] / "core/db/migrations/add_financial_metrics.sql"
+            await connection.execute(metrics_migration.read_text(encoding="utf-8"))
+            await connection.execute(metrics_migration.read_text(encoding="utf-8"))
             old_id = await connection.fetchval("SELECT current_report_id FROM stock_analysis")
             assert old_id
             assert await connection.fetchval("SELECT count(*) FROM deepresearch_versions") == 1
@@ -59,8 +63,12 @@ def test_migration_versions_manual_edits_and_failed_attempts(monkeypatch, tmp_pa
             inputs = archive.save_inputs({"prompt": "complete prompt", "previous_report_id": str(old_id),
                                           "previous_report": "Original legacy report"})
             await register_generation(archive, inputs)
+            candidate = FinancialMetric(ticker="TEST.JO", report_id=archive.report_id,
+                                        name="target_price", value=1.70, unit=Unit.ZAR)
             await finish_generation(archive, {"response_text": "New report", "raw_response": {"text": "New report"},
-                                             "audit": {"warnings": ["advisory"]}}, report_content="New report", publish=True)
+                                             "audit": {"warnings": ["advisory"]}}, report_content="New report",
+                                    publish=True, metrics=[candidate])
+            assert await connection.fetchval("SELECT count(*) FROM financial_metrics WHERE report_id=$1::uuid", archive.report_id) == 1
             assert str(await connection.fetchval("SELECT current_report_id FROM stock_analysis")) == archive.report_id
             assert await connection.fetchval("SELECT report_content FROM deepresearch_versions WHERE report_id=$1", old_id) == "Original legacy report"
             assert await connection.fetchval("SELECT previous_report_id FROM deepresearch_versions WHERE report_id=$1::uuid", archive.report_id) == old_id

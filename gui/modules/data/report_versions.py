@@ -135,7 +135,8 @@ async def register_generation(archive, inputs):
         inputs.get("previous_report_id"), str(archive.path.resolve()), json_text(inputs))
 
 
-async def finish_generation(archive, result, *, report_content=None, publish=False, manual=False):
+async def finish_generation(archive, result, *, report_content=None, publish=False, manual=False,
+                            metrics=(), metric_warnings=()):
     """Publish report + current pointer in one transaction, retaining every version."""
     from core.db.engine import DBEngine
     pending_result = dict(result, status="pending")
@@ -173,6 +174,14 @@ async def finish_generation(archive, result, *, report_content=None, publish=Fal
             """, archive.report_id, status, json_text(result), report_content, json_text(result.get("audit")))
             if updated != "UPDATE 1":
                 raise ValueError("Report does not exist or is already finalised")
+            for metric in metrics:
+                await connection.execute("""
+                    INSERT INTO financial_metrics
+                      (metric_id, ticker, report_id, metric, warnings)
+                    VALUES ($1::uuid, $2, $3::uuid, $4::jsonb, $5::jsonb)
+                """, metric.metric_id, archive.ticker, archive.report_id,
+                    json_text(metric.model_dump(mode="json")),
+                    json_text([w for w in metric_warnings if w.get("metric_id") == str(metric.metric_id)]))
             if publish:
                 await connection.execute("""
                     UPDATE stock_analysis SET deepresearch=$2, deepresearch_date=CURRENT_DATE,
