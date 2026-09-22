@@ -1,0 +1,53 @@
+VALUATION PREFLIGHT
+Ticker: JBL.JO
+Case: Base
+production_volume: 3000 tonnes_contained_metal | Roan | formal_guidance | eligible
+mining_throughput: 120000 tonnes_rom_per_year | Molefe | management_target | eligible_with_warning
+  WARNING TARGET_THROUGHPUT: Management throughput target is a scenario assumption, not copper production.
+production_volume: 1740 tonnes_contained_metal | Molefe | management_target | eligible
+production_volume: 3739 tonnes_contained_metal | Roan/Molefe combined | historical_actual | eligible
+saleable_volume: 2120 tonnes_saleable_product | Roan/Molefe combined | historical_actual | eligible
+production_volume: 12000 tonnes | group | unresolved | ineligible
+  ERROR UNRESOLVED_ASSUMPTION: Provenance or classification is unresolved.
+  ERROR MISSING_UNIT: Unit is unresolved.
+  BLOCKING UNRESOLVED_CONVERSION: Raw unit could not be normalized to a controlled unit.
+  ERROR PRODUCTION_STAGE_UNKNOWN: Production stage is unknown.
+commodity_price: 13690.71 USD_per_tonne | group | unresolved | unresolved
+  ERROR UNRESOLVED_ASSUMPTION: Provenance or classification is unresolved.
+  ERROR PRICE_CURRENCY_UNIT: Commodity price needs explicit currency and unit.
+  WARNING SPOT_HORIZON_UNKNOWN: Market price has no stated averaging or forecast horizon.
+aisc: 5950 USD_per_tonne | group | unresolved | unresolved
+  ERROR UNRESOLVED_ASSUMPTION: Provenance or classification is unresolved.
+  ERROR COST_DEFINITION_UNKNOWN: Source has not established whether cost means production cost, cash cost, AISC or operating cost.
+  ERROR COST_SOURCE_PERIOD: Cost needs source and historical or forecast period.
+current_issued_shares: 3146295996 shares | group | historical_actual | ineligible
+  WARNING DILUTION_UNMODELED: Current issued shares used without a forecast diluted share count.
+  ERROR STALE_FORWARD_SHARES: Newer comparable issued shares exist.
+current_issued_shares: 3381330240 shares | group | historical_actual | eligible_with_warning
+  WARNING DILUTION_UNMODELED: Current issued shares used without a forecast diluted share count.
+current_issued_shares: 3146295996 shares | group | unresolved | ineligible
+  ERROR UNRESOLVED_ASSUMPTION: Provenance or classification is unresolved.
+  BLOCKING SHARE_BASIS_MISMATCH: Share-count basis differs from selected valuation field.
+  WARNING DILUTION_UNMODELED: Current issued shares used without a forecast diluted share count.
+  ERROR SHARE_BASIS_UNKNOWN: Share-count basis is unresolved.
+production_cost: 5948 USD_per_tonne | group | historical_actual | eligible
+production_cost: 8062 USD_per_tonne | group | historical_actual | eligible
+wacc: 12 percentage | group | unresolved | unresolved
+  ERROR UNRESOLVED_ASSUMPTION: Provenance or classification is unresolved.
+  ERROR WACC_UNSUPPORTED: WACC needs documented components or explicit override.
+production_growth: 5 percentage | group | unresolved | unresolved
+  ERROR UNRESOLVED_ASSUMPTION: Provenance or classification is unresolved.
+  ERROR TERMINAL_ASSUMPTION_UNSUPPORTED: Growth or exit assumption has no supported basis.
+exit_multiple: 6.0 multiple | group | unresolved | unresolved
+  ERROR UNRESOLVED_ASSUMPTION: Provenance or classification is unresolved.
+  ERROR TERMINAL_ASSUMPTION_UNSUPPORTED: Growth or exit assumption has no supported basis.
+Target reconciliation: carried_forward
+Overall preflight: FAIL
+Reason: production_volume: ineligible
+Reason: commodity_price: unresolved
+Reason: aisc: unresolved
+Reason: current_issued_shares: ineligible
+Reason: current_issued_shares: ineligible
+Reason: wacc: unresolved
+Reason: production_growth: unresolved
+Reason: exit_multiple: unresolved

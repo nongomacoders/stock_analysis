@@ -7,7 +7,7 @@ from decimal import Decimal, InvalidOperation
 from uuid import UUID
 
 from .financial_metrics import (
-    AssumptionType, FinancialMetric, ProductionStage, ShareCountType,
+    AssumptionType, CommodityPriceType, CostDefinition, FinancialMetric, ProductionStage, ShareCountType,
     SourceType, Unit, normalize_metric,
 )
 from .metric_validation import validate_metrics
@@ -115,6 +115,8 @@ def structure_report_metrics(ticker: str, report_id: str | UUID, audit: dict) ->
                 source_date=_date(item.get("source_date")), source=item.get("source"),
                 source_type=source_type, assumption_type=assumption, confidence=confidence,
                 operation_segment=item.get("operation_segment"), commodity=item.get("commodity"),
+                price_type=_enum(CommodityPriceType, item.get("price_type")),
+                cost_definition=_enum(CostDefinition, item.get("cost_definition")),
                 production_stage=stage, share_count_type=share_type, annualised=item.get("annualised"),
                 notes=item.get("notes"), raw_value=str(raw) if raw is not None else None,
                 raw_unit=str(raw_unit) if raw_unit is not None else None,

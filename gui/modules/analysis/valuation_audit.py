@@ -28,7 +28,7 @@ Each entry must contain: assumption, value, unit, source, source_date, classific
 evidence_quote, supporting_inputs, calculation. Use null for unknown fields.
 Also include unit_code, currency, period_start, period_end, source_type,
 confidence, operation_segment, commodity, production_stage, annualised,
-share_count_type, raw_value, raw_unit, intended_use when applicable. Use null
+share_count_type, price_type, cost_definition, raw_value, raw_unit, intended_use when applicable. Use null
 when evidence cannot establish a field. source_type must be one of:
 company_disclosure, market_data, external_consensus, previous_report,
 model, python, manual, unresolved. production_stage must be one of:
@@ -39,6 +39,11 @@ weighted_average_diluted_shares, forecast_diluted_shares. Use controlled
 unit_code values, including tonnes_rom_per_month, tonnes_contained_metal,
 tonnes_refined_product, tonnes_saleable_product, USD_per_lb,
 USD_per_tonne, ZAR, ZAR_cents, shares, percentage, multiple.
+For commodity prices, price_type must be current_spot, historical_average,
+analyst_forecast, or long_term_normalized, or null if unknown.
+For cost metrics, cost_definition must be production_cost, cash_cost, aisc,
+or operating_cost, or null when the source does not establish it. Never
+rename production cost as AISC without evidence.
 Do not invent a controlled value to make the schema complete. Do not infer a copper production stage
 from ROM feed, capacity or contained-metal figures. Keep historical weighted
 shares separate from current issued and forecast diluted shares.

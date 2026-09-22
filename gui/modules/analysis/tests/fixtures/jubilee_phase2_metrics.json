@@ -120,7 +120,8 @@
     "assumption_type": "historical_actual",
     "commodity": "copper",
     "notes": "Copper cost per tonne; not independently verified as AISC.",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "cost_definition": "production_cost"
   },
   {
     "name": "production_cost_per_tonne",
@@ -135,7 +136,8 @@
     "assumption_type": "historical_actual",
     "commodity": "copper",
     "notes": "Copper cost per tonne; newer comparable disclosed period.",
-    "ticker": "JBL.JO"
+    "ticker": "JBL.JO",
+    "cost_definition": "production_cost"
   },
   {
     "name": "production_cost_per_tonne",

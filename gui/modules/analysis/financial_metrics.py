@@ -44,6 +44,20 @@ class ProductionStage(str, Enum):
     CAPACITY = "capacity"
 
 
+class CostDefinition(str, Enum):
+    PRODUCTION_COST = "production_cost"
+    CASH_COST = "cash_cost"
+    AISC = "aisc"
+    OPERATING_COST = "operating_cost"
+
+
+class CommodityPriceType(str, Enum):
+    CURRENT_SPOT = "current_spot"
+    HISTORICAL_AVERAGE = "historical_average"
+    ANALYST_FORECAST = "analyst_forecast"
+    LONG_TERM_NORMALIZED = "long_term_normalized"
+
+
 class ShareCountType(str, Enum):
     ISSUED_SHARES_CURRENT = "issued_shares_current"
     WEIGHTED_AVERAGE_BASIC_SHARES = "weighted_average_basic_shares"
@@ -106,6 +120,8 @@ class FinancialMetric(BaseModel):
     confidence: Decimal | None = Field(default=None, ge=0, le=1)
     operation_segment: str | None = None
     commodity: str | None = None
+    price_type: CommodityPriceType | None = None
+    cost_definition: CostDefinition | None = None
     production_stage: ProductionStage | None = None
     share_count_type: ShareCountType | None = None
     annualised: bool | None = None
@@ -191,11 +207,11 @@ def normalize_metric(metric: FinancialMetric) -> FinancialMetric:
         return metric.model_copy(update={"normalized_value": usd_per_lb_to_usd_per_tonne(metric.value),
                                          "normalized_unit": Unit.USD_PER_TONNE,
                                          "conversion": "USD_per_lb_to_USD_per_tonne * 2204.6226218487757"})
-    if metric.unit == Unit.ZAR:
+    if metric.unit == Unit.ZAR and metric.name in {"target_price", "current_share_price"}:
         return metric.model_copy(update={"normalized_value": zar_to_cents(metric.value),
                                          "normalized_unit": Unit.ZAR_CENTS,
                                          "conversion": "ZAR_to_ZAR_cents * 100"})
-    if metric.unit == Unit.ZAR_CENTS:
+    if metric.unit == Unit.ZAR_CENTS and metric.name in {"target_price", "current_share_price"}:
         return metric.model_copy(update={"normalized_value": cents_to_zar(metric.value),
                                          "normalized_unit": Unit.ZAR,
                                          "conversion": "ZAR_cents_to_ZAR / 100"})

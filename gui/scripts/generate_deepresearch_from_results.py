@@ -711,6 +711,24 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         metrics, metric_warnings = structure_report_metrics(t, archive.report_id, audit)
         result["structured_metrics"] = [metric_json(metric) for metric in metrics]
         result["metric_warnings"] = metric_warnings
+        try:
+            from modules.analysis.valuation_preflight import propose_report_candidates, run_preflight
+            proposals, unmapped = propose_report_candidates(metrics, archive.report_id)
+            target_entry = next((x for x in audit["assumptions"] if x.get("assumption") == "target_price"), None)
+            target_metric = next((x for x in metrics if x.name == "target_price"), None)
+            preflight = run_preflight(t, archive.report_id, proposals, metrics,
+                                      current_price=inputs["share_price"].get("value_zar_supplied"),
+                                      target_price=target_metric.value if target_metric else None,
+                                      target_assumption=target_entry)
+            preflight["unmapped_metric_names"] = unmapped
+            result["valuation_preflight"] = preflight
+            if preflight["status"] == "FAIL":
+                audit["warnings"].append({"code": "valuation_preflight_failed", "assumption": None,
+                                          "message": "Python input eligibility failed; the Gemini target remains an unaudited legacy-style valuation."})
+        except Exception as exc:
+            result["valuation_preflight"] = {"status": "UNAVAILABLE", "error": str(exc)}
+            audit["warnings"].append({"code": "valuation_preflight_unavailable", "assumption": None,
+                                      "message": "Python valuation input preflight could not be completed: " + str(exc)})
         audit["warnings"].extend({"code": warning["code"], "assumption": warning.get("name"),
                                   "message": warning["message"]} for warning in metric_warnings)
         result["audit"] = audit

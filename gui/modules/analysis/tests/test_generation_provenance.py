@@ -75,6 +75,8 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
     else:
         assert result["raw_response"]["extra"] == "raw field"
         assert options["publish"]
+        assert result["valuation_preflight"]["status"] == "FAIL"
+        assert result["valuation_preflight"]["target_reconciliation"] in {"unresolved", "carried_forward"}
         assert options["report_content"].startswith(report)
         assert "target_not_reproducible" in options["report_content"]
 
