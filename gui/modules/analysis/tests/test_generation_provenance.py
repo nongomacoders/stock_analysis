@@ -15,8 +15,9 @@ from modules.data import report_versions
 
 def test_generation_prompt_revalidation_and_python_only_target():
     template = Path(generator.GUI_ROOT / "prompts/commodity_prompt.txt").read_text(encoding="utf-8")
-    prompt = generator._build_llm_prompt(template, ticker="JBL.JO", price=45, payload="Source", previous_report="Old report")
-    assert HISTORICAL_CONTEXT in prompt
+    prompt = generator._build_llm_prompt(template, ticker="JBL.JO", price=45, payload="Source")
+    assert "Old report" not in prompt
+    assert "PREVIOUS DEEP RESEARCH REPORT" not in prompt
     assert "ASSUMPTION_AUDIT_JSON_BEGIN" in prompt
     assert "HEPS = [(Spot Price - AISC) * Production * (1 - Tax Rate)] / Shares" not in prompt
     assert "Python alone calculates valuation and target prices" in prompt
@@ -41,7 +42,7 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
     monkeypatch.setattr(generator, "_fetch_latest_close_price", AsyncMock(return_value={"value": 45, "source_date": "2026-09-18"}))
     monkeypatch.setattr(generator, "_fetch_category_name", AsyncMock(return_value="commodity"))
     monkeypatch.setattr(generator, "_fetch_last_results_date", AsyncMock(return_value=None))
-    monkeypatch.setattr(report_versions, "get_previous_report", AsyncMock(return_value={"deepresearch": "Old report", "current_report_id": None}))
+    monkeypatch.setattr(report_versions, "get_previous_report_metadata", AsyncMock(return_value={"deepresearch_date": "2026-09-01", "current_report_id": None, "has_previous_report": True}))
     monkeypatch.setattr(report_versions, "fetch_audit_sources", AsyncMock(return_value=[]))
     monkeypatch.setattr(DBEngine, "fetch", AsyncMock(return_value=[]))
     monkeypatch.setattr(report_versions, "register_generation", AsyncMock())
@@ -61,7 +62,9 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
         assert len(manifests) == 1  # Already durable before inference.
         manifest = json.loads(manifests[0].read_text(encoding="utf-8"))
         assert manifest["prompt"] == prompt
-        assert manifest["previous_report"] == "Old report"
+        assert "previous_report" not in manifest
+        assert manifest["previous_report_supplied_to_model"] is False
+        assert "Old report" not in manifest["prompt"]
         assert manifest["share_price"]["source_date"] == "2026-09-18"
         assert Path(manifest["sources"][0]["archive_path"]).read_text() == "Exact source data"
         if provider_fails:

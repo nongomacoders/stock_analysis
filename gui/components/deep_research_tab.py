@@ -3,7 +3,7 @@ from components.base_text_tab import BaseTextTab
 from scripts.generate_deepresearch_from_results import run as run_deepresearch
 import logging
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import RIGHT
+from ttkbootstrap.constants import RIGHT, LEFT, X, BOTH, Y
 from ttkbootstrap.dialogs import Messagebox
 
 logger = logging.getLogger(__name__)
@@ -135,6 +135,99 @@ class DeepResearchTab(BaseTextTab):
         except Exception:
             logger.exception("Failed to compute or show spot price")
 
+    def _confirm_source_inventory(self, inventory):
+        """Show a readable, scrollable review of folder-based report inputs."""
+        dialog = ttk.Toplevel(self)
+        dialog.title("Review Deep Research Sources")
+        dialog.geometry("760x540")
+        dialog.minsize(640, 430)
+        dialog.transient(self.winfo_toplevel())
+        result = {"run": False}
+
+        header = ttk.Frame(dialog, padding=(20, 16, 20, 10))
+        header.pack(fill=X)
+        ttk.Label(header, text="Review Deep Research Sources",
+                  font=("Segoe UI", 16, "bold")).pack(anchor="w")
+        ttk.Label(header,
+                  text="Confirm the evidence that will be sent to Gemini for this rerun.",
+                  bootstyle="secondary").pack(anchor="w", pady=(3, 0))
+
+        location = ttk.Labelframe(dialog, text="Source folder", padding=10)
+        location.pack(fill=X, padx=20, pady=(0, 10))
+        folder_value = ttk.StringVar(value=str(inventory["folder"]))
+        ttk.Entry(location, textvariable=folder_value, state="readonly").pack(fill=X)
+
+        counts = ttk.Frame(dialog)
+        counts.pack(fill=X, padx=20, pady=(0, 10))
+        ttk.Label(counts, text=f"Text files: {len(inventory['text_files'])}",
+                  bootstyle="info", font=("Segoe UI", 10, "bold")).pack(side=LEFT, padx=(0, 20))
+        ttk.Label(counts, text=f"PDF files: {len(inventory['pdf_files'])}",
+                  bootstyle="success" if inventory["pdf_files"] else "danger",
+                  font=("Segoe UI", 10, "bold")).pack(side=LEFT, padx=(0, 20))
+        if inventory["ignored_files"]:
+            ttk.Label(counts, text=f"Ignored: {len(inventory['ignored_files'])}",
+                      bootstyle="secondary").pack(side=LEFT)
+
+        table_frame = ttk.Labelframe(dialog, text="Files in folder", padding=8)
+        table_frame.pack(fill=BOTH, expand=True, padx=20, pady=(0, 10))
+        table = ttk.Treeview(table_frame, columns=("status", "filename"),
+                             show="headings", height=10)
+        table.heading("status", text="Used as")
+        table.heading("filename", text="Filename")
+        table.column("status", width=110, stretch=False, anchor="w")
+        table.column("filename", width=560, stretch=True, anchor="w")
+        yscroll = ttk.Scrollbar(table_frame, orient="vertical", command=table.yview)
+        xscroll = ttk.Scrollbar(table_frame, orient="horizontal", command=table.xview)
+        table.configure(yscrollcommand=yscroll.set, xscrollcommand=xscroll.set)
+        table.grid(row=0, column=0, sticky="nsew")
+        yscroll.grid(row=0, column=1, sticky="ns")
+        xscroll.grid(row=1, column=0, sticky="ew")
+        table_frame.rowconfigure(0, weight=1)
+        table_frame.columnconfigure(0, weight=1)
+        for file in inventory["pdf_files"]:
+            table.insert("", "end", values=("PDF evidence", file.name))
+        for file in inventory["text_files"]:
+            table.insert("", "end", values=("Text evidence", file.name))
+        for file in inventory["ignored_files"]:
+            table.insert("", "end", values=("Ignored", file.name))
+
+        if not inventory["pdf_files"]:
+            warning = ttk.Frame(dialog, padding=10, bootstyle="danger")
+            warning.pack(fill=X, padx=20, pady=(0, 10))
+            ttk.Label(warning, text="PDF financial presentation missing",
+                      bootstyle="inverse-danger", font=("Segoe UI", 10, "bold")).pack(anchor="w")
+            ttk.Label(warning,
+                      text="The detailed financial presentation will not be supplied to Gemini. "
+                           "The report may lack notes, segment detail and complete financial statements.",
+                      bootstyle="inverse-danger", wraplength=690, justify="left").pack(anchor="w", pady=(2, 0))
+
+        ttk.Label(dialog,
+                  text="The previous report is archived after successful replacement and is not supplied to Gemini.",
+                  bootstyle="secondary").pack(anchor="w", padx=20, pady=(0, 10))
+
+        buttons = ttk.Frame(dialog, padding=(20, 0, 20, 18))
+        buttons.pack(fill=X)
+        def close(run=False):
+            result["run"] = run
+            dialog.destroy()
+        ttk.Button(buttons, text="Cancel", bootstyle="secondary",
+                   command=lambda: close(False)).pack(side=RIGHT, padx=(8, 0))
+        run_button = ttk.Button(buttons, text="Run Deep Research", bootstyle="success",
+                                command=lambda: close(True))
+        run_button.pack(side=RIGHT)
+        dialog.protocol("WM_DELETE_WINDOW", lambda: close(False))
+        dialog.bind("<Escape>", lambda event: close(False))
+        dialog.bind("<Return>", lambda event: close(True))
+        dialog.update_idletasks()
+        parent = self.winfo_toplevel()
+        x = parent.winfo_rootx() + max(0, (parent.winfo_width() - dialog.winfo_width()) // 2)
+        y = parent.winfo_rooty() + max(0, (parent.winfo_height() - dialog.winfo_height()) // 2)
+        dialog.geometry(f"+{x}+{y}")
+        dialog.grab_set()
+        run_button.focus_set()
+        dialog.wait_window()
+        return result["run"]
+
     def _on_rerun_clicked(self):
         """Handler for the 'Rerun AI DeepResearch' button.
 
@@ -143,8 +236,7 @@ class DeepResearchTab(BaseTextTab):
         if not self.ticker:
             return
 
-        from scripts.generate_deepresearch_from_results import (
-            format_results_source_inventory, get_results_source_inventory)
+        from scripts.generate_deepresearch_from_results import get_results_source_inventory
         inventory = get_results_source_inventory(self.ticker)
         if not inventory["text_files"] and not inventory["pdf_files"]:
             Messagebox.show_warning(
@@ -154,12 +246,7 @@ class DeepResearchTab(BaseTextTab):
                 parent=self,
             )
             return
-        decision = Messagebox.yesno(
-            format_results_source_inventory(inventory),
-            "Review Deep Research Sources",
-            parent=self,
-        )
-        if decision != "Yes":
+        if not self._confirm_source_inventory(inventory):
             return
 
         if hasattr(self, "async_run_bg") and self.async_run_bg:

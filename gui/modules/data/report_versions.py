@@ -153,6 +153,17 @@ async def get_previous_report(ticker):
     return dict(rows[0]) if rows else {}
 
 
+async def get_previous_report_metadata(ticker):
+    """Return version lineage without loading prior report text into generation."""
+    from core.db.engine import DBEngine
+    rows = await DBEngine.fetch("""
+        SELECT deepresearch_date, current_report_id,
+               (deepresearch IS NOT NULL AND BTRIM(deepresearch) <> '') AS has_previous_report
+        FROM stock_analysis WHERE ticker=$1
+    """, ticker)
+    return dict(rows[0]) if rows else {}
+
+
 async def fetch_audit_sources(ticker, *, until=None):
     """Disclosure evidence for warnings, never silently inserted into model inputs."""
     from core.db.engine import DBEngine
@@ -239,7 +250,7 @@ async def save_manual_report(ticker, content):
     previous = await get_previous_report(ticker)
     archive = EvidenceArchive(ticker)
     inputs = archive.save_inputs({"kind": "manual", "prompt": None, "model": None, "temperature": None,
-                                  "previous_report": previous.get("deepresearch"),
+                                  "previous_report_supplied_to_model": False,
                                   "previous_report_id": str(previous["current_report_id"]) if previous.get("current_report_id") else None,
                                   "sources": [], "provenance": "manual edit; no Gemini generation"})
     await register_generation(archive, inputs)

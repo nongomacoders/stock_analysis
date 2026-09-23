@@ -329,7 +329,7 @@ def format_results_source_inventory(inventory: dict) -> str:
     if ignored:
         lines.extend(["", f"Other files ignored by Deep Research ({len(ignored)}):",
                       *[f"  - {p.name}" for p in ignored]])
-    lines.extend(["", "The current Deep Research report will also be supplied as unverified historical context.",
+    lines.extend(["", "The previous Deep Research report will be archived after a successful replacement and is not supplied to Gemini.",
                   "", "Continue with the rerun?"])
     return "\n".join(lines)
 
@@ -339,7 +339,7 @@ PHASE4_RESEARCH_ONLY = (
     "Do not calculate or state a new target price, DCF, SOTP, WACC, implied upside, "
     "spot HEPS or HEPS proxy. Treat conflicting template instructions as superseded. "
     "If no Python valuation is supplied, say deterministic valuation is pending. "
-    "Previous Gemini targets may be mentioned only as unverified historical context.\n"
+    "Do not use or mention previous reports; they are not supplied to the model.\n"
 )
 
 
@@ -368,13 +368,12 @@ def _build_llm_prompt(
     ticker: str,
     price: float | None,
     payload: str,
-    previous_report: str | None = None,
     commodity_avgs: list[dict] | None = None,
     fx_avgs: list[dict] | None = None,
     results_date: str | None = None,
 ) -> str:
     from modules.analysis.market_context import format_market_context
-    from modules.analysis.valuation_audit import HISTORICAL_CONTEXT, AUDIT_INSTRUCTIONS
+    from modules.analysis.valuation_audit import AUDIT_INSTRUCTIONS
     today = date.today().isoformat()
     # DB stores close_price in ZAR cents (ZARc). Convert to ZAR for the model.
     price_zar = None if price is None else (float(price) / 100.0)
@@ -385,18 +384,7 @@ def _build_llm_prompt(
     txt = txt.replace("<today's date>", today)
     txt = txt.replace("[Insert Price]", price_str)
 
-    # Optional: include previous deep research report for change comparison.
-    prev_block = ""
-    if previous_report:
-        prev_block = (
-            "\n\n[PREVIOUS DEEP RESEARCH REPORT: UNVERIFIED HISTORICAL CONTEXT]\n"
-            + previous_report.strip()
-            + "\n[END PREVIOUS REPORT]\n\n"
-            + "IMPORTANT: Your response MUST include a section titled \"## Summary of Changes\"\n"
-            + "at the end that summarises the key differences between this new report and the\n"
-            + "previous report above. Highlight changes in financials, outlook, risks, and any\n"
-            + "new developments.\n"
-        )
+    # Previous reports are intentionally excluded to prevent analysis leakage.
 
     # Optional: inject commodity and FX average prices.
     commodity_block = ""
@@ -414,7 +402,6 @@ def _build_llm_prompt(
     # Provide a consistent preamble, then include payload.
     return (
         PHASE4_RESEARCH_ONLY + "\n" + txt.rstrip()
-        + prev_block
         + commodity_block
         + "\n\n"
         + f"TICKER: {ticker}\n"
@@ -423,7 +410,7 @@ def _build_llm_prompt(
         + "\n"
         + "[PASTE RESULTS / SENS ANNOUNCEMENTS BELOW THIS LINE]\n"
         + payload.strip()
-        + "\n\n" + HISTORICAL_CONTEXT + "\n" + AUDIT_INSTRUCTIONS
+        + "\n\n" + AUDIT_INSTRUCTIONS
     )
 
 
@@ -578,7 +565,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
     from modules.analysis.engine import generate_master_research
     from modules.data.research import save_research_data
     from modules.data.report_versions import (
-        EvidenceArchive, get_previous_report, fetch_audit_sources, register_generation,
+        EvidenceArchive, get_previous_report_metadata, fetch_audit_sources, register_generation,
         finish_generation, raw_response, write_json,
     )
     from modules.analysis.valuation_audit import audit_report, extract_share_disclosures, render_audit
@@ -643,10 +630,8 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
         prompt_file = _select_prompt_file(prompts_dir, category)
         prompt_template = prompt_file.read_text(encoding="utf-8", errors="ignore")
 
-        # Fetch any existing deep research so the LLM can produce a change summary.
-        # Missing schema/previous context must not silently discard lineage.
-        previous = await get_previous_report(t)
-        existing_dr = previous.get("deepresearch")
+        # Fetch lineage metadata only. Prior report text never enters generation memory or prompt.
+        previous = await get_previous_report_metadata(t)
 
         # For commodity-type tickers, fetch average commodity/FX prices since last reporting period.
         commodity_avgs = None
@@ -674,7 +659,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
             prompt_file.name,
             len(direct_records) if direct_records else len(used_files),
             len(pdfs),
-            bool(existing_dr),
+            bool(previous.get("has_previous_report")),
         )
 
         llm_prompt = _build_llm_prompt(
@@ -682,7 +667,6 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
             ticker=t,
             price=price,
             payload=payload,
-            previous_report=existing_dr,
             commodity_avgs=commodity_avgs,
             fx_avgs=fx_avgs,
             results_date=results_date_str,
@@ -742,7 +726,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
         if not payload:
             payload = "[NO TEXT FILES FOUND FOR THIS TICKER]\n"
         llm_prompt = _build_llm_prompt(
-            prompt_template, ticker=t, price=price, payload=payload, previous_report=existing_dr,
+            prompt_template, ticker=t, price=price, payload=payload,
             commodity_avgs=commodity_avgs, fx_avgs=fx_avgs, results_date=results_date_str,
         )
         llm_prompt += "\nSOURCE CATALOG (dates may be unresolved; never infer dates):\n"
@@ -761,7 +745,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
             "prompt": llm_prompt, "request": dict(trace), "sources": sources,
             "source_set_id": archive.report_id, "audit_only_sources": audit_sources,
             "source_warnings": source_errors,
-            "previous_report": existing_dr,
+            "previous_report_supplied_to_model": False,
             "previous_report_id": str(previous["current_report_id"]) if previous.get("current_report_id") else None,
             "previous_report_date": previous.get("deepresearch_date"),
             "commodities_supplied": (commodity_avgs or [])[:10], "fx_supplied": (fx_avgs or [])[:10],
@@ -802,7 +786,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
             continue
         try:
             from modules.analysis.market_context import market_audit_sources
-            audit = audit_report(response, sources=sources + market_audit_sources(commodity_avgs, fx_avgs), previous_report=existing_dr,
+            audit = audit_report(response, sources=sources + market_audit_sources(commodity_avgs, fx_avgs),
                                  share_disclosures=extract_share_disclosures(sources + audit_sources))
         except Exception as exc:
             # Audit failures are visible and advisory; retain the raw report.
