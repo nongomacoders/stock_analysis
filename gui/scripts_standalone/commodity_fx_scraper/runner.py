@@ -91,7 +91,8 @@ async def fetch_active_fx_pairs(limit: Optional[int]) -> List[str]:
     return pairs
 
 
-async def run(mode: str, symbol: Optional[str], pair: Optional[str], limit: Optional[int]) -> int:
+async def run(mode: str, symbol: Optional[str], pair: Optional[str], limit: Optional[int],
+              *, ingestion_run_id=None, return_details=False):
     logger = logging.getLogger(__name__)
     logger.info("Starting market data scraper (mode=%s, DBEngine=%s)", mode, DBENGINE_IMPORT_PATH or "N/A")
 
@@ -100,6 +101,9 @@ async def run(mode: str, symbol: Optional[str], pair: Optional[str], limit: Opti
         return 2
 
     failed = 0
+    outcomes = []
+    errors = []
+    configured = 0
 
     # --------------------------------------------------
     # COMMODITIES
@@ -112,11 +116,12 @@ async def run(mode: str, symbol: Optional[str], pair: Optional[str], limit: Opti
         else:
             symbols = await fetch_active_commodities(limit)
 
+        configured += len(symbols)
         if not symbols:
             logger.warning("No active commodities found")
         else:
             for sym in symbols:
-                rc = await run_tradingeconomics(symbol=sym)
+                rc = await run_tradingeconomics(symbol=sym, ingestion_run_id=ingestion_run_id, outcomes=outcomes, errors=errors)
                 if rc != 0:
                     failed += 1
 
@@ -131,15 +136,20 @@ async def run(mode: str, symbol: Optional[str], pair: Optional[str], limit: Opti
         else:
             pairs = await fetch_active_fx_pairs(limit)
 
+        configured += len(pairs)
         if not pairs:
             logger.warning("No active FX pairs found")
         else:
             for p in pairs:
-                rc = await run_tradingeconomics_fx(pair=p)
+                rc = await run_tradingeconomics_fx(pair=p, ingestion_run_id=ingestion_run_id, outcomes=outcomes, errors=errors)
                 if rc != 0:
                     failed += 1
 
     logger.info("Market data scraper finished. failed=%d", failed)
+    if return_details:
+        return {"failed": failed, "fetched": sum(x["fetched"] for x in outcomes),
+                "written": sum(x["written"] for x in outcomes), "errors": errors,
+                "configured": configured}
     return 0 if failed == 0 else 2
 
 

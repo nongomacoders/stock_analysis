@@ -113,18 +113,29 @@ def _select_prompt_file(prompts_dir: Path, category: str | None) -> Path:
     Heuristic:
     - Normalize category, compare to prompt stems (minus _prompt).
     - Prefer exact match, then substring match.
-    - Fallback to sa_inc_mid_small_prompt.txt.
+    - Use an equity-neutral prompt for unmapped categories.
     """
 
     prompt_files = sorted([p for p in prompts_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"])
     if not prompt_files:
         raise FileNotFoundError(f"No prompt .txt files found in {prompts_dir}")
 
-    fallback = prompts_dir / "sa_inc_mid_small_prompt.txt"
+    fallback = prompts_dir / "generic_equity_prompt.txt"
     if not category:
         return fallback if fallback.exists() else prompt_files[0]
 
     cat_norm = _normalize_category(category)
+    sector_routes = (
+        (("retail", "clothing", "food", "furniture"), "clothing_food_furniture_prompt.txt"),
+        (("bank",), "banks_prompt.txt"),
+        (("mining", "commodity", "commodities", "resources"), "commodity_prompt.txt"),
+        (("reit", "property"), "REITS_prompt.txt"),
+        (("telecom",), "telecoms_prompt.txt"),
+        (("holding", "investment holding"), "holding_company_prompt.txt"),
+    )
+    for terms, filename in sector_routes:
+        if any(term in cat_norm for term in terms) and (prompts_dir / filename).exists():
+            return prompts_dir / filename
 
     def _variants(s: str) -> set[str]:
         out = {s}
@@ -217,8 +228,18 @@ async def _fetch_existing_deepresearch(ticker: str) -> str | None:
 
 async def _fetch_last_results_date(ticker: str):
     """Return the most recent results_release_date for *ticker*, or None."""
+    import asyncpg
     from core.db.engine import DBEngine
 
+    try:
+        rows = await DBEngine.fetch("""SELECT release_date AS results_release_date
+            FROM canonical_fundamental_observations WHERE ticker=$1 AND release_date IS NOT NULL
+            ORDER BY release_date DESC LIMIT 1""", ticker)
+        if rows:
+            return rows[0]["results_release_date"]
+    except asyncpg.UndefinedTableError:
+        # Migration may not yet be deployed; retain the legacy read path.
+        logger.debug("Canonical fundamentals unavailable for %s; using legacy projection", ticker)
     q = """
         SELECT results_release_date
         FROM raw_stock_valuations
@@ -272,6 +293,45 @@ def _find_result_pdfs(results_root: Path, canon_ticker: str) -> list[Path]:
     if not ticker_dir.exists():
         return []
     return sorted([p for p in ticker_dir.glob("*.pdf") if p.is_file()])
+
+
+def get_results_source_inventory(ticker: str) -> dict:
+    """Describe the staging-folder inputs before a folder-based rerun."""
+    from scripts_standalone.results_scraper.utils import sanitize_ticker
+    folder = GUI_ROOT / "results" / sanitize_ticker(ticker)
+    files = sorted((p for p in folder.iterdir() if p.is_file()), key=lambda p: p.name.lower()) if folder.exists() else []
+    return {
+        "folder": folder,
+        "files": files,
+        "text_files": [p for p in files if p.suffix.lower() == ".txt"],
+        "pdf_files": [p for p in files if p.suffix.lower() == ".pdf"],
+        "ignored_files": [p for p in files if p.suffix.lower() not in {".txt", ".pdf"}],
+    }
+
+
+def format_results_source_inventory(inventory: dict) -> str:
+    """User-facing explanation of exactly what a rerun can and cannot use."""
+    text_files = inventory["text_files"]
+    pdf_files = inventory["pdf_files"]
+    ignored = inventory["ignored_files"]
+    lines = [
+        f"Source folder: {inventory['folder']}",
+        "",
+        f"Text files supplied to Gemini ({len(text_files)}):",
+        *([f"  - {p.name}" for p in text_files] or ["  - None"]),
+        "",
+        f"PDF files supplied to Gemini ({len(pdf_files)}):",
+        *([f"  - {p.name}" for p in pdf_files] or ["  - None"]),
+    ]
+    if not pdf_files:
+        lines.extend(["", "WARNING: No PDF is present.",
+                      "The detailed financial presentation will therefore not be supplied to Gemini."])
+    if ignored:
+        lines.extend(["", f"Other files ignored by Deep Research ({len(ignored)}):",
+                      *[f"  - {p.name}" for p in ignored]])
+    lines.extend(["", "The current Deep Research report will also be supplied as unverified historical context.",
+                  "", "Continue with the rerun?"])
+    return "\n".join(lines)
 
 PHASE4_RESEARCH_ONLY = (
     "PHASE 4 RESEARCH ROLE: Extract and explain source-backed facts, catalysts and risks. "
@@ -510,7 +570,8 @@ def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bo
 
 
 
-async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars: int | None) -> int:
+async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
+              max_chars: int | None, source_records: list[dict] | None = None) -> int:
     from scripts_standalone.results_scraper.watchlist import resolve_tickers_to_process
     from scripts_standalone.results_scraper.utils import sanitize_ticker
     from modules.analysis.selector import managed_query_ai
@@ -541,13 +602,21 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         canon = sanitize_ticker(t)
         logger.info("\n=== %s (canon=%s) ===", t, canon)
 
-        pdfs = _find_result_pdfs(results_root, canon)
-
-        # Load all results text (optional if PDFs exist).
-        payload, used_files = _load_results_text(results_root, canon, max_chars=max_chars)
+        # A SENS-tab request supplies the selected persisted announcement directly.
+        # It deliberately does not mix in staging-folder files.
+        direct_records = list(source_records or [])
+        if direct_records:
+            pdfs = []
+            used_files = []
+            payload = "".join(
+                f"\n\n===== SOURCE: {x.get('source_id') or x.get('name') or 'selected SENS'} =====\n\n{str(x.get('text') or '').strip()}\n"
+                for x in direct_records).strip() + "\n"
+        else:
+            pdfs = _find_result_pdfs(results_root, canon)
+            payload, used_files = _load_results_text(results_root, canon, max_chars=max_chars)
 
         if (not payload.strip()) and (not pdfs):
-            logger.warning("No .txt or .pdf files found for %s under %s", canon, results_root / canon)
+            logger.warning("No direct source or .txt/.pdf files found for %s", canon)
             continue
 
         if not payload.strip():
@@ -603,7 +672,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
             "Category: %s | Prompt: %s | Txt files: %d | Pdf files: %d | Has previous DR: %s",
             category or "(none)",
             prompt_file.name,
-            len(used_files),
+            len(direct_records) if direct_records else len(used_files),
             len(pdfs),
             bool(existing_dr),
         )
@@ -642,7 +711,8 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
         # Snapshot before inference. PDFs are sent from these immutable copies;
         # text is rebuilt from the snapshots so the evidence matches the prompt.
         archive = EvidenceArchive(t)
-        sources = archive.snapshot_sources(used_files + pdfs)
+        sources = (archive.snapshot_text_records(direct_records) if direct_records
+                   else archive.snapshot_sources(used_files + pdfs))
         source_errors = []
         try:
             audit_sources = await fetch_audit_sources(t, until=archive.generated_at)
@@ -739,9 +809,21 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
             audit = {"assumptions": [], "warnings": [{"code": "audit_failed", "assumption": None,
                        "message": str(exc)}], "blocking": False}
         audit['warnings'].extend({"code": "source_metadata_unavailable", "assumption": None, "message": x} for x in source_errors)
+        for item in audit.get("assumptions", []):
+            item.setdefault("report_date", archive.generated_at.date().isoformat())
+            if item.get("source"):
+                source = next((x for x in sources if x.get("source_id") == item.get("source") or x.get("name") == item.get("source")), None)
+                if source:
+                    item.setdefault("observed_at", source.get("observed_at") or source.get("fetched_at"))
         from modules.analysis.metric_extraction import structure_report_metrics
         from modules.analysis.financial_metrics import metric_json
         metrics, metric_warnings = structure_report_metrics(t, archive.report_id, audit)
+        from modules.analysis.historical_metrics import extract_retail_historical_metrics, render_historical_metrics
+        if prompt_file.name == "clothing_food_furniture_prompt.txt":
+            metrics.extend(extract_retail_historical_metrics(
+                t, archive.report_id, sources,
+                price_zar=inputs["share_price"].get("value_zar_supplied"),
+                report_date=archive.generated_at.date(), observed_at=archive.generated_at))
         result["structured_metrics"] = [metric_json(metric) for metric in metrics]
         result["metric_warnings"] = metric_warnings
         proposals = []
@@ -771,8 +853,17 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool, max_chars
                                       candidates=proposals, metrics=metrics,
                                       valuation_date=date.today())
         result["deterministic_valuation"] = deterministic.model_dump(mode="json")
+        from modules.analysis.report_contract import guard_report
+        reviewed_response, report_warnings = guard_report(
+            response, valuation_status=deterministic.status.value, audit=audit)
+        metric_warnings.extend(report_warnings)
+        audit["warnings"].extend({"code": w["code"], "assumption": None, "message": w["message"]}
+                                 for w in report_warnings)
+        result["reviewed_response_text"] = reviewed_response
+        result["report_contract_warnings"] = report_warnings
         result["audit"] = audit
-        published_report = response + "\n\n" + render_audit(audit, archive.report_id) + "\n\n" + render_valuation_result(deterministic)
+        historical_section = render_historical_metrics(metrics)
+        published_report = reviewed_response + ("\n\n" + historical_section if historical_section else "") + "\n\n" + render_audit(audit, archive.report_id) + "\n\n" + render_valuation_result(deterministic)
         try:
             await finish_generation(archive, result, report_content=published_report, publish=True,
                                     metrics=metrics, metric_warnings=metric_warnings,

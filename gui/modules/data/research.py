@@ -6,7 +6,7 @@ async def get_action_logs(ticker: str, limit=50):
     query = """
         SELECT log_id, log_timestamp, trigger_type, trigger_content, ai_analysis, is_read
         FROM action_log
-        WHERE ticker = $1
+        WHERE ticker = $1 AND dismissed_at IS NULL
         ORDER BY is_read ASC, log_timestamp DESC
         LIMIT $2
     """
@@ -21,9 +21,28 @@ async def mark_log_read(log_id: int):
 
 
 async def delete_action_log(log_id: int):
-    """Delete an action log entry by id."""
-    query = "DELETE FROM action_log WHERE log_id = $1"
-    await DBEngine.execute(query, log_id)
+    """Hide a log and remember a SENS dismissal without removing source evidence."""
+    from hashlib import sha256
+    pool = await DBEngine.get_pool()
+    async with pool.acquire() as conn:
+        async with conn.transaction():
+            row = await conn.fetchrow("""SELECT ticker,trigger_type,trigger_content,sens_content_hash
+                FROM action_log WHERE log_id=$1 FOR UPDATE""", log_id)
+            if row is None:
+                return
+            digest = row["sens_content_hash"]
+            if row["trigger_type"] == "SENS" and not digest:
+                # Legacy logs lack a source link. Resolve only an unambiguous body.
+                matches = await conn.fetch("""SELECT DISTINCT content FROM sens WHERE ticker=$1 AND
+                    (left(content,203)=$2 OR left(content,200)||'...'=$2 OR content=$2)
+                    LIMIT 2""", row["ticker"], row["trigger_content"])
+                if len(matches) == 1:
+                    digest = sha256(matches[0]["content"].encode("utf-8")).hexdigest()
+            if row["trigger_type"] == "SENS" and digest:
+                await conn.execute("""INSERT INTO sens_action_dismissals
+                    (ticker,content_hash,source_log_id) VALUES($1,$2,$3)
+                    ON CONFLICT(ticker,content_hash) DO NOTHING""", row["ticker"], digest, log_id)
+            await conn.execute("UPDATE action_log SET dismissed_at=now() WHERE log_id=$1", log_id)
 
 
 async def get_research_data(ticker: str):
@@ -53,7 +72,7 @@ async def get_research_data(ticker: str):
 async def get_sens_for_ticker(ticker: str, limit=50):
     """Get SENS announcements for a ticker."""
     query = """
-        SELECT publication_datetime, content
+        SELECT sens_id, publication_datetime, content, source_document_id
         FROM SENS
         WHERE ticker = $1
         ORDER BY publication_datetime DESC

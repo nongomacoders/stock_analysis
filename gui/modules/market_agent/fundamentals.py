@@ -158,7 +158,7 @@ async def get_tickers_needing_update() -> list[str]:
         return []
 
 
-async def run_fundamentals_check():
+async def run_fundamentals_check(ingestion_run_id=None):
     """
     Main worker function to check and update fundamentals.
     Called daily by the market agent.
@@ -170,13 +170,23 @@ async def run_fundamentals_check():
     
     if not tickers:
         logger.info("No tickers need fundamentals updates today.")
-        return
+        from modules.data.ingestion_runs import IngestionResult
+        return IngestionResult("skipped")
     
     # Run the loader for these specific tickers
     loader = RawFundamentalsLoader(log_callback=logger.info)
-    result = await loader.run_fundamentals_update(tickers=tickers)
+    result = await loader.run_fundamentals_update(tickers=tickers, ingestion_run_id=ingestion_run_id)
     
     logger.info("\nFundamentals Update Summary:")
     logger.info("  Succeeded: %s", result['succeeded'])
     logger.info("  Failed: %s", result['failed'])
     logger.info("  Total periods: %s", result['total_periods'])
+
+    from modules.data.ingestion_runs import IngestionResult
+    if result["failed"]:
+        codes=set(result.get("failure_codes",[]))
+        code=next(iter(codes)) if len(codes)==1 else "mixed_failures"
+        return IngestionResult.failure(code, f"{result['failed']} tickers failed",
+            retryable=bool(codes-{"parser_failure","validation_failure"}),
+            fetched=result["total_periods"], written=result["total_written"])
+    return IngestionResult.success(result["total_periods"],result["total_written"])

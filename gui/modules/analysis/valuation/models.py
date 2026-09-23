@@ -68,6 +68,22 @@ class TargetReconciliation(BaseModel):
     rounding_tolerance: Decimal = Decimal("0.005")
 
 
+class BankTargetReconciliation(BaseModel):
+    opening_common_equity: Decimal
+    pv_forecast_residual_income: Decimal
+    pv_terminal_residual_income: Decimal
+    approved_equity_adjustments: Decimal = Decimal(0)
+    equity_value: Decimal
+    shares: Decimal
+    shares_metric_id: UUID
+    unrounded_target_zar: Decimal
+    rounded_target_zar: Decimal
+    rounded_target_cents: Decimal
+    display_currency: str = "ZAR"
+    display_unit: str = "ZAR_per_share"
+    rounding_tolerance: Decimal = Decimal("0.005")
+
+
 class ValuationResult(BaseModel):
     valuation_id: UUID = Field(default_factory=uuid4)
     ticker: str
@@ -81,7 +97,7 @@ class ValuationResult(BaseModel):
     methods: dict[str, ValuationMethodResult] = Field(default_factory=dict)
     sotp: dict[str, Any] | None = None
     target_price: Decimal | None = None
-    reconciliation: TargetReconciliation | None = None
+    reconciliation: TargetReconciliation | BankTargetReconciliation | None = None
     warnings: list[str] = Field(default_factory=list)
     status: ValuationStatus
     preflight: dict[str, Any] | None = None

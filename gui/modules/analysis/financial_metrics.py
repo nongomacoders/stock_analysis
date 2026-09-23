@@ -1,7 +1,7 @@
 """Typed facts and deterministic unit conversions; no target-price model."""
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 from enum import Enum
 from typing import Any
@@ -60,6 +60,8 @@ class CommodityPriceType(str, Enum):
 
 class ShareCountType(str, Enum):
     ISSUED_SHARES_CURRENT = "issued_shares_current"
+    TREASURY_SHARES = "treasury_shares"
+    EXTERNAL_SHARES_EX_TREASURY = "external_shares_ex_treasury"
     WEIGHTED_AVERAGE_BASIC_SHARES = "weighted_average_basic_shares"
     WEIGHTED_AVERAGE_DILUTED_SHARES = "weighted_average_diluted_shares"
     FORECAST_DILUTED_SHARES = "forecast_diluted_shares"
@@ -115,7 +117,10 @@ class FinancialMetric(BaseModel):
     unit: Unit | None = None
     period_start: date | None = None
     period_end: date | None = None
+    effective_date: date | None = None
     source_date: date | None = None
+    observed_at: datetime | None = None
+    report_date: date | None = None
     source: str | None = None
     source_type: SourceType = SourceType.UNRESOLVED
     assumption_type: AssumptionType = AssumptionType.UNRESOLVED
@@ -130,6 +135,7 @@ class FinancialMetric(BaseModel):
     notes: str | None = None
     raw_value: str | None = None
     raw_unit: str | None = None
+    normalization_rule: str | None = None
     normalized_value: Decimal | None = None
     normalized_unit: Unit | None = None
     conversion: str | None = None

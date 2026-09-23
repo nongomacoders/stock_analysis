@@ -21,7 +21,9 @@ def parse_period_label(header: str) -> Optional[date]:
 
         # Parse only Month YYYY from matched groups
         date_str = f"{m.group(1)} {m.group(2)}"
-        return parser.parse(date_str).date()
+        parsed = parser.parse(date_str)
+        from calendar import monthrange
+        return date(parsed.year, parsed.month, monthrange(parsed.year, parsed.month)[1])
     except:
         return None
 

@@ -49,6 +49,17 @@ def source_date_from_name(name):
     return None
 
 
+def source_date_from_text(text):
+    """Use an explicit SENS publication stamp before a file-save timestamp."""
+    match = re.search(r"(?im)^\s*Date:\s*(\d{1,2})[-/](\d{1,2})[-/](20\d{2})(?:\s|$)", text)
+    if match:
+        try:
+            return date(int(match.group(3)), int(match.group(2)), int(match.group(1))).isoformat()
+        except ValueError:
+            pass
+    return None
+
+
 class EvidenceArchive:
     def __init__(self, ticker, *, root=None, report_id=None, generated_at=None):
         self.report_id = str(report_id or uuid4())
@@ -77,12 +88,40 @@ class EvidenceArchive:
                     text = "\n".join(p.extract_text() or "" for p in PdfReader(archived).pages)
                 except Exception as exc:
                     extraction_error = str(exc)
-            source_date = source_date_from_name(original.name)
+            embedded_date = source_date_from_text(text)
+            source_date = embedded_date or source_date_from_name(original.name)
             sources.append({"source_id": f"file:{index}", "name": original.name,
                             "original_path": str(original.resolve()), "archive_path": str(archived.resolve()),
                             "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data),
-                            "source_date": source_date, "date_basis": "filename" if source_date else None,
-                            "supplied_to_model": True, "text": text, "extraction_error": extraction_error})
+                            "source_date": source_date, "date_basis": "embedded publication stamp" if embedded_date else "filename" if source_date else None,
+                            "supplied_to_model": True, "text": text, "extraction_error": extraction_error,
+                            "observed_at": self.generated_at.isoformat(), "fetched_at": self.generated_at.isoformat()})
+        return sources
+
+    def snapshot_text_records(self, records):
+        """Archive in-memory/database text evidence without a staging source file."""
+        sources = []
+        folder = self.path / "sources"
+        folder.mkdir(exist_ok=False)
+        for index, record in enumerate(records):
+            text = str(record.get("text") or "")
+            data = text.encode("utf-8")
+            raw_name = str(record.get("name") or f"source_{index}.txt")
+            safe_name = re.sub(r"[^A-Za-z0-9_.-]", "_", Path(raw_name).name) or f"source_{index}.txt"
+            archived = folder / f"{index:03d}_{safe_name}"
+            archived.write_bytes(data)
+            embedded_date = source_date_from_text(text)
+            source_date = record.get("source_date") or embedded_date
+            item = {k: v for k, v in record.items() if k != "text"}
+            item.update({"source_id": record.get("source_id") or f"inline:{index}",
+                         "name": raw_name, "original_path": None,
+                         "archive_path": str(archived.resolve()),
+                         "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data),
+                         "source_date": str(source_date)[:10] if source_date else None,
+                         "date_basis": record.get("date_basis") or ("embedded publication stamp" if embedded_date else None),
+                         "supplied_to_model": True, "text": text, "extraction_error": None,
+                         "observed_at": self.generated_at.isoformat(), "fetched_at": self.generated_at.isoformat()})
+            sources.append(item)
         return sources
 
     def save_inputs(self, inputs):

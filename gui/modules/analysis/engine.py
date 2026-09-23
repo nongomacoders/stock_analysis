@@ -30,7 +30,7 @@ async def _log_ai_cost_wrapper(ticker, task_name, response_obj):
     return getattr(response_obj, "text", str(response_obj))
 
 
-async def analyze_new_sens(ticker: str, content: str):
+async def analyze_new_sens(ticker: str, content: str, *, store_log: bool = True):
     import logging
     logger = logging.getLogger(__name__)
     logger.info("AI: Analyzing SENS for %s...", ticker)
@@ -64,11 +64,13 @@ async def analyze_new_sens(ticker: str, content: str):
 
         # 4. Save Log
         headline = (content[:200] + "...") if len(content) > 200 else content
-        await _save_log(ticker, "SENS", headline, analysis, significance=significance)
-        logger.info("AI: SENS analysis saved for %s.", ticker)
+        if store_log:
+            await _save_log(ticker, "SENS", headline, analysis, significance=significance,
+                            source_content=content)
+        logger.info("AI: SENS analysis generated for %s.", ticker)
         
         # 5. Return success to allow the caller to mark SENS as done
-        return True
+        return analysis
     except Exception as e:
         logger.error("AI: Failed to analyze SENS for %s: %s", ticker, e)
         # Raising let's the caller know it failed
@@ -173,7 +175,24 @@ async def estimate_spot_price(ticker: str):
 
     return analysis
 
-async def _save_log(ticker, type_, content, analysis, significance=None):
+async def _save_log(ticker, type_, content, analysis, significance=None, source_content=None):
+    if type_ == "SENS" and source_content is not None:
+        from hashlib import sha256
+        digest = sha256(source_content.encode("utf-8")).hexdigest()
+        pool = await DBEngine.get_pool()
+        async with pool.acquire() as conn:
+            async with conn.transaction():
+                if await conn.fetchval("""SELECT EXISTS(SELECT 1 FROM sens_action_dismissals
+                    WHERE ticker=$1 AND content_hash=$2)""", ticker, digest):
+                    return
+                if await conn.fetchval("""SELECT EXISTS(SELECT 1 FROM action_log WHERE ticker=$1
+                    AND trigger_type='SENS' AND sens_content_hash=$2 AND dismissed_at IS NULL)""",
+                                       ticker, digest):
+                    return
+                await conn.execute("""INSERT INTO action_log
+                    (ticker,trigger_type,trigger_content,ai_analysis,significance,sens_content_hash)
+                    VALUES($1,'SENS',$2,$3,$4,$5)""", ticker, content, analysis, significance, digest)
+        return
     q = """
         INSERT INTO action_log (ticker, trigger_type, trigger_content, ai_analysis, significance)
         VALUES ($1, $2, $3, $4, $5)

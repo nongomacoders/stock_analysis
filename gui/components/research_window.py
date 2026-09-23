@@ -46,7 +46,28 @@ class ResearchWindow(ttk.Toplevel):
                 pass
 
         self.create_widgets()
+        self.notebook.bind("<<NotebookTabChanged>>", self.on_notebook_tab_changed)
+        self.after(60000, self.refresh_open_sens_tab)
         self.load_research()
+
+    def refresh_sens(self):
+        """Refresh source announcements without waiting for Gemini action logs."""
+        ticker = self.ticker
+        def loaded(rows):
+            if self.winfo_exists() and self.ticker == ticker:
+                self.sens_tab.load_content(rows)
+        self.async_run_bg(get_sens_for_ticker(ticker), callback=loaded)
+
+    def on_notebook_tab_changed(self, event=None):
+        if self.notebook.select() == str(self.sens_tab):
+            self.refresh_sens()
+
+    def refresh_open_sens_tab(self):
+        if not self.winfo_exists():
+            return
+        if self.notebook.select() == str(self.sens_tab):
+            self.refresh_sens()
+        self.after(60000, self.refresh_open_sens_tab)
 
     def on_action_log_notification(self, payload: str):
         """Callback for DB notifications to reload the action log."""

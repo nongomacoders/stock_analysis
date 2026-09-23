@@ -39,7 +39,7 @@ class ValuationWorkbenchTab(ttk.Frame):
         ttk.Button(bar,text='Save new version',command=self.save).pack(side='right',padx=5)
         self.book=ttk.Notebook(self); self.book.pack(fill=BOTH,expand=True,padx=8,pady=4)
         self.views={}
-        for name in ('Evidence','Forecast','Scenarios','WACC','DCF','SOTP','Sensitivity','Reconciliation','Audit','Legacy / History'):
+        for name in ('Evidence','Forecast','Scenarios','WACC','DCF','SOTP','Bank Equity','Sensitivity','Reconciliation','Audit','Legacy / History'):
             frame=ttk.Frame(self.book); self.book.add(frame,text=name)
             if name == 'Forecast': self._forecast_form(frame)
             else:
@@ -153,6 +153,22 @@ class ValuationWorkbenchTab(ttk.Frame):
         self.forecast_detail.insert('end','\nCommodity price schedule: '+str(price_fx_schedule(p,'commodity_price'))+'\nFX schedule: '+str(price_fx_schedule(p,'fx_rate')))
         self._text('DCF','DCF requires an approved plan with explicit annual operating, cash-flow, WACC and terminal inputs. Missing fields remain missing.\nTerminal method: '+(p.engine_plan.cases.get('base').dcf.terminal_method.value if p.engine_plan and p.engine_plan.cases.get('base') and p.engine_plan.cases['base'].dcf else 'not selected'))
         self._text('SOTP','SOTP components must have explicit asset boundaries, ownership, probability, and source-linked values.\n'+('\n'.join(c.name for c in p.engine_plan.cases['base'].sotp.components) if p.engine_plan and p.engine_plan.cases.get('base') and p.engine_plan.cases['base'].sotp else 'No SOTP components entered.'))
+        bank_case = p.engine_plan.cases.get('base') if p.engine_plan else None
+        if bank_case and bank_case.primary_method == 'RESIDUAL_INCOME':
+            bank_fields = {'common_equity','bank_roe','bank_earnings','dividend_payout','bank_dividends',
+                           'bank_equity_movement','risk_free_rate','beta','equity_risk_premium',
+                           'country_risk_premium','cost_of_equity','bank_terminal_roe','terminal_growth',
+                           'forecast_diluted_shares','cet1_ratio','cet1_minimum','cet1_target','target_pb'}
+            rows = [f"{a.period_label or 'Base'} | {a.field}: {a.value} {a.unit} [{LABELS[a.origin.value]} / {a.approval_state.value}]"
+                    for a in p.assumptions if a.field in bank_fields]
+            self._text('Bank Equity', 'Residual income uses common equity, ROE or earnings, payout, '
+                'cost of equity, terminal ROE/growth, and forecast diluted shares. '
+                'The bank equity bridge does not add cash or subtract deposits.\n' +
+                ('\n'.join(rows) if rows else 'No approved bank forecast inputs entered.'))
+            self._text('WACC', 'Bank residual income uses cost of equity; enterprise WACC is inapplicable.')
+            self._text('DCF', 'Operating enterprise DCF is inapplicable to the bank residual-income method.')
+        else:
+            self._text('Bank Equity', 'Select bank sector and an explicit RESIDUAL_INCOME engine mapping to use this panel.')
         self._text('Sensitivity','Enter two saved approved plan versions and calculate the target-price change. Missing inputs remain NOT_CALCULABLE. No Gemini estimate is used.')
         self._text('Reconciliation','Deterministic target: NOT_CALCULABLE until complete approved inputs pass preflight and the engine.\nNo legacy target is used in equity-to-share reconciliation.')
         self._text('Audit',f'Plan ID: {p.forecast_plan_id}\nSource report: {p.source_report_version_id}\nEngine: {p.valuation_engine_version}\nApproval: {p.approval_status}\nUnaccepted assumptions: '+str(sum(a.approval_state!=ApprovalState.ACCEPTED for a in p.assumptions)))
@@ -269,6 +285,12 @@ class ValuationWorkbenchTab(ttk.Frame):
             from modules.analysis.forecast_plan import terminal_value_summary
             self._text('DCF',str(result.methods.get('DCF'))+'\nTerminal dependence: '+str(terminal_value_summary(result)))
             self._text('SOTP',str(result.methods.get('SOTP')))
+            if self.plan.engine_plan and self.plan.engine_plan.cases.get('base') and self.plan.engine_plan.cases['base'].primary_method == 'RESIDUAL_INCOME':
+                bank_result = result.methods['RESIDUAL_INCOME']
+                self._text('Bank Equity', 'Residual-income schedule:\n' +
+                    '\n'.join(str(row) for row in bank_result.schedule) +
+                    '\nP/B cross-checks: ' + str(result.implied_checks) +
+                    '\nWarnings: ' + str(result.warnings))
         self.async_run_bg(self._run_approved(),callback=done)
 
 

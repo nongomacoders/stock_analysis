@@ -143,6 +143,25 @@ class DeepResearchTab(BaseTextTab):
         if not self.ticker:
             return
 
+        from scripts.generate_deepresearch_from_results import (
+            format_results_source_inventory, get_results_source_inventory)
+        inventory = get_results_source_inventory(self.ticker)
+        if not inventory["text_files"] and not inventory["pdf_files"]:
+            Messagebox.show_warning(
+                "No Deep Research Sources",
+                f"No .txt or .pdf files were found in:\n{inventory['folder']}\n\n"
+                "Add a detailed financial PDF or export selected SENS announcements first.",
+                parent=self,
+            )
+            return
+        decision = Messagebox.yesno(
+            format_results_source_inventory(inventory),
+            "Review Deep Research Sources",
+            parent=self,
+        )
+        if decision != "Yes":
+            return
+
         if hasattr(self, "async_run_bg") and self.async_run_bg:
             def _on_generated(result):
                 """Refresh the UI after the AI generation finishes."""

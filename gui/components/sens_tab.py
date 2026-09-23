@@ -1,8 +1,10 @@
-import ttkbootstrap as ttk
+﻿import ttkbootstrap as ttk
 from ttkbootstrap.constants import TOP, X, HORIZONTAL, BOTH, VERTICAL, LEFT, RIGHT, Y, WORD, END, NORMAL, DISABLED
 from modules.analysis.engine import analyze_new_sens
-from modules.analysis.sens_processor import process_sens_for_deepresearch
+from modules.analysis.sens_processor import (process_sens_records_for_deepresearch,
+    save_sens_records_to_results)
 from components.button_utils import run_bg_with_button
+from ttkbootstrap.dialogs import Messagebox
 
 
 class SensTab(ttk.Frame):
@@ -16,6 +18,8 @@ class SensTab(ttk.Frame):
         self.create_widgets()
         self.sens_map = {}
         self.current_selection_content = None
+        self.current_selection = None
+        self.current_selections = []
 
     def create_widgets(self):
         # Toolbar
@@ -40,6 +44,15 @@ class SensTab(ttk.Frame):
         )
         self.deep_research_btn.pack(side=LEFT, padx=5)
 
+        self.add_to_folder_btn = ttk.Button(
+            toolbar,
+            text="Add SENS to Folder",
+            bootstyle="secondary",
+            command=self.on_add_to_folder_clicked,
+            state=DISABLED
+        )
+        self.add_to_folder_btn.pack(side=LEFT, padx=5)
+
         paned = ttk.Panedwindow(self, orient=HORIZONTAL)
         paned.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
@@ -48,7 +61,8 @@ class SensTab(ttk.Frame):
         paned.add(left, weight=1)
 
         self.tree = ttk.Treeview(
-            left, columns=("date", "content"), show="headings", bootstyle="primary"
+            left, columns=("date", "content"), show="headings", bootstyle="primary",
+            selectmode="extended"
         )
         self.tree.heading("date", text="Date")
         self.tree.heading("content", text="Headline")
@@ -80,8 +94,11 @@ class SensTab(ttk.Frame):
         self.tree.delete(*self.tree.get_children())
         self.sens_map.clear()
         self.current_selection_content = None
+        self.current_selection = None
+        self.current_selections = []
         self.analyze_btn.config(state=DISABLED)
         self.deep_research_btn.config(state=DISABLED)
+        self.add_to_folder_btn.config(state=DISABLED)
 
         self.text_widget.config(state=NORMAL)
         self.text_widget.delete("1.0", END)
@@ -94,35 +111,32 @@ class SensTab(ttk.Frame):
                 first_line = content.strip().split("\n")[0] if content else "No content"
 
                 iid = self.tree.insert("", END, values=(d_str, first_line))
-                self.sens_map[iid] = content
+                self.sens_map[iid] = item
         else:
             self.tree.insert("", END, values=("", "No SENS announcements found."))
 
     def on_sens_select(self, event):
-        """Displays the full SENS content when an item is selected."""
-        selection = self.tree.selection()
-        if not selection:
-            self.current_selection_content = None
-            self.analyze_btn.config(state=DISABLED)
-            self.deep_research_btn.config(state=DISABLED)
-            return
+        """Displays all selected announcements and enables batch Deep Research."""
+        selections = [self.sens_map[iid] for iid in self.tree.selection()
+                      if iid in self.sens_map and self.sens_map[iid].get("content")]
+        self.current_selections = selections
+        self.current_selection = selections[0] if len(selections) == 1 else None
+        self.current_selection_content = (selections[0]["content"]
+                                          if len(selections) == 1 else None)
 
-        item_id = selection[0]
-        content = self.sens_map.get(item_id)
-        
-        if not content:
-            self.current_selection_content = None
-            self.analyze_btn.config(state=DISABLED)
-            self.deep_research_btn.config(state=DISABLED)
-            return
-
-        self.current_selection_content = content
-        self.analyze_btn.config(state=NORMAL)
-        self.deep_research_btn.config(state=NORMAL)
+        self.analyze_btn.config(state=NORMAL if len(selections) == 1 else DISABLED)
+        selected_state = NORMAL if selections else DISABLED
+        self.deep_research_btn.config(state=selected_state)
+        self.add_to_folder_btn.config(state=selected_state)
 
         self.text_widget.config(state=NORMAL)
         self.text_widget.delete("1.0", END)
-        self.text_widget.insert("1.0", content)
+        if selections:
+            blocks = []
+            for index, item in enumerate(selections, 1):
+                published = item.get("publication_datetime")
+                blocks.append(f"===== SELECTED SENS {index} | {published} =====\n{item['content']}")
+            self.text_widget.insert("1.0", "\n\n".join(blocks))
         self.text_widget.config(state=DISABLED)
 
     def on_analyze_sens_clicked(self):
@@ -136,13 +150,35 @@ class SensTab(ttk.Frame):
             self.async_run_bg,
             analyze_new_sens(self.ticker, self.current_selection_content)
         )
+    def on_add_to_folder_clicked(self):
+        """Explicitly exports all selected database SENS announcements."""
+        if not self.current_selections or not self.ticker:
+            return
+
+        def on_saved(paths):
+            count = len(paths or [])
+            location = str(paths[0].parent) if paths else "results folder"
+            Messagebox.show_info(
+                "SENS Export Complete",
+                f"Saved {count} selected SENS announcement(s) to:\n{location}",
+                parent=self,
+            )
+
+        run_bg_with_button(
+            self.add_to_folder_btn,
+            self.async_run_bg,
+            save_sens_records_to_results(self.ticker, list(self.current_selections)),
+            callback=on_saved,
+        )
+
     def on_deep_research_clicked(self):
-        """Saves current SENS to results/ticker and runs deep research."""
-        if not self.current_selection_content or not self.ticker:
+        """Runs deep research directly from the selected persisted SENS."""
+        if not self.current_selections or not self.ticker:
             return
 
         run_bg_with_button(
             self.deep_research_btn,
             self.async_run_bg,
-            process_sens_for_deepresearch(self.ticker, self.current_selection_content)
+            process_sens_records_for_deepresearch(self.ticker, list(self.current_selections))
         )
+

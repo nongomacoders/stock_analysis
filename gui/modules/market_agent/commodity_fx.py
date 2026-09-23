@@ -5,7 +5,7 @@ import sys
 logger = logging.getLogger(__name__)
 
 
-async def run_market_data_update(mode: str = "all") -> int:
+async def run_market_data_update(mode: str = "all", *, ingestion_run_id=None):
     """
     Runs the DB-driven commodity + FX scrapers.
     Uses the same process/event loop as the market agent.
@@ -22,9 +22,21 @@ async def run_market_data_update(mode: str = "all") -> int:
         from scripts_standalone.commodity_scraper.runner import run as run_scraper
 
         # Our runner signature: run(mode, symbol, pair, limit)
-        rc = await run_scraper(mode=mode, symbol=None, pair=None, limit=None)
-        return rc
+        detail = await run_scraper(mode=mode, symbol=None, pair=None, limit=None,
+                                   ingestion_run_id=ingestion_run_id, return_details=True)
+        from modules.data.ingestion_runs import IngestionResult
+        if detail.get("configured",1)==0:
+            return IngestionResult("skipped")
+        if detail["failed"] or detail["fetched"] == 0:
+            errors=set(detail.get("errors",[]))
+            code=next(iter(errors)) if len(errors)==1 else "mixed_failures" if errors else "source_no_data"
+            return IngestionResult.failure(code,
+                f"{detail['failed']} instruments failed; {detail['fetched']} fetched",
+                retryable=code not in {"parser_failure","validation_failure"},
+                fetched=detail["fetched"], written=detail["written"])
+        return IngestionResult.success(detail["fetched"], detail["written"])
 
     except Exception:
         logger.exception("Market data update failed")
-        return 2
+        from modules.data.ingestion_runs import IngestionResult
+        return IngestionResult.failure("market_worker_failure", "Market data update failed")

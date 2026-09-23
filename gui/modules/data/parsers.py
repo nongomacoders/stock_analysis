@@ -78,6 +78,7 @@ def parse_multi_year_share_statistics(table_html: str) -> List[Dict[str, Any]]:
             "dividend_12m_zarc": None,
             "cash_gen_ps_zarc": None,
             "nav_ps_zarc": None,
+            "raw_values": {},
         }
         for p in periods_info
     ]
@@ -99,10 +100,10 @@ def parse_multi_year_share_statistics(table_html: str) -> List[Dict[str, Any]]:
             if f_label.lower() in label.lower():
                 for p_idx, p_info in enumerate(periods_info):
                     if p_info["column_idx"] < len(cols):
-                        val = parse_financial_value(
-                            cols[p_info["column_idx"]].get_text(strip=True)
-                        )
+                        raw = cols[p_info["column_idx"]].get_text(strip=True)
+                        val = parse_financial_value(raw)
                         periods_data[p_idx][f_key] = val
+                        periods_data[p_idx]["raw_values"][f_key] = raw
                 break
     return periods_data
 
@@ -156,7 +157,7 @@ def parse_multi_year_ratios(table_html: str) -> List[Dict[str, Any]]:
                 )
 
     periods_data = [
-        {"results_period_end": p["results_period_end"], "quick_ratio": None}
+        {"results_period_end": p["results_period_end"], "quick_ratio": None, "raw_values": {}}
         for p in periods_info
     ]
 
@@ -167,10 +168,10 @@ def parse_multi_year_ratios(table_html: str) -> List[Dict[str, Any]]:
         if "Quick Ratio".lower() in cols[0].get_text(strip=True).lower():
             for p_idx, p_info in enumerate(periods_info):
                 if p_info["column_idx"] < len(cols):
-                    val = parse_financial_value(
-                        cols[p_info["column_idx"]].get_text(strip=True)
-                    )
+                    raw = cols[p_info["column_idx"]].get_text(strip=True)
+                    val = parse_financial_value(raw)
                     periods_data[p_idx]["quick_ratio"] = val
+                    periods_data[p_idx]["raw_values"]["quick_ratio"] = raw
             break
     return periods_data
 

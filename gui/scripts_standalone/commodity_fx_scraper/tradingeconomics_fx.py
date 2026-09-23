@@ -103,17 +103,7 @@ def _parse_pair(pair: str, html: str) -> Optional[Dict[str, Any]]:
         "notes": "Parsed from TradingEconomics currencies table",
     }
 
-async def _insert_fx(row: Dict[str, Any]) -> None:
-    if not DBEngine:
-        raise RuntimeError("DBEngine not available")
-
-    q = """
-        INSERT INTO public.fx_rates (pair, rate, as_of_ts, source, url, notes)
-        VALUES ($1,$2,$3,$4,$5,$6)
-    """
-    await DBEngine.execute(q, row["pair"], row["rate"], row["as_of_ts"], row["source"], row["url"], row.get("notes"))
-
-async def run_tradingeconomics_fx(*, pair: str) -> int:
+async def run_tradingeconomics_fx(*, pair: str, ingestion_run_id=None, outcomes=None, errors=None) -> int:
     """
     0 = success OR clean skip (not implemented)
     1 = non-fatal fetch/parse issue
@@ -127,21 +117,37 @@ async def run_tradingeconomics_fx(*, pair: str) -> int:
         return 0
 
     if not DBEngine:
+        if errors is not None: errors.append("database_failure")
         logger.error("DBEngine not available (run via commodity_scraper entrypoint).")
         return 2
 
     html = await _fetch_html()
     if not html:
+        if errors is not None: errors.append("transient_network")
         return 1
+
+    from modules.data.ingestion_evidence import archive_market_page
+    try:
+        source_doc = await archive_market_page("fx", pair, html,
+            url=URL, ingestion_run_id=ingestion_run_id, db=DBEngine)
+    except Exception:
+        logger.exception("Could not archive TradingEconomics page")
+        if errors is not None: errors.append("database_failure")
+        return 2
 
     row = _parse_pair(pair, html)
     if not row:
+        if errors is not None: errors.append("parser_failure")
         return 1
 
     try:
-        await _insert_fx(row)
+        from modules.data.ingestion_evidence import ingest_tradingeconomics_row
+        changed = await ingest_tradingeconomics_row("fx", row, html, ingestion_run_id=ingestion_run_id,
+            source_document_id=source_doc, db=DBEngine)
+        if outcomes is not None: outcomes.append({"fetched": 1, "written": int(changed)})
         logger.info("Inserted FX %s: %s (as_of=%s)", pair, row["rate"], row["as_of_ts"])
         return 0
     except Exception:
         logger.exception("Failed to insert FX row for %s", pair)
+        if errors is not None: errors.append("database_failure")
         return 2

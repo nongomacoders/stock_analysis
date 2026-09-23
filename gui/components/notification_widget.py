@@ -282,6 +282,7 @@ class NotificationWidget(ttk.Frame):
                         is_read,
                         significance
                     FROM action_log
+                    WHERE dismissed_at IS NULL
                     ORDER BY log_timestamp DESC
                     LIMIT 100
                 """

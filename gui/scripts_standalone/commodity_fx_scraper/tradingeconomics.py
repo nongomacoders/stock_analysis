@@ -118,31 +118,7 @@ def _parse_row_to_price(symbol: str, html: str) -> Optional[dict]:
     }
 
 
-async def _insert_price(row: Dict[str, Any]) -> None:
-    if not DBEngine:
-        raise RuntimeError("DBEngine not available")
-
-    query = """
-        INSERT INTO commodity_prices
-        (symbol, commodity, price, unit, currency, as_of_ts, source, url, quality, notes)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-    """
-    await DBEngine.execute(
-        query,
-        row["symbol"],
-        row["commodity"],
-        row["price"],
-        row["unit"],
-        row["currency"],
-        row["as_of_ts"],
-        row["source"],
-        row["url"],
-        row.get("quality"),
-        row.get("notes"),
-    )
-
-
-async def run_tradingeconomics(*, symbol: str) -> int:
+async def run_tradingeconomics(*, symbol: str, ingestion_run_id=None, outcomes=None, errors=None) -> int:
     """
     Return codes:
       0 = success OR clean skip (not implemented)
@@ -157,25 +133,41 @@ async def run_tradingeconomics(*, symbol: str) -> int:
         return 0
 
     if not DBEngine:
+        if errors is not None: errors.append("database_failure")
         logger.error("DBEngine not available (run via standalone_scripts/commodity_scraper.py entrypoint).")
         return 2
 
     html = await _fetch_te_html()
     if not html:
         logger.warning("No HTML fetched for TradingEconomics; %s skipped", symbol)
+        if errors is not None: errors.append("transient_network")
         return 1
+
+    from modules.data.ingestion_evidence import archive_market_page
+    try:
+        source_doc = await archive_market_page("commodity", symbol, html,
+            url=URL, ingestion_run_id=ingestion_run_id, db=DBEngine)
+    except Exception:
+        logger.exception("Could not archive TradingEconomics page")
+        if errors is not None: errors.append("database_failure")
+        return 2
 
     row = _parse_row_to_price(symbol, html)
     if not row:
         logger.warning("No data parsed for %s", symbol)
+        if errors is not None: errors.append("parser_failure")
         return 1
 
     try:
-        await _insert_price(row)
+        from modules.data.ingestion_evidence import ingest_tradingeconomics_row
+        changed = await ingest_tradingeconomics_row("commodity", row, html, ingestion_run_id=ingestion_run_id,
+            source_document_id=source_doc, db=DBEngine)
+        if outcomes is not None: outcomes.append({"fetched": 1, "written": int(changed)})
         logger.info("Inserted %s: %s %s (as_of=%s)", row["commodity"], row["price"], row["unit"], row["as_of_ts"])
         return 0
     except Exception:
         logger.exception("Failed to insert price row for %s", symbol)
+        if errors is not None: errors.append("database_failure")
         return 2
     
 def _parse_as_of(text: str) -> Optional[datetime]:

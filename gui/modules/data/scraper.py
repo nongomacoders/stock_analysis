@@ -21,6 +21,13 @@ class FundamentalsScraper:
         """
         self.log = log_callback if log_callback else print
 
+    async def scrape_tables(self, ticker: str) -> Optional[List[Dict[str, str]]]:
+        """Return raw finals/interims HTML for durable evidence archival."""
+        if ticker and ticker.strip().startswith("^"):
+            return None
+        from playwright_scraper.pw import scrape_ticker_fundamentals
+        return await scrape_ticker_fundamentals(ticker)
+
     async def scrape_multi_year_fundamentals(self, ticker: str) -> Optional[List[Dict[str, Any]]]:
         """
         Scrape multi-year fundamentals for a ticker from ShareData.

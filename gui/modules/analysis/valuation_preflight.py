@@ -84,6 +84,21 @@ class ValuationField(str, Enum):
     OTHER_EQUITY_ADJUSTMENTS = "other_equity_adjustments"
     CURRENT_SHARE_PRICE = "current_share_price"
     NET_ASSET_VALUE = "net_asset_value"
+    COMMON_EQUITY = "common_equity"
+    BANK_ROE = "bank_roe"
+    BANK_EARNINGS = "bank_earnings"
+    DIVIDEND_PAYOUT = "dividend_payout"
+    BANK_DIVIDENDS = "bank_dividends"
+    BANK_EQUITY_MOVEMENT = "bank_equity_movement"
+    COST_OF_EQUITY = "cost_of_equity"
+    BANK_TERMINAL_ROE = "bank_terminal_roe"
+    CET1_RATIO = "cet1_ratio"
+    CET1_MINIMUM = "cet1_minimum"
+    CET1_TARGET = "cet1_target"
+    CREDIT_LOSS_RATIO = "credit_loss_ratio"
+    IMPAIRMENT_CHARGE = "impairment_charge"
+    TARGET_PB = "target_pb"
+    BANK_EQUITY_ADJUSTMENT = "bank_equity_adjustment"
     TARGET_PRICE = "target_price"  # Reconciliation only, never a valuation input.
 
 
@@ -278,6 +293,21 @@ def validate_candidate(c: ValuationInputCandidate, metrics: list[FinancialMetric
         add("MISSING_UNIT", Severity.ERROR, "Unit is unresolved.")
         if m.raw_unit is not None:
             add("UNRESOLVED_CONVERSION", Severity.BLOCKING, "Raw unit could not be normalized to a controlled unit.")
+    if base and f in {ValuationField.BANK_ROE, ValuationField.CREDIT_LOSS_RATIO} and m.assumption_type == AssumptionType.HISTORICAL_ACTUAL:
+        add("HISTORICAL_BANK_RATE_FORWARD", Severity.ERROR, "Historical bank rate cannot become a forward assumption without an approved forecast.")
+    if base and f in {ValuationField.BANK_ROE, ValuationField.BANK_EARNINGS, ValuationField.DIVIDEND_PAYOUT,
+                      ValuationField.BANK_DIVIDENDS, ValuationField.BANK_TERMINAL_ROE, ValuationField.COST_OF_EQUITY} and m.assumption_type == AssumptionType.HISTORICAL_ACTUAL:
+        add("HISTORICAL_BANK_INPUT_FORWARD", Severity.ERROR, "Historical bank value cannot silently become a forecast input.")
+    if f in {ValuationField.BANK_ROE, ValuationField.DIVIDEND_PAYOUT, ValuationField.BANK_TERMINAL_ROE,
+             ValuationField.CET1_RATIO, ValuationField.CET1_MINIMUM, ValuationField.CET1_TARGET,
+             ValuationField.COST_OF_EQUITY, ValuationField.CREDIT_LOSS_RATIO, ValuationField.TERMINAL_GROWTH} and m.unit != Unit.PERCENTAGE:
+        add("BANK_PERCENTAGE_UNIT", Severity.BLOCKING, "Bank ratio requires percentage units.")
+    if f == ValuationField.TARGET_PB and m.unit != Unit.MULTIPLE:
+        add("BANK_PB_UNIT", Severity.BLOCKING, "P/B cross-check requires a dimensionless multiple.")
+    if base and f == ValuationField.TARGET_PB and m.assumption_type != AssumptionType.MODEL_ASSUMPTION:
+        add("BANK_PB_NOT_APPROVED", Severity.ERROR, "Target P/B requires an approved analyst or scenario assumption.")
+    if f == ValuationField.COST_OF_EQUITY and m.name == "wacc":
+        add("BANK_WACC_MISMATCH", Severity.BLOCKING, "Enterprise WACC cannot stand in for bank cost of equity.")
     if f == ValuationField.COMMODITY_PRICE:
         if not m.currency or m.unit is None:
             add("PRICE_CURRENCY_UNIT", Severity.ERROR, "Commodity price needs explicit currency and unit.")

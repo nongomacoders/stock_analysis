@@ -215,8 +215,7 @@ class PortfolioWindow(ttk.Toplevel):
 
     def _on_prices_fetched(self, result):
         try:
-            # result is typically None; refresh data
-            self.status_label.configure(text="Latest prices downloaded")
+            self.status_label.configure(text="Latest prices downloaded" if result and result.status == "success" else "Price update incomplete; check ingestion runs")
             # reload portfolios + holdings (they will refresh totals via the existing hooks)
             try:
                 self.load_portfolios()

@@ -1,14 +1,19 @@
 """Advisory checks for typed metrics. These do not change report values."""
 from __future__ import annotations
 
+import re
+from decimal import Decimal, InvalidOperation
+
 from .financial_metrics import (
     AssumptionType, FinancialMetric, PRODUCTION_UNITS, ProductionStage,
     ShareCountType, SourceType, Unit,
 )
 
 
-def warning(code: str, metric: FinancialMetric, message: str, newer: FinancialMetric | None = None) -> dict:
+def warning(code: str, metric: FinancialMetric, message: str, newer: FinancialMetric | None = None, severity: str | None = None) -> dict:
     result = {"code": code, "metric_id": str(metric.metric_id), "name": metric.name, "message": message}
+    if severity:
+        result["severity"] = severity
     if newer:
         result["newer_metric_id"] = str(newer.metric_id)
         result["newer_value"] = str(newer.value)
@@ -28,6 +33,29 @@ def metric_date(metric: FinancialMetric):
 def validate_metrics(metrics: list[FinancialMetric]) -> list[dict]:
     warnings = []
     for metric in metrics:
+        raw = metric.raw_value or ""
+        match = re.search(r"(?<!\d)[+-]?(?:\d{1,3}(?:[ ,]\d{3})+|\d+)(?:\.\d+)?", raw)
+        if match and metric.value is not None and metric.assumption_type != AssumptionType.PYTHON_CALCULATION:
+            try:
+                expected = Decimal(match.group().replace(",", "").replace(" ", ""))
+                tail = raw[match.end():]
+                scale = re.match(r"\s*(thousand|million|billion|bn|mn)\b", tail, re.I)
+                if scale:
+                    expected *= {"thousand": 10**3, "million": 10**6, "mn": 10**6,
+                                 "billion": 10**9, "bn": 10**9}[scale.group(1).lower()]
+                if expected != metric.value:
+                    warnings.append(warning("RAW_SCALE_MISMATCH", metric,
+                        f"Typed value {metric.value} disagrees with raw evidence magnitude {expected}.", severity="ERROR"))
+            except InvalidOperation:
+                pass
+        if "%" in raw and metric.unit == Unit.PERCENTAGE and metric.value is not None:
+            shown = Decimal(match.group().replace(",", "").replace(" ", "")) if match else None
+            if shown is not None and shown != metric.value:
+                warnings.append(warning("PERCENT_SCALE_MISMATCH", metric,
+                    "Percentage must retain the displayed percentage-point value.", severity="ERROR"))
+        if re.search(r"(?i)\bcents?\b", raw) and metric.unit == Unit.ZAR:
+            warnings.append(warning("CENTS_AS_ZAR_WITHOUT_CONVERSION", metric,
+                "Raw cents were typed as ZAR without an explicit conversion.", severity="ERROR"))
         if metric.production_stage and metric.unit and metric.unit not in PRODUCTION_UNITS[metric.production_stage]:
             warnings.append(warning("STAGE_UNIT_MISMATCH", metric,
                                     f"{metric.production_stage.value} cannot use {metric.unit.value} without an explicit conversion."))

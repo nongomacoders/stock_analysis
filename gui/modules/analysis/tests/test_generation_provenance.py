@@ -144,3 +144,34 @@ def test_all_sector_templates_remove_gemini_target_requests():
         assert "<Target Price>" not in prompt, template.name
         assert "HEPS = [(Spot Price - AISC)" not in prompt, template.name
         assert "Python alone calculates valuation and target prices" in prompt
+
+
+def test_rerun_source_inventory_lists_inputs_and_warns_without_pdf(monkeypatch, tmp_path):
+    root = tmp_path / "gui"
+    folder = root / "results" / "TRU"
+    folder.mkdir(parents=True)
+    (folder / "results.txt").write_text("summary", encoding="utf-8")
+    (folder / "notes.json").write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(generator, "GUI_ROOT", root)
+    inventory = generator.get_results_source_inventory("TRU.JO")
+    assert [p.name for p in inventory["text_files"]] == ["results.txt"]
+    assert inventory["pdf_files"] == []
+    assert [p.name for p in inventory["ignored_files"]] == ["notes.json"]
+    message = generator.format_results_source_inventory(inventory)
+    assert "results.txt" in message
+    assert "notes.json" in message
+    assert "WARNING: No PDF is present" in message
+    assert "detailed financial presentation" in message
+
+
+def test_rerun_source_inventory_identifies_financial_pdf(monkeypatch, tmp_path):
+    root = tmp_path / "gui"
+    folder = root / "results" / "TRU"
+    folder.mkdir(parents=True)
+    (folder / "FY2026_presentation.pdf").write_bytes(b"%PDF")
+    monkeypatch.setattr(generator, "GUI_ROOT", root)
+    inventory = generator.get_results_source_inventory("TRU.JO")
+    message = generator.format_results_source_inventory(inventory)
+    assert [p.name for p in inventory["pdf_files"]] == ["FY2026_presentation.pdf"]
+    assert "FY2026_presentation.pdf" in message
+    assert "WARNING: No PDF is present" not in message

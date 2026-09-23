@@ -231,8 +231,11 @@ class WatchlistWidget(ttk.Frame):
         """Download latest prices from Yahoo Finance (non-blocking)."""
         logger = logging.getLogger(__name__)
 
-        def on_complete(_):
-            logger.info("Prices updated successfully.")
+        def on_complete(result):
+            if result is None or result.status != "success":
+                logger.warning("Price update incomplete: %s", result)
+            else:
+                logger.info("Prices updated successfully.")
             self.refresh()
 
         logger.info("Downloading latest prices...")

@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from decimal import Decimal
 from typing import Any
 from uuid import UUID
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, ValidationError, model_validator
 from ..financial_metrics import AssumptionType, FinancialMetric, CommodityPriceType, ProductionStage, ShareCountType, SourceType, Unit, convert_fx
 from ..valuation_preflight import (ValuationInputCandidate, ValuationField,
                                     validate_candidate, run_preflight)
@@ -19,7 +19,9 @@ from .earnings import earnings_bridge
 from .implied import implied_checks
 from .models import (Basis, InputRef, MethodStatus, TerminalMethod,
                      ValuationMethodResult, ValuationResult, ValuationStatus)
-from .reconciliation import recalculate_target, reconcile_equity
+from .reconciliation import recalculate_target, reconcile_equity, reconcile_bank_equity
+from .bank import BankInputs, BankYear, calculate_residual_income, cost_of_equity, pb_cross_checks
+from .sector_methods import validate_sector_method
 from .sotp import SotpComponent, calculate_sotp
 from .wacc import WaccInputs, calculate_wacc
 
@@ -138,11 +140,56 @@ class EquitySpec(BaseModel):
     shares: InputRef
 
 
+class BankYearSpec(BaseModel):
+    period_end: date
+    roe: InputRef | None = None
+    earnings: InputRef | None = None
+    payout_ratio: InputRef | None = None
+    dividends: InputRef | None = None
+    other_equity_movement: InputRef | None = None
+    cet1_ratio: InputRef | None = None
+
+    @model_validator(mode="after")
+    def valid(self):
+        if (self.roe is None) == (self.earnings is None):
+            raise ValueError("Bank year needs exactly one ROE or earnings reference")
+        if (self.payout_ratio is None) == (self.dividends is None):
+            raise ValueError("Bank year needs exactly one payout or dividends reference")
+        return self
+
+
+class BankSpec(BaseModel):
+    opening_common_equity: InputRef
+    years: list[BankYearSpec]
+    risk_free_rate: InputRef
+    beta: InputRef
+    equity_risk_premium: InputRef
+    country_risk_premium: InputRef | None = None
+    cost_of_equity_override: InputRef | None = None
+    override_rationale: str | None = None
+    terminal_roe: InputRef
+    terminal_growth: InputRef
+    shares: InputRef
+    equity_adjustment: InputRef | None = None
+    cet1_minimum: InputRef | None = None
+    cet1_target: InputRef | None = None
+    target_pb: InputRef | None = None
+
+    @model_validator(mode="after")
+    def valid(self):
+        if self.cost_of_equity_override and not (self.override_rationale and self.override_rationale.strip()):
+            raise ValueError("Cost-of-equity override requires recorded rationale")
+        if not self.years:
+            raise ValueError("Bank residual-income model needs annual forecast years")
+        return self
+
+
 class CasePlan(BaseModel):
     rationale: str
     primary_method: str
     dcf: DcfSpec | None = None
     sotp: SotpSpec | None = None
+    bank: BankSpec | None = None
     equity: EquitySpec | None = None
     group_dcf_boundaries: set[str] = Field(default_factory=set)
     valuation_fx_rate: InputRef | None = None
@@ -150,8 +197,12 @@ class CasePlan(BaseModel):
 
     @model_validator(mode="after")
     def valid(self):
-        if self.primary_method not in {"DCF", "SOTP"}:
-            raise ValueError("Primary method must be explicitly DCF or SOTP; no hidden weighting")
+        if self.primary_method not in {"DCF", "SOTP", "RESIDUAL_INCOME"}:
+            raise ValueError("Primary method must be explicitly DCF, SOTP or RESIDUAL_INCOME")
+        if self.primary_method == "RESIDUAL_INCOME" and (self.bank is None or self.equity is not None or self.dcf is not None or self.sotp is not None):
+            raise ValueError("Bank residual income uses direct equity; enterprise bridge and other methods are ineligible")
+        if self.primary_method != "RESIDUAL_INCOME" and self.bank is not None:
+            raise ValueError("Bank input schedule requires residual-income primary method")
         return self
 
 
@@ -160,6 +211,8 @@ class ValuationPlan(BaseModel):
     report_version_id: UUID
     valuation_date: date
     currency: str = "ZAR"
+    sector: str | None = None
+    method_override_rationale: str | None = None
     cases: dict[str, CasePlan]
     historical_calibration: dict[str, InputRef] = Field(default_factory=dict)
     market_price: InputRef | None = None
@@ -170,6 +223,8 @@ class ValuationPlan(BaseModel):
     def valid(self):
         if any(name not in {"base", "bear", "bull"} for name in self.cases):
             raise ValueError("Only controlled bear/base/bull cases are supported")
+        for case in self.cases.values():
+            validate_sector_method(self.sector, case.primary_method, self.method_override_rationale)
         if self.currency != "ZAR":
             raise ValueError("v1.0 target display currency is ZAR")
         return self
@@ -184,7 +239,8 @@ class IneligibleInput(Exception):
 
 
 def _active_refs(case: CasePlan) -> list[InputRef]:
-    return (_refs(case.dcf if case.primary_method == "DCF" else case.sotp)
+    return (_refs(case.dcf if case.primary_method == "DCF" else
+                  case.bank if case.primary_method == "RESIDUAL_INCOME" else case.sotp)
             + _refs(case.equity) + _refs(case.valuation_fx_rate))
 
 
@@ -530,6 +586,65 @@ def _sotp(spec: SotpSpec | None, resolver: Resolver, case: str,
         return ValuationMethodResult(method="SOTP", status=MethodStatus.FAIL, warnings=[str(exc)])
 
 
+def _bank(spec: BankSpec | None, resolver: Resolver, case: str, valuation_date: date) -> ValuationMethodResult:
+    if spec is None:
+        return ValuationMethodResult(method="RESIDUAL_INCOME", status=MethodStatus.NOT_CALCULABLE,
+                                     missing_inputs=["source-backed bank forecast plan"])
+    try:
+        def money(ref, field):
+            return resolver.get(ref, required_case=case, expected_field=field, currency="ZAR")
+        def ratio(ref, field):
+            return resolver.get(ref, required_case=case, expected_field=field, fraction=True)
+        opening = money(spec.opening_common_equity, "common_equity")
+        calculated_coe = cost_of_equity(risk_free_rate=ratio(spec.risk_free_rate, "risk_free_rate"),
+            beta=resolver.get(spec.beta, required_case=case, expected_field="beta"),
+            equity_risk_premium=ratio(spec.equity_risk_premium, "equity_risk_premium"),
+            country_risk_premium=ratio(spec.country_risk_premium, "country_risk_premium")
+                if spec.country_risk_premium else Decimal(0))
+        selected_coe = ratio(spec.cost_of_equity_override, "cost_of_equity") if spec.cost_of_equity_override else calculated_coe
+        years = []
+        prev = valuation_date
+        for item in spec.years:
+            period_start = prev + timedelta(days=1)
+            if (item.period_end - prev).days not in range(300, 400):
+                raise IneligibleInput("Bank forecast periods must be consecutive annual periods")
+            def forward(ref, field, *, money_unit=False):
+                metric = resolver.metric(ref)
+                if metric.assumption_type == AssumptionType.HISTORICAL_ACTUAL:
+                    raise IneligibleInput(f"Historical {field} cannot become bank forecast input")
+                return money(ref, field) if money_unit else ratio(ref, field)
+            roe = forward(item.roe, "bank_roe") if item.roe else None
+            earnings = forward(item.earnings, "bank_earnings", money_unit=True) if item.earnings else None
+            payout = forward(item.payout_ratio, "dividend_payout") if item.payout_ratio else None
+            dividends = forward(item.dividends, "bank_dividends", money_unit=True) if item.dividends else None
+            movement = forward(item.other_equity_movement, "bank_equity_movement", money_unit=True) if item.other_equity_movement else Decimal(0)
+            cet1 = forward(item.cet1_ratio, "cet1_ratio") if item.cet1_ratio else None
+            years.append(BankYear(period_end=item.period_end, roe=roe, earnings=earnings,
+                payout_ratio=payout, dividends=dividends, other_equity_movement=movement, cet1_ratio=cet1))
+            prev = item.period_end
+        if resolver.metric(spec.terminal_roe).assumption_type == AssumptionType.HISTORICAL_ACTUAL:
+            raise IneligibleInput("Historical terminal ROE cannot be projected without approved assumption")
+        if resolver.metric(spec.terminal_growth).assumption_type == AssumptionType.HISTORICAL_ACTUAL:
+            raise IneligibleInput("Historical growth cannot become bank terminal growth")
+        inputs = BankInputs(valuation_date=valuation_date, opening_common_equity=opening, years=years,
+            cost_of_equity=selected_coe, terminal_roe=ratio(spec.terminal_roe, "bank_terminal_roe"),
+            terminal_growth=ratio(spec.terminal_growth, "terminal_growth"),
+            cet1_minimum=ratio(spec.cet1_minimum, "cet1_minimum") if spec.cet1_minimum else None,
+            cet1_target=ratio(spec.cet1_target, "cet1_target") if spec.cet1_target else None)
+        result = calculate_residual_income(inputs)
+        result.currency = "ZAR"
+        result.schedule[0]["calculated_cost_of_equity"] = str(calculated_coe)
+        result.schedule[0]["selected_cost_of_equity"] = str(selected_coe)
+        result.schedule[0]["cost_of_equity_override_rationale"] = spec.override_rationale
+        result.input_ids = [r.metric_id for r in _refs(spec)]
+        return result
+    except MissingInput as exc:
+        return ValuationMethodResult(method="RESIDUAL_INCOME", status=MethodStatus.NOT_CALCULABLE,
+                                     missing_inputs=[str(exc)])
+    except (IneligibleInput, ValueError, ValidationError) as exc:
+        return ValuationMethodResult(method="RESIDUAL_INCOME", status=MethodStatus.FAIL, warnings=[str(exc)])
+
+
 def _equity(spec: EquitySpec | None, resolver: Resolver, case: str, operating_value: Decimal):
     if spec is None:
         raise MissingInput("enterprise-to-equity schedule and forward shares")
@@ -596,7 +711,7 @@ def run_valuation(*, ticker: str, report_version_id: UUID | str,
         preflight = run_preflight(ticker, report_id, base_candidates, metrics) if base_candidates else None
         return ValuationResult(**base_kwargs, status=ValuationStatus.NOT_CALCULABLE,
             methods={m: ValuationMethodResult(method=m, status=MethodStatus.NOT_CALCULABLE,
-                                             missing_inputs=reasons) for m in ("DCF", "SOTP")},
+                                             missing_inputs=reasons) for m in ("DCF", "SOTP", "RESIDUAL_INCOME")},
             warnings=reasons, input_ids=[c.metric_id for c in candidates], preflight=preflight,
             calculation_inputs={"candidates": [c.model_dump(mode="json") for c in candidates],
                                 "available_metrics": [m.model_dump(mode="json") for m in metrics],
@@ -643,7 +758,8 @@ def run_valuation(*, ticker: str, report_version_id: UUID | str,
         dcf = _dcf(case_plan.dcf, resolver, case_name)
         sotp = _sotp(case_plan.sotp, resolver, case_name, plan.currency, plan.valuation_date,
                      case_plan.group_dcf_boundaries)
-        methods = {"DCF": dcf, "SOTP": sotp}
+        bank = _bank(case_plan.bank, resolver, case_name, plan.valuation_date)
+        methods = {"DCF": dcf, "SOTP": sotp, "RESIDUAL_INCOME": bank}
         selected = methods[case_plan.primary_method]
         if case_name == "base" and selected.warnings:
             base_warnings.extend(selected.warnings)
@@ -658,7 +774,22 @@ def run_valuation(*, ticker: str, report_version_id: UUID | str,
                     operating_value = _convert(operating_value, selected.currency,
                         case_plan.valuation_fx_rate, case_plan.valuation_fx_pair,
                         resolver, case_name, plan.currency)
-                recon = _equity(case_plan.equity, resolver, case_name, operating_value)
+                if case_plan.primary_method == "RESIDUAL_INCOME":
+                    terminal = selected.schedule[-1]
+                    share_ref = case_plan.bank.shares
+                    if share_ref.field != "forecast_diluted_shares" or resolver.metric(share_ref).share_count_type != ShareCountType.FORECAST_DILUTED_SHARES:
+                        raise IneligibleInput("Bank target requires forecast diluted parent shares")
+                    shares = resolver.get(share_ref, required_case=case_name, expected_field="forecast_diluted_shares")
+                    adjustment = (resolver.get(case_plan.bank.equity_adjustment, required_case=case_name,
+                        expected_field="bank_equity_adjustment", currency="ZAR")
+                        if case_plan.bank.equity_adjustment else Decimal(0))
+                    recon = reconcile_bank_equity(opening_common_equity=D(terminal["opening_common_equity"]),
+                        pv_forecast_residual_income=D(terminal["pv_forecast_residual_income"]),
+                        pv_terminal_residual_income=D(terminal["pv_terminal_residual_income"]),
+                        approved_equity_adjustments=adjustment, forward_diluted_shares=shares,
+                        shares_metric_id=share_ref.metric_id)
+                else:
+                    recon = _equity(case_plan.equity, resolver, case_name, operating_value)
                 if case_plan.primary_method == "SOTP":
                     kinds = {row.get("value_kind") for row in selected.schedule}
                     if (kinds & {"cash", "net_cash"} and recon.cash != 0) or (kinds & {"debt", "net_debt"} and recon.debt != 0) or ("receivable" in kinds and recon.receivables != 0):
@@ -727,6 +858,17 @@ def run_valuation(*, ticker: str, report_version_id: UUID | str,
                 return resolver.get(ref, expected_field=expected)
             except (MissingInput, IneligibleInput):
                 return None
+        if plan.cases["base"].primary_method == "RESIDUAL_INCOME":
+            spec = plan.cases["base"].bank
+            terminal = result.methods["RESIDUAL_INCOME"].schedule[-1]
+            target_pb = optional(spec.target_pb, "target_pb") if spec.target_pb else None
+            result.implied_checks = pb_cross_checks(equity_value=result.reconciliation.equity_value,
+                shares=result.reconciliation.shares,
+                opening_book_equity=D(terminal["opening_common_equity"]),
+                forecast_book_equity=D(terminal["terminal_book_equity"]), target_pb=target_pb,
+                terminal_roe=D(terminal["terminal_roe"]),
+                cost_of_equity=D(terminal["cost_of_equity"]), growth=D(terminal["terminal_growth"]))
+            return result
         result.implied_checks = {k: str(v) for k, v in implied_checks(
             equity_value=result.reconciliation.equity_value,
             shares=result.reconciliation.shares,
@@ -762,7 +904,15 @@ def render_valuation_result(result: ValuationResult) -> str:
         lines.extend(f"Reason: {reason}" for reason in result.warnings)
     else:
         r = result.reconciliation
-        lines.extend([f"Enterprise/operating value: ZAR {r.enterprise_or_operating_value}",
+        if hasattr(r, "opening_common_equity"):
+            lines.extend([f"Opening common equity: ZAR {r.opening_common_equity}",
+                          f"PV forecast residual income: ZAR {r.pv_forecast_residual_income}",
+                          f"PV terminal residual income: ZAR {r.pv_terminal_residual_income}",
+                          f"Approved equity adjustments: ZAR {r.approved_equity_adjustments}",
+                          f"Equity value: ZAR {r.equity_value}", f"Forward diluted shares: {r.shares}",
+                          f"Deterministic target: ZAR {r.rounded_target_zar} / {r.rounded_target_cents} cents"])
+        else:
+            lines.extend([f"Enterprise/operating value: ZAR {r.enterprise_or_operating_value}",
                       f"Equity value: ZAR {r.equity_value}", f"Forward shares: {r.shares}",
                       f"Unrounded target: ZAR {r.unrounded_target_zar}",
                       f"Deterministic target: ZAR {r.rounded_target_zar} / {r.rounded_target_cents} cents"])
