@@ -296,16 +296,24 @@ def _find_result_pdfs(results_root: Path, canon_ticker: str) -> list[Path]:
 
 
 def get_results_source_inventory(ticker: str) -> dict:
-    """Describe the staging-folder inputs before a folder-based rerun."""
+    """Describe and classify staging-folder inputs before a folder-based rerun."""
     from scripts_standalone.results_scraper.utils import sanitize_ticker
+    from modules.analysis.results_package import (ANNUAL_FINANCIAL_STATEMENTS, RESULTS_SENS,
+                                                   DETAILED_RESULTS_PACKAGE, HEADLINE_RESULTS_ONLY,
+                                                   classify_path)
     folder = GUI_ROOT / "results" / sanitize_ticker(ticker)
     files = sorted((p for p in folder.iterdir() if p.is_file()), key=lambda p: p.name.lower()) if folder.exists() else []
+    roles = {p: classify_path(p) for p in files if p.suffix.lower() in {".txt", ".pdf"}}
+    role_values = set(roles.values())
+    evidence_depth = (DETAILED_RESULTS_PACKAGE
+                      if RESULTS_SENS in role_values and ANNUAL_FINANCIAL_STATEMENTS in role_values
+                      else HEADLINE_RESULTS_ONLY)
     return {
-        "folder": folder,
-        "files": files,
+        "folder": folder, "files": files,
         "text_files": [p for p in files if p.suffix.lower() == ".txt"],
         "pdf_files": [p for p in files if p.suffix.lower() == ".pdf"],
         "ignored_files": [p for p in files if p.suffix.lower() not in {".txt", ".pdf"}],
+        "document_roles": roles, "evidence_depth": evidence_depth,
     }
 
 
@@ -314,8 +322,11 @@ def format_results_source_inventory(inventory: dict) -> str:
     text_files = inventory["text_files"]
     pdf_files = inventory["pdf_files"]
     ignored = inventory["ignored_files"]
+    roles = inventory.get("document_roles", {})
+    has_afs = "annual_financial_statements" in set(roles.values())
     lines = [
         f"Source folder: {inventory['folder']}",
+        f"Evidence depth: {inventory.get('evidence_depth', 'HEADLINE_RESULTS_ONLY')}",
         "",
         f"Text files supplied to Gemini ({len(text_files)}):",
         *([f"  - {p.name}" for p in text_files] or ["  - None"]),
@@ -323,9 +334,9 @@ def format_results_source_inventory(inventory: dict) -> str:
         f"PDF files supplied to Gemini ({len(pdf_files)}):",
         *([f"  - {p.name}" for p in pdf_files] or ["  - None"]),
     ]
-    if not pdf_files:
-        lines.extend(["", "WARNING: No PDF is present.",
-                      "The detailed financial presentation will therefore not be supplied to Gemini."])
+    if not has_afs:
+        lines.extend(["", "NOTICE: No annual-financial-statements PDF is present.",
+                      "Evidence depth will remain HEADLINE_RESULTS_ONLY."])
     if ignored:
         lines.extend(["", f"Other files ignored by Deep Research ({len(ignored)}):",
                       *[f"  - {p.name}" for p in ignored]])
@@ -404,6 +415,7 @@ def _build_llm_prompt(
         PHASE4_RESEARCH_ONLY + "\n" + txt.rstrip()
         + commodity_block
         + "\n\n"
+        + f"REPORT GENERATION DATE: {today}\n"
         + f"TICKER: {ticker}\n"
         + f"LATEST CLOSE PRICE (ZAR): {price_str}\n"
         + ("" if price is None else f"LATEST CLOSE PRICE (ZARc): {int(price)}\n")
@@ -518,7 +530,7 @@ _ERROR_PREFIXES = (
 def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bool:
     """Return True if *response* looks like a valid deep-research report."""
     if not response or not response.strip():
-        logger.warning("SKIP %s — empty response from LLM", ticker)
+        logger.warning("SKIP %s ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â empty response from LLM", ticker)
         return False
 
     stripped = response.strip()
@@ -529,7 +541,7 @@ def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bo
     # Too short to be real research.
     if len(stripped) < _MIN_RESPONSE_CHARS:
         logger.warning(
-            "SKIP %s — response too short (%d chars, min %d)",
+            "SKIP %s ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â response too short (%d chars, min %d)",
             ticker, len(stripped), _MIN_RESPONSE_CHARS,
         )
         return False
@@ -539,7 +551,7 @@ def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bo
     for prefix in _ERROR_PREFIXES:
         if lower.startswith(prefix):
             logger.warning(
-                "SKIP %s — response looks like an error: %.120s...",
+                "SKIP %s ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â response looks like an error: %.120s...",
                 ticker, stripped[:120],
             )
             return False
@@ -547,7 +559,7 @@ def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bo
     # A valid report typically contains markdown headings.
     if "#" not in stripped and len(stripped) < 2000:
         logger.warning(
-            "SKIP %s — response has no headings and is only %d chars; likely not a real report",
+            "SKIP %s ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â response has no headings and is only %d chars; likely not a real report",
             ticker, len(stripped),
         )
         return False
@@ -557,8 +569,25 @@ def _validate_response(response: str, ticker: str, logger: logging.Logger) -> bo
 
 
 
+async def _run_post_publication_comparison(enabled, ticker, publication_result, current_report_id,
+                                           runner=None, logger=None):
+    """Failure-isolated hook invoked only after finish_generation commits."""
+    if not enabled or not publication_result.get("supersedes_report_id"):
+        return None
+    if runner is None:
+        from modules.data.research_comparisons import run_post_publication_comparison
+        runner = run_post_publication_comparison
+    try:
+        return await runner(ticker, publication_result["supersedes_report_id"], current_report_id)
+    except Exception as exc:
+        if logger:
+            logger.exception("Post-generation comparison failed for %s; published report remains current", ticker)
+        return {"status": "failed", "error": str(exc)}
+
+
 async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
-              max_chars: int | None, source_records: list[dict] | None = None) -> int:
+              max_chars: int | None, source_records: list[dict] | None = None,
+              post_compare: bool = False) -> int:
     from scripts_standalone.results_scraper.watchlist import resolve_tickers_to_process
     from scripts_standalone.results_scraper.utils import sanitize_ticker
     from modules.analysis.selector import managed_query_ai
@@ -721,6 +750,11 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
                         source.update(source_date=str(matches[0]["release_date"]), date_basis="results_downloads.release_date")
         except Exception as exc:
             source_errors.append(f"Download metadata unavailable: {exc}")
+        from modules.analysis.results_package import build_results_package, render_package_for_prompt
+        results_package = build_results_package(sources)
+        logger.info("Results package for %s: %s | observations=%d | reconciliations=%d | warnings=%d",
+                    t, results_package["evidence_depth"], len(results_package["observations"]),
+                    len(results_package["reconciliations"]), len(results_package["warnings"]))
         payload = "".join(f"\n\n===== FILE: {x['name']} =====\n\n{x['text'].strip()}\n"
                           for x in sources if Path(x['name']).suffix.lower() == '.txt').strip()
         if not payload:
@@ -729,9 +763,10 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
             prompt_template, ticker=t, price=price, payload=payload,
             commodity_avgs=commodity_avgs, fx_avgs=fx_avgs, results_date=results_date_str,
         )
+        llm_prompt += "\n\n" + render_package_for_prompt(results_package)
         llm_prompt += "\nSOURCE CATALOG (dates may be unresolved; never infer dates):\n"
         llm_prompt += "\n".join(f"Source ID: {x['source_id']} | Filename: {x['name']} | "
-                                f"Source date: {x.get('source_date') or 'unresolved'} | "
+                                f"Document role: {x.get('document_role') or 'other'} | Source date: {x.get('source_date') or 'unresolved'} | "
                                 f"Date basis: {x.get('date_basis') or 'unresolved'}" for x in sources)
         archived_pdfs = [Path(x["archive_path"]) for x in sources if Path(x["name"]).suffix.lower() == ".pdf"]
         if archived_pdfs:
@@ -744,6 +779,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
         inputs = archive.save_inputs({
             "prompt": llm_prompt, "request": dict(trace), "sources": sources,
             "source_set_id": archive.report_id, "audit_only_sources": audit_sources,
+            "evidence_depth": results_package["evidence_depth"], "results_package": results_package,
             "source_warnings": source_errors,
             "previous_report_supplied_to_model": False,
             "previous_report_id": str(previous["current_report_id"]) if previous.get("current_report_id") else None,
@@ -792,6 +828,8 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
             # Audit failures are visible and advisory; retain the raw report.
             audit = {"assumptions": [], "warnings": [{"code": "audit_failed", "assumption": None,
                        "message": str(exc)}], "blocking": False}
+        audit["evidence_depth"] = results_package["evidence_depth"]
+        audit["results_package_warnings"] = results_package["warnings"]
         audit['warnings'].extend({"code": "source_metadata_unavailable", "assumption": None, "message": x} for x in source_errors)
         for item in audit.get("assumptions", []):
             item.setdefault("report_date", archive.generated_at.date().isoformat())
@@ -802,6 +840,8 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
         from modules.analysis.metric_extraction import structure_report_metrics
         from modules.analysis.financial_metrics import metric_json
         metrics, metric_warnings = structure_report_metrics(t, archive.report_id, audit)
+        from modules.analysis.results_package import observations_to_metrics
+        metrics.extend(observations_to_metrics(t, archive.report_id, results_package, archive.generated_at.date(), archive.generated_at))
         from modules.analysis.historical_metrics import extract_retail_historical_metrics, render_historical_metrics
         if prompt_file.name == "clothing_food_furniture_prompt.txt":
             metrics.extend(extract_retail_historical_metrics(
@@ -839,7 +879,11 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
         result["deterministic_valuation"] = deterministic.model_dump(mode="json")
         from modules.analysis.report_contract import guard_report
         reviewed_response, report_warnings = guard_report(
-            response, valuation_status=deterministic.status.value, audit=audit)
+            response,
+            valuation_status=deterministic.status.value,
+            audit=audit,
+            report_date=date.today().isoformat(),
+        )
         metric_warnings.extend(report_warnings)
         audit["warnings"].extend({"code": w["code"], "assumption": None, "message": w["message"]}
                                  for w in report_warnings)
@@ -847,7 +891,7 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
         result["report_contract_warnings"] = report_warnings
         result["audit"] = audit
         historical_section = render_historical_metrics(metrics)
-        published_report = reviewed_response + ("\n\n" + historical_section if historical_section else "") + "\n\n" + render_audit(audit, archive.report_id) + "\n\n" + render_valuation_result(deterministic)
+        published_report = "Evidence depth: " + results_package["evidence_depth"] + "\n\n" + reviewed_response + ("\n\n" + historical_section if historical_section else "") + "\n\n" + render_audit(audit, archive.report_id) + "\n\n" + render_valuation_result(deterministic)
         try:
             await finish_generation(archive, result, report_content=published_report, publish=True,
                                     metrics=metrics, metric_warnings=metric_warnings,
@@ -856,6 +900,18 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
         except Exception:
             logger.exception("Could not publish report %s; evidence retained", archive.report_id)
             continue
+
+        # Rerun-only post-publication review. Publication is already committed;
+        # comparison failure can never roll back or modify either report.
+        comparison = await _run_post_publication_comparison(
+            post_compare, t, result, archive.report_id, logger=logger)
+        if comparison and isinstance(comparison, dict) and comparison.get("status") == "failed":
+            result["post_generation_comparison_error"] = comparison["error"]
+        elif comparison:
+            result["post_generation_comparison_id"] = str(comparison)
+            logger.info("Stored post-generation comparison %s for %s", comparison, t)
+        elif post_compare:
+            logger.info("No prior report for %s; post-generation comparison skipped", t)
 
         # AUTOMATION: Trigger master research generation
         try:

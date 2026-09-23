@@ -164,3 +164,26 @@ def test_previous_report_values_are_never_current_evidence():
     assert "inventory absorbing cash" not in source()["text"].lower()
     assert "delayed customer collections" not in source()["text"].lower()
 
+
+
+def test_guard_report_replaces_model_report_date():
+    cleaned, warnings = guard_report(
+        "Report Date: 23 May 2024\n\nInvestment Thesis\nText",
+        valuation_status="NOT_CALCULABLE",
+        audit={"assumptions": []},
+        report_date="2026-09-23",
+    )
+    assert "Report Date: 2026-09-23" in cleaned
+    assert "23 May 2024" not in cleaned
+    assert any(item["code"] == "REPORT_DATE_CORRECTED" for item in warnings)
+
+
+def test_guard_report_adds_missing_report_date():
+    cleaned, warnings = guard_report(
+        "Investment Thesis\nText",
+        valuation_status="NOT_CALCULABLE",
+        audit={"assumptions": []},
+        report_date="2026-09-23",
+    )
+    assert cleaned.startswith("Report Date: 2026-09-23")
+    assert any(item["code"] == "REPORT_DATE_ADDED" for item in warnings)

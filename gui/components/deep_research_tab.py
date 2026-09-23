@@ -1,4 +1,4 @@
-﻿from modules.data.research import save_deep_research_data
+from modules.data.research import save_deep_research_data
 from components.base_text_tab import BaseTextTab
 from scripts.generate_deepresearch_from_results import run as run_deepresearch
 import logging
@@ -157,6 +157,8 @@ class DeepResearchTab(BaseTextTab):
         folder_value = ttk.StringVar(value=str(inventory["folder"]))
         ttk.Entry(location, textvariable=folder_value, state="readonly").pack(fill=X)
 
+        roles = inventory.get("document_roles", {})
+        has_afs = "annual_financial_statements" in set(roles.values())
         counts = ttk.Frame(dialog)
         counts.pack(fill=X, padx=20, pady=(0, 10))
         ttk.Label(counts, text=f"Text files: {len(inventory['text_files'])}",
@@ -164,6 +166,8 @@ class DeepResearchTab(BaseTextTab):
         ttk.Label(counts, text=f"PDF files: {len(inventory['pdf_files'])}",
                   bootstyle="success" if inventory["pdf_files"] else "danger",
                   font=("Segoe UI", 10, "bold")).pack(side=LEFT, padx=(0, 20))
+        ttk.Label(counts, text=f"Evidence depth: {inventory.get('evidence_depth','HEADLINE_RESULTS_ONLY')}",
+                  bootstyle="primary", font=("Segoe UI", 10, "bold")).pack(side=LEFT)
         if inventory["ignored_files"]:
             ttk.Label(counts, text=f"Ignored: {len(inventory['ignored_files'])}",
                       bootstyle="secondary").pack(side=LEFT)
@@ -185,16 +189,16 @@ class DeepResearchTab(BaseTextTab):
         table_frame.rowconfigure(0, weight=1)
         table_frame.columnconfigure(0, weight=1)
         for file in inventory["pdf_files"]:
-            table.insert("", "end", values=("PDF evidence", file.name))
+            table.insert("", "end", values=({"annual_financial_statements":"Annual financial statements"}.get(roles.get(file),"PDF evidence"), file.name))
         for file in inventory["text_files"]:
-            table.insert("", "end", values=("Text evidence", file.name))
+            table.insert("", "end", values=({"results_sens":"Results SENS"}.get(roles.get(file),"Text evidence"), file.name))
         for file in inventory["ignored_files"]:
             table.insert("", "end", values=("Ignored", file.name))
 
-        if not inventory["pdf_files"]:
+        if not has_afs:
             warning = ttk.Frame(dialog, padding=10, bootstyle="danger")
             warning.pack(fill=X, padx=20, pady=(0, 10))
-            ttk.Label(warning, text="PDF financial presentation missing",
+            ttk.Label(warning, text="Annual financial statements PDF not detected",
                       bootstyle="inverse-danger", font=("Segoe UI", 10, "bold")).pack(anchor="w")
             ttk.Label(warning,
                       text="The detailed financial presentation will not be supplied to Gemini. "
@@ -270,10 +274,12 @@ class DeepResearchTab(BaseTextTab):
             run_bg_with_button(
                 self.rerun_btn,
                 self.async_run_bg,
-                run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000),
+                run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000,
+                                 post_compare=True),
                 callback=_on_generated
             )
         else:
-            self.async_run(run_deepresearch(ticker=self.ticker, limit=None, dry_run=False, max_chars=200_000))
+            self.async_run(run_deepresearch(ticker=self.ticker, limit=None, dry_run=False,
+                                             max_chars=200_000, post_compare=True))
 
 

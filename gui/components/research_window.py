@@ -19,6 +19,7 @@ from components.research_tab import ResearchTab
 from components.sens_tab import SensTab
 from components.action_log_tab import ActionLogTab
 from components.valuation_workbench_tab import ValuationWorkbenchTab
+from components.learning_tab import LearningTab
 
 
 class ResearchWindow(ttk.Toplevel):
@@ -59,8 +60,11 @@ class ResearchWindow(ttk.Toplevel):
         self.async_run_bg(get_sens_for_ticker(ticker), callback=loaded)
 
     def on_notebook_tab_changed(self, event=None):
-        if self.notebook.select() == str(self.sens_tab):
+        selected = self.notebook.select()
+        if selected == str(self.sens_tab):
             self.refresh_sens()
+        elif selected == str(self.learning_tab):
+            self.learning_tab.refresh()
 
     def refresh_open_sens_tab(self):
         if not self.winfo_exists():
@@ -114,6 +118,7 @@ class ResearchWindow(ttk.Toplevel):
         self.action_log_tab.ticker = ticker
         self.sens_tab.ticker = ticker
         self.valuation_workbench_tab.update_ticker(ticker)
+        self.learning_tab.update_ticker(ticker)
 
         self.load_research()
 
@@ -153,6 +158,9 @@ class ResearchWindow(ttk.Toplevel):
 
         self.valuation_workbench_tab = ValuationWorkbenchTab(self.notebook, self.ticker, self.async_run_bg)
         self.notebook.add(self.valuation_workbench_tab, text="Valuation")
+
+        self.learning_tab = LearningTab(self.notebook, self.ticker, self.async_run_bg)
+        self.notebook.add(self.learning_tab, text="Learning")
 
         self.action_log_tab = ActionLogTab(self.notebook, self.ticker, self.async_run, self.async_run_bg)
         self.notebook.add(self.action_log_tab, text="Action Log")

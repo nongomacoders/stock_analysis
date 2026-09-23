@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 import json
 import sys
 from pathlib import Path
@@ -83,7 +83,8 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
         assert options["publish"]
         assert result["valuation_preflight"]["status"] == "FAIL"
         assert result["valuation_preflight"]["target_reconciliation"] in {"unresolved", "carried_forward"}
-        assert options["report_content"].startswith(report)
+        assert options["report_content"].startswith("Evidence depth: HEADLINE_RESULTS_ONLY")
+        assert report.strip() in options["report_content"]
         assert result["deterministic_valuation"]["status"] == "NOT_CALCULABLE"
         assert "Deterministic target price: NOT_CALCULABLE" in options["report_content"]
 
@@ -163,11 +164,13 @@ def test_rerun_source_inventory_lists_inputs_and_warns_without_pdf(monkeypatch, 
     message = generator.format_results_source_inventory(inventory)
     assert "results.txt" in message
     assert "notes.json" in message
-    assert "WARNING: No PDF is present" in message
-    assert "detailed financial presentation" in message
+    assert "NOTICE: No annual-financial-statements PDF is present" in message
+    assert "HEADLINE_RESULTS_ONLY" in message
 
 
 def test_rerun_source_inventory_identifies_financial_pdf(monkeypatch, tmp_path):
+    import modules.analysis.results_package as results_package
+    monkeypatch.setattr(results_package, "classify_path", lambda path: "annual_financial_statements")
     root = tmp_path / "gui"
     folder = root / "results" / "TRU"
     folder.mkdir(parents=True)
@@ -177,4 +180,5 @@ def test_rerun_source_inventory_identifies_financial_pdf(monkeypatch, tmp_path):
     message = generator.format_results_source_inventory(inventory)
     assert [p.name for p in inventory["pdf_files"]] == ["FY2026_presentation.pdf"]
     assert "FY2026_presentation.pdf" in message
-    assert "WARNING: No PDF is present" not in message
+    assert "NOTICE: No annual-financial-statements PDF is present" not in message
+    assert inventory["evidence_depth"] == "HEADLINE_RESULTS_ONLY"

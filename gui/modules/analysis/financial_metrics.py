@@ -143,6 +143,11 @@ class FinancialMetric(BaseModel):
     evidence_verified: bool = False
     source_id: str | None = None
     intended_use: str | None = None
+    source_page: int | None = Field(default=None, ge=1)
+    source_section: str | None = None
+    raw_label: str | None = None
+    parser_version: str | None = None
+    document_role: str | None = None
 
     @model_validator(mode="after")
     def enforce_semantics(self):

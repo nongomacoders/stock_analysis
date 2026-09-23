@@ -29,6 +29,7 @@ TASK_MAP = {
     "spot_price":          {"p": "gemini",     "m": MODELS["gemini"][1]},
     "research_extraction": {"p": "gemini",     "m": MODELS["gemini"][0]},
     "deep_research":       {"p": "gemini",     "m": MODELS["gemini"][0]},
+    "research_comparison": {"p": "gemini",     "m": MODELS["gemini"][1]},
 }
 
 DEFAULT_TASK = {"p": "gemini", "m": MODELS["gemini"][1]}

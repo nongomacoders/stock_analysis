@@ -21,7 +21,13 @@ def valid_headline_metric(line: str) -> bool:
     return all(re.search(pattern, line, re.I) for pattern in required)
 
 
-def guard_report(report: str, *, valuation_status: str, audit: dict) -> tuple[str, list[dict]]:
+def guard_report(
+    report: str,
+    *,
+    valuation_status: str,
+    audit: dict,
+    report_date: str | None = None,
+) -> tuple[str, list[dict]]:
     """Remove invalid headlines and label unsupported causal assertions."""
     original = report
     warnings = []
@@ -39,6 +45,25 @@ def guard_report(report: str, *, valuation_status: str, audit: dict) -> tuple[st
             continue
         lines.append(line)
     current = "\n".join(lines)
+    if report_date:
+        pattern = re.compile(r"(?im)^(report date\s*:\s*).*$")
+        match = pattern.search(current)
+        if match:
+            supplied = match.group(0).split(":", 1)[1].strip()
+            if supplied != report_date:
+                warnings.append({
+                    "code": "REPORT_DATE_CORRECTED",
+                    "severity": "WARNING",
+                    "message": f"Model report date {supplied!r} replaced with generation date {report_date}.",
+                })
+            current = pattern.sub(rf"\g<1>{report_date}", current, count=1)
+        else:
+            current = f"Report Date: {report_date}\n\n" + current
+            warnings.append({
+                "code": "REPORT_DATE_ADDED",
+                "severity": "WARNING",
+                "message": f"Missing report date replaced with generation date {report_date}.",
+            })
     # Current assumptions sourced only from the previous report are rendered only in legacy context.
     legacy = [x for x in audit.get("assumptions", []) if x.get("classification") == "previous_report"]
     legacy_values = {str(x.get("value")) for x in legacy if x.get("value") is not None}

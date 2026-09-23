@@ -21,6 +21,7 @@ def test_sens_processor_passes_database_record_without_staging_file(monkeypatch,
     assert result is True
     assert set(tmp_path.rglob("*")) == before
     kwargs = run.await_args.kwargs
+    assert "post_compare" not in kwargs
     assert kwargs["source_records"] == [{
         "source_id": "sens:5591", "name": "sens_5591.txt",
         "text": "Exact persisted SENS body", "source_date": "2026-08-27",

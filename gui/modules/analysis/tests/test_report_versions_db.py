@@ -48,6 +48,14 @@ def test_migration_versions_manual_edits_and_failed_attempts(monkeypatch, tmp_pa
             forecast_migration = Path(__file__).resolve().parents[3] / "core/db/migrations/add_forecast_plans.sql"
             await connection.execute(forecast_migration.read_text(encoding="utf-8"))
             await connection.execute(forecast_migration.read_text(encoding="utf-8"))
+            comparison_migration = Path(__file__).resolve().parents[3] / "core/db/migrations/add_deepresearch_comparisons.sql"
+            await connection.execute(comparison_migration.read_text(encoding="utf-8"))
+            await connection.execute(comparison_migration.read_text(encoding="utf-8"))
+            period_migration = Path(__file__).resolve().parents[3] / "core/db/migrations/refine_deepresearch_comparison_periods.sql"
+            await connection.execute(period_migration.read_text(encoding="utf-8"))
+            await connection.execute(period_migration.read_text(encoding="utf-8"))
+            assert await connection.fetchval("SELECT to_regclass('deepresearch_comparisons') IS NOT NULL")
+            assert await connection.fetchval("SELECT to_regclass('research_learning_points') IS NOT NULL")
             old_id = await connection.fetchval("SELECT current_report_id FROM stock_analysis")
             assert old_id
             assert await connection.fetchval("SELECT count(*) FROM deepresearch_versions") == 1
