@@ -1,0 +1,52 @@
+ticker=TRU.JO
+case=base
+
+period=FY2027
+start=2026-06-29
+end=2027-06-27
+operation=Truworths Africa
+field=retail_sales_growth
+value=2.5
+unit=percentage
+currency=ZAR
+confidence=0.6
+analyst=Dion
+rationale=FY2026 retail sales declined 2.1%; H2 improved to -0.1%. Base case assumes modest recovery without requiring a strong consumer rebound.
+
+period=FY2027
+start=2026-06-29
+end=2027-06-27
+operation=Truworths Africa
+case=base
+field=revenue_growth
+value=2.5
+unit=percentage
+currency=ZAR
+confidence=0.6
+analyst=Dion
+rationale=FY2026 Truworths Africa accounting revenue was R15.246bn. Base case assumes modest nominal revenue recovery in FY2027. This accounting-revenue assumption is independently approved and is not derived automatically from retail-sales growth.
+
+period=FY2027
+start=2026-06-29
+end=2027-06-27
+operation=Office UK
+field=revenue_growth
+value=3.0
+unit=percentage
+currency=GBP
+confidence=0.6
+analyst=Dion
+rationale=FY2026 Office UK sales grew 4.9% in sterling, with material support from trading-space expansion. Base case assumes continued growth at a slower 3.0% rate.
+
+period=FY2027
+start=2026-06-29
+end=2027-06-27
+operation=Group
+field=fx_rate
+value=21.6
+unit=multiple
+currency=ZAR
+confidence=0.6
+analyst=Dion
+fx_pair=GBP/ZAR
+rationale=Initial FY2027 translation assumption based on current GBP/ZAR around 21.6. This is an analyst FX assumption and can be revised independently of Office UK operating growth.

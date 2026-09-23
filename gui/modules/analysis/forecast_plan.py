@@ -26,6 +26,37 @@ class Origin(str, Enum):
     GEMINI_SUGGESTION = "gemini_suggestion"
 
 
+FORECAST_FIELD_EXTENSIONS = frozenset({
+    "rom", "ownership", "project_start_date", "wacc_override",
+    "latest_reported_cost", "inflation", "operational_efficiency",
+    "scale_factor", "reagent_energy_factor",
+    "store_count", "new_store_openings", "like_for_like_growth",
+    "inventory_days", "online_sales", "capex_per_store",
+})
+FORECAST_CURRENCIES = ("ZAR", "USD", "GBP", "EUR", "HKD")
+FORECAST_CASES = ("base", "bear", "bull", "informational")
+
+
+def allowed_forecast_fields() -> tuple[str, ...]:
+    """Fields accepted by plans: engine fields plus explicit schedule helpers."""
+    from .valuation_preflight import ValuationField
+    engine_fields = {item.value for item in ValuationField if item != ValuationField.TARGET_PRICE}
+    return tuple(sorted(engine_fields | FORECAST_FIELD_EXTENSIONS))
+
+
+def forecast_selector_values() -> dict[str, tuple[str, ...]]:
+    """Single source of truth for controlled Forecast-tab selectors."""
+    from .financial_metrics import Unit, CommodityPriceType, CostDefinition
+    return {
+        "case": FORECAST_CASES,
+        "field": allowed_forecast_fields(),
+        "unit": tuple(item.value for item in Unit),
+        "currency": FORECAST_CURRENCIES,
+        "price_type": tuple(item.value for item in CommodityPriceType),
+        "cost_definition": tuple(item.value for item in CostDefinition),
+    }
+
+
 class ApprovalState(str, Enum):
     PROPOSED = "proposed"
     ACCEPTED = "accepted"
@@ -80,8 +111,21 @@ class ForecastAssumption(BaseModel):
 
     @model_validator(mode="after")
     def valid(self):
-        if self.case not in {"base", "bear", "bull", "informational"}:
+        if self.case not in FORECAST_CASES:
             raise ValueError("Unknown forecast case")
+        if self.field not in allowed_forecast_fields():
+            raise ValueError(f"Unknown forecast field: {self.field}")
+        if self.unit is not None:
+            from .financial_metrics import Unit
+            if self.unit not in {item.value for item in Unit}:
+                raise ValueError(f"Unknown controlled unit: {self.unit}")
+        if self.currency is not None and self.currency not in FORECAST_CURRENCIES:
+            raise ValueError(f"Unknown controlled currency: {self.currency}")
+        if self.field in {"retail_sales_growth", "revenue_growth"}:
+            if not self.period_label:
+                raise ValueError(f"{self.field} requires a fiscal period")
+            if self.unit not in (None, "percentage"):
+                raise ValueError(f"{self.field} requires the percentage unit")
         if self.origin == Origin.GEMINI_SUGGESTION and self.approval_state == ApprovalState.ACCEPTED:
             raise ValueError("Gemini suggestions cannot themselves be accepted as valuation inputs")
         if self.origin in {Origin.ANALYST_ASSUMPTION, Origin.SCENARIO_ASSUMPTION} and self.approval_state == ApprovalState.ACCEPTED:
@@ -131,6 +175,33 @@ class ForecastPlan(BaseModel):
         if any(a.period_label and a.period_label not in {p.label for p in self.horizon} for a in self.assumptions):
             raise ValueError("Assumption refers to an unknown financial period")
         return self
+
+
+def horizon_for_assumption(
+    plan: ForecastPlan,
+    period_label: str | None,
+    *,
+    start: date | None = None,
+    end: date | None = None,
+) -> tuple[list[ForecastPeriod], bool]:
+    """Return a horizon containing an assumption's period, creating it when fully specified."""
+    label = (period_label or "").strip()
+    if not label:
+        return list(plan.horizon), False
+    existing = next((period for period in plan.horizon if period.label == label), None)
+    if existing:
+        if start is not None and start != existing.start:
+            raise ValueError(f"{label} already exists with start date {existing.start.isoformat()}")
+        if end is not None and end != existing.end:
+            raise ValueError(f"{label} already exists with end date {existing.end.isoformat()}")
+        return list(plan.horizon), False
+    if start is None or end is None:
+        raise ValueError(
+            f"Financial period {label} has not been added. Enter its start and end dates, "
+            "or click 'Add financial period' first."
+        )
+    period = ForecastPeriod(label=label, start=start, end=end)
+    return sorted([*plan.horizon, period], key=lambda item: item.start), True
 
 
 def new_version(plan: ForecastPlan, *, changed_by: str, **changes: Any) -> ForecastPlan:
@@ -241,11 +312,20 @@ def preview_valuation(plan: ForecastPlan, metrics: list, candidates: list) -> Va
     for c in candidates:
         if c.source_metric.assumption_type == AssumptionType.MODEL_ASSUMPTION:
             sid = c.source_metric.source_id or ""
-            if not sid.startswith("forecast_assumption:"):
+            if sid.startswith("forecast_assumption:"):
+                ident = UUID(sid.split(":", 1)[1])
+                a = accepted.get(ident)
+                valid = (a is not None and a.value == c.source_metric.value
+                         and a.case == c.case_type.value and a.field == c.valuation_field.value)
+            elif sid.startswith("retail_forecast:"):
+                ident = UUID(sid.split(":", 1)[1])
+                a = accepted.get(ident)
+                valid = (a is not None and a.field == "revenue_growth"
+                         and c.valuation_field.value == "revenue"
+                         and a.case == c.case_type.value)
+            else:
                 raise ValueError("Model input lacks an accepted forecast-assumption link")
-            ident = UUID(sid.split(":", 1)[1])
-            a = accepted.get(ident)
-            if a is None or a.value != c.source_metric.value or a.case != c.case_type.value or a.field != c.valuation_field.value:
+            if not valid:
                 raise ValueError("Unaccepted or altered forecast assumption in engine candidates")
     result = run_valuation(ticker=plan.ticker, report_version_id=plan.source_report_version_id,
         candidates=candidates, metrics=metrics, plan=plan.engine_plan,
@@ -367,6 +447,13 @@ def compile_plan_inputs(plan: ForecastPlan, evidence_metrics: list):
     from .valuation_preflight import candidate
     evidence = {m.metric_id: m for m in evidence_metrics}
     accepted = {a.assumption_id: a for a in eligible_assumptions(plan)}
+    from .retail_forecast import build_retail_forecasts, materialize_retail_forecast
+    retail_records, _ = build_retail_forecasts(plan, evidence_metrics, include_proposed=False)
+    derived = {}
+    for record in retail_records:
+        if record.valuation_eligible:
+            metric, derived_candidate = materialize_retail_forecast(record, plan.source_report_version_id)
+            derived[metric.metric_id] = (metric, derived_candidate)
     metrics = list(evidence_metrics)
     candidates = []
     seen = set()
@@ -379,6 +466,11 @@ def compile_plan_inputs(plan: ForecastPlan, evidence_metrics: list):
             m, c = materialize_assumption(plan, ref.metric_id)
             if c.valuation_field.value != ref.field or c.case_type.value != ref.case:
                 raise ValueError("Engine reference differs from accepted assumption field/case")
+            metrics.append(m)
+        elif ref.metric_id in derived:
+            m, c = derived[ref.metric_id]
+            if c.valuation_field.value != ref.field or c.case_type.value != ref.case:
+                raise ValueError("Engine reference differs from derived retail forecast field/case")
             metrics.append(m)
         elif ref.metric_id in evidence:
             m = evidence[ref.metric_id]

@@ -50,6 +50,8 @@ class ValuationField(str, Enum):
     OWNERSHIP_PERCENTAGE = "ownership_percentage"
     PRODUCTION_GROWTH = "production_growth"
     OPERATING_MARGIN = "operating_margin"
+    RETAIL_SALES_GROWTH = "retail_sales_growth"
+    REVENUE_GROWTH = "revenue_growth"
     GRADE = "grade"
     RECOVERY = "recovery"
     PROCESSING_CONVERSION = "processing_conversion"

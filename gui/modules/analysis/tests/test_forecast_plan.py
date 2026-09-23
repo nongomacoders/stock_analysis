@@ -1,4 +1,4 @@
-"""Phase 5 forecast-plan controls, with no invented Jubilee assumptions."""
+﻿"""Phase 5 forecast-plan controls, with no invented Jubilee assumptions."""
 import sys
 from pathlib import Path
 from uuid import uuid4
@@ -9,7 +9,8 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[3]))
 from modules.analysis.forecast_plan import (ForecastPlan, ForecastPeriod, ForecastAssumption, Origin,
     ApprovalState, PlanStatus, new_version, accept_suggestion, reject_suggestion, approve_plan,
     eligible_assumptions, scenario_differences, forecast_operating_schedule, price_fx_schedule,
-    calculate_plan_wacc, preview_valuation, materialize_assumption)
+    calculate_plan_wacc, preview_valuation, materialize_assumption, horizon_for_assumption,
+    allowed_forecast_fields, forecast_selector_values)
 
 RID=uuid4()
 
@@ -215,4 +216,91 @@ def test_approved_plan_rejects_unlinked_model_candidate():
     result=preview_valuation(approved,[],[])
     assert result.status.value=='NOT_CALCULABLE' and result.target_price is None
     assert result.calculation_inputs['forecast_plan']['forecast_plan_id']==str(approved.forecast_plan_id)
+
+def test_assumption_can_atomically_add_fully_entered_financial_period():
+    empty = ForecastPlan(ticker='TRU.JO', created_by='Dion', source_report_version_id=RID)
+    horizon, added = horizon_for_assumption(
+        empty, 'FY2027', start=date(2026, 6, 29), end=date(2027, 6, 27))
+    assert added is True
+    assert [(item.label, item.start, item.end) for item in horizon] == [
+        ('FY2027', date(2026, 6, 29), date(2027, 6, 27))]
+    proposed = ForecastAssumption(
+        field='retail_sales_growth', value=Decimal('2.5'), unit='percentage',
+        currency='ZAR', period_label='FY2027', operation_segment='Truworths Africa',
+        case='base', origin=Origin.ANALYST_ASSUMPTION,
+        rationale='Consumer rebound', created_by='Dion', confidence=Decimal('0.6'))
+    updated = new_version(empty, changed_by='Dion', horizon=horizon, assumptions=[proposed])
+    assert updated.horizon[0].label == updated.assumptions[0].period_label
+
+
+def test_assumption_missing_period_dates_has_actionable_error():
+    empty = ForecastPlan(ticker='TRU.JO', created_by='Dion', source_report_version_id=RID)
+    with pytest.raises(ValueError, match="Enter its start and end dates"):
+        horizon_for_assumption(empty, 'FY2027')
+
+
+def test_existing_assumption_period_is_reused_without_duplicate():
+    existing = ForecastPlan(
+        ticker='TRU.JO', created_by='Dion', source_report_version_id=RID,
+        horizon=[ForecastPeriod(label='FY2027', start=date(2026, 6, 29), end=date(2027, 6, 27))])
+    horizon, added = horizon_for_assumption(existing, 'FY2027')
+    assert added is False
+    assert horizon == existing.horizon
+
+def test_forecast_selectors_match_model_controlled_values():
+    selectors = forecast_selector_values()
+    assert selectors['case'] == ('base', 'bear', 'bull', 'informational')
+    assert 'retail_sales_growth' in selectors['field']
+    assert 'target_price' not in selectors['field']
+    assert 'percentage' in selectors['unit']
+    assert '%' not in selectors['unit']
+    assert selectors['currency'] == ('ZAR', 'USD', 'GBP', 'EUR', 'HKD')
+
+
+@pytest.mark.parametrize('changes, message', [
+    ({'field': 'sales growth'}, 'Unknown forecast field'),
+    ({'unit': '%'}, 'Unknown controlled unit'),
+    ({'currency': 'RAND'}, 'Unknown controlled currency'),
+    ({'case': 'upside'}, 'Unknown forecast case'),
+    ({'confidence': Decimal('1.1')}, 'less than or equal to 1'),
+    ({'period_label': None}, 'requires a fiscal period'),
+])
+def test_retail_forecast_rejects_uncontrolled_values(changes, message):
+    values = dict(
+        field='retail_sales_growth', value=Decimal('2.5'), unit='percentage',
+        currency='ZAR', period_label='FY2027', operation_segment='Truworths Africa',
+        case='base', origin=Origin.ANALYST_ASSUMPTION,
+        rationale='Consumer rebound', created_by='Dion', confidence=Decimal('0.6'))
+    values.update(changes)
+    with pytest.raises(ValueError, match=message):
+        ForecastAssumption(**values)
+
+
+def test_screenshot_error_is_unknown_period_before_ui_resolution():
+    proposed = ForecastAssumption(
+        field='retail_sales_growth', value=Decimal('2.5'), unit='percentage',
+        currency='ZAR', period_label='FY2027', operation_segment='Truworths Africa',
+        case='base', origin=Origin.ANALYST_ASSUMPTION,
+        rationale='Consumer rebound', created_by='Dion', confidence=Decimal('0.6'))
+    with pytest.raises(ValueError, match='unknown financial period'):
+        ForecastPlan(ticker='TRU.JO', created_by='Dion',
+                     source_report_version_id=RID, assumptions=[proposed])
+
+
+def test_retail_sales_growth_materializes_as_controlled_candidate():
+    accepted = ForecastAssumption(
+        field='retail_sales_growth', value=Decimal('2.5'), unit='percentage',
+        currency='ZAR', period_label='FY2027', operation_segment='Truworths Africa',
+        case='base', origin=Origin.ANALYST_ASSUMPTION,
+        approval_state=ApprovalState.ACCEPTED,
+        rationale='Consumer rebound', created_by='Dion', confidence=Decimal('0.6'))
+    retail_plan = ForecastPlan(
+        ticker='TRU.JO', created_by='Dion', source_report_version_id=RID,
+        horizon=[ForecastPeriod(label='FY2027', start=date(2026, 6, 29), end=date(2027, 6, 27))],
+        assumptions=[accepted])
+    metric, candidate = materialize_assumption(retail_plan, accepted.assumption_id)
+    assert metric.name == 'retail_sales_growth'
+    assert metric.unit.value == 'percentage'
+    assert candidate.valuation_field.value == 'retail_sales_growth'
+    assert candidate.case_type.value == 'base'
 

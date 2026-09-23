@@ -1,4 +1,4 @@
-"""Typed facts and deterministic unit conversions; no target-price model."""
+﻿"""Typed facts and deterministic unit conversions; no target-price model."""
 from __future__ import annotations
 
 from datetime import date, datetime
@@ -85,9 +85,13 @@ class Unit(str, Enum):
     USD = "USD"
     HKD = "HKD"
     EUR = "EUR"
+    GBP = "GBP"
     SHARES = "shares"
     PERCENTAGE = "percentage"
     MULTIPLE = "multiple"
+    DATE = "date"
+    STORES = "stores"
+    DAYS = "days"
 
 
 PRODUCTION_UNITS = {

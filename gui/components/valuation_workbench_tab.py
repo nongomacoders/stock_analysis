@@ -4,12 +4,18 @@ from datetime import date
 import json
 from pathlib import Path
 from decimal import Decimal
-from tkinter import StringVar, messagebox
+from tkinter import StringVar, messagebox, filedialog
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import BOTH, X
 from modules.analysis.forecast_plan import (ForecastPlan, ForecastPeriod, ForecastAssumption,
-    Origin, ApprovalState, new_version, approve_plan, forecast_operating_schedule, scenario_differences)
+    Origin, ApprovalState, new_version, approve_plan, scenario_differences,
+    horizon_for_assumption, forecast_selector_values)
 from modules.data.forecast_plans import list_plans, save_plan, valuation_history
+from modules.data.research import get_stock_category
+from modules.analysis.retail_forecast import (WorkbenchRoute, build_sector_schedules,
+    aggregate_retail_revenue, render_retail_records, retail_engine_mapping)
+from modules.analysis.forecast_txt_import import (
+    parse_forecast_txt, resolve_import_assumptions, ForecastTxtImportError)
 from core.db.engine import DBEngine
 
 LABELS = {
@@ -22,13 +28,13 @@ LABELS = {
 class ValuationWorkbenchTab(ttk.Frame):
     def __init__(self, parent, ticker, async_run_bg):
         super().__init__(parent)
-        self.ticker=ticker; self.async_run_bg=async_run_bg; self.plan=None; self.evidence=[]; self.history=[]; self.pending=[]; self.saving=False
-        self.fields={}
+        self.ticker=ticker; self.async_run_bg=async_run_bg; self.plan=None; self.evidence=[]; self.history=[]; self.pending=[]; self.saving=False; self.category=None
+        self.fields={}; self.input_widgets={}
         self._widgets()
         self.refresh()
 
     def update_ticker(self,ticker):
-        self.ticker=ticker; self.plan=None; self.pending=[]; self.refresh()
+        self.ticker=ticker; self.plan=None; self.pending=[]; self.category=None; self.refresh()
 
     def _widgets(self):
         bar=ttk.Frame(self); bar.pack(fill=X,padx=8,pady=5)
@@ -54,6 +60,8 @@ class ValuationWorkbenchTab(ttk.Frame):
                 box=ttk.Text(frame,wrap='word',height=20); box.pack(fill=BOTH,expand=True)
                 self.views[name]=box
         mapping=ttk.Frame(self.book); self.book.add(mapping,text='Engine Mapping')
+        ttk.Label(mapping,text='Deterministic assumption routing').pack(fill=X)
+        self.mapping_flow=ttk.Text(mapping,wrap='word',height=7); self.mapping_flow.pack(fill=X)
         ttk.Label(mapping,text='Advanced: explicit ValuationPlan JSON. References must be source metric IDs or accepted assumption IDs.').pack(fill=X)
         self.mapping_text=ttk.Text(mapping,wrap='none'); self.mapping_text.pack(fill=BOTH,expand=True)
         ttk.Button(mapping,text='Apply mapping as new version',command=self.apply_mapping).pack()
@@ -74,12 +82,20 @@ class ValuationWorkbenchTab(ttk.Frame):
                 ('Unit','unit'),('Currency','currency'),('Rationale','rationale'),('Analyst','analyst'),
                 ('Commodity','commodity'),('Price type','price_type'),('Project start YYYY-MM-DD','effective_date'),
                 ('Cost definition','cost_definition'),('Confidence 0-1','confidence'),('FX pair','fx_pair')]
+        controlled = forecast_selector_values()
         for i,(label,key) in enumerate(schema):
             var=StringVar(); self.fields[key]=var
             ttk.Label(top,text=label).grid(row=i//3*2,column=i%3,sticky='w',padx=4)
-            ttk.Entry(top,textvariable=var,width=23).grid(row=i//3*2+1,column=i%3,sticky='ew',padx=4)
+            if key in controlled or key == 'operation':
+                widget=ttk.Combobox(top,textvariable=var,width=21,state='readonly',
+                                    values=controlled.get(key, ()))
+            else:
+                widget=ttk.Entry(top,textvariable=var,width=23)
+            widget.grid(row=i//3*2+1,column=i%3,sticky='ew',padx=4)
+            self.input_widgets[key]=widget
         ttk.Button(top,text='Add financial period',command=self.add_period).grid(row=16,column=0,pady=5)
         ttk.Button(top,text='Add proposed assumption',command=self.add_assumption).grid(row=16,column=1,pady=5)
+        ttk.Button(top,text='Import assumptions from TXT',command=self.import_assumptions_txt).grid(row=17,column=0,pady=5)
         ttk.Button(top,text='Accept selected',command=self.accept_selected).grid(row=16,column=2,pady=5)
         ttk.Button(top,text='Reject selected',command=self.reject_selected).grid(row=17,column=2,pady=5)
         ttk.Button(top,text='Record Gemini suggestion',command=self.add_suggestion).grid(row=17,column=1,pady=5)
@@ -98,12 +114,13 @@ class ValuationWorkbenchTab(ttk.Frame):
         report=await DBEngine.fetch('SELECT current_report_id FROM stock_analysis WHERE ticker=$1',self.ticker)
         evidence=[json.loads(r['metric']) if isinstance(r['metric'],str) else r['metric'] for r in rows]
         report_id=report[0]['current_report_id'] if report else None
+        category=await get_stock_category(self.ticker)
         if not evidence and self.ticker == 'JBL.JO' and report_id:
             snapshot=Path(__file__).resolve().parents[1]/'data/valuation_workbench_jubilee_evidence.json'
             evidence=json.loads(snapshot.read_text(encoding='utf-8'))
             for metric in evidence:
                 metric['report_id']=str(report_id)
-        return plans,evidence,hist,report_id
+        return plans,evidence,hist,report_id,category
 
     def refresh(self):
         self.status.set('Loading evidence and plan history...')
@@ -112,7 +129,7 @@ class ValuationWorkbenchTab(ttk.Frame):
     def _loaded(self,data):
         if data is None:
             self.status.set('Workbench data unavailable. Check Phase 5 migration and database connection.'); return
-        plans,self.evidence,self.history,report_id=data
+        plans,self.evidence,self.history,report_id,self.category=data
         self.plan=plans[0] if plans else (ForecastPlan(ticker=self.ticker,created_by='analyst',source_report_version_id=report_id,legacy_target=next((Decimal(h['legacy_target']) for h in self.history if h['legacy_target']),None))
              if report_id else None)
         self.plans=plans
@@ -122,10 +139,25 @@ class ValuationWorkbenchTab(ttk.Frame):
     def _text(self,name,content):
         box=self.views[name]; box.configure(state='normal'); box.delete('1.0','end'); box.insert('end',content); box.configure(state='disabled')
 
+    def _update_forecast_selectors(self):
+        operations = sorted({
+            value for value in (
+                *[m.get('operation_segment') for m in self.evidence],
+                *[a.operation_segment for a in self.plan.assumptions],
+            ) if value
+        })
+        operation_widget = self.input_widgets.get('operation')
+        if operation_widget is not None:
+            current = self.fields['operation'].get()
+            operation_widget.configure(values=operations)
+            if current and current not in operations:
+                self.fields['operation'].set('')
+
     def _render(self):
         p=self.plan
         if p is None:
             self.status.set('No deep-research report version available.'); return
+        self._update_forecast_selectors()
         self.title_var.set(f'{self.ticker}  Plan v{p.plan_version}  {p.status.value.upper()}')
         self.status.set('No analyst assumptions are automatically filled. Save edits as a new version; approve separately.')
         evidence=[]
@@ -140,17 +172,38 @@ class ValuationWorkbenchTab(ttk.Frame):
             self.assumption_table.insert('', 'end', iid=str(a.assumption_id), values=(a.period_label or '',a.case,a.operation_segment or '',a.field,
                 str(a.value) if a.value is not None else '',a.unit or '',LABELS[a.origin.value],a.approval_state.value))
         periods='\n'.join(f'{x.label}: {x.start} to {x.end}' for x in p.horizon) or 'No fiscal periods entered.'
-        self.forecast_detail.delete('1.0','end'); self.forecast_detail.insert('end',periods+'\n\nDerived production appears only when every required accepted input is present.\n')
-        for operation in sorted({a.operation_segment for a in p.assumptions if a.operation_segment}):
-            for row in forecast_operating_schedule(p,operation):
-                self.forecast_detail.insert('end',f"{operation} {row['period']}: {row['status']} {row.get('attributable_saleable_tonnes',row.get('missing'))}\n")
+        sector_schedules=build_sector_schedules(self.category,p,self.evidence)
+        route=sector_schedules['route']
+        self.forecast_detail.delete('1.0','end'); self.forecast_detail.insert('end',periods+'\n\n')
+        mapping_summary=f'Sector route: {route.value}\nNo sector-specific forecast bridge is active.'
+        if route == WorkbenchRoute.RETAIL:
+            retail_records=sector_schedules['retail_records']; retail_warnings=sector_schedules['warnings']
+            self.forecast_detail.insert('end',render_retail_records(retail_records,retail_warnings)+'\n')
+            for period in p.horizon:
+                aggregate=aggregate_retail_revenue(
+                    p,retail_records,period=period.label,evidence_metrics=self.evidence)
+                self.forecast_detail.insert('end',f"Group revenue aggregation {period.label}: {aggregate}\n")
+            mapping_summary=retail_engine_mapping(retail_records,retail_warnings)
+        elif route == WorkbenchRoute.MINING:
+            self.forecast_detail.insert('end','Derived production appears only when every required accepted mining input is present.\n')
+            for operation,rows in sector_schedules['production'].items():
+                for row in rows:
+                    self.forecast_detail.insert('end',f"{operation} {row['period']}: {row['status']} {row.get('attributable_saleable_tonnes',row.get('missing'))}\n")
+            mapping_summary='ForecastPlan assumption -> mining production/cost bridge -> derived forecast metric -> valuation input'
+        else:
+            self.forecast_detail.insert('end',f'No {route.value} operating forecast bridge is configured. Missing values remain NOT_CALCULABLE.\n')
+        self.mapping_flow.configure(state='normal'); self.mapping_flow.delete('1.0','end'); self.mapping_flow.insert('end',mapping_summary); self.mapping_flow.configure(state='disabled')
         self.mapping_text.delete('1.0','end'); self.mapping_text.insert('end',p.engine_plan.model_dump_json(indent=2) if p.engine_plan else '')
         self._text('Scenarios','\n'.join(str(x) for x in scenario_differences(p)) or 'No explicit bear/base/bull differences. Base does not inherit management targets.')
         wacc=[a for a in p.assumptions if a.field in {'risk_free_rate','equity_risk_premium','beta','country_risk_premium','cost_of_debt','tax_rate','debt_weight','equity_weight','wacc'}]
-        from modules.analysis.forecast_plan import calculate_plan_wacc,price_fx_schedule,cost_forecast_schedule
-        self.forecast_detail.insert('end','\nCost schedules: '+str({o:cost_forecast_schedule(p,o) for o in sorted({a.operation_segment for a in p.assumptions if a.operation_segment})}))
+        from modules.analysis.forecast_plan import calculate_plan_wacc,price_fx_schedule
+        if route == WorkbenchRoute.MINING:
+            self.forecast_detail.insert('end','\nCost schedules: '+str(sector_schedules['costs']))
         self._text('WACC','\n'.join(f"{a.field}: {a.value} {a.unit} [{LABELS[a.origin.value]} / {a.approval_state.value}]" for a in wacc) + '\nCalculated: ' + str(calculate_plan_wacc(p)))
-        self.forecast_detail.insert('end','\nCommodity price schedule: '+str(price_fx_schedule(p,'commodity_price'))+'\nFX schedule: '+str(price_fx_schedule(p,'fx_rate')))
+        if route == WorkbenchRoute.MINING:
+            self.forecast_detail.insert('end','\nCommodity price schedule: '+str(price_fx_schedule(p,'commodity_price')))
+        if route in {WorkbenchRoute.MINING, WorkbenchRoute.RETAIL}:
+            self.forecast_detail.insert('end','\nFX schedule: '+str(price_fx_schedule(p,'fx_rate')))
         self._text('DCF','DCF requires an approved plan with explicit annual operating, cash-flow, WACC and terminal inputs. Missing fields remain missing.\nTerminal method: '+(p.engine_plan.cases.get('base').dcf.terminal_method.value if p.engine_plan and p.engine_plan.cases.get('base') and p.engine_plan.cases['base'].dcf else 'not selected'))
         self._text('SOTP','SOTP components must have explicit asset boundaries, ownership, probability, and source-linked values.\n'+('\n'.join(c.name for c in p.engine_plan.cases['base'].sotp.components) if p.engine_plan and p.engine_plan.cases.get('base') and p.engine_plan.cases['base'].sotp else 'No SOTP components entered.'))
         bank_case = p.engine_plan.cases.get('base') if p.engine_plan else None
@@ -188,17 +241,98 @@ class ValuationWorkbenchTab(ttk.Frame):
     def add_assumption(self):
         if not self.plan: return
         try:
-            a=ForecastAssumption(field=self.fields['field'].get(),value=Decimal(self.fields['value'].get()) if self.fields['value'].get() else None,
-              unit=self.fields['unit'].get(),currency=self.fields['currency'].get() or None,
-              period_label=self.fields['period_label'].get() or None,operation_segment=self.fields['operation'].get() or None,
+            period_label=self.fields['period_label'].get().strip() or None
+            start_text=self.fields['period_start'].get().strip()
+            end_text=self.fields['period_end'].get().strip()
+            start=date.fromisoformat(start_text) if start_text else None
+            end=date.fromisoformat(end_text) if end_text else None
+            horizon,period_added=horizon_for_assumption(
+                self.plan,period_label,start=start,end=end)
+            a=ForecastAssumption(field=self.fields['field'].get().strip(),value=Decimal(self.fields['value'].get()) if self.fields['value'].get() else None,
+              unit=self.fields['unit'].get() or None,currency=self.fields['currency'].get() or None,
+              period_label=period_label,operation_segment=self.fields['operation'].get() or None,
               case=self.fields['case'].get() or 'base',origin=Origin.ANALYST_ASSUMPTION,
               rationale=self.fields['rationale'].get(),created_by=self.fields['analyst'].get() or 'analyst',
               commodity=self.fields['commodity'].get() or None,price_type=self.fields['price_type'].get() or None,
               cost_definition=self.fields['cost_definition'].get() or None,fx_pair=self.fields['fx_pair'].get() or None,
               confidence=Decimal(self.fields['confidence'].get()) if self.fields['confidence'].get() else None,
               effective_date=date.fromisoformat(self.fields['effective_date'].get()) if self.fields['effective_date'].get() else None)
-            self.plan=new_version(self.plan,changed_by=a.created_by,assumptions=[*self.plan.assumptions,a]); self.pending.append(self.plan); self._render()
+            self.plan=new_version(self.plan,changed_by=a.created_by,horizon=horizon,
+                                  assumptions=[*self.plan.assumptions,a])
+            self.pending.append(self.plan); self._render()
+            if period_added:
+                self.status.set(f'Added financial period {period_label} and proposed assumption {a.field}.')
         except Exception as e: messagebox.showerror('Invalid assumption',str(e))
+
+    def import_assumptions_txt(self):
+        if not self.plan:
+            return
+        path=filedialog.askopenfilename(
+            parent=self, title='Import ForecastPlan assumptions',
+            filetypes=[('Text files','*.txt')])
+        if not path:
+            return
+        try:
+            text=Path(path).read_text(encoding='utf-8-sig')
+            allowed_operations={
+                value for value in (
+                    *[m.get('operation_segment') for m in self.evidence],
+                    *[a.operation_segment for a in self.plan.assumptions],
+                ) if value
+            }
+            preview=parse_forecast_txt(
+                text, current_plan=self.plan, current_ticker=self.ticker,
+                category=self.category, source_name=Path(path).name,
+                allowed_operations=allowed_operations)
+        except (OSError, UnicodeError, ForecastTxtImportError) as exc:
+            messagebox.showerror('Assumption import blocked',str(exc),parent=self)
+            return
+        dialog=ttk.Toplevel(self)
+        dialog.title('Preview ForecastPlan assumption import')
+        dialog.geometry('900x650')
+        dialog.transient(self.winfo_toplevel())
+        ttk.Label(dialog,text='Review the validated assumptions below. Import keeps every entry PROPOSED.',
+                  font=('Helvetica',11,'bold')).pack(fill=X,padx=10,pady=(10,5))
+        body=ttk.Text(dialog,wrap='word')
+        body.pack(fill=BOTH,expand=True,padx=10,pady=5)
+        body.insert('1.0',preview.render()); body.configure(state='disabled')
+        buttons=ttk.Frame(dialog); buttons.pack(fill=X,padx=10,pady=10)
+        def confirm(action):
+            try:
+                resolved=resolve_import_assumptions(self.plan,preview,action)
+            except ForecastTxtImportError as exc:
+                messagebox.showerror('Duplicate resolution required',str(exc),parent=dialog)
+                return
+            if resolved == self.plan.assumptions and preview.horizon == self.plan.horizon:
+                self.status.set(
+                    f'No changes imported from {preview.source_name}; identical duplicates kept existing.')
+                dialog.destroy()
+                return
+            sources=[*preview.assumptions,*[item.imported for item in preview.conflicts]]
+            analyst=sources[0].created_by if sources else 'analyst'
+            self.plan=new_version(
+                self.plan, changed_by=analyst, horizon=preview.horizon,
+                assumptions=resolved)
+            self.pending.append(self.plan)
+            self._render()
+            replaced=len(preview.conflicts) if action == 'replace_as_proposed' else 0
+            self.status.set(
+                f'Imported {len(preview.assumptions)} new and replaced {replaced} conflicting '
+                f'assumption(s) from {preview.source_name}. Save new version when ready; '
+                'nothing has been accepted or approved.')
+            dialog.destroy()
+        ttk.Button(buttons,text='Cancel',command=dialog.destroy).pack(side='right',padx=5)
+        if preview.conflicts:
+            ttk.Button(buttons,text='Replace as Proposed',
+                       command=lambda:confirm('replace_as_proposed')).pack(side='right',padx=5)
+            ttk.Button(buttons,text='Keep Existing',
+                       command=lambda:confirm('keep_existing')).pack(side='right',padx=5)
+        else:
+            ttk.Button(buttons,text='Import as proposed',
+                       command=lambda:confirm('keep_existing')).pack(side='right',padx=5)
+        dialog.protocol('WM_DELETE_WINDOW',dialog.destroy)
+        dialog.grab_set()
+        dialog.focus_set()
 
     def accept_selected(self):
         if not self.plan: return

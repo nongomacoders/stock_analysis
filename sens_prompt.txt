@@ -2,36 +2,36 @@
 You are a professional JSE financial analyst.
 
 --- MARKET CONTEXT ---
-Current Share Price: 3757.00c
+Current Share Price: 12227.00c
 
 --- END CONTEXT ---
 
 --- MY RESEARCH ---
 PRICE LEVELS & TARGETS
-Report Date Share Price: 38.22 ZAR
-Report 12-Month Target: 45.00 ZAR
-Consensus Target: Not specified
-Valuation Floor (NAV): Not specified
+Report Date Share Price: ZAR 123.16
+Report 12-Month Target: ZAR 134.50
+Consensus Target: Not stated
+Valuation Floor (NAV): Not stated
 
 CATALYSTS & RISKS
 Positive:
-- Regulatory clearance and earnings accretion from the in2food backward integration
-- Potential interest rate cuts in late 2026 easing pressure on consumer discretionary spend
-- Operational turnaround in Country Road Group sustaining positive EBIT margins
+- Competing superior proposal from a rival global explosives major at a minimum 2.5 percent premium (above R137.86)
+- Accelerated clearance from South African and cross-border African competition authorities enabling early closing
+- RMB bank guarantee eliminating buyer financing risk and securing a hard cash exit floor
 
 Negative:
-- Persistent margin pressure in FBH from discounting and inventory clearance
-- Escalation in Middle East conflict driving up freight, fuel, and supply chain input costs
-- Regulatory delay or execution challenges in integrating in2food manufacturing operations
+- Failure of competition or regulatory approvals across eight African regional jurisdictions or burdensome public interest conditions
+- Material Adverse Change clause triggered if group EBITDA falls below R2.357 billion during the offer period
+- Dissenting shareholders exceeding the 3 percent threshold invoking section 164 appraisal rights
 
 KEY DATES
 Debt / Facilities Maturing:
-- Not specified
+- Not stated
 
 Project Timelines / Milestones:
-- 1 June 2026: Sam Ngumeni assumed Group CEO role
-- Late 2026: Potential interest rate cuts easing pressure on consumer discretionary spend
-- FY27: Anticipated in2food manufacturing consolidation and earnings accretion following competition authority clearance
+- 14 September 2026: Solar SA Investments entered into implementation agreement to acquire 100 percent of Omnia shares
+- Mid-2027: Targeted full regulatory clearance and Scheme Meeting approval
+- 9 September 2027: Validity deadline for Rand Merchant Bank cash confirmation guarantee
 --- END RESEARCH ---
 
 --- MY STRATEGY ---
@@ -39,37 +39,48 @@ Project Timelines / Milestones:
 --- END STRATEGY ---
 
 --- NEW SENS ANNOUNCEMENT ---
-Dealings in securities by an associate of a director of the Company
-Woolworths Holdings Limited
-(Incorporated in the Republic of South Africa)
-Registration number 1929/001986/06
-Share code: WHL
-ISIN: ZAE000063863
-Bond company code: WHLI
-(the “Company”)
-DEALINGS IN SECURITIES BY AN ASSOCIATE OF A DIRECTOR OF THE COMPANY
-In compliance with the JSE Limited Listings Requirements and Debt & Specialist Securities Listings
-Requirements, the following information is disclosed:
-Director                                         Itumeleng Kgaboesele
-Name of associate                                Tau Sachin Capital (Pty) Ltd (“Tau Sachin Capital”)
-Relationship to associate                        Mr Kgaboesele is a director and a shareholder of Tau Sachin
-Capital
-Company                                          Woolworths Holdings Limited
-Date of transaction                              21 September 2026
-Nature of transaction                            On-market purchase of shares
-Class of securities                              Ordinary shares
-Number of shares                                 16,800
-Volume weighted average purchase price           3831.54 cents per share
-Highest purchase price                           3838.55 cents per share
-Lowest purchase price                            3821.00 cents per share
-Total value of transaction                       R643,698.72
-Nature of interest                               Indirect beneficial
-Clearance obtained                               Yes
-Cape Town
+Dealings in securities by the Omnia Broad-Based Employee Share Trust and prescribed officer of the Company
+OMNIA HOLDINGS LIMITED
+Incorporated in the Republic of South Africa
+(Registration number 1967/003680/06)
+JSE code: OMN
+LEI NUMBER: 529900T6L5CEOP1PNP91
+ISIN: ZAE000005153
+(‘Omnia’ or the ‘Company’)
+DEALINGS IN SECURITIES BY THE OMNIA BROAD-BASED EMPLOYEE SHARE TRUST AND PRESCRIBED OFFICER OF THE COMPANY
+Shareholders are advised of the following dealings by the Omnia Broad-Based Employee Share Trust on behalf of
+beneficiaries.
+Name of scheme:                                                  The Omnia Broad-Based Employee Share Trust
+Company:                                                         Omnia Holdings Limited
+Transaction date:                                                17 September 2026
+Number and class of securities:                                  62 499 ordinary shares
+Total value:                                                     R7 742 701.11
+Weighted average price per security:                             R123.8852
+Highest traded price on the market on the day:                   R124.52
+Lowest traded price on the market on the day:                    R122.00
+Nature of transaction and extent of interest in transaction:     On-market disposal of shares on behalf of and in
+accordance with instructions provided by the
+beneficiaries
+Clearance to deal obtained:                                      Yes
+Shareholders are further referred to the announcement released on 17 September 2026 regarding the vesting of
+Performance Forfeitable Shares awarded in terms of the provisions of the Omnia 2020 Share Plan.
+In compliance with the JSE Listings Requirements, shareholders are advised of the following dealings in securities
+by a prescribed officer of the Company, in order to settle any tax liabilities incurred as a result of the vesting of the
+Performance Forfeitable Shares:
+Name of prescribed officer:                                      CM Kotze
+Number and class of securities:                                  27 193 ordinary shares
+Transaction date:                                                18 September 2026
+Total value:                                                     R3 346 767.60
+Weighted average price per security:                             R123.0746
+Highest traded price on the market on the day:                   R124.24
+Lowest traded price on the market on the day:                    R122.59
+Nature of transaction:                                           On-market disposal of shares
+Nature and extent of interest:                                   Direct beneficial
+Clearance to deal obtained:                                      Yes
 23 September 2026
-Equity Sponsor and Debt Sponsor
-Investec Bank Limited
-Date: 23/09/2026 07:05:00
+Sponsor
+Java Capital
+Date: 23/09/2026 03:30:00
 Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited (‘JSE’).
 The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
 the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,
