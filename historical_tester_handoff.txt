@@ -1,0 +1,318 @@
+HISTORICAL BACKTEST / TESTER HANDOFF
+Generated: 2026-09-24
+Project: C:\Users\Dion\Desktop\Projects\stock_analysis
+
+PURPOSE
+The Historical Backtest system reconstructs the evidence and market data available at a historical as-of date, isolates that work from live ForecastPlans and valuations, and supports separate historical plans/results. It must never query yfinance during a backtest rerun and must not leak current reports, current ForecastPlans, learning points, later evidence, or later market prices.
+
+IMPLEMENTED ARCHITECTURE
+
+1. Historical Backtest contracts
+File:
+- gui/modules/analysis/historical_backtest.py
+
+Key models/functions:
+- HistoricalBacktest
+- HistoricalEvidence
+- HistoricalMarketObservation
+- BacktestStatus: draft, locked, completed, failed
+- resolve_evidence_as_of()
+- resolve_latest_market_as_of()
+- select_historical_share_count()
+- backtest_input_hash()
+- lock_backtest()
+- compare_forecast_actuals()
+- require_reveal_allowed()
+
+Market resolution rule:
+- latest valid persisted observation <= as_of_date
+- never use a later observation
+- weekend/holiday dates use the preceding trading date
+- lag_days is retained
+- provider_symbol and price_basis are retained
+- raw close is used for historical spot-price comparisons
+
+2. Historical Backtest persistence
+Files:
+- gui/modules/data/historical_backtests.py
+- gui/core/db/migrations/add_historical_backtests.sql
+
+Database tables:
+- historical_backtests
+- historical_backtest_plans
+- historical_backtest_results
+- historical_backtest_outcomes
+
+Important behavior:
+- Historical storage is separate from live ForecastPlans and deterministic valuations.
+- Historical snapshots preserve evidence IDs and market observation IDs.
+- Historical plans are stored as snapshots.
+- Results are append-only/idempotent by backtest, historical plan, engine version, and input hash.
+- Rerunning an existing historical result should not require network access.
+- No Historical Backtest valuation has been executed yet.
+
+3. Historical evidence packages
+Files:
+- gui/modules/analysis/historical_packages.py
+- gui/modules/analysis/tests/test_historical_packages.py
+
+Canonical root:
+- gui/results_history
+
+Canonical path example:
+- gui/results_history/TRU/FY2025
+
+Canonical period labels:
+- FY2025
+- H1_FY2026
+- H2_FY2026
+- Q1_FY2026 through Q4_FY2026
+- 9M_FY2026
+
+Short forms such as H1_2026 are intentionally invalid under the existing validator.
+
+Expected filenames:
+- TRU_FY2025_SENS.txt
+- TRU_FY2025_AFS.pdf
+
+Starter manifest:
+{
+  "schema_version": 1,
+  "ticker": "TRU.JO",
+  "symbol": "TRU",
+  "period_label": "FY2025",
+  "period_type": "fiscal_year",
+  "period_start": null,
+  "period_end": null,
+  "sources": []
+}
+
+A starter manifest is INCOMPLETE, not VALID. The analyst must add real period/source metadata. No fake dates, filenames, hashes, or source IDs are generated.
+
+Relevant helpers:
+- canonical_ticker_folder()
+- controlled_period_label()
+- controlled_period_values()
+- expected_filenames()
+- package_folder()
+- starter_manifest()
+- create_package_scaffold()
+- package_status()
+- validate_period_folder()
+- discover_packages()
+
+Safety:
+- canonical ticker validation
+- controlled period validation
+- traversal prevention
+- Windows invalid-character prevention
+- reserved Windows device-name prevention
+- resolved path must remain below gui/results_history
+- repeated creation is idempotent
+- existing folders, manifests, and source files are preserved
+- missing manifest creation requires a separate confirmed action
+- filesystem scaffolding performs no database writes
+
+4. Backtest UI
+File:
+- gui/components/valuation_workbench_tab.py
+
+Location:
+- Research window -> Valuation -> Backtest
+
+Existing controls:
+- As-of date
+- Resolve historical snapshot
+- Save backtest snapshot
+- Package ticker
+- Controlled reporting-period selector
+- Create backtest folders
+- Open selected backtest folder
+- Validate package
+- Historical price start/end
+- Preview yfinance import
+- Import historical prices
+
+Package workflow:
+Create backtest folders
+-> Open selected folder
+-> analyst adds real SENS and AFS
+-> analyst completes manifest metadata
+-> Validate package
+-> later resolve/save historical snapshot
+
+Creating or validating a package does not ingest it, create metrics, create a backtest, create a plan, or run a valuation.
+
+5. Historical price importer
+Files:
+- gui/modules/data/historical_prices.py
+- gui/core/db/migrations/add_historical_price_imports.sql
+- gui/modules/data/tests/test_historical_prices.py
+
+Database:
+- historical_price_import_batches
+- additive fields on price_observations:
+  provider_symbol
+  raw_close
+  adjusted_close
+  currency
+  price_unit
+  price_basis
+  retrieved_at
+  import_batch_id
+  provider_metadata
+  revision_of
+  conflict_status
+
+Download settings:
+- yfinance 0.2.66
+- auto_adjust=False
+- actions=False
+- progress=False
+- end is sent as an exclusive end date
+
+JSE units:
+- Yahoo reports provider currency ZAc for TRU.JO.
+- Stored economic currency is ZAR.
+- Stored unit is cents_per_share.
+- raw Close and adjusted close remain separate.
+- raw Close is the historical spot basis.
+- adjusted close is retained for later return calculations.
+
+Validation:
+- expected provider symbol
+- monotonic, unique, in-range dates
+- no future observations
+- positive raw close
+- positive adjusted close when present
+- known currency/unit
+- fail closed on ambiguity
+- no automatic daily_stock_data rewrite
+
+Idempotency/revisions:
+- Exact same provider observation is reused.
+- Changed adjusted close becomes an immutable adjusted_revision.
+- Changed raw close becomes an immutable raw_close_conflict warning.
+- Old observations are never overwritten.
+
+6. TRU historical price import already completed
+Configured PostgreSQL:
+- database: jse_stock_data
+- host: 100.92.22.55
+- schema: public
+
+Batch:
+- 80d1366d-a5c0-46bb-a24b-c98411e09b33
+- ticker/provider symbol: TRU.JO
+- requested: 2020-01-01 through 2026-09-24
+- actual coverage: 2020-01-02 through 2026-09-23
+- fetched/inserted: 1,683
+- raw close rows: 1,683
+- adjusted close rows: 1,683
+- evidence/source-document links: 1,683
+- duplicate economic dates: 0
+- conflicts/warnings: 0
+
+Sample:
+- as-of date: Sunday 2025-08-31
+- selected observation: Friday 2025-08-29
+- raw close: 6,022 cents = R60.22
+- lag: 2 days
+- source: yfinance
+- basis: raw_close
+
+Legacy daily_stock_data was not rewritten and remained at 1,472 TRU rows.
+
+7. Live results and historical results separation
+Files:
+- gui/modules/analysis/results_package.py
+- gui/scripts/generate_deepresearch_from_results.py
+- gui/modules/analysis/tests/test_results_package.py
+- gui/modules/analysis/tests/test_generation_provenance.py
+
+Roots:
+- live/current staging: gui/results
+- historical packages: gui/results_history
+
+These must remain separate.
+
+Regression fixed:
+- gui/results/TRU/FY2025AFS.pdf was previously selected by a test using next(folder.glob("*.pdf")), which relies on filesystem order.
+- The live generator also previously supplied every TXT/PDF in a ticker folder without reporting-period filtering.
+
+Current live selection rule:
+- extract content
+- classify source role by content
+- extract reporting-period end
+- use explicitly requested period if supplied
+- otherwise use latest results-SENS period
+- select only recognized SENS/AFS documents matching that period
+- ignore and warn about prior-period, unresolved, or unsupported files
+
+Current TRU live selection:
+- target: 2026-06-28
+- selects FY2026 SENS
+- selects FY2026 Group and Company AFS
+- ignores FY2025AFS.pdf
+- no production files were moved, deleted, or modified
+
+Relevant helpers:
+- read_document_text()
+- select_live_sources()
+- select_live_result_paths()
+- classify_document()
+- classify_path()
+- build_results_package()
+
+8. Current evidence limitations
+At the time Historical Backtest mode was added:
+- typed detailed TRU metrics were mainly FY2026
+- earliest relevant stored results SENS was FY2026
+- older ShareData compatibility fundamentals existed but often lacked raw source_document_id provenance
+- historical prices are now fully provenance-backed from 2020 onward
+- older historical SENS/AFS packages must still be supplied manually under gui/results_history
+- do not fabricate provenance for older compatibility rows
+
+9. Tests
+Latest broad result after live-selection fix:
+- 351 passed
+- 10 skipped
+- zero failures
+
+Focused package/Backtest/importer tests cover:
+- historical cutoff leakage
+- weekend fallback and no future price leakage
+- raw vs adjusted close
+- JSE ZAc normalization
+- malformed/empty downloads
+- idempotency and provider revisions
+- package creation and starter manifest
+- existing-folder preservation
+- missing-manifest control
+- ticker/period/path safety
+- package readiness display
+- FY2025/FY2026 mixed live directory selection
+- filesystem operations with temporary directories
+- no database/valuation dependency for scaffolding
+
+10. Important invariants
+- Do not edit approved live ForecastPlans.
+- Do not use current reports in a historical snapshot unless they were genuinely available at the cutoff and source-dated.
+- Do not query yfinance during backtest execution or rerun.
+- Do not use adjusted close as historical spot price.
+- Do not use a later trading date for a weekend/holiday cutoff.
+- Do not place historical evidence in gui/results.
+- Do not make gui/results discovery depend on filename order.
+- Do not mark starter packages VALID.
+- Do not automatically ingest, create a plan, approve a plan, run a valuation, or publish a target from folder creation/validation.
+- Preserve append-only historical and valuation records.
+
+11. Likely next steps
+- Gather genuine TRU FY2022-FY2025 SENS and AFS documents.
+- Use the Backtest tab to create one controlled package folder per period.
+- Add the real documents and complete manifest period_end, publication dates, and sources.
+- Validate each package.
+- Resolve a historical snapshot for a chosen cutoff.
+- Review evidence completeness before creating a historical ForecastPlan.
+- Historical valuation execution should happen only after a separate analyst-reviewed historical plan is complete and approved.
+- Do not automatically start historical backfills or valuations.

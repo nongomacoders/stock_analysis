@@ -1,0 +1,686 @@
+VALUATION WORKFLOW HANDOFF
+Generated: 2026-09-24
+Project: C:\Users\Dion\Desktop\Projects\stock_analysis
+
+PURPOSE
+This application separates research extraction, analyst-approved forecast assumptions, deterministic valuation, target approval, and publication. Gemini may extract evidence and suggest assumptions, but it must not be the authoritative calculator for deterministic valuations or silently carry prior report assumptions forward.
+
+CORE GOVERNANCE
+- Deep Research reports are versioned and append-only.
+- Previous Deep Research reports are not supplied to Gemini during a rerun.
+- A previous report is archived only after a successful replacement.
+- ForecastPlan assumptions have explicit origin and approval state.
+- Proposed assumptions are not valuation inputs.
+- Analyst assumptions require explicit acceptance.
+- Gemini suggestions require explicit acceptance or rejection.
+- Approved ForecastPlan versions are immutable.
+- Corrections happen by cloning to a new draft version.
+- Valuation execution requires an approved, persisted ForecastPlan and deterministic preflight.
+- Deterministic valuation results are append-only and keyed by plan, engine version, and input hash.
+- Deterministic valuations do not overwrite legacy Gemini targets.
+- Target approval and publication are separate explicit actions.
+- No workflow action should approve a plan, run a valuation, create a target, or publish automatically unless the user explicitly invokes that action.
+
+1. DEEP RESEARCH GENERATION AND EVIDENCE
+
+Primary files:
+- gui/scripts/generate_deepresearch_from_results.py
+- gui/modules/data/research.py
+- gui/modules/data/report_versions.py
+- gui/modules/analysis/valuation_audit.py
+- gui/modules/analysis/results_package.py
+- gui/components/deep_research_tab.py
+- gui/modules/analysis/selector.py
+
+Source roots:
+- Live/current results staging: gui/results/<SYMBOL>
+- Historical backtest packages: gui/results_history/<SYMBOL>/<PERIOD>
+- These roots must remain separate.
+
+Rerun Deep Research:
+- Uses current selected live results sources.
+- Does not send the previous Deep Research report to Gemini.
+- Shows the analyst which TXT/PDF inputs are present.
+- Warns when no detailed AFS PDF is available.
+- Archives complete generation inputs and raw Gemini response.
+- Archives the previous report only after the new report succeeds.
+- Does not allow an old Gemini analysis to leak forward as “Baseline Truth.”
+
+Create Deep Research from SENS:
+- Uses selected persisted SENS announcement records.
+- This is separate from the normal folder-based Deep Research rerun.
+- “Add SENS to folder” is a preparation action; it should not mix arbitrary historical files into the current package.
+
+Live results-package selection:
+- Content-based document role classification is preserved.
+- Reporting-period end is extracted from document content.
+- If an explicit period is supplied, only that period is selected.
+- Otherwise the latest period identified by a results SENS is selected.
+- Only SENS/AFS documents matching the target period are used.
+- Prior-period, unresolved, and unsupported files are ignored and reported.
+- Directory order and filename order must never choose the AFS.
+- Current TRU selection resolves FY2026 SENS + FY2026 AFS and ignores FY2025AFS.pdf.
+
+Deep Research provenance captures:
+- ticker
+- timestamp
+- model
+- temperature
+- complete Gemini prompt
+- source paths/IDs/names
+- source dates
+- commodity and FX values with currency/unit/period/type
+- current share price
+- raw Gemini response
+- report/version identity
+- source set
+
+Valuation audit classifications:
+- historical_actual
+- formal_guidance
+- management_target
+- external_consensus
+- model_assumption
+- previous_report
+- python_calculation
+- unresolved
+
+Missing provenance must remain unresolved. Do not fabricate it.
+
+2. FINANCIAL METRICS AND RESULTS PACKAGE
+
+Primary files:
+- gui/modules/analysis/financial_metrics.py
+- gui/modules/analysis/results_package.py
+- gui/modules/analysis/historical_metrics.py
+- gui/modules/analysis/tests/test_results_package.py
+- gui/modules/analysis/tests/test_truworths_contract.py
+
+The structured results package:
+- classifies SENS and AFS by content
+- extracts reporting period
+- extracts typed financial observations
+- retains page, section, source ID/path/hash, raw label/value, period, unit, and provenance
+- reconciles observations across SENS and AFS
+- keeps distinct accounting concepts separate
+- exposes evidence depth:
+  HEADLINE_RESULTS_ONLY
+  DETAILED_RESULTS_PACKAGE
+
+Important accounting distinctions:
+- retail sales != sale of merchandise != accounting revenue
+- operating margin must retain its disclosed numerator/denominator definition
+- trading margin means trading_profit / sale_of_merchandise
+- current issued shares != weighted-average basic shares != diluted weighted-average shares
+- historical actuals cannot silently become forward assumptions
+- management targets are not formal guidance unless the source supports that classification
+
+3. FORECASTPLAN CONTRACT AND GOVERNANCE
+
+Primary files:
+- gui/modules/analysis/forecast_plan.py
+- gui/modules/data/forecast_plans.py
+- gui/components/valuation_workbench_tab.py
+- gui/modules/analysis/forecast_txt_import.py
+- gui/modules/analysis/forecast_plan_history.py
+
+ForecastPlan contains:
+- plan ID
+- ticker
+- plan version
+- previous/source version identity
+- horizon/financial periods
+- assumptions
+- engine mapping / ValuationPlan
+- DCF configuration
+- EquitySpec
+- status and approval metadata
+- source report version
+- engine version
+
+Approval states/origins:
+- analyst-entered and TXT-imported assumptions start proposed
+- only accepted assumptions can enter deterministic calculations
+- Gemini suggestions use their separate reject action
+- proposed analyst assumptions can be discarded from the current draft
+- accepted assumptions cannot be discarded through the proposed-only action
+- unresolved proposed items block plan approval
+- discarding does not run a valuation or alter saved historical versions
+
+Plan versioning:
+- Save new version creates the next version exactly once.
+- Approval approves the same persisted version; it should not create another version.
+- Save/approve confirmations include version, plan ID, and status/timestamp.
+- After save or approval, the persisted plan is reloaded and every dependent tab refreshes.
+- Manual Refresh remains available.
+- Dirty state is shown as SAVED or UNSAVED CHANGES.
+- Approved historical versions are read-only.
+- Legacy / History lists all versions and supports:
+  View selected version
+  Clone selected as new draft
+
+Never repair an approved plan in place. Clone, repair the new draft, save, review, and approve.
+
+4. FORECAST TXT IMPORT
+
+Primary file:
+- gui/modules/analysis/forecast_txt_import.py
+
+UI:
+- Valuation -> Forecast -> Import assumptions from TXT
+
+Format:
+FORECAST_PLAN
+ticker=TRU.JO
+case=base
+
+ASSUMPTION
+period=FY2027
+start=2026-06-29
+end=2027-06-27
+operation=Group
+field=...
+value=...
+unit=...
+currency=ZAR
+confidence=0.6
+analyst=Dion
+rationale=...
+
+Rules:
+- UTF-8 and blank lines supported.
+- Imported ticker must equal the open research-window ticker.
+- Existing ForecastAssumption/ForecastPlan validators are authoritative.
+- Invalid enum values are not silently corrected.
+- Missing periods can be constructed from supplied start/end dates.
+- Imported assumptions remain proposed.
+- Import does not accept or approve anything.
+- Import is atomic.
+
+Duplicate identity:
+- period + case + operation + field
+
+Duplicate handling:
+- DUPLICATE_IDENTICAL: keep existing by default
+- DUPLICATE_CONFLICT: show existing vs imported and require explicit choice
+- checks current in-memory draft, persisted/reloaded draft, and duplicates within the TXT
+- replacement affects only the current draft and never mutates an approved historical version
+
+5. SECTOR ROUTING
+
+Primary files:
+- gui/modules/analysis/retail_forecast.py
+- gui/modules/analysis/bank_residual_income.py
+- gui/modules/analysis/valuation_engine.py
+- gui/modules/analysis/dcf_mapping.py
+- gui/modules/analysis/forecast_plan.py
+
+Routes currently tested:
+- generic/retailer DCF
+- mining-specific operating bridge
+- bank residual-income valuation
+- holding-company/SOTP integration tested with Naspers/Prosus concepts
+
+Sector routing must not force incompatible concepts through a generic DCF.
+
+Retail:
+- revenue-bearing segment completeness is enforced.
+- Group aggregation is PASS only when all required material segments have accepted compatible forecasts, or an explicit approved group forecast is used.
+- Missing foreign-segment FX keeps aggregation incomplete.
+- Group forecasts and segment forecasts must not be double counted.
+
+Mining:
+- production/cost bridges require complete accepted inputs.
+- Historical production/cost values do not become forward inputs automatically.
+- Management targets remain management targets unless formal guidance is proven.
+
+Banks:
+- use bank-specific residual income.
+- cost of equity is used instead of enterprise WACC.
+- deposits are not treated as ordinary net debt.
+- bank equity bridge must not add cash/subtract deposits as if it were an industrial company.
+
+6. RETAILER EARNINGS BRIDGE
+
+Primary file:
+- gui/modules/analysis/retail_forecast.py
+
+Controlled fields include:
+- retail_sales_growth
+- revenue_growth
+- sale_of_merchandise_growth
+- trading_margin
+- depreciation
+- tax_rate
+- total_capex
+- working_capital
+- other_recurring_cash
+
+Semantics:
+- trading_margin = trading_profit / sale_of_merchandise
+- forecast sale of merchandise =
+  historical sale of merchandise * (1 + accepted sale_of_merchandise_growth)
+- forecast trading profit =
+  forecast sale of merchandise * accepted trading_margin
+
+Do not substitute:
+- retail_sales_growth for sale_of_merchandise_growth
+- revenue_growth for sale_of_merchandise_growth
+- operating_margin for trading_margin
+
+TRU FY2026 historical baseline:
+- sale of merchandise: R21.339bn
+- trading profit: R2.774bn
+- disclosed trading margin: 13.0%
+- R21.339bn * 13.0% is approximately R2.774bn, allowing disclosure rounding
+
+The reported 19.2% operating margin must not be applied to R23.030bn accounting revenue as the primary deterministic retail DCF margin.
+
+Finance income is excluded from trading profit:
+- interest income and dividend income remain non-trading items
+
+Direct EBIT/FCFF route:
+- sale_of_merchandise_growth + trading_margin
+  -> forecast_trading_profit
+  -> direct EBIT
+- depreciation -> D&A add-back
+- tax_rate -> cash tax
+- total_capex -> capex
+- working_capital -> change in operating working capital
+- other_recurring_cash -> recurring operating cash deduction
+- forecast_revenue can remain informational/cross-check data on the direct trading-profit route
+
+7. DCF CONFIGURATION AND EXECUTION
+
+Primary files:
+- gui/modules/analysis/dcf_execution.py
+- gui/modules/analysis/valuation_engine.py
+- gui/modules/analysis/dcf_mapping.py
+- gui/components/valuation_workbench_tab.py
+- deterministic valuation persistence modules under gui/modules/data
+
+Terminal methods are mutually exclusive:
+- perpetuity_growth
+- exit_multiple
+
+Perpetuity growth requires:
+- accepted terminal_growth
+- WACC
+- WACC > terminal_growth
+- no simultaneous exit-multiple terminal inputs
+
+Exit multiple requires:
+- accepted exit_multiple
+- explicit terminal metric basis: EBIT or EBITDA
+- no simultaneous perpetuity-growth terminal inputs
+
+Terminal method:
+- is a ForecastPlan/DCF configuration choice
+- is stored in the existing DCF specification
+- persists on Save new version
+- changing it modifies only the current draft
+- does not accept assumptions, approve, persist, or run a valuation
+
+Execution button:
+- Valuation -> DCF -> Run deterministic DCF
+
+Enabled only when:
+- plan is approved
+- DCF status is ready
+- EquitySpec/Reconciliation is READY
+- exact normalized execution inputs pass preflight
+
+Execution sequence:
+- preflight exact inputs used by execution
+- block and show all issues if invalid
+- run deterministic engine
+- persist append-only result
+- reuse exact plan/engine/input-hash result when available
+- do not modify the approved plan
+- do not rewrite report text
+- do not overwrite legacy targets
+
+Required warnings:
+- SHORT_EXPLICIT_FORECAST_HORIZON when fewer than 3 explicit years
+- TERMINAL_VALUE_CONCENTRATION when terminal value >80% of enterprise value
+- DILUTION_UNMODELED when current issued shares are used without forecast dilution
+
+Readiness and execution must consume the same normalized representation. READY/PASS must never be returned if execution has no usable explicit periods or no terminal method. Empty/incomplete forecasts must fail before a placeholder valuation is appended.
+
+Known historical bad result:
+- valuation ID 7cd28f04-00f1-4db3-8e21-c84280174260 was stored as NOT_CALCULABLE during the earlier mismatch investigation
+- preserve append-only history
+- do not delete or rewrite it
+
+8. EQUITYSPEC / EV-TO-EQUITY BRIDGE
+
+Primary files:
+- gui/modules/analysis/equity_bridge_preview.py
+- gui/components/valuation_workbench_tab.py
+- ForecastPlan/ValuationPlan models
+
+Reconciliation shows:
+- enterprise value
+- net cash or net debt
+- lease adjustment
+- minorities
+- non-operating assets
+- other equity adjustments
+- equity value
+- share denominator
+- lease treatment
+- exact metric/assumption IDs
+- provenance/eligibility/mapping status
+
+Provenance states displayed:
+- SOURCE-BACKED
+- ACCEPTED
+- MISSING
+- INVALID/DOUBLE-COUNTED
+- MAPPED where applicable
+
+TRU reviewed bridge inputs:
+- net cash:
+  source metric a5bb31a4-b2dd-43af-9c40-de9383abb7a5
+  R196,000,000
+- current issued shares:
+  source metric 84ddb897-a2de-4203-b240-dbf831fd7829
+  400,551,604 shares
+- lease adjustment:
+  accepted assumption d51f4b2f-6ef3-40ac-b9a2-f4f6e8c7daf9
+  R4,218,000,000
+- minorities:
+  accepted assumption 702ec342-1ec2-4632-a58f-40dc71ed5d99
+  R0
+- non-operating assets:
+  accepted assumption b3b357b6-b98f-45f0-8f03-18a10e9cf387
+  R0
+- other equity adjustments:
+  accepted assumption 11e58331-8868-4d14-aec1-6ffdf8cd6f72
+  R0
+- lease_treatment:
+  lease_debt_adjustment
+
+Non-operating asset rationale:
+“No separately realisable material non-operating asset was identified. Money-market funds are included in net cash, and ordinary retail working-capital assets are excluded.”
+
+Rules:
+- exactly one of net_cash or net_debt
+- no trade receivables as equity additions
+- no duplicate lease treatment
+- lease adjustment required for lease_debt_adjustment
+- zero minorities allowed
+- zero non-operating assets require rationale
+- zero other adjustments allowed
+- shares must use an allowed denominator basis
+- current issued shares retain DILUTION_UNMODELED warning
+- mapping reviewed inputs creates/updates the in-memory EquitySpec only
+- persistence happens only through Save new version
+
+9. ENGINE MAPPING AND DERIVED REFERENCES
+
+Primary files:
+- gui/modules/analysis/dcf_mapping.py
+- gui/modules/analysis/valuation_engine.py
+- gui/modules/analysis/retail_forecast.py
+- gui/modules/analysis/forecast_plan_history.py
+
+Engine Mapping must show:
+- accepted assumption/source metric
+- deterministic derived metric
+- final valuation input
+- eligibility
+- exact IDs
+
+Derived IDs must be reproducible after save/reload. Approved plans must not depend on ephemeral derived metric UUIDs that cannot be regenerated.
+
+Preferred architecture:
+- deterministic derived IDs from stable plan/input identity
+- persisted derived records
+- deterministic regeneration/resolution on load
+
+Never fall back to an unrelated historical metric because a derived reference is stale.
+
+Approved plans with stale references:
+- detect stale reference
+- clone approved version to new draft
+- regenerate/re-resolve derived references
+- preserve accepted economics
+- save/review/approve the new version
+- do not mutate the approved source version
+
+10. FORECASTPLAN HISTORY UI
+
+Location:
+- Valuation -> Legacy / History
+
+Displays:
+- version
+- status
+- created timestamp
+- plan ID
+
+Actions:
+- View selected version: read-only assumptions, mapping, DCF config, EquitySpec, approval, input references
+- Clone selected as new draft: creates a prospective next-version in-memory draft
+
+Database is authoritative for which versions exist. Do not assume missing version numbers exist.
+
+11. RESEARCH COMPARISON AND LEARNING
+
+Primary files/migrations:
+- Deep Research comparison/learning modules and tables
+- gui/core/db/migrations/refine_deepresearch_comparison_periods.sql
+
+Purpose:
+- post-publication comparison only
+- never feeds old report text into new Deep Research generation
+- deterministic comparison first
+- Gemini only for qualitative learning review
+- comparison failures do not affect reports or valuations
+
+TRU approved comparison pair:
+- previous report: dc182da2-62c6-402b-a96a-723bc0bba23c
+- compared report: ed547f0e-4a66-48b1-a7a2-93adfdbadf3f
+- comparison engine 1.1
+- prompt version 2
+- SAME_PERIOD_REVISION where both cover 52 weeks ended 28 June 2026
+
+Same-period rules:
+- no forecast-accuracy or thesis-outcome analysis without later economic evidence
+- extraction failures are not NEW_INFORMATION merely because the earlier workflow missed evidence
+- recurrence counts use distinct reporting-period transitions
+- full comparison history remains append-only
+
+12. JUBILEE PROVENANCE REGRESSION
+
+The original problematic Jubilee analysis contained:
+- 12,000 tonnes annual copper production
+- US$5,950/t AISC
+- 3.146bn shares
+- 12% WACC
+- 5% growth
+- 6x exit multiple
+- ZAR1.70 target
+
+Required audit interpretation:
+- ZAR1.70 was carried forward, not produced by deterministic Python
+- 12,000 tonnes had unresolved provenance
+- US$5,950/t was unresolved or previous-report provenance unless demonstrated
+- share count was stale relative to newer issued shares
+- WACC 12%, growth 5%, and exit multiple 6x were unsupported/model assumptions unless derivation could be demonstrated
+- missing provenance remains unresolved
+- Jubilee returning NOT_CALCULABLE when required inputs are absent is correct behavior
+
+Do not rebuild a new valuation engine merely to reproduce a legacy target.
+
+13. DATA INGESTION RELEVANT TO VALUATION
+
+Primary files:
+- gui/modules/data/ingestion_runs.py
+- gui/modules/data/ingestion_evidence.py
+- gui/modules/market_agent/prices.py
+- ShareData, SENS, TradingEconomics collectors
+- additive ingestion provenance migration
+
+Evidence-backed stores:
+- source_documents
+- fundamental_observations
+- price_observations
+- market_observations
+- ingestion_runs
+- sens_analyses
+
+Compatibility tables remain available:
+- daily_stock_data
+- raw_stock_valuations
+- SENS
+- commodity_prices
+- fx_rates
+
+Historical compatibility rows may lack raw provenance. Do not fabricate it.
+
+Commodity/FX prompt metadata must retain:
+- name/instrument
+- value
+- currency
+- unit
+- period start/end
+- spot vs historical average
+- source timestamp/provenance
+
+14. CURRENT UI MAP
+
+Research window tabs include:
+- Deep Research
+- Strategy
+- Research
+- SENS
+- Valuation
+- Learning
+- Action Log
+
+Valuation subtabs include:
+- Evidence
+- Forecast
+- Scenarios
+- WACC
+- DCF
+- SOTP
+- Bank Equity
+- Sensitivity
+- Reconciliation
+- Backtest
+- Audit
+- Legacy / History
+- Engine Mapping
+- Publication
+
+Important explicit actions:
+- Add proposed assumption
+- Import assumptions from TXT
+- Accept selected
+- Discard proposed
+- Reject Gemini suggestion
+- Save new version
+- Approve plan
+- Select terminal method
+- Map accepted inputs
+- Map reviewed equity bridge
+- Run deterministic DCF
+- Approve valuation
+- Publish approved valuation
+- Create/validate historical package
+- Resolve/save historical snapshot
+
+15. TEST BASELINE
+
+Latest broad analysis/data result:
+- 351 passed
+- 10 skipped
+- zero failures
+
+Relevant test areas:
+- ForecastPlan models/validation/versioning
+- TXT import and duplicates
+- proposed-discard workflow
+- retailer forecast bridge and segment completeness
+- trading-margin semantics
+- direct EBIT/FCFF mapping
+- terminal configuration
+- DCF execution/preflight/idempotency
+- EquitySpec mapping/reconciliation
+- bank residual income
+- holding-company/SOTP integration
+- report provenance and comparison learning
+- historical backtests/prices/packages
+- live results period selection
+
+Run from project root:
+$env:PYTHONPATH='gui'
+python -m pytest -q gui\modules\analysis\tests gui\modules\data\tests
+
+16. CURRENT TRU CONTEXT
+
+TRU is the primary General Retail integration case.
+
+Known accepted/reviewed economics discussed in the workflow:
+- Group revenue growth: 2.5%
+- sale of merchandise growth: 2.0%
+- trading margin: 13.0%
+- depreciation: R1.516bn
+- tax rate: 25.3%
+- total capex: R592m
+- working capital: R188m
+- other recurring cash: R0
+- WACC discussed: 12.5%
+- terminal growth discussed: 4.0%
+- terminal method discussed: perpetuity_growth
+- current issued shares: 400,551,604
+- net cash: R196m
+- lease adjustment: R4.218bn
+- lease treatment: lease_debt_adjustment
+
+These values must be confirmed from the currently loaded persisted ForecastPlan before use. Do not assume the latest plan version or approval state from conversation history. Query PostgreSQL/list versions and inspect the actual persisted plan.
+
+Earlier conversation referenced plans v23 through v27 and repairs to derived references. Treat the database as authoritative.
+
+17. IMPORTANT KNOWN FAILURE MODES
+
+- Calling a previous Gemini report “Baseline Truth.”
+- Sending a previous report into a rerun prompt.
+- Mixing FY2025 AFS with FY2026 SENS.
+- Using first filename/directory order for source selection.
+- Treating management target as formal guidance.
+- Applying operating margin to the wrong revenue denominator.
+- Treating retail_sales_growth, revenue_growth, and sale_of_merchandise_growth as interchangeable.
+- Aggregating Group plus segments and double counting.
+- Omitting a known material segment or FX conversion.
+- Using weighted-average shares when current issued shares are required, or vice versa.
+- Applying current issued shares without a dilution warning.
+- Treating finance income as trading profit.
+- Treating leases inconsistently between FCFF and equity bridge.
+- Supplying both net_cash and net_debt.
+- Adding ordinary receivables/inventory as non-operating assets.
+- Marking READY when the execution-normalized plan has no periods or terminal method.
+- Persisting zero-value NOT_CALCULABLE placeholders before preflight.
+- Persisting ephemeral derived metric IDs that cannot resolve after reload.
+- Editing approved versions instead of cloning.
+- Accepting unused proposals merely to pass approval.
+- Auto-running valuation after save/approve.
+- Publishing deterministic targets into report text without explicit approval.
+
+18. SAFE NEXT-AGENT STARTUP CHECKLIST
+
+Before changing valuation behavior:
+1. Run git status and inspect existing uncommitted changes.
+2. Read any repository AGENTS.md/instructions.
+3. Query actual ForecastPlan versions for the target ticker.
+4. Load the exact persisted plan JSON, status, engine plan, DCF spec, and EquitySpec.
+5. Identify source metric IDs and accepted assumption IDs.
+6. Run readiness and preflight on the exact normalized execution object.
+7. Do not modify approved versions.
+8. Use a cloned draft for repairs.
+9. Run focused tests, then the broad analysis/data suite.
+10. Report any data-dependent test deviation.
+11. Do not execute or publish a valuation unless explicitly requested.
