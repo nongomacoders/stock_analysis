@@ -25,14 +25,17 @@ from .sector_methods import validate_sector_method
 from .sotp import SotpComponent, calculate_sotp
 from .wacc import WaccInputs, calculate_wacc
 
-ENGINE_VERSION = "1.0"
-YEAR_FIELDS = ("revenue", "operating_cost", "corporate_cost", "depreciation",
-               "net_finance_cost", "tax_rate", "sustaining_capex", "growth_capex",
-               "working_capital", "other_recurring_cash")
+ENGINE_VERSION = "1.1"
+YEAR_COMMON_FIELDS = ("revenue", "depreciation", "tax_rate",
+                      "working_capital", "other_recurring_cash")
+YEAR_COMPONENT_FIELDS = ("operating_cost", "corporate_cost")
+YEAR_SPLIT_CAPEX_FIELDS = ("sustaining_capex", "growth_capex")
+YEAR_FIELDS = (*YEAR_COMMON_FIELDS, *YEAR_COMPONENT_FIELDS, *YEAR_SPLIT_CAPEX_FIELDS,
+               "total_capex", "ebit", "net_finance_cost")
 WACC_FIELDS = ("risk_free_rate", "equity_risk_premium", "beta", "country_risk_premium",
                "cost_of_debt", "tax_rate", "debt_weight", "equity_weight")
-EQUITY_FIELDS = ("non_operating_assets", "receivables", "net_cash", "net_debt",
-                 "lease_adjustments", "minorities", "other_equity_adjustments")
+EQUITY_REQUIRED_FIELDS = ("non_operating_assets", "minorities", "other_equity_adjustments")
+EQUITY_OPTIONAL_FIELDS = ("receivables", "net_cash", "net_debt", "lease_adjustments")
 
 
 class DevelopmentInputSpec(BaseModel):
@@ -72,6 +75,20 @@ class YearInputSpec(BaseModel):
     operational_revenue: OperationalRevenueSpec | None = None
     cost_components: dict[str, InputRef] | None = None
 
+    @model_validator(mode="after")
+    def exclusive_profit_and_capex_routes(self):
+        direct_ebit = "ebit" in self.inputs
+        component_profit = (
+            "operating_cost" in self.inputs or "corporate_cost" in self.inputs
+            or self.cost_components is not None)
+        if direct_ebit and component_profit:
+            raise ValueError("Choose direct EBIT or component EBIT inputs, not both")
+        total_capex = "total_capex" in self.inputs
+        split_capex = any(field in self.inputs for field in YEAR_SPLIT_CAPEX_FIELDS)
+        if total_capex and split_capex:
+            raise ValueError("Choose total capex or sustaining/growth capex, not both")
+        return self
+
 
 class WaccSpec(BaseModel):
     currency: str
@@ -92,6 +109,15 @@ class DcfSpec(BaseModel):
     terminal_growth: InputRef | None = None
     exit_multiple: InputRef | None = None
     terminal_metric: str | None = None  # EBITDA or EBIT; from final forecast, not Gemini.
+
+    @model_validator(mode="after")
+    def one_terminal_method(self):
+        if self.terminal_method == TerminalMethod.PERPETUITY_GROWTH:
+            if self.exit_multiple is not None or self.terminal_metric is not None:
+                raise ValueError("Perpetuity growth cannot include exit-multiple inputs")
+        elif self.terminal_growth is not None:
+            raise ValueError("Exit multiple cannot include terminal growth")
+        return self
 
 
 class ComponentSpec(BaseModel):
@@ -138,6 +164,18 @@ class SotpSpec(BaseModel):
 class EquitySpec(BaseModel):
     adjustments: dict[str, InputRef]
     shares: InputRef
+    lease_treatment: str | None = None
+    non_operating_asset_rationale: str | None = None
+
+    @model_validator(mode="after")
+    def reviewed_bridge_choices(self):
+        cash_fields = {field for field in ("net_cash", "net_debt") if field in self.adjustments}
+        if len(cash_fields) != 1:
+            raise ValueError("Equity bridge requires exactly one of net_cash or net_debt")
+        if self.lease_treatment not in {
+                None, "lease_debt_adjustment", "leases_in_operating_cash_flows"}:
+            raise ValueError("Unknown lease treatment")
+        return self
 
 
 class BankYearSpec(BaseModel):
@@ -394,22 +432,66 @@ def _operational_revenue(spec: OperationalRevenueSpec, period_end: date,
 
 def _year(spec: YearInputSpec, resolver: Resolver, case: str, currency: str,
           forecast_start: date) -> ForecastYear:
-    missing = [field for field in YEAR_FIELDS if field not in spec.inputs
+    direct_ebit = "ebit" in spec.inputs
+    required = list(YEAR_COMMON_FIELDS)
+    if not direct_ebit:
+        required.extend(YEAR_COMPONENT_FIELDS)
+    missing = [field for field in required if field not in spec.inputs
                and not (field == "revenue" and spec.operational_revenue)
                and not (field == "operating_cost" and spec.cost_components)]
+    total_capex_route = "total_capex" in spec.inputs
+    if not total_capex_route:
+        missing.extend(field for field in YEAR_SPLIT_CAPEX_FIELDS if field not in spec.inputs)
     if missing:
         raise MissingInput("Forecast year missing " + ", ".join(missing))
+    if direct_ebit and ("operating_cost" in spec.inputs or "corporate_cost" in spec.inputs
+                        or spec.cost_components):
+        raise IneligibleInput("Choose direct EBIT or component EBIT inputs, not both")
+    if total_capex_route and any(field in spec.inputs for field in YEAR_SPLIT_CAPEX_FIELDS):
+        raise IneligibleInput("Choose total capex or sustaining/growth capex, not both")
+
     ids = [str(ref.metric_id) for ref in _refs(spec)]
     values = {}
     operational_schedule = None
-    for field in YEAR_FIELDS:
-        if field == "revenue" and spec.operational_revenue:
-            if field in spec.inputs:
-                raise IneligibleInput("Direct and bridged revenue cannot both be counted")
-            values[field], operational_schedule = _operational_revenue(spec.operational_revenue,
-                spec.period_end, resolver, case, currency)
-        elif field == "operating_cost" and spec.cost_components:
-            if field in spec.inputs:
+
+    if spec.operational_revenue:
+        if "revenue" in spec.inputs:
+            raise IneligibleInput("Direct and bridged revenue cannot both be counted")
+        values["revenue"], operational_schedule = _operational_revenue(
+            spec.operational_revenue, spec.period_end, resolver, case, currency)
+    else:
+        values["revenue"] = resolver.get(
+            spec.inputs["revenue"], required_case=case, expected_field="revenue",
+            currency=currency, forecast_period_start=forecast_start)
+
+    for field in ("depreciation", "tax_rate", "working_capital", "other_recurring_cash"):
+        values[field] = resolver.get(
+            spec.inputs[field], required_case=case, expected_field=field,
+            fraction=field == "tax_rate", currency=None if field == "tax_rate" else currency,
+            forecast_period_start=forecast_start)
+
+    if total_capex_route:
+        values["total_capex"] = resolver.get(
+            spec.inputs["total_capex"], required_case=case, expected_field="total_capex",
+            currency=currency, forecast_period_start=forecast_start)
+        values["sustaining_capex"] = None
+        values["growth_capex"] = None
+    else:
+        values["total_capex"] = None
+        for field in YEAR_SPLIT_CAPEX_FIELDS:
+            values[field] = resolver.get(
+                spec.inputs[field], required_case=case, expected_field=field,
+                currency=currency, forecast_period_start=forecast_start)
+
+    attributable = None
+    if direct_ebit:
+        ebit = resolver.get(
+            spec.inputs["ebit"], required_case=case, expected_field="ebit",
+            currency=currency, forecast_period_start=forecast_start)
+        ebitda = ebit + values["depreciation"]
+    else:
+        if spec.cost_components:
+            if "operating_cost" in spec.inputs:
                 raise IneligibleInput("Direct and component operating costs cannot both be counted")
             needed = {"mining", "processing", "refining", "transport", "treatment", "royalties", "other_operating"}
             if set(spec.cost_components) != needed:
@@ -418,31 +500,50 @@ def _year(spec: YearInputSpec, resolver: Resolver, case: str, currency: str,
                         "refining": "refining_cost", "transport": "transport_cost",
                         "treatment": "treatment_cost", "royalties": "royalties",
                         "other_operating": "other_operating_cost"}
-            costs = {name: resolver.get(ref, required_case=case,
-                                        expected_field=expected[name], currency=currency,
-                                        forecast_period_start=spec.operational_revenue.period_start if spec.operational_revenue else forecast_start)
+            costs = {name: resolver.get(
+                        ref, required_case=case, expected_field=expected[name],
+                        currency=currency, forecast_period_start=forecast_start)
                      for name, ref in spec.cost_components.items()}
-            values[field] = cost_bridge(CostSchedule(**costs))["operating_cost"]
+            operating_cost = cost_bridge(CostSchedule(**costs))["operating_cost"]
         else:
-            values[field] = resolver.get(spec.inputs[field], required_case=case, expected_field=field,
-                                         fraction=field == "tax_rate", currency=None if field == "tax_rate" else currency,
-                                         forecast_period_start=spec.operational_revenue.period_start if spec.operational_revenue else forecast_start)
-    accounting = earnings_bridge(revenue=values["revenue"], operating_cost=values["operating_cost"],
-                                 corporate_cost=values["corporate_cost"], depreciation=values["depreciation"],
-                                 net_finance_cost=values["net_finance_cost"], tax_rate=values["tax_rate"])
-    cash = unlevered_fcf(ebit=accounting["ebit"], tax_rate=values["tax_rate"],
-                        depreciation=values["depreciation"], sustaining_capex=values["sustaining_capex"],
-                        growth_capex=values["growth_capex"], working_capital_change=values["working_capital"],
-                        other_recurring_cash=values["other_recurring_cash"])
-    return ForecastYear(period_end=spec.period_end, revenue=values["revenue"],
-                        ebitda=accounting["ebitda"], ebit=accounting["ebit"], tax=cash["cash_tax"],
-                        sustaining_capex=values["sustaining_capex"], growth_capex=values["growth_capex"],
-                        working_capital_change=values["working_capital"],
-                        depreciation_addback=values["depreciation"],
-                        other_recurring_cash=values["other_recurring_cash"],
-                        fcf=cash["unlevered_fcf"],
-                        attributable_earnings=accounting["attributable_earnings"],
-                        source_input_ids=ids, operational_schedule=operational_schedule)
+            operating_cost = resolver.get(
+                spec.inputs["operating_cost"], required_case=case,
+                expected_field="operating_cost", currency=currency,
+                forecast_period_start=forecast_start)
+        corporate_cost = resolver.get(
+            spec.inputs["corporate_cost"], required_case=case,
+            expected_field="corporate_cost", currency=currency,
+            forecast_period_start=forecast_start)
+        net_finance_cost = (
+            resolver.get(spec.inputs["net_finance_cost"], required_case=case,
+                         expected_field="net_finance_cost", currency=currency,
+                         forecast_period_start=forecast_start)
+            if "net_finance_cost" in spec.inputs else Decimal(0))
+        accounting = earnings_bridge(
+            revenue=values["revenue"], operating_cost=operating_cost,
+            corporate_cost=corporate_cost, depreciation=values["depreciation"],
+            net_finance_cost=net_finance_cost, tax_rate=values["tax_rate"])
+        ebitda = accounting["ebitda"]
+        ebit = accounting["ebit"]
+        if "net_finance_cost" in spec.inputs:
+            attributable = accounting["attributable_earnings"]
+
+    cash = unlevered_fcf(
+        ebit=ebit, tax_rate=values["tax_rate"], depreciation=values["depreciation"],
+        sustaining_capex=values["sustaining_capex"],
+        growth_capex=values["growth_capex"], total_capex=values["total_capex"],
+        working_capital_change=values["working_capital"],
+        other_recurring_cash=values["other_recurring_cash"])
+    return ForecastYear(
+        period_end=spec.period_end, revenue=values["revenue"],
+        ebitda=ebitda, ebit=ebit, tax=cash["cash_tax"],
+        sustaining_capex=cash["sustaining_capex"],
+        growth_capex=cash["growth_capex"], total_capex=cash["total_capex"],
+        working_capital_change=values["working_capital"],
+        depreciation_addback=values["depreciation"],
+        other_recurring_cash=values["other_recurring_cash"],
+        fcf=cash["unlevered_fcf"], attributable_earnings=attributable,
+        source_input_ids=ids, operational_schedule=operational_schedule)
 
 
 def _wacc(spec: WaccSpec, resolver: Resolver, case: str) -> Decimal:
@@ -645,14 +746,45 @@ def _bank(spec: BankSpec | None, resolver: Resolver, case: str, valuation_date: 
         return ValuationMethodResult(method="RESIDUAL_INCOME", status=MethodStatus.FAIL, warnings=[str(exc)])
 
 
-def _equity(spec: EquitySpec | None, resolver: Resolver, case: str, operating_value: Decimal):
+def _equity(spec: EquitySpec | None, resolver: Resolver, case: str,
+            operating_value: Decimal, sector: str | None = None):
     if spec is None:
         raise MissingInput("enterprise-to-equity schedule and forward shares")
-    missing = [f for f in EQUITY_FIELDS if f not in spec.adjustments]
+    missing = [field for field in EQUITY_REQUIRED_FIELDS if field not in spec.adjustments]
     if missing:
         raise MissingInput("equity adjustments: " + ", ".join(missing))
-    vals = {f: resolver.get(spec.adjustments[f], required_case=case, expected_field=f,
-                            currency="ZAR") for f in EQUITY_FIELDS}
+    cash_fields = [field for field in ("net_cash", "net_debt") if field in spec.adjustments]
+    if len(cash_fields) != 1:
+        raise IneligibleInput("Equity bridge requires exactly one of net_cash or net_debt")
+    vals = {
+        field: resolver.get(spec.adjustments[field], required_case=case,
+                            expected_field=field, currency="ZAR")
+        for field in EQUITY_REQUIRED_FIELDS
+    }
+    for field in EQUITY_OPTIONAL_FIELDS:
+        vals[field] = (
+            resolver.get(spec.adjustments[field], required_case=case,
+                         expected_field=field, currency="ZAR")
+            if field in spec.adjustments else Decimal(0)
+        )
+    if vals["net_cash"] != 0 and vals["net_debt"] != 0:
+        raise IneligibleInput("Net cash and net debt are mutually exclusive")
+    normalized_sector = " ".join((sector or "").casefold().replace("&", " ").split())
+    retail = "retail" in normalized_sector
+    if retail and vals["receivables"] != 0:
+        raise IneligibleInput(
+            "Ordinary retail receivables are operating working capital and cannot be added to equity value")
+    if retail and not (spec.non_operating_asset_rationale or "").strip():
+        raise IneligibleInput("Retail non-operating assets require explicit classification and rationale")
+    if spec.lease_treatment is None and vals["lease_adjustments"] != 0:
+        raise IneligibleInput("Non-zero lease adjustment requires an explicit lease treatment")
+    if (spec.lease_treatment == "leases_in_operating_cash_flows"
+            and vals["lease_adjustments"] != 0):
+        raise IneligibleInput(
+            "Lease liabilities cannot be deducted when leases are included in operating cash flows")
+    if (spec.lease_treatment == "lease_debt_adjustment"
+            and "lease_adjustments" not in spec.adjustments):
+        raise MissingInput("lease adjustment for selected lease-debt treatment")
     share_ref = spec.shares
     if share_ref.field not in {"forecast_diluted_shares", "current_issued_shares"}:
         raise IneligibleInput("Forward target requires forecast diluted or current issued shares")
@@ -660,12 +792,14 @@ def _equity(spec: EquitySpec | None, resolver: Resolver, case: str, operating_va
     metric = resolver.metric(share_ref)
     if metric.share_count_type not in {ShareCountType.FORECAST_DILUTED_SHARES, ShareCountType.ISSUED_SHARES_CURRENT}:
         raise IneligibleInput("Historical weighted-average denominator rejected")
-    return reconcile_equity(enterprise_or_operating_value=operating_value,
-                            non_operating_assets=vals["non_operating_assets"], receivables=vals["receivables"],
-                            cash=vals["net_cash"], debt=vals["net_debt"],
-                            lease_adjustments=vals["lease_adjustments"], minorities=vals["minorities"],
-                            other_equity_adjustments=vals["other_equity_adjustments"],
-                            forward_shares=shares, shares_metric_id=share_ref.metric_id)
+    return reconcile_equity(
+        enterprise_or_operating_value=operating_value,
+        non_operating_assets=vals["non_operating_assets"],
+        receivables=vals["receivables"], cash=vals["net_cash"],
+        debt=vals["net_debt"], lease_adjustments=vals["lease_adjustments"],
+        minorities=vals["minorities"],
+        other_equity_adjustments=vals["other_equity_adjustments"],
+        forward_shares=shares, shares_metric_id=share_ref.metric_id)
 
 
 def _case_differences(resolver: Resolver, case_names: set[str], active_keys: set[tuple]) -> list[dict]:
@@ -789,7 +923,9 @@ def run_valuation(*, ticker: str, report_version_id: UUID | str,
                         approved_equity_adjustments=adjustment, forward_diluted_shares=shares,
                         shares_metric_id=share_ref.metric_id)
                 else:
-                    recon = _equity(case_plan.equity, resolver, case_name, operating_value)
+                    recon = _equity(
+                        case_plan.equity, resolver, case_name, operating_value,
+                        sector=plan.sector)
                 if case_plan.primary_method == "SOTP":
                     kinds = {row.get("value_kind") for row in selected.schedule}
                     if (kinds & {"cash", "net_cash"} and recon.cash != 0) or (kinds & {"debt", "net_debt"} and recon.debt != 0) or ("receivable" in kinds and recon.receivables != 0):

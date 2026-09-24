@@ -94,6 +94,23 @@ def test_share_basis_staleness_and_forward_preference():
     assert "SHARE_BASIS_MISMATCH" in codes(mismatch)
 
 
+def test_identical_later_share_observation_confirms_value_without_stale_block():
+    selected = m("issued_shares_current", 400551604, unit=Unit.SHARES,
+        share_count_type=ShareCountType.ISSUED_SHARES_CURRENT,
+        source_type=SourceType.COMPANY_DISCLOSURE,
+        assumption_type=AssumptionType.HISTORICAL_ACTUAL,
+        period_end=date(2026, 6, 28), source_date=date(2026, 8, 27))
+    duplicate = m("issued_shares_current", 400551604, unit=Unit.SHARES,
+        share_count_type=ShareCountType.ISSUED_SHARES_CURRENT,
+        source_type=SourceType.COMPANY_DISCLOSURE,
+        assumption_type=AssumptionType.HISTORICAL_ACTUAL,
+        effective_date=date(2026, 8, 27), source_date=date(2026, 8, 27))
+    decision, fresh = validate_candidate(
+        c(selected, "current_issued_shares"), [selected, duplicate])
+    assert fresh["freshness_status"] == "current"
+    assert "STALE_FORWARD_SHARES" not in codes(decision)
+    assert decision.validation_status == Eligibility.ELIGIBLE_WITH_WARNING
+
 def test_cost_definition_freshness_and_like_for_like():
     old = m("production_cost_per_tonne", 5948, unit=Unit.USD_PER_TONNE, commodity="copper",
             source="H1 FY25", cost_definition=CostDefinition.PRODUCTION_COST, source_type=SourceType.COMPANY_DISCLOSURE,

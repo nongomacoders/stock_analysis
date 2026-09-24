@@ -7,10 +7,12 @@ from decimal import Decimal
 import pytest
 sys.path.insert(0,str(Path(__file__).resolve().parents[3]))
 from modules.analysis.forecast_plan import (ForecastPlan, ForecastPeriod, ForecastAssumption, Origin,
-    ApprovalState, PlanStatus, new_version, accept_suggestion, reject_suggestion, approve_plan,
+    ApprovalState, PlanStatus, new_version, accept_suggestion,
+    discard_proposed_assumption, reject_suggestion, approve_plan,
     eligible_assumptions, scenario_differences, forecast_operating_schedule, price_fx_schedule,
     calculate_plan_wacc, preview_valuation, materialize_assumption, horizon_for_assumption,
-    allowed_forecast_fields, forecast_selector_values)
+    allowed_forecast_fields, configure_terminal_method, forecast_selector_values,
+    terminal_configuration_status, terminal_method_values, terminal_metric_values)
 
 RID=uuid4()
 
@@ -27,8 +29,8 @@ def test_fiscal_periods_and_immutable_versions():
     q=new_version(p,changed_by='analyst',notes='changed')
     assert q.previous_plan_id==p.forecast_plan_id and q.plan_version==2 and p.notes==''
     approved=approve_plan(p,'reviewer')
-    assert approved.status==PlanStatus.APPROVED and approved.plan_version==2
-    assert approved.forecast_plan_id!=p.forecast_plan_id
+    assert approved.status==PlanStatus.APPROVED and approved.plan_version==1
+    assert approved.forecast_plan_id==p.forecast_plan_id
     assert approved.legacy_target==Decimal('1.70')
 
 def test_approval_and_suggestion_boundary():
@@ -303,4 +305,266 @@ def test_retail_sales_growth_materializes_as_controlled_candidate():
     assert metric.unit.value == 'percentage'
     assert candidate.valuation_field.value == 'retail_sales_growth'
     assert candidate.case_type.value == 'base'
+
+
+
+def test_retail_trading_fields_are_controlled_percentage_period_fields():
+    from modules.analysis.forecast_plan import allowed_forecast_fields
+    assert {"sale_of_merchandise_growth", "trading_margin"} <= set(allowed_forecast_fields())
+    for field in ("sale_of_merchandise_growth", "trading_margin"):
+        item = ForecastAssumption(
+            field=field, value=Decimal("3"), unit="percentage",
+            period_label="FY2027", operation_segment="Group", case="base",
+            origin=Origin.ANALYST_ASSUMPTION, approval_state=ApprovalState.PROPOSED,
+            rationale="Analyst input", created_by="analyst")
+        assert item.field == field
+        with pytest.raises(ValueError, match="requires the percentage unit"):
+            item.model_copy(update={"unit": "multiple"}).__class__.model_validate(
+                {**item.model_dump(), "unit": "multiple"})
+
+
+def terminal_plan(*items):
+    return plan().model_copy(update={"assumptions": list(items)})
+
+
+def test_terminal_selector_values_come_from_engine_enum():
+    from modules.analysis.valuation.models import TerminalMethod
+    assert terminal_method_values() == tuple(item.value for item in TerminalMethod)
+    assert terminal_method_values() == ("perpetuity_growth", "exit_multiple")
+    assert terminal_metric_values() == ("EBIT", "EBITDA")
+
+
+def test_perpetuity_terminal_method_requires_accepted_growth_and_wacc():
+    original = terminal_plan()
+    configured = configure_terminal_method(
+        original, "perpetuity_growth", sector="General Retail")
+    status = terminal_configuration_status(configured)
+    assert status["method"] == "perpetuity_growth"
+    assert set(status["missing"]) == {"terminal_growth", "WACC"}
+    assert configured.status == PlanStatus.DRAFT
+    assert original.engine_plan is None
+    assert configured.assumptions == original.assumptions
+
+
+def test_exit_multiple_requires_accepted_multiple_and_terminal_metric():
+    configured = configure_terminal_method(
+        terminal_plan(), "exit_multiple", sector="General Retail")
+    status = terminal_configuration_status(configured)
+    assert set(status["missing"]) == {"exit_multiple", "terminal_metric"}
+    multiple = assumption("exit_multiple", 6, "multiple", period=None)
+    configured = configure_terminal_method(
+        terminal_plan(multiple), "exit_multiple", terminal_metric="EBIT",
+        sector="General Retail")
+    status = terminal_configuration_status(configured)
+    assert status["status"] == "ready"
+    assert status["exit_multiple"] == Decimal("6")
+    assert status["terminal_metric"] == "EBIT"
+
+
+def test_terminal_methods_cannot_coexist():
+    growth = assumption("terminal_growth", 4, "percentage", period=None)
+    configured = configure_terminal_method(
+        terminal_plan(growth), "perpetuity_growth", sector="General Retail")
+    with pytest.raises(ValueError, match="Remove terminal-growth"):
+        configure_terminal_method(configured, "exit_multiple", terminal_metric="EBIT")
+
+
+def test_terminal_growth_must_remain_below_wacc():
+    growth = assumption("terminal_growth", 5, "percentage", period=None)
+    wacc = assumption("wacc_override", 4, "percentage", period=None)
+    configured = configure_terminal_method(
+        terminal_plan(growth, wacc), "perpetuity_growth",
+        sector="General Retail")
+    status = terminal_configuration_status(configured)
+    assert status["status"] == "invalid"
+    assert status["error"] == "WACC must be greater than terminal growth"
+
+
+def test_terminal_selection_is_draft_only_and_round_trips_in_saved_json():
+    source = terminal_plan(
+        assumption("terminal_growth", 4, "percentage", period=None),
+        assumption("wacc_override", 12.5, "percentage", period=None))
+    configured = configure_terminal_method(
+        source, "perpetuity_growth", sector="General Retail")
+    assert configured.status == PlanStatus.DRAFT
+    assert configured.approval_status == "unapproved"
+    assert all(item.approval_state == ApprovalState.ACCEPTED
+               for item in configured.assumptions)
+    assert configured.forecast_plan_id != source.forecast_plan_id
+    restored = ForecastPlan.model_validate_json(configured.model_dump_json())
+    dcf = restored.engine_plan.cases["base"].dcf
+    assert dcf.terminal_method.value == "perpetuity_growth"
+    assert str(dcf.terminal_growth.metric_id) == str(
+        configured.assumptions[0].assumption_id)
+    assert terminal_configuration_status(restored)["status"] == "ready"
+
+
+def test_tru_perpetuity_selection_reports_missing_growth_without_valuation():
+    tru = ForecastPlan(
+        ticker="TRU.JO", created_by="analyst",
+        source_report_version_id=RID)
+    configured = configure_terminal_method(
+        tru, "perpetuity_growth", sector="General Retail")
+    status = terminal_configuration_status(configured)
+    assert status["method"] == "perpetuity_growth"
+    assert "terminal_growth" in status["missing"]
+    assert configured.status == PlanStatus.DRAFT
+
+
+def test_terminal_selector_handler_does_not_approve_or_run_valuation(monkeypatch):
+    from types import SimpleNamespace
+    import components.valuation_workbench_tab as workbench
+    source = plan()
+    configured = new_version(source, changed_by="analyst")
+    calls = []
+    monkeypatch.setattr(
+        workbench, "configure_terminal_method",
+        lambda *args, **kwargs: configured)
+    class Var:
+        def __init__(self,value): self.value=value
+        def get(self): return self.value
+    class Status:
+        def set(self,value): calls.append(("status",value))
+    fake = SimpleNamespace(
+        plan=source, terminal_method_var=Var("perpetuity_growth"),
+        terminal_metric_var=Var(""), fields={"analyst": Var("Dion")},
+        category="General Retail", pending=[], status=Status(),
+        _render=lambda: calls.append(("render",None)),
+        async_run_bg=lambda *args, **kwargs: calls.append(("valuation",None)),
+    )
+    fake._stage_plan=lambda proposed: (
+        setattr(fake,'plan',proposed), setattr(fake,'pending',[proposed]),
+        fake._render())
+    workbench.ValuationWorkbenchTab._terminal_method_changed(fake)
+    assert fake.plan is configured
+    assert fake.pending == [configured]
+    assert configured.status == PlanStatus.DRAFT
+    assert not any(name == "valuation" for name, _ in calls)
+
+
+def test_proposed_analyst_assumption_can_be_discarded_copy_on_write():
+    proposed = assumption(
+        "revenue_growth", 2.5, "percentage",
+        origin=Origin.ANALYST_ASSUMPTION, state=ApprovalState.PROPOSED,
+        operation_segment="Group")
+    original = plan().model_copy(update={"assumptions": [proposed]})
+    revised = discard_proposed_assumption(
+        original, proposed.assumption_id, "Dion")
+    assert revised.assumptions == []
+    assert original.assumptions == [proposed]
+    assert revised.previous_plan_id == original.forecast_plan_id
+    assert revised.plan_version == original.plan_version + 1
+    assert revised.status == PlanStatus.DRAFT
+
+
+def test_accepted_analyst_assumption_cannot_be_discarded():
+    accepted = assumption(
+        "revenue_growth", 2.5, "percentage",
+        operation_segment="Group")
+    p = plan().model_copy(update={"assumptions": [accepted]})
+    with pytest.raises(ValueError, match="Only a proposed analyst"):
+        discard_proposed_assumption(p, accepted.assumption_id, "Dion")
+
+
+def test_gemini_suggestion_still_uses_reject_not_discard():
+    suggestion = assumption(
+        "revenue_growth", 2.5, "percentage",
+        origin=Origin.GEMINI_SUGGESTION, state=ApprovalState.PROPOSED,
+        operation_segment="Group")
+    p = plan().model_copy(update={"assumptions": [suggestion]})
+    with pytest.raises(ValueError, match="Only a proposed analyst"):
+        discard_proposed_assumption(p, suggestion.assumption_id, "Dion")
+    rejected = reject_suggestion(p, suggestion.assumption_id, "Dion")
+    assert rejected.assumptions[0].approval_state == ApprovalState.REJECTED
+
+
+def test_discarded_proposal_no_longer_blocks_approval_but_remaining_one_does():
+    first = assumption(
+        "revenue_growth", 2.5, "percentage",
+        origin=Origin.ANALYST_ASSUMPTION, state=ApprovalState.PROPOSED,
+        operation_segment="Group")
+    second = assumption(
+        "retail_sales_growth", 2.5, "percentage",
+        origin=Origin.ANALYST_ASSUMPTION, state=ApprovalState.PROPOSED,
+        operation_segment="Group")
+    p = plan().model_copy(update={"assumptions": [first, second]})
+    one_left = discard_proposed_assumption(p, first.assumption_id, "Dion")
+    with pytest.raises(ValueError, match="Review proposed assumptions"):
+        approve_plan(one_left, "reviewer")
+    none_left = discard_proposed_assumption(
+        one_left, second.assumption_id, "Dion")
+    approved_copy = approve_plan(none_left, "reviewer")
+    assert approved_copy.status == PlanStatus.APPROVED
+    assert none_left.status == PlanStatus.DRAFT
+
+
+def test_txt_imported_proposal_can_be_discarded():
+    from modules.analysis.forecast_txt_import import parse_forecast_txt
+    current = plan()
+    text = """FORECAST_PLAN
+ticker=JBL.JO
+case=base
+
+ASSUMPTION
+period=FY2027
+operation=Group
+field=revenue_growth
+value=2.5
+unit=percentage
+currency=ZAR
+confidence=0.6
+analyst=Dion
+rationale=Exploratory imported assumption.
+"""
+    preview = parse_forecast_txt(
+        text, current_plan=current, current_ticker="JBL.JO",
+        category="General Retail", allowed_operations={"Group"})
+    imported = preview.assumptions[0]
+    assert imported.origin == Origin.ANALYST_ASSUMPTION
+    assert imported.approval_state == ApprovalState.PROPOSED
+    draft = current.model_copy(
+        update={"horizon": preview.horizon, "assumptions": [imported]})
+    discarded = discard_proposed_assumption(
+        draft, imported.assumption_id, "Dion")
+    assert discarded.assumptions == []
+
+
+def test_discard_ui_does_not_run_valuation_or_create_target(monkeypatch):
+    from types import SimpleNamespace
+    import components.valuation_workbench_tab as workbench
+    proposed = assumption(
+        "revenue_growth", 2.5, "percentage",
+        origin=Origin.ANALYST_ASSUMPTION, state=ApprovalState.PROPOSED,
+        operation_segment="Group")
+    source = plan().model_copy(update={"assumptions": [proposed]})
+    revised = discard_proposed_assumption(
+        source, proposed.assumption_id, "Dion")
+    calls = []
+    monkeypatch.setattr(
+        workbench.messagebox, "askyesno", lambda *args: True)
+    monkeypatch.setattr(
+        workbench, "discard_proposed_assumption", None, raising=False)
+    class Table:
+        def selection(self): return (str(proposed.assumption_id),)
+    class Var:
+        def get(self): return "Dion"
+    class Status:
+        def set(self,value): calls.append(("status",value))
+    fake = SimpleNamespace(
+        plan=source, assumption_table=Table(),
+        fields={"analyst": Var()}, pending=[], status=Status(),
+        _render=lambda: calls.append(("render",None)),
+        async_run_bg=lambda *args, **kwargs: calls.append(("valuation",None)),
+    )
+    fake._stage_plan=lambda proposed: (
+        setattr(fake,'plan',proposed), setattr(fake,'pending',[proposed]),
+        fake._render())
+    # The handler imports the model function locally; invoke normally.
+    workbench.ValuationWorkbenchTab.discard_selected(fake)
+    assert fake.plan.assumptions == []
+    assert fake.plan.status == PlanStatus.DRAFT
+    assert fake.plan.legacy_target == source.legacy_target
+    assert not any(name == "valuation" for name, _ in calls)
+
+
 

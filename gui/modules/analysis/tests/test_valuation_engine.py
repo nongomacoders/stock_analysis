@@ -150,7 +150,7 @@ def test_sotp_ownership_probability_payment_pv_and_boundaries():
 def test_equity_reconciliation_zar_cents_rounding_and_tamper_detection():
     mid = uuid4()
     r = reconcile_equity(enterprise_or_operating_value=D(1000), non_operating_assets=D(100),
-        receivables=D(50), cash=D(20), debt=D(100), lease_adjustments=D(10),
+        receivables=D(50), cash=D(0), debt=D(80), lease_adjustments=D(10),
         minorities=D(20), other_equity_adjustments=D(-40), forward_shares=D(100), shares_metric_id=mid)
     assert r.equity_value == 1000 and r.rounded_target_zar == 10
     assert r.rounded_target_cents == 1000
@@ -206,7 +206,7 @@ def synthetic_sotp():
     ownership=add("ownership_percentage",80,unit=Unit.PERCENTAGE,currency=None)
     probability=add("probability",50,unit=Unit.PERCENTAGE,currency=None)
     share=add("current_issued_shares",100)
-    adjustments={f:add(f,0) for f in ("non_operating_assets","receivables","net_cash","net_debt",
+    adjustments={f:add(f,0) for f in ("non_operating_assets","net_debt",
                                       "lease_adjustments","minorities","other_equity_adjustments")}
     component=ComponentSpec(component_id="mine",name="Mine",boundary_id="mine:1",method="project_npv",
         gross_value=gross,ownership=ownership,probability=probability,currency="ZAR",
@@ -227,7 +227,7 @@ def test_guarded_engine_sotp_reconciles_and_current_shares_warn():
     assert recalculate_target(result) == 4
     assert "Deterministic target: ZAR 4.00" in render_valuation_result(result)
     assert result.legacy_gemini_target is None
-    assert result.valuation_engine_version == "1.0"
+    assert result.valuation_engine_version == "1.1"
 
 
 def test_engine_refuses_ineligible_blocking_and_missing():
@@ -287,7 +287,7 @@ def test_guarded_dcf_builds_forecast_from_eligible_candidate_refs():
                         currency="ZAR" if field in {"risk_free_rate","cost_of_debt"} else None)
     growth=add("terminal_growth",3,unit=Unit.PERCENTAGE,currency=None)
     share=add("current_issued_shares",100)
-    adjustments={f:add(f,0) for f in ("non_operating_assets","receivables","net_cash","net_debt",
+    adjustments={f:add(f,0) for f in ("non_operating_assets","net_debt",
                                       "lease_adjustments","minorities","other_equity_adjustments")}
     dcf=DcfSpec(valuation_date=date(2026,12,31),
         years=[YearInputSpec(period_end=date(2027,12,31),inputs=year)],
@@ -472,3 +472,155 @@ def test_engine_feeds_reconciled_high_upside_into_phase3_review():
     assert "HIGH_UPSIDE_REVIEW: ERROR" in result.warnings
     assert result.implied_checks["implied_market_cap"]=="400.00"
     assert result.implied_checks["current_market_cap"]=="100"
+
+
+def synthetic_direct_ebit(*, receivables=0, lease_adjustment=0,
+                          lease_treatment="leases_in_operating_cash_flows"):
+    pairs = []
+    def add(field, value, **kwargs):
+        pair = funded(field, value, **kwargs)
+        pairs.append(pair)
+        return ref(pair[1])
+    year = {}
+    for field, value in {
+        "revenue": 1000, "ebit": 300, "depreciation": 50,
+        "tax_rate": 25, "total_capex": 60, "working_capital": 10,
+        "other_recurring_cash": 0,
+    }.items():
+        year[field] = add(
+            field, value,
+            unit=Unit.PERCENTAGE if field == "tax_rate" else Unit.ZAR,
+            currency=None if field == "tax_rate" else "ZAR")
+    wacc = {}
+    for field, value in {
+        "risk_free_rate": 5, "equity_risk_premium": 6, "beta": 1,
+        "country_risk_premium": 2, "cost_of_debt": 8, "tax_rate": 25,
+        "debt_weight": 20, "equity_weight": 80,
+    }.items():
+        wacc[field] = add(
+            field, value,
+            unit=Unit.MULTIPLE if field == "beta" else Unit.PERCENTAGE,
+            currency="ZAR" if field in {"risk_free_rate", "cost_of_debt"} else None)
+    growth = add("terminal_growth", 3, unit=Unit.PERCENTAGE, currency=None)
+    shares = add("current_issued_shares", 100)
+    adjustments = {
+        "non_operating_assets": add("non_operating_assets", 0),
+        "net_cash": add("net_cash", 20),
+        "minorities": add("minorities", 0),
+        "other_equity_adjustments": add("other_equity_adjustments", 0),
+    }
+    if receivables:
+        adjustments["receivables"] = add("receivables", receivables)
+    if lease_adjustment:
+        adjustments["lease_adjustments"] = add(
+            "lease_adjustments", lease_adjustment)
+    dcf = DcfSpec(
+        valuation_date=date(2026, 12, 31),
+        years=[YearInputSpec(period_end=date(2027, 12, 31), inputs=year)],
+        cash_flow_currency="ZAR", cash_flow_basis=Basis.NOMINAL,
+        inflation_basis="ZAR_CPI",
+        wacc=WaccSpec(currency="ZAR", basis=Basis.NOMINAL,
+                      inflation_basis="ZAR_CPI", components=wacc),
+        terminal_method=TerminalMethod.PERPETUITY_GROWTH,
+        terminal_growth=growth)
+    equity = EquitySpec(
+        adjustments=adjustments, shares=shares,
+        lease_treatment=lease_treatment,
+        non_operating_asset_rationale="No separately identified non-operating assets")
+    plan = ValuationPlan(
+        ticker="RETAIL_DIRECT.JO", report_version_id=RID,
+        valuation_date=date(2026, 12, 31), sector="retail",
+        cases={"base": CasePlan(
+            rationale="Synthetic direct EBIT FCFF", primary_method="DCF",
+            dcf=dcf, equity=equity)})
+    return plan, [item for pair in pairs for item in [pair[0]]], [
+        item for pair in pairs for item in [pair[1]]]
+
+
+def test_direct_ebit_fcff_path_and_depreciation_addback():
+    plan, metrics, candidates = synthetic_direct_ebit()
+    result = run_valuation(
+        ticker=plan.ticker, report_version_id=RID,
+        metrics=metrics, candidates=candidates, plan=plan)
+    assert result.status == ValuationStatus.PASS_WITH_WARNINGS
+    year = result.methods["DCF"].schedule[0]
+    assert D(year["ebit"]) == 300
+    assert D(year["ebitda"]) == 350
+    assert D(year["tax"]) == 75
+    assert D(year["depreciation_addback"]) == 50
+    assert D(year["total_capex"]) == 60
+    assert D(year["fcf"]) == 205
+    assert year["attributable_earnings"] is None
+
+
+def test_fcff_path_does_not_require_or_deduct_finance_cost():
+    plan, metrics, candidates = synthetic_direct_ebit()
+    assert all(candidate.valuation_field.value != "net_finance_cost"
+               for candidate in candidates)
+    result = run_valuation(
+        ticker=plan.ticker, report_version_id=RID,
+        metrics=metrics, candidates=candidates, plan=plan)
+    assert D(result.methods["DCF"].schedule[0]["fcf"]) == 205
+
+
+def test_direct_and_component_ebit_routes_are_mutually_exclusive():
+    marker = InputRef(metric_id=uuid4(), field="ebit")
+    with pytest.raises(ValidationError, match="direct EBIT or component EBIT"):
+        YearInputSpec(
+            period_end=date(2027, 12, 31),
+            inputs={"ebit": marker,
+                    "operating_cost": InputRef(metric_id=uuid4(), field="operating_cost")})
+
+
+def test_total_and_split_capex_routes_are_mutually_exclusive():
+    with pytest.raises(ValidationError, match="total capex or sustaining/growth"):
+        YearInputSpec(
+            period_end=date(2027, 12, 31),
+            inputs={
+                "total_capex": InputRef(metric_id=uuid4(), field="total_capex"),
+                "sustaining_capex": InputRef(
+                    metric_id=uuid4(), field="sustaining_capex")})
+
+
+def test_ordinary_retail_receivables_are_not_added_to_equity():
+    plan, metrics, candidates = synthetic_direct_ebit(receivables=50)
+    result = run_valuation(
+        ticker=plan.ticker, report_version_id=RID,
+        metrics=metrics, candidates=candidates, plan=plan)
+    assert result.status == ValuationStatus.FAIL
+    assert any("receivables are operating working capital" in warning
+               for warning in result.warnings)
+
+
+def test_net_cash_and_net_debt_are_mutually_exclusive_at_plan_boundary():
+    ref_cash = InputRef(metric_id=uuid4(), field="net_cash")
+    ref_debt = InputRef(metric_id=uuid4(), field="net_debt")
+    with pytest.raises(ValidationError, match="exactly one"):
+        EquitySpec(
+            adjustments={"net_cash": ref_cash, "net_debt": ref_debt},
+            shares=InputRef(metric_id=uuid4(), field="current_issued_shares"))
+
+
+def test_lease_treatment_rejects_separate_debt_adjustment_when_in_cash_flows():
+    plan, metrics, candidates = synthetic_direct_ebit(lease_adjustment=100)
+    result = run_valuation(
+        ticker=plan.ticker, report_version_id=RID,
+        metrics=metrics, candidates=candidates, plan=plan)
+    assert result.status == ValuationStatus.FAIL
+    assert any("Lease liabilities cannot be deducted" in warning
+               for warning in result.warnings)
+
+
+def test_terminal_method_inputs_are_mutually_exclusive():
+    wacc = WaccSpec(
+        currency="ZAR", basis=Basis.NOMINAL, inflation_basis="ZAR_CPI",
+        supported_wacc=InputRef(metric_id=uuid4(), field="wacc"))
+    with pytest.raises(ValidationError, match="cannot include exit-multiple"):
+        DcfSpec(
+            valuation_date=date(2026, 12, 31), years=[],
+            cash_flow_currency="ZAR", cash_flow_basis=Basis.NOMINAL,
+            inflation_basis="ZAR_CPI", wacc=wacc,
+            terminal_method=TerminalMethod.PERPETUITY_GROWTH,
+            terminal_growth=InputRef(metric_id=uuid4(), field="terminal_growth"),
+            exit_multiple=InputRef(metric_id=uuid4(), field="exit_multiple"),
+            terminal_metric="EBIT")

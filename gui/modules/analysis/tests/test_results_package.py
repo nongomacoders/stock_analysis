@@ -79,5 +79,5 @@ def test_tru_actual_package_regression():
  package=build_results_package(sources)
  assert package["evidence_depth"]==DETAILED_RESULTS_PACKAGE
  names={x["name"] for x in package["observations"]}
- assert {"inventory","working_capital_movement","weighted_average_basic_shares","weighted_average_diluted_shares","segment_revenue"}<=names
+ assert {"inventory","working_capital_movement","weighted_average_basic_shares","weighted_average_diluted_shares","segment_revenue","segment_trading_margin"}<=names
  assert {"Truworths Africa","Office UK"}<={x["operation_segment"] for x in package["observations"]}

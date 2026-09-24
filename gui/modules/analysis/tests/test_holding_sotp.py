@@ -34,7 +34,7 @@ def test_synthetic_holding_nav_parent_shares_and_discount():
     assert schedule.value == 50 + 1800 + 6000 + 100
     # Parent cash/debt are reconciled once, outside the asset schedule.
     nav = reconcile_equity(enterprise_or_operating_value=schedule.value, non_operating_assets=D(0),
-        receivables=D(0), cash=D(500), debt=D(450), lease_adjustments=D(0),
+        receivables=D(0), cash=D(50), debt=D(0), lease_adjustments=D(0),
         minorities=D(0), other_equity_adjustments=D(0), forward_shares=D(100), shares_metric_id=uuid4())
     assert nav.equity_value == 8000 and nav.unrounded_target_zar == 80
     discounted = holding_discount_schedule(nav_per_share=nav.unrounded_target_zar, discount=D(".20"),
@@ -105,8 +105,10 @@ def test_engine_rejects_component_and_parent_bridge_double_count(kind, bridge_fi
     item = plan.cases["base"].sotp.components[0]
     item.value_kind = kind
     metric, selected = funded(bridge_field, 50)
+    opposite = "net_debt" if bridge_field == "net_cash" else "net_cash"
+    plan.cases["base"].equity.adjustments.pop(opposite, None)
     plan.cases["base"].equity.adjustments[bridge_field] = ref(selected)
-    metrics = [m for m in metrics if m.name != bridge_field] + [metric]
+    metrics = [m for m in metrics if m.name not in {bridge_field, opposite}] + [metric]
     candidates = [c for c in candidates if c.valuation_field.value != bridge_field] + [selected]
     result = run_valuation(ticker="TEST.JO", report_version_id=RID,
                            metrics=metrics, candidates=candidates, plan=plan)

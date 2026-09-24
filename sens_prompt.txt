@@ -2,36 +2,39 @@
 You are a professional JSE financial analyst.
 
 --- MARKET CONTEXT ---
-Current Share Price: 12227.00c
+Current Share Price: 13600.00c
 
 --- END CONTEXT ---
 
 --- MY RESEARCH ---
 PRICE LEVELS & TARGETS
-Report Date Share Price: ZAR 123.16
-Report 12-Month Target: ZAR 134.50
-Consensus Target: Not stated
-Valuation Floor (NAV): Not stated
+Report Date Share Price: 138.40 ZAR
+Report 12-Month Target: 164.00 ZAR
+Consensus Target: Not specified in report
+Valuation Floor (NAV): 1.12x estimated 12-month forward TNAV per share
 
 CATALYSTS & RISKS
 Positive:
-- Competing superior proposal from a rival global explosives major at a minimum 2.5 percent premium (above R137.86)
-- Accelerated clearance from South African and cross-border African competition authorities enabling early closing
-- RMB bank guarantee eliminating buyer financing risk and securing a hard cash exit floor
+- Accelerated capital repatriation and ongoing earnings accretion from share repurchases
+- Sustained high momentum in Southern African Wealth net inflows driving recurring annuity fees
+- Margin defense in Southern Africa through continuous funding mix optimisation and CASA growth
+- Capital management optionality through potential additional share buybacks or special dividends (Investec Limited CET1 at 14.2%, Investec plc at 12.7%)
+- Acceleration of private sector fixed investment and renewable energy financing in South Africa
+- Earlier-than-anticipated regulatory approval for the UK Internal Ratings-Based (IRB) approach
 
 Negative:
-- Failure of competition or regulatory approvals across eight African regional jurisdictions or burdensome public interest conditions
-- Material Adverse Change clause triggered if group EBITDA falls below R2.357 billion during the offer period
-- Dissenting shareholders exceeding the 3 percent threshold invoking section 164 appraisal rights
+- Accelerated negative endowment effect from aggressive global and domestic central bank rate cuts
+- Asset quality deterioration in the UK Specialist Bank pushing credit loss ratio above 55bps
+- Continued earnings drag from high strategic technology and regulatory spend during peak investment cycle
+- Volatility in the Rand-Pound exchange rate
 
 KEY DATES
 Debt / Facilities Maturing:
-- Not stated
+- Not specified in report
 
 Project Timelines / Milestones:
-- 14 September 2026: Solar SA Investments entered into implementation agreement to acquire 100 percent of Omnia shares
-- Mid-2027: Targeted full regulatory clearance and Scheme Meeting approval
-- 9 September 2027: Validity deadline for Rand Merchant Bank cash confirmation guarantee
+- FY2027: Guided peak investment expenditure for digital architecture modernization and IT transformation
+- FY2030: Medium-term target for achieving 16.0% group ROE
 --- END RESEARCH ---
 
 --- MY STRATEGY ---
@@ -39,48 +42,784 @@ Project Timelines / Milestones:
 --- END STRATEGY ---
 
 --- NEW SENS ANNOUNCEMENT ---
-Dealings in securities by the Omnia Broad-Based Employee Share Trust and prescribed officer of the Company
-OMNIA HOLDINGS LIMITED
-Incorporated in the Republic of South Africa
-(Registration number 1967/003680/06)
-JSE code: OMN
-LEI NUMBER: 529900T6L5CEOP1PNP91
-ISIN: ZAE000005153
-(‘Omnia’ or the ‘Company’)
-DEALINGS IN SECURITIES BY THE OMNIA BROAD-BASED EMPLOYEE SHARE TRUST AND PRESCRIBED OFFICER OF THE COMPANY
-Shareholders are advised of the following dealings by the Omnia Broad-Based Employee Share Trust on behalf of
-beneficiaries.
-Name of scheme:                                                  The Omnia Broad-Based Employee Share Trust
-Company:                                                         Omnia Holdings Limited
-Transaction date:                                                17 September 2026
-Number and class of securities:                                  62 499 ordinary shares
-Total value:                                                     R7 742 701.11
-Weighted average price per security:                             R123.8852
-Highest traded price on the market on the day:                   R124.52
-Lowest traded price on the market on the day:                    R122.00
-Nature of transaction and extent of interest in transaction:     On-market disposal of shares on behalf of and in
-accordance with instructions provided by the
-beneficiaries
-Clearance to deal obtained:                                      Yes
-Shareholders are further referred to the announcement released on 17 September 2026 regarding the vesting of
-Performance Forfeitable Shares awarded in terms of the provisions of the Omnia 2020 Share Plan.
-In compliance with the JSE Listings Requirements, shareholders are advised of the following dealings in securities
-by a prescribed officer of the Company, in order to settle any tax liabilities incurred as a result of the vesting of the
-Performance Forfeitable Shares:
-Name of prescribed officer:                                      CM Kotze
-Number and class of securities:                                  27 193 ordinary shares
-Transaction date:                                                18 September 2026
-Total value:                                                     R3 346 767.60
-Weighted average price per security:                             R123.0746
-Highest traded price on the market on the day:                   R124.24
-Lowest traded price on the market on the day:                    R122.59
-Nature of transaction:                                           On-market disposal of shares
-Nature and extent of interest:                                   Direct beneficial
-Clearance to deal obtained:                                      Yes
+Transactions in Investec plc and Investec Limited Ordinary Shares
+Investec Limited                                            Investec plc
+Incorporated in the Republic of South Africa                Incorporated in England and Wales
+Registration number 1925/002833/06                          Registration number 3633621
+JSE share code: INL                                         LSE share code: INVP
+JSE hybrid code: INPR                                       JSE share code: INP
+JSE debt code: INLV                                         ISIN: GB00B17BBQ50
+NSX share code: IVD                                         LEI: 2138007Z3U5GWDN3MY22
+BSE share code: INVESTEC
+ISIN: ZAE000081949
+LEI: 213800CU7SM6O4UWOZ70
+Transactions in Investec plc and Investec Limited Ordinary Shares
+As part of the dual listed company structure, Investec plc and Investec Limited (together “Investec”) notify
+both the London and Johannesburg Stock Exchanges of those interests (and changes to those interests)
+of (i) directors of both entities and the respective company secretaries, (ii) persons discharging managerial
+responsibilities (PDMRs) across the group, and (iii) in certain instances the directors of major subsidiaries
+of Investec Limited, in the securities of Investec plc and Investec Limited which are required to be disclosed
+under Article 19 of the Market Abuse Regulation (Regulation 596/2014), the Disclosure Guidance and
+Transparency Rules of the United Kingdom Listing Authority (the “UKLA”) and/or the JSE Listings
+Requirements.
+TRANSACTIONS BY DIRECTORS/PDMRs IN INVESTEC PLC ORDINARY SHARES
+1        Details of the person discharging managerial responsibilities / person closely associated
+a)       Name                               Stuart Spencer
+2        Reason for the notification
+a)       Position/status                    PDMR
+b)       Initial notification /Amendment    Initial notification
+3        Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)       Name                               Investec plc
+b)       LEI                                2138007Z3U5GWDN3MY22
+4        Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)       Description of the financial
+instrument, type of instrument     INVP – ordinary shares of GBP0.0002 each
+Identification code                GB00B17BBQ50
+b)       Nature of the transaction          On market sale of shares on the vesting of conditional share
+awards from a prior period
+c)       Price(s) and volume(s)
+Price(s)                     Volume(s)
+GBP 6.4920                   86,955
+d)       Aggregated information
+– Aggregated volume                86,955
+– Price                            GBP 6.4920
+e)       Date of the transaction            22 September 2026
+f)       Place of the transaction           London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 564,511.86
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Stuart Spencer
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale of shares to settle a tax liability arising from
+the vesting of conditional share awards from a prior period
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 8,513
+d)        Aggregated information
+– Aggregated volume               8,513
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 55,266.40
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Stuart Spencer
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         Off market take up of shares on vesting of conditional share
+awards from a prior period, which are subject to retention
+c)        Price(s) and volume(s)
+Price(s)                     Volume(s)
+GBP 6.4920                   10,359
+d)        Aggregated information
+– Aggregated volume               10,359
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 67,250.63
+Highest price                               N/A
+Lowest price                                N/A
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Fani Titi
+2         Reason for the notification
+a)        Position/status                   Director
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale of shares to settle a tax liability arising from
+the vesting of conditional share awards from a prior period
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 236,022
+d)        Aggregated information
+– Aggregated volume               236,022
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 1,532,254.82
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Fani Titi
+2         Reason for the notification
+a)        Position/status                   Director
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         Off market take up of shares on vesting of conditional share
+awards from a prior period, which are subject to retention
+c)        Price(s) and volume(s)
+Price(s)                     Volume(s)
+GBP 6.4920                   275,537
+d)        Aggregated information
+– Aggregated volume               275,537
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 1,788,786.20
+Highest price                               N/A
+Lowest price                                N/A
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Nishlan Samujh
+2         Reason for the notification
+a)        Position/status                   Director
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale of shares to settle a tax liability arising from
+the vesting of conditional share awards from a prior period
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 117,105
+d)        Aggregated information
+– Aggregated volume               117,105
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 760,245.66
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Nishlan Samujh
+2         Reason for the notification
+a)        Position/status                   Director
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         Off market take up of shares on vesting of conditional share
+awards from a prior period, which are subject to retention
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 136,762
+d)        Aggregated information
+– Aggregated volume               136,762
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 887,858.90
+Highest price                               N/A
+Lowest price                                N/A
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Cumesh Moodliar
+2         Reason for the notification
+a)        Position/status                   PDMR and Director of Major Subsidiary
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale of shares on the vesting of conditional share
+awards from a prior period
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 135
+d)        Aggregated information
+– Aggregated volume               135
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 876.42
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Ruth Leas
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale of shares on the vesting of conditional share
+awards from a prior period
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 126,401
+d)        Aggregated information
+– Aggregated volume               126,401
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 820,595.29
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Marc Kahn
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale of shares on the vesting of conditional share
+awards from a prior period
+c)        Price(s) and volume(s)
+Price(s)                     Volume(s)
+GBP 6.4920                   56,980
+d)        Aggregated information
+– Aggregated volume               56,980
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 369,914.16
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Marc Kahn
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale of shares to settle a tax liability arising from
+the vesting of conditional share awards from a prior period
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 17,271
+d)        Aggregated information
+– Aggregated volume               17,271
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 112,123.33
+Highest price                               GBP 6.550
+Lowest price                                GBP 6.425
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Marc Kahn
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         Off market take up of shares on vesting of conditional share
+awards from a prior period, which are subject to retention
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4920                 19,385
+d)        Aggregated information
+– Aggregated volume               19,385
+– Price                           GBP 6.4920
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4920
+Total value of transaction                  GBP 125,847.42
+Highest price                               N/A
+Lowest price                                N/A
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Nishlan Samujh
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial      INVP – ordinary shares of GBP0.0002 each
+instrument, type of instrument
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale
+c)        Price(s) and volume(s)
+Price(s)                   Volume(s)
+GBP 6.4432                 166,601
+d)        Aggregated information
+– Aggregated volume               166,601
+– Price                           GBP 6.4432
+e)        Date of the transaction           22 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.4432
+Total value of transaction                  GBP 1,073,439.97
+Highest price                               N/A
+Lowest price                                N/A
+Nature of interest                          Direct Beneficial
+1         Details of the person discharging managerial responsibilities / person closely associated
+a)        Name                              Marc Kahn
+2         Reason for the notification
+a)        Position/status                   PDMR
+b)        Initial notification /Amendment   Initial notification
+3         Details of the issuer, emission allowance market participant, auction platform, auctioneer or
+auction monitor
+a)        Name                              Investec plc
+b)        LEI                               2138007Z3U5GWDN3MY22
+4         Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii) each
+type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)        Description of the financial
+instrument, type of instrument    INVP – ordinary shares of GBP0.0002 each
+Identification code               GB00B17BBQ50
+b)        Nature of the transaction         On market sale
+c)        Price(s) and volume(s)
+Price(s)                    Volume(s)
+GBP 6.57                    48,698
+d)        Aggregated information
+– Aggregated volume               48,698
+– Price                           GBP 6.57
+e)        Date of the transaction           21 September 2026
+f)        Place of the transaction          London
+In compliance with paragraphs 6.77 to 6.89 of the JSE Listings Requirements we disclose the
+following additional information:
+Volume weighted average price               GBP 6.57
+Total value of transaction                  GBP 318,568.54
+Highest price                               N/A
+Lowest price                                N/A
+Nature of interest                          Direct Beneficial
+TRANSACTION BY COMPANY SECRETARY AND PERSON CLOSELY ASSOCIATED IN INVESTEC
+PLC ORDINARY SHARES OF GBP0.0002 EACH
+Transaction by the Company Secretary, Investec plc – David Miller
+The following on market sale is notified in terms of paragraphs 6.77 to 6.89 of the JSE Listings
+Requirements:
+On market sale of shares on the release of forfeitable share
+Nature of transaction                       awards
+Number of securities                        7,265
+Selling price                               GBP 6.4920 per share
+Total value of transaction                  GBP 47,164.38
+Highest price                               GBP 6.550 per share
+Lowest price                                GBP 6.425 per share
+Nature of interest                          Direct beneficial
+Date and place of transaction               22 September 2026, London
+Transaction by Person Closely Associated to David Miller, Investec plc – Jemima Baines
+The following on market sale is notified in terms of paragraphs 6.77 to 6.89 of the JSE Listings
+Requirements:
+On market sale of shares on the release of forfeitable share
+Nature of transaction                      awards
+Number of securities                       2,277
+Selling price                              GBP 6.4920 per share
+Total value of transaction                 GBP 14,782.28
+Highest price                              GBP 6.550 per share
+Lowest price                               GBP 6.425 per share
+Nature of interest                         Direct beneficial
+Date and place of transaction              22 September 2026, London
+TRANSACTIONS BY DIRECTORS / PDMRs IN INVESTEC LIMITED ORDINARY SHARES
+1       Details of the person discharging managerial responsibilities / person closely associated
+a)      Name                                Marle van der Walt
+2       Reason for the notification
+a)      Position/status                     PDMR
+b)      Initial notification /Amendment     Initial notification
+3       Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)      Name                                Investec Limited
+b)      LEI                                 213800CU7SM6O4UWOZ70
+4       Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)      Description of the financial
+instrument, type of instrument      Ordinary shares of ZAR0.0002 each
+Identification code                 ZAE000081949
+b)      Nature of the transaction           On market sale of shares on the release of forfeitable share
+awards
+c)      Price(s) and volume(s)
+Price(s)                    Volume(s)
+ZAR 138.4405                7,144
+d)      Aggregated information
+– Aggregated volume                7,144
+– Price                            ZAR 138.4405
+e)      Date of the transaction             22 September 2026
+f)      Place of the transaction            Johannesburg
+In compliance with paragraphs 6.77 – 6.89 of the JSE Listings Requirements we disclose the following
+additional information:
+Volume weighted average price               ZAR 138.4405
+Total value of transaction                  ZAR 989,018.93
+Highest price                               ZAR 139.19
+Lowest price                                ZAR 137.50
+Nature of interest                          Direct Beneficial
+1       Details of the person discharging managerial responsibilities / person closely associated
+a)      Name                                Stuart Spencer
+2       Reason for the notification
+a)      Position/status                     PDMR
+b)      Initial notification /Amendment   Initial notification
+3       Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)      Name                                Investec Limited
+b)      LEI                                 213800CU7SM6O4UWOZ70
+4       Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)      Description of the financial
+instrument, type of instrument      Ordinary shares of ZAR0.0002 each
+Identification code                 ZAE000081949
+b)      Nature of the transaction           On market sale of shares on the vesting of conditional share
+awards from a prior period
+c)      Price(s) and volume(s)
+Price(s)                   Volume(s)
+ZAR 138.4405               26,661
+d)      Aggregated information
+– Aggregated volume                 26,661
+– Price                             ZAR 138.4405
+e)      Date of the transaction             22 September 2026
+f)      Place of the transaction            Johannesburg
+In compliance with paragraphs 6.77 – 6.89 of the JSE Listings Requirements we disclose the following
+additional information:
+Volume weighted average price               ZAR 138.4405
+Total value of transaction                  ZAR 3,690,962.17
+Highest price                               ZAR 139.19
+Lowest price                                ZAR 137.50
+Nature of interest                          Direct Beneficial
+1       Details of the person discharging managerial responsibilities / person closely associated
+a)      Name                                Lesley-Anne Gatter
+2       Reason for the notification
+a)      Position/status                     PDMR
+b)      Initial notification /Amendment     Initial notification
+3       Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)      Name                                Investec Limited
+b)      LEI                                 213800CU7SM6O4UWOZ70
+4       Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)      Description of the financial
+instrument, type of instrument      Ordinary shares of ZAR0.0002 each
+Identification code                 ZAE000081949
+b)      Nature of the transaction           On market sale of shares on the vesting of conditional share
+awards from a prior period
+c)      Price(s) and volume(s)
+Price(s)                   Volume(s)
+ZAR 138.4405                 4,515
+d)      Aggregated information
+– Aggregated volume                  4,515
+– Price                             ZAR 138.4405
+e)      Date of the transaction             22 September 2026
+f)      Place of the transaction            Johannesburg
+In compliance with paragraphs 6.77 – 6.89 of the JSE Listings Requirements we disclose the following
+additional information:
+Volume weighted average price               ZAR 138.4405
+Total value of transaction                  ZAR 625,058.86
+Highest price                               ZAR 139.19
+Lowest price                                ZAR 137.50
+Nature of interest                          Direct Beneficial
+1       Details of the person discharging managerial responsibilities / person closely associated
+a)      Name                              Bradley Gatter
+2       Reason for the notification
+a)      Position/status                   Person closely associated with Lesley-Anne Gatter (PDMR)
+b)      Initial notification /Amendment   Initial notification
+3       Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)      Name                              Investec Limited
+b)      LEI                               213800CU7SM6O4UWOZ70
+4       Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)      Description of the financial
+instrument, type of instrument    Ordinary shares of ZAR0.0002 each
+Identification code               ZAE000081949
+b)      Nature of the transaction         On market sale of shares to settle a tax liability arising from
+the release of forfeitable share awards
+c)      Price(s) and volume(s)
+Price(s)                   Volume(s)
+ZAR 138.4405               914
+d)      Aggregated information
+– Aggregated volume               914
+– Price                           ZAR 138.4405
+e)      Date of the transaction           22 September 2026
+f)      Place of the transaction          Johannesburg
+In compliance with paragraphs 6.77 – 6.89 of the JSE Listings Requirements we disclose the following
+additional information:
+Volume weighted average price             ZAR 138.4405
+Total value of transaction                ZAR 126,534.62
+Highest price                             ZAR 139.19
+Lowest price                              ZAR 137.50
+Nature of interest                        Direct Beneficial
+1       Details of the person discharging managerial responsibilities / person closely associated
+a)      Name                              Joubert Hay
+2       Reason for the notification
+a)      Position/status                   PDMR
+b)      Initial notification /Amendment   Initial notification
+3       Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)      Name                              Investec Limited
+b)      LEI                               213800CU7SM6O4UWOZ70
+4       Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)      Description of the financial
+instrument, type of instrument    Ordinary shares of ZAR0.0002 each
+Identification code               ZAE000081949
+b)      Nature of the transaction         On market sale of shares on the release of forfeitable share
+awards
+c)      Price(s) and volume(s)
+Price(s)                   Volume(s)
+ZAR 138.4405               6,630
+d)      Aggregated information
+– Aggregated volume               6,630
+– Price                           ZAR 138.4405
+e)      Date of the transaction           22 September 2026
+f)      Place of the transaction          Johannesburg
+In compliance with paragraphs 6.77 – 6.89 of the JSE Listings Requirements we disclose the following
+additional information:
+Volume weighted average price             ZAR 138.4405
+Total value of transaction                ZAR 917,860.52
+Highest price                             ZAR 139.19
+Lowest price                              ZAR 137.50
+Nature of interest                        Direct Beneficial
+1       Details of the person discharging managerial responsibilities / person closely associated
+a)      Name                              Cumesh Moodliar
+2       Reason for the notification
+a)      Position/status                   PDMR and Director of Major Subsidiary
+b)      Initial notification /Amendment   Initial notification
+3       Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)      Name                              Investec Limited
+b)      LEI                               213800CU7SM6O4UWOZ70
+4       Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)      Description of the financial
+instrument, type of instrument    Ordinary shares of ZAR0.0002 each
+Identification code               ZAE000081949
+b)      Nature of the transaction         On market sale of shares on the release of forfeitable share
+awards
+c)      Price(s) and volume(s)
+Price(s)                     Volume(s)
+ZAR 138.4405                 111,367
+d)      Aggregated information
+– Aggregated volume                 111,367
+– Price                             ZAR 138.4405
+e)      Date of the transaction             22 September 2026
+f)      Place of the transaction            Johannesburg
+In compliance with paragraphs 6.77 – 6.89 of the JSE Listings Requirements we disclose the following
+additional information:
+Volume weighted average price               ZAR 138.4405
+Total value of transaction                  ZAR 15,417,703.16
+Highest price                               ZAR 139.19
+Lowest price                                ZAR 137.50
+Nature of interest                          Direct Beneficial
+TRANSACTION BY COMPANY SECRETARY IN INVESTEC LIMITED ORDINARY SHARES OF ZAR
+0.0002 EACH
+Transaction by the Company Secretary, Investec Limited – Niki van Wyk
+The following on market sale is notified in terms of paragraph 6.77 to 6.89 of the JSE Listings Requirements:
+On market sale of shares on the release of forfeitable share
+Nature of transaction
+awards
+Number of securities                        5,557
+Selling price                               ZAR 138.4405 per share
+Total value of transaction                  ZAR 769,313.86
+Highest price                               ZAR 139.19 per share
+Lowest price                                ZAR 137.50 per share
+Nature of interest                          Direct beneficial
+Date and place of transaction               22 September 2026, Johannesburg
+EXERCISE OF SHARE OPTIONS AND SALE OF SHARES IN TERMS OF THE INVESTEC LIMITED
+SHARE INCENTIVE PLAN 2021 – SHARE APPRECIATION RIGHTS
+1       Details of the person discharging managerial responsibilities / person closely associated
+a)      Name                              Cumesh Moodliar
+2       Reason for the notification
+a)      Position/status                   PDMR and Director of Major Subsidiary
+b)      Initial notification /Amendment   Initial notification
+3       Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)      Name                              Investec Limited
+b)      LEI                               213800CU7SM6O4UWOZ70
+4      Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)     Description of the financial
+instrument, type of instrument    Ordinary shares of ZAR0.0002 each
+Identification code               ZAE000081949
+b)     Nature of interest                Direct Beneficial
+c)     Nature of the transaction         Off market exercise of SAR
+d)     Number of SAR awards              20,977
+e)     Award Date                        1 June 2022
+f)     Award / Strike price              ZAR 86.46
+g)     Number of Investec Limited        7,876
+shares received on exercise of
+SAR
+h)     Exercise price                    ZAR 138.4405
+i)     Total value of transaction        ZAR 1,090,394.95
+j)     Date of the transaction           22 September 2026
+k)     Place of the transaction          Johannesburg
+a)     Nature of the transaction         On market sale of Investec Limited shares
+b)     Number of securities              7,876
+c)     Volume weighted average price     ZAR 138.4405
+d)     Highest Price                     ZAR 139.19
+e)     Lowest Price                      ZAR 137.50
+f)     Total value of transaction        ZAR 1,090,394.95
+g)     Date of the transaction           22 September 2026
+h)     Place of the transaction          Johannesburg
+1    Details of the person discharging managerial responsibilities / person closely associated
+a)   Name                              Niki van Wyk
+2    Reason for the notification
+a)   Position/status                   Company Secretary
+b)   Initial notification /Amendment   Initial notification
+3    Details of the issuer, emission allowance market participant, auction platform, auctioneer
+or auction monitor
+a)   Name                              Investec Limited
+b)   LEI                               213800CU7SM6O4UWOZ70
+4    Details of the transaction(s): section to be repeated for (i) each type of instrument; (ii)
+each type of transaction; (iii) each date; and (iv) each place where transactions have been
+conducted
+a)   Description of the financial
+instrument, type of instrument    Ordinary shares of ZAR0.0002 each
+Identification code               ZAE000081949
+b)   Nature of interest                Direct Beneficial
+c)   Nature of the transaction         Off market exercise of SAR
+d)   Number of SAR awards              6,555
+e)   Award Date                        1 June 2022
+f)   Award / Strike price              ZAR 86.46
+g)   Number of Investec Limited        2,461
+shares received on exercise of
+SAR
+h)   Exercise price                    ZAR 138.4405
+i)   Total value of transaction        ZAR 340,732.18
+j)      Date of the transaction           22 September 2026
+k)      Place of the transaction          Johannesburg
+a)      Nature of the transaction         On market sale of Investec Limited shares
+b)      Number of securities              2,461
+c)      Volume weighted average price     ZAR 138.4405
+d)      Highest Price                     ZAR 139.19
+e)      Lowest Price                      ZAR 137.50
+f)      Total value of transaction        ZAR 340,732.18
+g)      Date of the transaction           22 September 2026
+h)      Place of the transaction          Johannesburg
+Clearance was obtained for the above dealings in securities.
+London and Johannesburg
 23 September 2026
 Sponsor
-Java Capital
-Date: 23/09/2026 03:30:00
+Investec Bank Limited
+Date: 23/09/2026 05:00:00
 Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited (‘JSE’).
 The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
 the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,

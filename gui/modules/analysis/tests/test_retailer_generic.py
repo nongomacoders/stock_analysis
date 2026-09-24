@@ -57,8 +57,8 @@ def retailer_fixture(*, capex_add=0, working_capital_add=0, omit_wacc=False):
     growth = add("terminal_growth", 3, "percentage")
     shares = add("forecast_diluted_shares", 100, "shares")
     adjustments = {field: add(field, value) for field, value in {
-        "non_operating_assets": 0, "receivables": 0, "net_cash": 20,
-        "net_debt": 100, "lease_adjustments": 0, "minorities": 0,
+        "non_operating_assets": 0, "net_debt": 80,
+        "lease_adjustments": 0, "minorities": 0,
         "other_equity_adjustments": 0}.items()}
     dcf = DcfSpec(valuation_date=date(2026, 6, 30), years=years,
         cash_flow_currency="ZAR", cash_flow_basis=Basis.NOMINAL,

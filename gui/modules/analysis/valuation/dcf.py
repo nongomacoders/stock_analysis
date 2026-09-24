@@ -11,8 +11,9 @@ class ForecastYear(BaseModel):
     ebitda: Decimal
     ebit: Decimal
     tax: Decimal
-    sustaining_capex: Decimal
-    growth_capex: Decimal
+    sustaining_capex: Decimal = Decimal(0)
+    growth_capex: Decimal = Decimal(0)
+    total_capex: Decimal | None = None
     working_capital_change: Decimal
     fcf: Decimal
     depreciation_addback: Decimal = Decimal(0)
@@ -23,8 +24,12 @@ class ForecastYear(BaseModel):
 
     @model_validator(mode="after")
     def reconciles(self):
-        expected = (self.ebit - self.tax + self.depreciation_addback - self.sustaining_capex
-                    - self.growth_capex - self.working_capital_change - self.other_recurring_cash)
+        capex = (self.total_capex if self.total_capex is not None
+                 else self.sustaining_capex + self.growth_capex)
+        if self.total_capex is not None and (self.sustaining_capex != 0 or self.growth_capex != 0):
+            raise ValueError("Total capex cannot be combined with sustaining/growth capex")
+        expected = (self.ebit - self.tax + self.depreciation_addback - capex
+                    - self.working_capital_change - self.other_recurring_cash)
         if expected != self.fcf:
             raise ValueError("Forecast FCF does not reconcile to EBIT/cash items")
         return self

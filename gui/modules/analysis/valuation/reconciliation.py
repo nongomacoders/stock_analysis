@@ -12,6 +12,8 @@ def reconcile_equity(*, enterprise_or_operating_value: Decimal, non_operating_as
                      forward_shares: Decimal, shares_metric_id: UUID) -> TargetReconciliation:
     if forward_shares <= 0:
         raise ValueError("Forward share count must be positive")
+    if cash != 0 and debt != 0:
+        raise ValueError("Net cash and net debt are mutually exclusive")
     equity = (enterprise_or_operating_value + non_operating_assets + receivables + cash
               - debt - lease_adjustments - minorities + other_equity_adjustments)
     if equity < 0:

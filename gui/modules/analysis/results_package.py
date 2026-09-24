@@ -138,7 +138,7 @@ def parse_afs(source):
      if name=="treasury_shares" and share_value is not None:share_value=abs(share_value)
      observations.append(_obs(source,ANNUAL_FINANCIAL_STATEMENTS,name,share_value,"shares",period_end,page_no,"note_12_share_capital",label,current,scale="thousands",notes=quote))
   if re.search(r"34\.1 Reportable segment information(?: \(continued\))?\s*2026",text):
-   segment_map={r"Total third\s*-party revenue":"segment_revenue","Sale of merchandise":"segment_sale_of_merchandise","Gross profit":"segment_gross_profit","Trading profit":"segment_trading_profit","Profit before tax":"segment_profit_before_tax","EBITDA":"segment_ebitda","Segment assets":"segment_assets","Segment liabilities":"segment_liabilities","Capital expenditure":"segment_capex",r"Gross margin \(%\)":"segment_gross_margin",r"Operating margin \(%\)":"segment_operating_margin"}
+   segment_map={r"Total third\s*-party revenue":"segment_revenue","Sale of merchandise":"segment_sale_of_merchandise","Gross profit":"segment_gross_profit","Trading profit":"segment_trading_profit","Profit before tax":"segment_profit_before_tax","EBITDA":"segment_ebitda","Segment assets":"segment_assets","Segment liabilities":"segment_liabilities","Capital expenditure":"segment_capex",r"Gross margin \(%\)":"segment_gross_margin",r"Trading margin \(%\)":"segment_trading_margin",r"Operating margin \(%\)":"segment_operating_margin"}
    for label,name in segment_map.items():
     m=re.search(rf"(?im)^\s*{label}\s+(?:\d+(?:\.\d+)?\s+)?(\(?[\d,]+(?:\.\d+)?\)?)\s+(\(?[\d,]+(?:\.\d+)?\)?)\s+(?:-|\(?[\d,]+(?:\.\d+)?\)?)\s+(\(?[\d,]+(?:\.\d+)?\)?)\s*$",text)
     if not m:continue

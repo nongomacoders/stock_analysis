@@ -2,7 +2,7 @@
 from __future__ import annotations
 from uuid import UUID
 import json
-from modules.analysis.forecast_plan import ForecastPlan, PlanStatus
+from modules.analysis.forecast_plan import ForecastPlan, PlanStatus, approve_plan
 from modules.analysis.valuation.models import ValuationResult, ValuationStatus
 from modules.analysis.valuation.reconciliation import recalculate_target
 
@@ -29,12 +29,51 @@ async def get_plan(plan_id: UUID):
     rows = await DBEngine.fetch("SELECT plan FROM forecast_plans WHERE forecast_plan_id=$1::uuid",plan_id)
     return ForecastPlan.model_validate(json.loads(rows[0]['plan']) if isinstance(rows[0]['plan'], str) else rows[0]['plan']) if rows else None
 
+async def approve_saved_plan(plan_id: UUID, reviewer: str, db=None):
+    """Approve one persisted draft in place without creating another version."""
+    from core.db.engine import DBEngine
+    db = db or DBEngine
+    rows = await db.fetch(
+        "SELECT plan FROM forecast_plans WHERE forecast_plan_id=$1::uuid", plan_id)
+    if not rows:
+        raise ValueError("ForecastPlan was not found")
+    raw = rows[0]['plan']
+    current = ForecastPlan.model_validate(
+        json.loads(raw) if isinstance(raw, str) else raw)
+    approved = approve_plan(current, reviewer)
+    result = await db.execute("""UPDATE forecast_plans SET
+        status=$2,approval_status=$3,updated_at=$4,approved_by=$5,approved_at=$6,
+        plan=$7::jsonb
+        WHERE forecast_plan_id=$1::uuid AND status='draft'""",
+        approved.forecast_plan_id, approved.status.value, approved.approval_status,
+        approved.updated_at, approved.approved_by, approved.approved_at,
+        approved.model_dump_json())
+    if isinstance(result, str) and not result.endswith(' 1'):
+        raise ValueError("ForecastPlan approval did not update the persisted draft")
+    return approved
 async def save_plan_valuation(plan: ForecastPlan, result: ValuationResult, db=None):
     if plan.status != PlanStatus.APPROVED or result.calculation_inputs.get('forecast_plan',{}).get('forecast_plan_id') != str(plan.forecast_plan_id):
         raise ValueError('Valuation requires the exact approved plan snapshot')
+    if result.status not in {ValuationStatus.PASS,ValuationStatus.PASS_WITH_WARNINGS}:
+        raise ValueError('Only a calculable deterministic valuation may be stored for a ForecastPlan')
     from core.db.engine import DBEngine
     from modules.data.valuation_results import insert_valuation_result
     await insert_valuation_result(db or DBEngine,result,forecast_plan_id=plan.forecast_plan_id)
+
+async def get_idempotent_plan_valuation(plan: ForecastPlan, input_hash: str, db=None):
+    """Return the prior result for the exact plan/engine/input hash, if present."""
+    from core.db.engine import DBEngine
+    db = db or DBEngine
+    rows = await db.fetch("""SELECT result FROM deterministic_valuations
+        WHERE forecast_plan_id=$1::uuid AND valuation_engine_version=$2
+          AND status IN ('PASS','PASS_WITH_WARNINGS')
+          AND calculation_inputs->>'input_hash'=$3
+        ORDER BY generated_at DESC LIMIT 1""",
+        plan.forecast_plan_id, plan.valuation_engine_version, input_hash)
+    if not rows:
+        return None
+    raw=rows[0]['result']
+    return ValuationResult.model_validate(json.loads(raw) if isinstance(raw,str) else raw)
 
 async def approve_valuation(valuation_id: UUID, reviewer: str, db=None):
     if not reviewer.strip(): raise ValueError('Reviewer required')
@@ -80,3 +119,4 @@ async def current_published_valuation(ticker: str):
         return None
     raw=rows[0]['result']
     return ValuationResult.model_validate(json.loads(raw) if isinstance(raw,str) else raw)
+

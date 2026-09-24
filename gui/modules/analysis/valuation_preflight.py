@@ -50,6 +50,8 @@ class ValuationField(str, Enum):
     OWNERSHIP_PERCENTAGE = "ownership_percentage"
     PRODUCTION_GROWTH = "production_growth"
     OPERATING_MARGIN = "operating_margin"
+    EBIT = "ebit"
+    TOTAL_CAPEX = "total_capex"
     RETAIL_SALES_GROWTH = "retail_sales_growth"
     REVENUE_GROWTH = "revenue_growth"
     GRADE = "grade"
@@ -245,7 +247,10 @@ def freshness(selected: FinancialMetric, metrics: list[FinancialMetric], *, hist
     elif not current_date:
         status = FreshnessStatus.UNKNOWN
     elif latest and _date(latest) > current_date:
-        status = FreshnessStatus.SUPERSEDED
+        # Identical later observations confirm the selected disclosed value.
+        status = (FreshnessStatus.CURRENT
+                  if (latest.normalized_value if latest.normalized_value is not None else latest.value) == (selected.normalized_value if selected.normalized_value is not None else selected.value)
+                  else FreshnessStatus.SUPERSEDED)
     elif selected.source_type == SourceType.COMPANY_DISCLOSURE or latest:
         status = FreshnessStatus.CURRENT
     else:
@@ -366,7 +371,13 @@ def validate_candidate(c: ValuationInputCandidate, metrics: list[FinancialMetric
             add("SHARE_BASIS_UNKNOWN", Severity.ERROR, "Share-count basis is unresolved.")
     if base and f == ValuationField.OWNERSHIP_PERCENTAGE and m.source_date and (date.today() - m.source_date).days > 365:
         add("STALE_OWNERSHIP", Severity.WARNING, "Ownership source is more than one year old; revalidate against a current disclosure.")
-    if base and f == ValuationField.WACC and not (m.notes and "derived" in m.notes.lower() and m.source):
+    supported_plan_override = (
+        m.assumption_type == AssumptionType.MODEL_ASSUMPTION
+        and (m.source_id or "").startswith("forecast_assumption:")
+        and bool((m.notes or "").strip()) and bool(m.source))
+    if base and f == ValuationField.WACC and not (
+            (m.notes and "derived" in m.notes.lower() and m.source)
+            or supported_plan_override):
         add("WACC_UNSUPPORTED", Severity.ERROR, "WACC needs documented components or explicit override.")
     if base and f in {ValuationField.EXIT_MULTIPLE, ValuationField.TERMINAL_GROWTH, ValuationField.PRODUCTION_GROWTH} and not m.source:
         add("TERMINAL_ASSUMPTION_UNSUPPORTED", Severity.ERROR, "Growth or exit assumption has no supported basis.")

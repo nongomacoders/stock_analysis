@@ -1,4 +1,4 @@
-"""Versioned, analyst-controlled inputs around the Phase 4 valuation engine."""
+﻿"""Versioned, analyst-controlled inputs around the Phase 4 valuation engine."""
 from __future__ import annotations
 
 from datetime import date, datetime, timezone
@@ -9,8 +9,10 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field, model_validator
 
-from .valuation.engine import ENGINE_VERSION, ValuationPlan, run_valuation
-from .valuation.models import ValuationResult, ValuationStatus
+from .valuation.engine import (
+    ENGINE_VERSION, CasePlan, DcfSpec, ValuationPlan, WaccSpec, run_valuation,
+)
+from .valuation.models import Basis, InputRef, TerminalMethod, ValuationResult, ValuationStatus
 from .valuation.production import ProductionBridge, bridge_production, DevelopmentPeriod, development_production
 from .valuation.wacc import WaccInputs, calculate_wacc
 
@@ -32,6 +34,7 @@ FORECAST_FIELD_EXTENSIONS = frozenset({
     "scale_factor", "reagent_energy_factor",
     "store_count", "new_store_openings", "like_for_like_growth",
     "inventory_days", "online_sales", "capex_per_store",
+    "sale_of_merchandise_growth", "trading_margin",
 })
 FORECAST_CURRENCIES = ("ZAR", "USD", "GBP", "EUR", "HKD")
 FORECAST_CASES = ("base", "bear", "bull", "informational")
@@ -121,7 +124,9 @@ class ForecastAssumption(BaseModel):
                 raise ValueError(f"Unknown controlled unit: {self.unit}")
         if self.currency is not None and self.currency not in FORECAST_CURRENCIES:
             raise ValueError(f"Unknown controlled currency: {self.currency}")
-        if self.field in {"retail_sales_growth", "revenue_growth"}:
+        if self.field in {
+                "retail_sales_growth", "revenue_growth",
+                "sale_of_merchandise_growth", "trading_margin"}:
             if not self.period_label:
                 raise ValueError(f"{self.field} requires a fiscal period")
             if self.unit not in (None, "percentage"):
@@ -176,6 +181,149 @@ class ForecastPlan(BaseModel):
             raise ValueError("Assumption refers to an unknown financial period")
         return self
 
+
+
+def terminal_method_values() -> tuple[str, ...]:
+    """Expose the engine enum as the only source for terminal-method UI values."""
+    return tuple(item.value for item in TerminalMethod)
+
+
+def terminal_metric_values() -> tuple[str, ...]:
+    """Terminal metric bases supported by the deterministic DCF engine."""
+    return ("EBIT", "EBITDA")
+
+
+def _accepted_terminal_ref(plan: ForecastPlan, field: str,
+                           case: str = "base") -> InputRef | None:
+    matches = [
+        item for item in eligible_assumptions(plan)
+        if item.field == field and item.case == case and item.value is not None
+    ]
+    if len(matches) != 1:
+        return None
+    return InputRef(metric_id=matches[0].assumption_id, field=field, case=case)
+
+
+def configure_terminal_method(
+        plan: ForecastPlan, method: str, *, terminal_metric: str | None = None,
+        changed_by: str = "analyst", sector: str | None = None) -> ForecastPlan:
+    """Change only the draft DCF terminal configuration and create a new in-memory version."""
+    selected = TerminalMethod(method)
+    if terminal_metric not in (None, "", *terminal_metric_values()):
+        raise ValueError("Terminal metric must be EBIT or EBITDA")
+    current_engine = plan.engine_plan
+    current_case = current_engine.cases.get("base") if current_engine else None
+    current_dcf = current_case.dcf if current_case else None
+    if current_dcf:
+        if (selected == TerminalMethod.PERPETUITY_GROWTH
+                and (current_dcf.exit_multiple is not None
+                     or current_dcf.terminal_metric is not None)):
+            raise ValueError("Remove exit-multiple terminal inputs before selecting perpetuity growth")
+        if (selected == TerminalMethod.EXIT_MULTIPLE
+                and current_dcf.terminal_growth is not None):
+            raise ValueError("Remove terminal-growth input before selecting exit multiple")
+        update = {"terminal_method": selected}
+        if selected == TerminalMethod.PERPETUITY_GROWTH:
+            update["terminal_growth"] = (
+                current_dcf.terminal_growth
+                or _accepted_terminal_ref(plan, "terminal_growth"))
+        else:
+            update["exit_multiple"] = (
+                current_dcf.exit_multiple
+                or _accepted_terminal_ref(plan, "exit_multiple"))
+            update["terminal_metric"] = terminal_metric or current_dcf.terminal_metric
+        dcf = current_dcf.model_copy(update=update)
+    else:
+        dcf = DcfSpec(
+            valuation_date=(current_engine.valuation_date if current_engine
+                            else plan.updated_at.date()),
+            years=[],
+            cash_flow_currency=plan.valuation_currency,
+            cash_flow_basis=Basis.NOMINAL,
+            inflation_basis=f"{plan.valuation_currency}_CPI",
+            wacc=WaccSpec(
+                currency=plan.valuation_currency, basis=Basis.NOMINAL,
+                inflation_basis=f"{plan.valuation_currency}_CPI"),
+            terminal_method=selected,
+            terminal_growth=(_accepted_terminal_ref(plan, "terminal_growth")
+                             if selected == TerminalMethod.PERPETUITY_GROWTH else None),
+            exit_multiple=(_accepted_terminal_ref(plan, "exit_multiple")
+                           if selected == TerminalMethod.EXIT_MULTIPLE else None),
+            terminal_metric=(terminal_metric or None)
+                            if selected == TerminalMethod.EXIT_MULTIPLE else None,
+        )
+    if current_engine:
+        if current_case and current_case.primary_method != "DCF":
+            raise ValueError("Base case must use DCF before configuring a DCF terminal method")
+        case = (current_case.model_copy(update={"dcf": dcf}) if current_case else
+                CasePlan(rationale="Analyst-configured draft DCF", primary_method="DCF", dcf=dcf))
+        engine = current_engine.model_copy(
+            update={"cases": {**current_engine.cases, "base": case}})
+    else:
+        raw_sector = (sector or "").casefold()
+        controlled_sector = (
+            sector if sector in {"mining", "retail", "holding_company", "bank"}
+            else "retail" if "retail" in raw_sector
+            else "mining" if any(x in raw_sector for x in ("mining", "commodit"))
+            else "holding_company" if "holding" in raw_sector
+            else "bank" if any(x in raw_sector for x in ("bank", "financial service"))
+            else None
+        )
+        engine = ValuationPlan(
+            ticker=plan.ticker, report_version_id=plan.source_report_version_id,
+            valuation_date=dcf.valuation_date, currency=plan.valuation_currency,
+            sector=controlled_sector,
+            cases={"base": CasePlan(
+                rationale="Analyst-configured draft DCF",
+                primary_method="DCF", dcf=dcf)},
+        )
+    return new_version(plan, changed_by=changed_by, engine_plan=engine)
+
+
+def terminal_configuration_status(plan: ForecastPlan, case: str = "base") -> dict:
+    """Report terminal readiness from accepted assumptions and the stored DcfSpec."""
+    case_plan = plan.engine_plan.cases.get(case) if plan.engine_plan else None
+    dcf = case_plan.dcf if case_plan else None
+    if dcf is None:
+        return {"method": None, "status": "missing inputs",
+                "missing": ["terminal_method"]}
+    accepted = [
+        item for item in eligible_assumptions(plan)
+        if item.case == case and item.value is not None
+    ]
+    by_field = {}
+    for item in accepted:
+        by_field.setdefault(item.field, []).append(item)
+    result = {"method": dcf.terminal_method.value, "status": "missing inputs",
+              "missing": []}
+    if dcf.terminal_method == TerminalMethod.PERPETUITY_GROWTH:
+        growth = by_field.get("terminal_growth", [])
+        if len(growth) != 1 or dcf.terminal_growth is None:
+            result["missing"].append("terminal_growth")
+        else:
+            result["terminal_growth"] = growth[0].value
+        wacc = by_field.get("wacc_override", []) or by_field.get("wacc", [])
+        if len(wacc) != 1:
+            result["missing"].append("WACC")
+        else:
+            result["wacc"] = wacc[0].value
+            if growth and len(growth) == 1 and wacc[0].value <= growth[0].value:
+                result["status"] = "invalid"
+                result["error"] = "WACC must be greater than terminal growth"
+                return result
+    else:
+        multiple = by_field.get("exit_multiple", [])
+        if len(multiple) != 1 or dcf.exit_multiple is None:
+            result["missing"].append("exit_multiple")
+        else:
+            result["exit_multiple"] = multiple[0].value
+        if dcf.terminal_metric not in terminal_metric_values():
+            result["missing"].append("terminal_metric")
+        else:
+            result["terminal_metric"] = dcf.terminal_metric
+    if not result["missing"]:
+        result["status"] = "ready"
+    return result
 
 def horizon_for_assumption(
     plan: ForecastPlan,
@@ -234,10 +382,12 @@ def approve_plan(plan: ForecastPlan, reviewer: str) -> ForecastPlan:
     if any(a.origin in {Origin.ANALYST_ASSUMPTION, Origin.SCENARIO_ASSUMPTION}
            and a.approval_state == ApprovalState.PROPOSED for a in plan.assumptions):
         raise ValueError("Review proposed assumptions before approving")
-    approved = new_version(plan, changed_by=reviewer)
-    return approved.model_copy(update={"status": PlanStatus.APPROVED, "approval_status": "approved",
-                                   "approved_by": reviewer, "approved_at": datetime.now(timezone.utc),
-                                   "updated_at": datetime.now(timezone.utc)})
+    if plan.status != PlanStatus.DRAFT:
+        raise ValueError("Only a draft ForecastPlan can be approved")
+    now = datetime.now(timezone.utc)
+    return plan.model_copy(update={"status": PlanStatus.APPROVED, "approval_status": "approved",
+                                   "approved_by": reviewer, "approved_at": now,
+                                   "updated_at": now})
 
 
 def eligible_assumptions(plan: ForecastPlan) -> list[ForecastAssumption]:
@@ -323,6 +473,18 @@ def preview_valuation(plan: ForecastPlan, metrics: list, candidates: list) -> Va
                 valid = (a is not None and a.field == "revenue_growth"
                          and c.valuation_field.value == "revenue"
                          and a.case == c.case_type.value)
+            elif sid.startswith("retail_trading_profit:"):
+                parts = sid.split(":")
+                if len(parts) != 3:
+                    raise ValueError("Retail trading-profit lineage is malformed")
+                sale = accepted.get(UUID(parts[1]))
+                margin = accepted.get(UUID(parts[2]))
+                valid = (
+                    sale is not None and margin is not None
+                    and sale.field == "sale_of_merchandise_growth"
+                    and margin.field == "trading_margin"
+                    and c.valuation_field.value == "ebit"
+                    and sale.case == margin.case == c.case_type.value)
             else:
                 raise ValueError("Model input lacks an accepted forecast-assumption link")
             if not valid:
@@ -377,6 +539,27 @@ def price_fx_schedule(plan: ForecastPlan, field: str, case: str = "base") -> lis
                           x.period_label == p.label and x.case == case), None)]]
 
 
+
+
+def discard_proposed_assumption(
+        plan: ForecastPlan, assumption_id: UUID, analyst: str) -> ForecastPlan:
+    """Remove one proposed analyst assumption from a new draft version."""
+    if not analyst.strip():
+        raise ValueError("Analyst required")
+    selected = next(
+        (item for item in plan.assumptions if item.assumption_id == assumption_id),
+        None)
+    if selected is None:
+        raise ValueError("Unknown assumption")
+    if (selected.origin != Origin.ANALYST_ASSUMPTION
+            or selected.approval_state != ApprovalState.PROPOSED):
+        raise ValueError(
+            "Only a proposed analyst assumption can be discarded")
+    retained = [
+        item for item in plan.assumptions
+        if item.assumption_id != assumption_id
+    ]
+    return new_version(plan, changed_by=analyst, assumptions=retained)
 
 def reject_suggestion(plan: ForecastPlan, suggestion_id: UUID, analyst: str) -> ForecastPlan:
     if not analyst.strip():
@@ -447,12 +630,23 @@ def compile_plan_inputs(plan: ForecastPlan, evidence_metrics: list):
     from .valuation_preflight import candidate
     evidence = {m.metric_id: m for m in evidence_metrics}
     accepted = {a.assumption_id: a for a in eligible_assumptions(plan)}
-    from .retail_forecast import build_retail_forecasts, materialize_retail_forecast
-    retail_records, _ = build_retail_forecasts(plan, evidence_metrics, include_proposed=False)
+    from .retail_forecast import (
+        build_retail_earnings_forecasts, build_retail_forecasts,
+        materialize_retail_forecast, materialize_retail_trading_profit)
+    retail_records, _ = build_retail_forecasts(
+        plan, evidence_metrics, include_proposed=False)
+    retail_earnings, _ = build_retail_earnings_forecasts(
+        plan, evidence_metrics, records=retail_records, include_proposed=False)
     derived = {}
     for record in retail_records:
         if record.valuation_eligible:
-            metric, derived_candidate = materialize_retail_forecast(record, plan.source_report_version_id)
+            metric, derived_candidate = materialize_retail_forecast(
+                record, plan.source_report_version_id)
+            derived[metric.metric_id] = (metric, derived_candidate)
+    for record in retail_earnings:
+        if record.valuation_eligible:
+            metric, derived_candidate = materialize_retail_trading_profit(
+                record, plan.source_report_version_id)
             derived[metric.metric_id] = (metric, derived_candidate)
     metrics = list(evidence_metrics)
     candidates = []
@@ -587,3 +781,4 @@ def record_gemini_suggestion(plan: ForecastPlan, suggestion: ForecastAssumption)
         raise ValueError("Only proposed Gemini suggestions can enter the suggestion ledger")
     return new_version(plan, changed_by=suggestion.created_by,
                        assumptions=[*plan.assumptions, suggestion])
+
