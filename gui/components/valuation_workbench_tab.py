@@ -50,7 +50,7 @@ LABELS = {
 class ValuationWorkbenchTab(ttk.Frame):
     def __init__(self, parent, ticker, async_run_bg):
         super().__init__(parent)
-        self.ticker=ticker; self.async_run_bg=async_run_bg; self.plan=None; self.evidence=[]; self.history=[]; self.pending=[]; self.saving=False; self.category=None; self.backtest=None
+        self.ticker=ticker; self.async_run_bg=async_run_bg; self.plan=None; self.evidence=[]; self.history=[]; self.pending=[]; self.saving=False; self.category=None; self.backtest=None; self.price_import_preview=None
         self.fields={}; self.input_widgets={}
         self._widgets()
         self.refresh()
@@ -152,8 +152,66 @@ class ValuationWorkbenchTab(ttk.Frame):
         ttk.Button(controls,text='Resolve historical snapshot',command=self.resolve_backtest).pack(side='left',padx=4)
         self.save_backtest_button=ttk.Button(controls,text='Save backtest snapshot',command=self.save_backtest,state='disabled')
         self.save_backtest_button.pack(side='left',padx=4)
+        import_controls=ttk.Frame(frame); import_controls.pack(fill=X,padx=8,pady=4)
+        ttk.Label(import_controls,text='Historical prices').pack(side='left')
+        self.price_start_var=StringVar(value='2020-01-01')
+        self.price_end_var=StringVar(value=str(date.today()))
+        ttk.Entry(import_controls,textvariable=self.price_start_var,width=12).pack(side='left',padx=4)
+        ttk.Entry(import_controls,textvariable=self.price_end_var,width=12).pack(side='left',padx=4)
+        ttk.Button(import_controls,text='Preview yfinance import',command=self.preview_price_import).pack(side='left',padx=4)
+        self.price_import_button=ttk.Button(import_controls,text='Import historical prices',
+          command=self.import_historical_prices,state='disabled')
+        self.price_import_button.pack(side='left',padx=4)
         box=ttk.Text(frame,wrap='word',height=24); box.pack(fill=BOTH,expand=True,padx=8,pady=4)
         self.views['Backtest']=box
+
+    def preview_price_import(self):
+        try:
+            start=date.fromisoformat(self.price_start_var.get().strip())
+            end=date.fromisoformat(self.price_end_var.get().strip())
+        except ValueError:
+            messagebox.showerror('Invalid range','Enter start and end as YYYY-MM-DD.',parent=self); return
+        self.status.set(f'Downloading yfinance preview for {self.ticker}...')
+        async def work():
+            try:
+                from modules.data.historical_prices import download_preview
+                return {'ok':True,'preview':await download_preview(self.ticker,start,end)}
+            except Exception as exc:return {'ok':False,'error':str(exc)}
+        def done(payload):
+            if not payload or not payload.get('ok'):
+                self.price_import_preview=None; self.price_import_button.configure(state='disabled')
+                messagebox.showerror('Historical price preview failed',(payload or {}).get('error','Unknown error'),parent=self); return
+            p=payload['preview']; self.price_import_preview=p; self.price_import_button.configure(state='normal')
+            lines=[f'Ticker: {p.ticker}',f'Provider symbol: {p.provider_symbol}',
+              f'Range: {p.start} to {p.end}',f'Rows fetched: {len(p.rows)}',
+              f'Provider currency: {p.provider_currency}',f'Normalized currency: {p.currency}',f'Unit: cents per share',
+              'Raw close basis: Yahoo Close (auto_adjust=False)',
+              f'Adjusted close available: {"yes" if p.adjusted_available else "no"}',
+              '', 'Review this preview, then choose Import historical prices to persist it.']
+            self._text('Backtest','\n'.join(lines)); self.status.set('Historical price preview ready; nothing persisted.')
+        self.async_run_bg(work(),callback=done)
+
+    def import_historical_prices(self):
+        p=self.price_import_preview
+        if p is None:return
+        if not messagebox.askyesno('Confirm historical price import',
+          f'Persist {len(p.rows)} immutable observations for {p.ticker}\n{p.start} to {p.end}?',parent=self):return
+        self.price_import_button.configure(state='disabled'); self.status.set('Persisting historical price evidence...')
+        async def work():
+            try:
+                from modules.data.historical_prices import persist_preview
+                return {'ok':True,'result':await persist_preview(p)}
+            except Exception as exc:return {'ok':False,'error':str(exc)}
+        def done(payload):
+            if not payload or not payload.get('ok'):
+                messagebox.showerror('Historical price import failed',(payload or {}).get('error','Unknown error'),parent=self); return
+            r=payload['result']; self.price_import_preview=None
+            messagebox.showinfo('Historical price import completed',
+              f"Batch ID: {r['batch_id']}\nFetched: {r['fetched']}\nInserted: {r['inserted']}\n"
+              f"Already present: {r['reused']}\nConflicts: {r['conflicted']}\n"
+              f"Date coverage: {r['coverage'][0]} to {r['coverage'][1]}",parent=self)
+            self.status.set(f"Historical price import completed: batch {r['batch_id']}")
+        self.async_run_bg(work(),callback=done)
 
     def _render_backtest(self):
         bt=self.backtest
@@ -169,7 +227,7 @@ class ValuationWorkbenchTab(ttk.Frame):
           '  Current learning points: EXCLUDED','  Evidence with unknown availability: EXCLUDED','']
         for item in bt.evidence_snapshot: lines.append(f'AVAILABLE | {item.kind} | {item.available_date} | {item.evidence_id}')
         for item in excluded: lines.append(f"EXCLUDED | {item.get('kind')} | {item.get('available_date') or 'unknown'} | {item.get('reason')}")
-        for item in bt.market_snapshot: lines.append(f'MARKET | {item.kind} | {item.observation_date} | lag={item.lag_days}d | {item.value} {item.unit or ""}')
+        for item in bt.market_snapshot: lines.append(f'MARKET | {item.kind} | {item.observation_date} | lag={item.lag_days}d | {item.value} {item.unit or ""} | provider={item.source} | basis={item.price_basis or "unknown"}')
         if not bt.source_report_ids: lines.extend(['','BLOCKED: No source-backed historical report package is available at this cutoff.'])
         self._text('Backtest','\n'.join(lines)); self.save_backtest_button.configure(state='normal')
 

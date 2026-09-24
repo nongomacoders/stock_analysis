@@ -1,4 +1,4 @@
-﻿"""Persistence and database resolvers for isolated Historical Backtests."""
+"""Persistence and database resolvers for isolated Historical Backtests."""
 from __future__ import annotations
 from datetime import date,datetime,timezone
 from decimal import Decimal
@@ -59,11 +59,16 @@ async def resolve_historical_snapshot(ticker:str,as_of_date:date,db=DBEngine):
       'published_at':r['publication_datetime'].date(),'content':r['content']} for r in sens_rows]
     sens_eligible,sens_excluded=resolve_evidence_as_of(sens_raw,as_of_date)
     eligible.extend(sens_eligible);excluded.extend(sens_excluded)
-    price_rows=await db.fetch("""SELECT observation_id AS id,ticker,trade_date,close_price,source,source_document_id
-      FROM price_observations WHERE ticker=$1 AND trade_date <= $2 ORDER BY trade_date DESC,observed_at DESC LIMIT 1""",ticker,as_of_date)
+    price_rows=await db.fetch("""SELECT observation_id AS id,ticker,trade_date,
+      COALESCE(raw_close,close_price) AS close_price,source,source_document_id,
+      COALESCE(currency,'ZAR') AS currency,COALESCE(price_unit,'cents_per_share') AS unit,
+      COALESCE(price_basis,'raw_close') AS price_basis,provider_symbol
+      FROM price_observations WHERE ticker=$1 AND trade_date <= $2
+      ORDER BY trade_date DESC,observed_at DESC LIMIT 1""",ticker,as_of_date)
     market_raw=[{'id':str(r['id']),'kind':'share_price','instrument':ticker,
-      'trade_date':r['trade_date'],'value':r['close_price'],'currency':'ZARc','unit':'cents_per_share',
-      'source':r['source'] or 'unknown','source_document_id':str(r['source_document_id']) if r['source_document_id'] else None} for r in price_rows]
+      'trade_date':r['trade_date'],'value':r['close_price'],'currency':r['currency'],'unit':r['unit'],
+      'source':r['source'] or 'unknown','price_basis':r['price_basis'],'provider_symbol':r['provider_symbol'],
+      'source_document_id':str(r['source_document_id']) if r['source_document_id'] else None} for r in price_rows]
     market=resolve_latest_market_as_of(market_raw,as_of_date)
     available_periods=sorted({x.period_end for x in eligible if x.period_end})
     period_end=available_periods[-1] if available_periods else None

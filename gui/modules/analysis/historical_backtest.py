@@ -1,4 +1,4 @@
-﻿"""Deterministic Historical Backtest contracts and leakage controls."""
+"""Deterministic Historical Backtest contracts and leakage controls."""
 from __future__ import annotations
 from datetime import date, datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -38,6 +38,8 @@ class HistoricalMarketObservation(BaseModel):
     unit:str|None=None
     source:str
     source_id:str|None=None
+    provider_symbol:str|None=None
+    price_basis:str|None=None
     lag_days:int=Field(ge=0)
 
 class HistoricalBacktest(BaseModel):
@@ -104,7 +106,7 @@ def resolve_latest_market_as_of(items:list[dict],as_of_date:date):
     for (kind,instrument),(observed,row) in sorted(selected.items()):
         value=row.get('value',row.get('close_price',row.get('close')))
         if value is None:continue
-        out.append(HistoricalMarketObservation(snapshot_id=str(row.get('observation_id') or row.get('id') or f'{kind}:{instrument}:{observed}'),kind=kind,instrument=instrument,observation_date=observed,value=Decimal(str(value)),currency=row.get('currency'),unit=row.get('unit'),source=str(row.get('source') or 'unknown'),source_id=str(row.get('source_document_id') or '') or None,lag_days=(as_of_date-observed).days))
+        out.append(HistoricalMarketObservation(snapshot_id=str(row.get('observation_id') or row.get('id') or f'{kind}:{instrument}:{observed}'),kind=kind,instrument=instrument,observation_date=observed,value=Decimal(str(value)),currency=row.get('currency'),unit=row.get('unit'),source=str(row.get('source') or 'unknown'),source_id=str(row.get('source_document_id') or '') or None,provider_symbol=row.get('provider_symbol'),price_basis=row.get('price_basis'),lag_days=(as_of_date-observed).days))
     return out
 
 def select_historical_share_count(evidence:list[HistoricalEvidence]):
