@@ -34,7 +34,7 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
     (root / "results/TEST").mkdir(parents=True)
     (root / "prompts").mkdir()
     source = root / "results/TEST/20260914.txt"
-    source.write_text("Exact source data", encoding="utf-8")
+    source.write_text("Exact source data\nGroup annual financial results for the 52 weeks ended 28 June 2026. Produced by the JSE SENS Department.", encoding="utf-8")
     (root / "prompts/commodity_prompt.txt").write_text("Generate report", encoding="utf-8")
     monkeypatch.setattr(generator, "GUI_ROOT", root)
     monkeypatch.setattr(report_versions, "ARCHIVE_ROOT", tmp_path / "evidence")
@@ -66,7 +66,7 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
         assert manifest["previous_report_supplied_to_model"] is False
         assert "Old report" not in manifest["prompt"]
         assert manifest["share_price"]["source_date"] == "2026-09-18"
-        assert Path(manifest["sources"][0]["archive_path"]).read_text() == "Exact source data"
+        assert Path(manifest["sources"][0]["archive_path"]).read_text().startswith("Exact source data")
         if provider_fails:
             raise RuntimeError("Simulated inference failure")
         return SimpleNamespace(text=report, usage_metadata=None, model_dump=lambda **kw: {"text": report, "extra": "raw field"})
@@ -154,7 +154,7 @@ def test_rerun_source_inventory_lists_inputs_and_warns_without_pdf(monkeypatch, 
     root = tmp_path / "gui"
     folder = root / "results" / "TRU"
     folder.mkdir(parents=True)
-    (folder / "results.txt").write_text("summary", encoding="utf-8")
+    (folder / "results.txt").write_text("Group annual financial results for the 52 weeks ended 28 June 2026. Produced by the JSE SENS Department.", encoding="utf-8")
     (folder / "notes.json").write_text("{}", encoding="utf-8")
     monkeypatch.setattr(generator, "GUI_ROOT", root)
     inventory = generator.get_results_source_inventory("TRU.JO")
@@ -170,7 +170,8 @@ def test_rerun_source_inventory_lists_inputs_and_warns_without_pdf(monkeypatch, 
 
 def test_rerun_source_inventory_identifies_financial_pdf(monkeypatch, tmp_path):
     import modules.analysis.results_package as results_package
-    monkeypatch.setattr(results_package, "classify_path", lambda path: "annual_financial_statements")
+    afs_text="Company annual financial statements\nStatement of financial position\nStatement of comprehensive income\n52 weeks ended 28 June 2026"
+    monkeypatch.setattr(results_package, 'read_document_text', lambda path: afs_text)
     root = tmp_path / "gui"
     folder = root / "results" / "TRU"
     folder.mkdir(parents=True)

@@ -258,12 +258,12 @@ async def _fetch_commodity_fx_averages(since_date):
     return await fetch_market_averages(since_date)
 
 
-def _load_results_text(results_root: Path, canon_ticker: str, *, max_chars: int | None) -> tuple[str, list[Path]]:
+def _load_results_text(results_root: Path, canon_ticker: str, *, max_chars: int | None, files: list[Path] | None = None) -> tuple[str, list[Path]]:
     ticker_dir = results_root / canon_ticker
     if not ticker_dir.exists():
         return "", []
 
-    files = sorted([p for p in ticker_dir.glob("*.txt") if p.is_file()])
+    files = sorted(files if files is not None else [p for p in ticker_dir.glob("*.txt") if p.is_file()])
     if not files:
         return "", []
 
@@ -303,17 +303,19 @@ def get_results_source_inventory(ticker: str) -> dict:
                                                    classify_path)
     folder = GUI_ROOT / "results" / sanitize_ticker(ticker)
     files = sorted((p for p in folder.iterdir() if p.is_file()), key=lambda p: p.name.lower()) if folder.exists() else []
-    roles = {p: classify_path(p) for p in files if p.suffix.lower() in {".txt", ".pdf"}}
+    from modules.analysis.results_package import select_live_result_paths
+    selection=select_live_result_paths([p for p in files if p.suffix.lower() in {'.txt','.pdf'}])
+    selected=selection['selected_paths']
+    roles = {item['path']:item['document_role'] for item in selection['selected']}
     role_values = set(roles.values())
-    evidence_depth = (DETAILED_RESULTS_PACKAGE
-                      if RESULTS_SENS in role_values and ANNUAL_FINANCIAL_STATEMENTS in role_values
-                      else HEADLINE_RESULTS_ONLY)
+    evidence_depth = (DETAILED_RESULTS_PACKAGE if RESULTS_SENS in role_values and ANNUAL_FINANCIAL_STATEMENTS in role_values else HEADLINE_RESULTS_ONLY)
+    ignored=[x['source']['path'] for x in selection['ignored']]
+    ignored.extend(p for p in files if p.suffix.lower() not in {'.txt','.pdf'})
     return {
-        "folder": folder, "files": files,
-        "text_files": [p for p in files if p.suffix.lower() == ".txt"],
-        "pdf_files": [p for p in files if p.suffix.lower() == ".pdf"],
-        "ignored_files": [p for p in files if p.suffix.lower() not in {".txt", ".pdf"}],
-        "document_roles": roles, "evidence_depth": evidence_depth,
+        'folder':folder,'files':files,'text_files':[p for p in selected if p.suffix.lower()=='.txt'],
+        'pdf_files':[p for p in selected if p.suffix.lower()=='.pdf'],'ignored_files':ignored,
+        'document_roles':roles,'evidence_depth':evidence_depth,'target_period':selection['target_period'],
+        'selection_warnings':selection['warnings'],
     }
 
 
@@ -340,6 +342,8 @@ def format_results_source_inventory(inventory: dict) -> str:
     if ignored:
         lines.extend(["", f"Other files ignored by Deep Research ({len(ignored)}):",
                       *[f"  - {p.name}" for p in ignored]])
+    if inventory.get('selection_warnings'):
+        lines.extend(['','Selection warnings:',*[f"  - {x}" for x in inventory['selection_warnings']]])
     lines.extend(["", "The previous Deep Research report will be archived after a successful replacement and is not supplied to Gemini.",
                   "", "Continue with the rerun?"])
     return "\n".join(lines)
@@ -628,8 +632,15 @@ async def run(*, ticker: str | None, limit: int | None, dry_run: bool,
                 f"\n\n===== SOURCE: {x.get('source_id') or x.get('name') or 'selected SENS'} =====\n\n{str(x.get('text') or '').strip()}\n"
                 for x in direct_records).strip() + "\n"
         else:
-            pdfs = _find_result_pdfs(results_root, canon)
-            payload, used_files = _load_results_text(results_root, canon, max_chars=max_chars)
+            from modules.analysis.results_package import select_live_result_paths
+            ticker_dir=results_root/canon
+            candidates=sorted([p for p in ticker_dir.iterdir() if p.is_file() and p.suffix.lower() in {'.txt','.pdf'}],key=lambda p:p.name.lower()) if ticker_dir.exists() else []
+            selection=select_live_result_paths(candidates)
+            for warning in selection['warnings']:logger.warning('Live results selection %s: %s',t,warning)
+            selected=selection['selected_paths']
+            pdfs=[p for p in selected if p.suffix.lower()=='.pdf']
+            payload,used_files=_load_results_text(results_root,canon,max_chars=max_chars,
+              files=[p for p in selected if p.suffix.lower()=='.txt'])
 
         if (not payload.strip()) and (not pdfs):
             logger.warning("No direct source or .txt/.pdf files found for %s", canon)

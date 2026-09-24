@@ -32,14 +32,50 @@ def classify_document(source):
 
 def classify_path(path):
  path=Path(path)
+ return classify_document({'name':path.name,'text':read_document_text(path)})
+def read_document_text(path:Path)->str:
+ path=Path(path)
  try:
-  if path.suffix.lower()==".txt":text=path.read_text(encoding="utf-8",errors="ignore")
-  elif path.suffix.lower()==".pdf":
+  if path.suffix.lower()=='.txt':return path.read_text(encoding='utf-8',errors='ignore')
+  if path.suffix.lower()=='.pdf':
    from PyPDF2 import PdfReader
-   reader=PdfReader(str(path)); text="\n".join((page.extract_text() or "") for page in reader.pages[:25])
-  else:text=""
- except Exception:return "other"
- return classify_document({"name":path.name,"text":text})
+   return '\n'.join((page.extract_text() or '') for page in PdfReader(str(path)).pages[:25])
+ except Exception:return ''
+ return ''
+
+def select_live_sources(sources,requested_period=None):
+ inspected=[]
+ for source in sources:
+  item=dict(source);item['document_role']=classify_document(item);item['reporting_period']=_period(item.get('text') or '')
+  inspected.append(item)
+ target=requested_period
+ if isinstance(target,str):target=date.fromisoformat(target)
+ recognized=[x for x in inspected if x['document_role'] in {RESULTS_SENS,ANNUAL_FINANCIAL_STATEMENTS}]
+ if target is None:
+  sens_periods=[x['reporting_period'] for x in recognized if x['document_role']==RESULTS_SENS and x['reporting_period']]
+  periods=sens_periods or [x['reporting_period'] for x in recognized if x['reporting_period']]
+  target=max(periods) if periods else None
+ selected=[];ignored=[]
+ for item in inspected:
+  reason=None
+  if item['document_role'] not in {RESULTS_SENS,ANNUAL_FINANCIAL_STATEMENTS}:reason='unsupported document role'
+  elif item['reporting_period'] is None:reason='reporting period unresolved'
+  elif target is None:reason='package reporting period unresolved'
+  elif item['reporting_period']!=target:reason=f"reporting period {item['reporting_period']} does not match requested {target}"
+  if reason:ignored.append({'source':item,'reason':reason})
+  else:selected.append(item)
+ roles={x['document_role'] for x in selected}
+ warnings=[f"Ignored {x['source'].get('name')}: {x['reason']}" for x in ignored]
+ if target and RESULTS_SENS not in roles:warnings.append(f'No results SENS found for {target}')
+ if target and ANNUAL_FINANCIAL_STATEMENTS not in roles:warnings.append(f'No annual financial statements found for {target}')
+ return {'target_period':target,'selected':selected,'ignored':ignored,'warnings':warnings}
+
+def select_live_result_paths(paths,requested_period=None):
+ sources=[{'name':Path(x).name,'path':Path(x),'text':read_document_text(Path(x))} for x in paths]
+ result=select_live_sources(sources,requested_period)
+ result['selected_paths']=[x['path'] for x in result['selected']]
+ return result
+
 def classify_package(sources):
  roles={s.get("document_role") or classify_document(s) for s in sources}
  if RESULTS_SENS in roles and ANNUAL_FINANCIAL_STATEMENTS in roles:return DETAILED_RESULTS_PACKAGE

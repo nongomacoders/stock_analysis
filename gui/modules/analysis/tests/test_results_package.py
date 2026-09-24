@@ -5,7 +5,7 @@ import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[3]))
 from modules.analysis.results_package import (ANNUAL_FINANCIAL_STATEMENTS,DETAILED_RESULTS_PACKAGE,
  HEADLINE_RESULTS_ONLY,RESULTS_SENS,annotate_sources,build_results_package,classify_document,
- classify_package,observations_to_metrics,parse_afs,reconcile_observations,render_package_for_prompt)
+ classify_package,observations_to_metrics,parse_afs,reconcile_observations,render_package_for_prompt,select_live_result_paths,select_live_sources)
 
 SENS="""Group annual financial statements, summarised audited group annual results for the 52 weeks ended 28 June 2026
 Headline earnings per share 732.2 cents
@@ -68,16 +68,35 @@ def test_share_metrics_remain_separate_with_page_provenance():
 
 def test_tru_actual_package_regression():
  folder=Path(__file__).resolve().parents[3]/"results/TRU"
- pdf=next(folder.glob("*.pdf"),None); txt=next(folder.glob("*.txt"),None)
- if not pdf or not txt:return
+ selection=select_live_result_paths(list(folder.glob('*.txt'))+list(folder.glob('*.pdf')))
+ selected=selection['selected']
+ if not selected:return
  from hashlib import sha256
- from PyPDF2 import PdfReader
- sources=[source(txt.name,txt.read_text(encoding="utf-8",errors="ignore"),"file:0"),
-          source(pdf.name,"\n".join(p.extract_text() or "" for p in PdfReader(str(pdf)).pages),"file:1")]
- sources[0].update(archive_path=str(txt),sha256=sha256(txt.read_bytes()).hexdigest())
- sources[1].update(archive_path=str(pdf),sha256=sha256(pdf.read_bytes()).hexdigest())
+ sources=[]
+ for index,item in enumerate(selected):
+  path=item['path'];record=source(path.name,item['text'],f'file:{index}')
+  record.update(archive_path=str(path),sha256=sha256(path.read_bytes()).hexdigest())
+  sources.append(record)
+ assert selection['target_period']==date(2026,6,28)
+ assert 'FY2025AFS.pdf' not in {x['name'] for x in selected}
  package=build_results_package(sources)
  assert package["evidence_depth"]==DETAILED_RESULTS_PACKAGE
  names={x["name"] for x in package["observations"]}
  assert {"inventory","working_capital_movement","weighted_average_basic_shares","weighted_average_diluted_shares","segment_revenue","segment_trading_margin"}<=names
  assert {"Truworths Africa","Office UK"}<={x["operation_segment"] for x in package["observations"]}
+
+
+def test_live_selector_ignores_prior_period_files_in_same_directory(tmp_path,monkeypatch):
+ import modules.analysis.results_package as rp
+ folder=tmp_path/'results'/'TEST';folder.mkdir(parents=True)
+ files={
+  'results_2026.txt':SENS,
+  'FY2025AFS.pdf':'Company ANNUAL FINANCIAL STATEMENTS 2025\nGROUP STATEMENT OF FINANCIAL POSITION\nGROUP STATEMENT OF COMPREHENSIVE INCOME\n52 weeks to 29 June 2025',
+  'FY2026AFS.pdf':AFS_TEXT,
+ }
+ for name,text in files.items():(folder/name).write_text(text,encoding='utf-8')
+ monkeypatch.setattr(rp,'read_document_text',lambda path:path.read_text(encoding='utf-8'))
+ result=rp.select_live_result_paths(list(folder.iterdir()))
+ assert result['target_period']==date(2026,6,28)
+ assert {p.name for p in result['selected_paths']}=={'results_2026.txt','FY2026AFS.pdf'}
+ assert any(x['source']['name']=='FY2025AFS.pdf' and 'does not match requested' in x['reason'] for x in result['ignored'])

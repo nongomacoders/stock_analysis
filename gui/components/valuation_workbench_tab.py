@@ -50,13 +50,13 @@ LABELS = {
 class ValuationWorkbenchTab(ttk.Frame):
     def __init__(self, parent, ticker, async_run_bg):
         super().__init__(parent)
-        self.ticker=ticker; self.async_run_bg=async_run_bg; self.plan=None; self.evidence=[]; self.history=[]; self.pending=[]; self.saving=False; self.category=None; self.backtest=None; self.price_import_preview=None
+        self.ticker=ticker; self.async_run_bg=async_run_bg; self.plan=None; self.evidence=[]; self.history=[]; self.pending=[]; self.saving=False; self.category=None; self.backtest=None; self.price_import_preview=None; self.package_ticker_var=StringVar(value=ticker)
         self.fields={}; self.input_widgets={}
         self._widgets()
         self.refresh()
 
     def update_ticker(self,ticker):
-        self.ticker=ticker; self.plan=None; self.pending=[]; self.category=None; self.backtest=None; self.refresh()
+        self.ticker=ticker; self.package_ticker_var.set(ticker); self.plan=None; self.pending=[]; self.category=None; self.backtest=None; self.refresh()
 
     def _widgets(self):
         bar=ttk.Frame(self); bar.pack(fill=X,padx=8,pady=5)
@@ -152,6 +152,16 @@ class ValuationWorkbenchTab(ttk.Frame):
         ttk.Button(controls,text='Resolve historical snapshot',command=self.resolve_backtest).pack(side='left',padx=4)
         self.save_backtest_button=ttk.Button(controls,text='Save backtest snapshot',command=self.save_backtest,state='disabled')
         self.save_backtest_button.pack(side='left',padx=4)
+        package_controls=ttk.Frame(frame); package_controls.pack(fill=X,padx=8,pady=4)
+        ttk.Label(package_controls,text='Package ticker:').pack(side='left')
+        ttk.Label(package_controls,textvariable=self.package_ticker_var).pack(side='left',padx=3)
+        self.backtest_period_var=StringVar(value=f'FY{date.today().year-1}')
+        from modules.analysis.historical_packages import controlled_period_values
+        ttk.Combobox(package_controls,textvariable=self.backtest_period_var,state='readonly',
+          values=controlled_period_values(),width=12).pack(side='left',padx=4)
+        ttk.Button(package_controls,text='Create backtest folders',command=self.create_backtest_folders).pack(side='left',padx=4)
+        ttk.Button(package_controls,text='Open selected backtest folder',command=self.open_backtest_folder).pack(side='left',padx=4)
+        ttk.Button(package_controls,text='Validate package',command=self.validate_backtest_package).pack(side='left',padx=4)
         import_controls=ttk.Frame(frame); import_controls.pack(fill=X,padx=8,pady=4)
         ttk.Label(import_controls,text='Historical prices').pack(side='left')
         self.price_start_var=StringVar(value='2020-01-01')
@@ -164,6 +174,71 @@ class ValuationWorkbenchTab(ttk.Frame):
         self.price_import_button.pack(side='left',padx=4)
         box=ttk.Text(frame,wrap='word',height=24); box.pack(fill=BOTH,expand=True,padx=8,pady=4)
         self.views['Backtest']=box
+
+    def _selected_package_status(self):
+        from modules.analysis.historical_packages import package_status
+        return package_status(self.ticker,self.backtest_period_var.get())
+
+    def _show_package_status(self,status):
+        lines=[f"{status['ticker']} / {status['period_label']}",'',
+          f"Folder: {'FOUND' if status['folder_exists'] else 'MISSING'}",
+          f"Path: {status['folder']}",'',
+          f"manifest.json: {'FOUND' if status['manifest_exists'] else 'MISSING'}",
+          f"SENS ({status['expected_files']['SENS']}): {'FOUND' if status['sens_exists'] else 'MISSING'}",
+          f"AFS ({status['expected_files']['AFS']}): {'FOUND' if status['afs_exists'] else 'MISSING'}",
+          f"Unexpected files: {', '.join(status['unexpected_files']) if status['unexpected_files'] else 'none'}",'',
+          f"Status: {status['status']}"]
+        validation=status.get('validation')
+        if validation:
+            lines.extend(['',f"Validator: {validation['status']}"])
+            lines.extend(f"ERROR: {x}" for x in validation.get('errors',[]))
+            lines.extend(f"WARNING: {x}" for x in validation.get('warnings',[]))
+        self._text('Backtest','\n'.join(lines))
+
+    def create_backtest_folders(self):
+        from modules.analysis.historical_packages import create_package_scaffold,package_status
+        try:
+            current=package_status(self.ticker,self.backtest_period_var.get())
+            create_missing=False
+            if current['folder_exists']:
+                if current['manifest_exists']:
+                    self._show_package_status(current)
+                    messagebox.showinfo('Backtest folder already exists',
+                      f"Existing contents were preserved.\n\nFolder:\n{current['folder']}",parent=self);return
+                create_missing=messagebox.askyesno('Create missing manifest',
+                  'The folder exists but manifest.json is missing. Create only the starter manifest?',parent=self)
+                if not create_missing:
+                    self._show_package_status(current);return
+            result=create_package_scaffold(self.ticker,self.backtest_period_var.get(),
+              create_missing_manifest=create_missing)
+        except Exception as exc:
+            messagebox.showerror('Cannot create backtest folder',str(exc),parent=self);return
+        status=result['status'];self._show_package_status(status)
+        messagebox.showinfo('Backtest folder created successfully',
+          f"Ticker: {self.ticker}\nPeriod: {status['period_label']}\nFolder:\n{status['folder']}\n\n"
+          f"Expected files:\n{status['expected_files']['SENS']}\n{status['expected_files']['AFS']}\n\n"
+          f"manifest.json {'created' if result['manifest_created'] else 'preserved'}",parent=self)
+
+    def open_backtest_folder(self):
+        try:
+            status=self._selected_package_status()
+            if not status['folder_exists']:raise ValueError('Create the selected backtest folder first')
+            import os
+            os.startfile(status['folder'])
+        except Exception as exc:messagebox.showerror('Cannot open folder',str(exc),parent=self)
+
+    def validate_backtest_package(self):
+        try:
+            status=self._selected_package_status()
+            if not status['folder_exists']:raise ValueError('Selected backtest folder does not exist')
+            from modules.analysis.historical_packages import validate_period_folder
+            result=validate_period_folder(status['folder'],self.ticker)
+            status['validation']=result
+            self._show_package_status(status)
+            messagebox.showinfo('Package validation',
+              f"Validation status: {result['status']}\nErrors: {len(result.get('errors',[]))}\nWarnings: {len(result.get('warnings',[]))}",
+              parent=self)
+        except Exception as exc:messagebox.showerror('Package validation failed',str(exc),parent=self)
 
     def preview_price_import(self):
         try:
