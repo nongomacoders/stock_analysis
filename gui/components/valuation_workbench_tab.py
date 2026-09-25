@@ -1,4 +1,4 @@
-﻿"""Analyst forecast workbench in the existing research window."""
+"""Analyst forecast workbench in the existing research window."""
 from __future__ import annotations
 from datetime import date
 import json
@@ -162,6 +162,29 @@ class ValuationWorkbenchTab(ttk.Frame):
         ttk.Button(package_controls,text='Create backtest folders',command=self.create_backtest_folders).pack(side='left',padx=4)
         ttk.Button(package_controls,text='Open selected backtest folder',command=self.open_backtest_folder).pack(side='left',padx=4)
         ttk.Button(package_controls,text='Validate package',command=self.validate_backtest_package).pack(side='left',padx=4)
+        from modules.analysis.historical_packages import suggest_manifest
+        from pathlib import Path
+        def suggest():
+          try:
+            status=self._selected_package_status()
+            if not status['folder_exists']:
+             messagebox.showwarning('Folder missing','Create the backtest folder first before suggesting manifest.',parent=self);return
+            suggested=suggest_manifest(self.ticker,self.backtest_period_var.get(),force_afs_date_override=True)
+            import json
+            folder=Path(status['folder'])
+            path=folder/'manifest.json'
+            if path.exists():
+             if messagebox.askyesno('Overwrite manifest?','Manifest already exists. Overwrite with suggested values?',parent=self):
+              path.write_text(json.dumps(suggested,indent=2),encoding='utf-8')
+              self._show_package_status(self._selected_package_status())
+              messagebox.showinfo('Manifest updated','Suggested manifest written.')
+            else:
+             path.write_text(json.dumps(suggested,indent=2),encoding='utf-8')
+             self._show_package_status(self._selected_package_status())
+             messagebox.showinfo('Suggested manifest','Manifest written successfully.')
+          except Exception as exc:
+            messagebox.showerror('Suggest manifest failed',str(exc),parent=self)
+        ttk.Button(package_controls,text='Suggest manifest',command=suggest).pack(side='left',padx=4)
         import_controls=ttk.Frame(frame); import_controls.pack(fill=X,padx=8,pady=4)
         ttk.Label(import_controls,text='Historical prices').pack(side='left')
         self.price_start_var=StringVar(value='2020-01-01')
@@ -172,7 +195,16 @@ class ValuationWorkbenchTab(ttk.Frame):
         self.price_import_button=ttk.Button(import_controls,text='Import historical prices',
           command=self.import_historical_prices,state='disabled')
         self.price_import_button.pack(side='left',padx=4)
-        box=ttk.Text(frame,wrap='word',height=24); box.pack(fill=BOTH,expand=True,padx=8,pady=4)
+        backtest_notebook = ttk.Notebook(frame)
+        backtest_notebook.pack(fill=BOTH, expand=True, padx=4, pady=4)
+        plan_frame = ttk.Frame(backtest_notebook)
+        backtest_notebook.add(plan_frame, text='Historical ForecastPlan')
+        from components.historical_plan_widget import HistoricalPlanWidget
+        self.historical_plan_widget = HistoricalPlanWidget(plan_frame, get_backtest_fn=lambda: self.backtest, async_run_bg=self.async_run_bg)
+        self.historical_plan_widget.pack(fill=BOTH, expand=True)
+        snapshot_frame = ttk.Frame(backtest_notebook)
+        backtest_notebook.add(snapshot_frame, text='Evidence & Market Snapshot')
+        box=ttk.Text(snapshot_frame,wrap='word',height=24); box.pack(fill=BOTH,expand=True,padx=8,pady=4)
         self.views['Backtest']=box
 
     def _selected_package_status(self):
@@ -304,7 +336,17 @@ class ValuationWorkbenchTab(ttk.Frame):
         for item in excluded: lines.append(f"EXCLUDED | {item.get('kind')} | {item.get('available_date') or 'unknown'} | {item.get('reason')}")
         for item in bt.market_snapshot: lines.append(f'MARKET | {item.kind} | {item.observation_date} | lag={item.lag_days}d | {item.value} {item.unit or ""} | provider={item.source} | basis={item.price_basis or "unknown"}')
         if not bt.source_report_ids: lines.extend(['','BLOCKED: No source-backed historical report package is available at this cutoff.'])
+        from modules.analysis.historical_readiness import evaluate_historical_baseline
+        gate = evaluate_historical_baseline(bt)
+        lines.extend(['', f'HISTORICAL BASELINE READINESS GATE: {"PASSED" if gate.ready else "BLOCKED"}'])
+        if not gate.ready:
+            lines.append(f'  Reason: {gate.reason}')
+        lines.append('  Baseline Concepts:')
+        for concept, st in gate.concept_statuses.items():
+            norm_str = f"{st.normalized_value:,.0f} {st.normalized_unit or ''}" if isinstance(st.normalized_value, Decimal) else f"{st.normalized_value} {st.normalized_unit or ''}"
+            lines.append(f"    {concept:<30} {st.status.value:<18} {norm_str:<25} (raw={st.raw_value} {st.raw_unit or ''}, src={st.source_name or 'none'}, p.{st.page})")
         self._text('Backtest','\n'.join(lines)); self.save_backtest_button.configure(state='normal')
+        if hasattr(self, 'historical_plan_widget'): self.historical_plan_widget.set_backtest(bt)
 
     def resolve_backtest(self):
         try: cutoff=date.fromisoformat(self.backtest_as_of_var.get().strip())

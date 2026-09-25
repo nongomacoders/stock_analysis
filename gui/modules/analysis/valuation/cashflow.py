@@ -29,3 +29,18 @@ def unlevered_fcf(*, ebit: Decimal, tax_rate: Decimal, depreciation: Decimal,
             "sustaining_capex": sustaining_capex, "growth_capex": growth_capex,
             "total_capex": total_capex, "working_capital_change": working_capital_change,
             "other_recurring_cash": other_recurring_cash, "unlevered_fcf": fcf}
+
+
+def interpret_working_capital(*, cash_flow: Decimal | None = None, investment: Decimal | None = None) -> Decimal:
+    """Interprets working capital based on explicitly stated semantic convention.
+    - If cash_flow is supplied (positive = cash generated/inflow), returns working_capital_change = -cash_flow.
+    - If investment is supplied (positive = cash consumed/outflow), returns working_capital_change = investment.
+    Ensures that the FCFF subtraction formula (FCFF = ... - working_capital_change) correctly handles both conventions without sign ambiguity.
+    """
+    if cash_flow is not None and investment is not None:
+        raise ValueError("Specify either cash_flow or investment, not both")
+    if cash_flow is not None:
+        return -cash_flow
+    if investment is not None:
+        return investment
+    raise ValueError("Must specify either cash_flow or investment")

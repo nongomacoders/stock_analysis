@@ -1,0 +1,145 @@
+================================================================================
+HISTORICAL BACKTEST BASELINE SUMMARY: TRU.JO / FY2025
+Generated: 2026-09-24
+Status: HISTORICAL BASELINE READY & VERIFIED (GATE: PASSED)
+================================================================================
+
+1. EXECUTIVE SUMMARY & CURRENT STATE
+--------------------------------------------------------------------------------
+We have fully validated, extracted, normalized, and verified the historical
+FY2025 SENS and AFS reporting package for Truworths International (TRU.JO).
+The Historical Backtest snapshot as of 2025-08-31 now resolves with a complete,
+provenance-backed, semantically validated historical baseline.
+
+Current Gate Status: PASSED (11 / 11 required baseline concepts satisfied)
+Historical ForecastPlan / Valuation: NOT CREATED (strictly baseline extraction)
+FY2026 / Current Data: STRICTLY ISOLATED & EXCLUDED (zero leakage)
+
+
+2. SNAPSHOT FACT SHEET (AS OF 2025-08-31)
+--------------------------------------------------------------------------------
+- Ticker: TRU.JO
+- Cutoff / As-of Date: 2025-08-31
+- Reporting Period End: 2025-06-29 (52 weeks ended 29 June 2025)
+- Active Source Files:
+  * TRU_FY2025_SENS.txt (SHA-256: 607f150f..., published 2025-08-28)
+  * TRU_FY2025_AFS.pdf  (SHA-256: 7e2389d7..., published 2025-08-28)
+  * manifest.json       (schema version 1, period FY2025)
+- Document Validation Status: VALID (all content classifiers passed)
+- Total Eligible Evidence Records: 85
+  * Document-level records: 2 (parent source files)
+  * Metric-level records: 83 (12 from SENS, 71 from AFS statements and notes)
+  * No duplicate registrations exist; all entries represent distinct audit provenance.
+- Excluded Evidence Records: 252 (FY2026 documents, post-cutoff metrics, unknown availability)
+- Market Observation: 2025-08-29 close price = 6,022 cents (R60.22/share, lag = 2 days)
+
+
+3. EXTRACTED & SEMANTICALLY VALIDATED BASELINE METRICS
+--------------------------------------------------------------------------------
+Concept                       Status      Normalized Economic Value   Raw Source Value       Unit              Source Location
+------------------------------------------------------------------------------------------------------------------------------------
+accounting_revenue            AVAILABLE   23,071,000,000              23,071                 ZAR               AFS Page 19 (Comprehensive Income)
+sale_of_merchandise           AVAILABLE   21,323,000,000              21,323                 ZAR               AFS Page 19 (Detailed AFS precedence over SENS R21.3b)
+trading_profit                AVAILABLE   2,892,000,000               2,892                  ZAR               AFS Page 19 (Comprehensive Income)
+trading_margin                AVAILABLE   13.6                        13.6                   percentage        AFS Page 101 (Note 35.1 Segments)
+depreciation                  AVAILABLE   1,500,000,000               (1,500)                ZAR               AFS Page 19 (Income statement expense normalized to FCFF add-back)
+capex                         AVAILABLE   674,000,000                 674                    ZAR               AFS Page 21 (Maintenance 187m + Expansion 428m + Software 59m)
+working_capital_baseline      AVAILABLE   166,000,000                 166                    ZAR               AFS Page 21 & Note 33.2 (Net cash inflow)
+tax_rate                      AVAILABLE   25.4                        25.4                   percentage        AFS Page 92 (Note 29.2 Effective Tax Rate; Statutory = 27.0%)
+net_cash_debt                 AVAILABLE   720,000,000                 +720m                  ZAR               AFS Notes 7.2, 7.3, 12, 16 & Note 25.8 (Reconstructed net cash)
+lease_liabilities             AVAILABLE   3,742,000,000               3,742                  ZAR               AFS Page 18 & Note 20.1 (Current 1,045m + Non-current 2,697m)
+historical_share_denominator  AVAILABLE   375,360,899                 375,360,899            shares            AFS Page 55 Note 12 (external_shares_ex_treasury at period end)
+historical_market_price       AVAILABLE   6,022.0                     6,022.0                cents_per_share   Market DB (2025-08-29 close price)
+
+
+4. KEY ARCHITECTURAL & METHODOLOGICAL RESOLUTIONS
+--------------------------------------------------------------------------------
+A. Historical Share Denominator:
+   - Full disclosed candidate set identified from source:
+     * Issued ordinary shares: 408,498,899 (AFS Note 12 / SENS)
+     * Treasury shares at period end: 33,138,000 (AFS Note 13)
+     * Treasury shares at announcement: 25,131,064 (SENS)
+     * External shares ex treasury (period end): 375,360,899 (AFS Note 12)
+     * External shares ex treasury (announcement): 383,367,835 (SENS)
+     * Weighted-average basic shares: 374,400,000 (AFS Note 31.1)
+     * Weighted-average diluted shares: 378,800,000 (AFS Note 31.2)
+   - Valuation Denominator Selected: `external_shares_ex_treasury` (375,360,899 shares).
+   - Economic Rationale: DCF equity valuation requires point-in-time claims entitled to
+     future distributions. Weighted-average counts are retrospective 52-week flow averages
+     for EPS, and treasury shares hold no economic claim on group equity value. Gross
+     issued shares (408.5m) are permitted only with a DILUTION_UNMODELED warning.
+
+B. Sale-of-Merchandise Normalization & Precedence:
+   - Resolved unit scaling in generic parser: SENS R21.3b now correctly normalizes to
+     21,300,000,000 ZAR with raw unit "ZAR_billion" preserved.
+   - Exact audited AFS Comprehensive Income disclosure (R21,323,000,000 ZAR) takes
+     precedence over rounded SENS headline figure.
+
+C. Depreciation Sign Semantics:
+   - Accounting presentation: -1,500,000,000 ZAR (shown as "(1 500)" on income statement).
+   - Economic normalization: +1,500,000,000 ZAR positive magnitude for FCFF add-back
+     with explicit conversion provenance: "income_statement_expense_to_economic_magnitude (abs)".
+
+D. Net Cash / Debt Definition:
+   - Exactly reconstructed from audited balance sheet and notes:
+     [Cash (964m) - Charitable trust restricted cash (14m) + Money market funds (2,224m)]
+     - [Interest-bearing borrowings (1,479m) + Bank overdraft (975m)]
+     = +R720,000,000 (reconciles with SENS and Note 25.8 gearing disclosure of 6.7% of equity).
+   - Lease liabilities (R3,742m) kept strictly separate from net cash/debt.
+
+E. Baseline Readiness Gate:
+   - Implemented deterministic evaluation in `gui/modules/analysis/historical_readiness.py`.
+   - Validates presence, unit, economic scale, sign convention, period alignment, and availability.
+   - Status transitions from BLOCKED to PASSED.
+
+
+5. CODEBASE MODULARITY & 200-LINE RULE COMPLIANCE
+--------------------------------------------------------------------------------
+All affected files strictly adhere to Rule 1 (strict 200-line limit per file):
+- gui/modules/analysis/afs_parser.py: 188 lines
+- gui/modules/analysis/sens_parser.py: 71 lines
+- gui/modules/analysis/results_package.py: 163 lines
+- gui/modules/analysis/historical_readiness.py: 127 lines
+- gui/modules/analysis/historical_backtest.py: 171 lines
+- gui/modules/analysis/historical_market_inputs.py: 103 lines
+- gui/modules/data/historical_market_storage.py: 69 lines
+- gui/modules/analysis/historical_wacc_resolver.py: 186 lines
+- gui/modules/analysis/historical_assistant_proposals.py: 178 lines
+- gui/modules/analysis/historical_mapping.py: 148 lines
+- gui/components/historical_market_input_dialog.py: 143 lines
+- gui/components/historical_plan_widget.py: 186 lines
+- gui/modules/analysis/tests/test_historical_market_wacc.py: 105 lines
+- gui/modules/analysis/tests/test_historical_assistant.py: 136 lines
+
+
+6. TEST SUITE & VALIDATION
+--------------------------------------------------------------------------------
+- Test Suite: gui/modules/analysis/tests/test_historical_market_wacc.py: 6/6 PASSED
+- Test Suite: gui/modules/analysis/tests/test_historical_market_provenance.py: 6/6 PASSED
+- Test Suite: gui/modules/analysis/tests/test_historical_assistant.py: 10/10 PASSED
+- Test Suite: gui/modules/analysis/tests/test_historical_forecast_plan.py: 4/4 PASSED
+- Test Suite: gui/modules/analysis/tests/test_historical_baseline_extraction.py: 7/7 PASSED
+- Test Suite: gui/modules/analysis/tests/test_historical_backtest.py: 14/14 PASSED
+- Total Historical Backtest Tests: 47 passed, 0 failed.
+
+
+7. HISTORICAL MARKET INPUT & PROVENANCE HARDENING
+--------------------------------------------------------------------------------
+- Authoritative PostgreSQL Storage: `historical_market_inputs` table created and migrated.
+  * Fields: input_id, scope, ticker, concept, value, unit, observation_date, available_date,
+    provider, source_url, source_methodology, notes, retrieval_timestamp, batch_id,
+    lookback_period, frequency, levered, debt_method, provenance_quality, source_document_id,
+    evidence_uri, evidence_hash, revision, supersedes_input_id, is_active, metadata, input_hash.
+- Audited Six Inputs & Provenance Classifications:
+  1. R2030 yield 10.25%: MANUAL_HISTORICAL_INPUT (analyst_entered, SARB/JSE, lag=2d, no raw file)
+  2. ERP 6.00%: MANUAL_HISTORICAL_INPUT (analyst_entered, PwC SA Survey, lag=57d, no raw file)
+  3. Beta 0.92: MANUAL_HISTORICAL_INPUT (analyst_entered, Bloomberg consensus, lag=2d, no raw file)
+  4. Cost of debt 9.80%: SOURCE_DOCUMENT_BACKED (Note 16 & Note 12, TRU_FY2025_AFS.pdf, hash 7e2389d7)
+  5. Inflation 4.50%: MANUAL_HISTORICAL_INPUT (analyst_entered, SARB MPC target midpoint, lag=16d)
+  6. Nominal GDP 6.00%: MANUAL_HISTORICAL_INPUT (analyst_entered, BER Stellenbosch forecast, lag=52d)
+- Historical WACC Calculation: Deterministically maintained at 14.94% (Quality: MIXED).
+- Backtest Hash Integrity: Market input IDs, revisions, input hashes, and evidence hashes are
+  bound into `backtest_input_hash`; any revision or change strictly changes the backtest hash.
+- Revision Management: Append-only with `supersedes_input_id` linkage; old rows deactivated.
+- Leakage Controls: Zero access to FY2026 actuals; no DCF execution; zero live-state mutation.
+================================================================================

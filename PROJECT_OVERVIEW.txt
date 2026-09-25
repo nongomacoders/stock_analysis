@@ -1,0 +1,149 @@
+JSE STOCK ANALYSIS - HIGH LEVEL OVERVIEW
+Starting from: gui/scripts/main.py
+Generated: 2026-09-24
+Root: C:\Users\Dion\Desktop\Projects\stock_analysis
+
+================================================================
+1. WHAT THIS PROJECT DOES
+================================================================
+Desktop "JSE Command Center" for Johannesburg Stock Exchange analysis:
+
+- Watchlist monitoring of JSE tickers (prices, research state, action-log alerts)
+- Price charting + technical analysis (matplotlib windows)
+- Fundamental research: SENS announcements, strategy/research notes,
+  versioned append-only Deep Research reports, results PDFs
+- Deterministic valuation workflow with analyst-approved ForecastPlans
+  (LLM suggests, deterministic engine calculates - no auto-approve)
+- Historical backtesting isolated from live plans/valuations
+- Portfolio tracking / discipline (holdings, transactions, metrics)
+- Background market monitoring + ingestion (prices, SENS, news,
+  results, commodities/FX) into PostgreSQL
+
+================================================================
+2. TECH STACK
+================================================================
+GUI: tkinter + ttkbootstrap (themename="cosmo"), matplotlib
+DB / Async: PostgreSQL (dbname=jse_stock_data) via asyncpg
+  - core/db/engine.py: DBEngine singleton pool (min 2, max 10)
+  - core/db/notifier.py: DBNotifier LISTEN/NOTIFY on action_log_changes
+  - tkinter main thread + separate asyncio loop thread
+    async_run(coro, timeout=120), async_run_bg(coro, callback)
+LLM / AI: google-genai / Vertex AI (service_account_key.json),
+  openrouter, ollama. Abstracted in gui/modules/analysis/
+  (selector.py + TASK_MAP, gemini_vertex_llm.py, openrouter_llm.py,
+  ollama_llm.py). Cost tracked in ai_cost_log. Sector prompts in
+  gui/prompts/*.txt (14 files), root sens_prompt.txt analyst prompt.
+Scraping: beautifulsoup4, aiohttp, httpx, curl_cffi, Playwright
+  (gui/scripts_standalone/, gui/playwright_scraper/)
+Config: python-dotenv (.env in root), gui/core/config.py,
+  logging to gui/logs/gui.log (mode=w) + market_agent.log
+
+================================================================
+3. ENTRY POINT & APP FLOW (gui/scripts/main.py, 310 lines)
+================================================================
+Class CommandCenter(ttk.Window):
+
+Startup:
+  load_dotenv() -> logging setup -> sys.path append gui/
+  -> geometry left-half screen -> new asyncio loop in daemon thread
+  -> DBNotifier() placeholder -> create_layout() immediately
+  -> _init_services_async() in background:
+       await DBEngine.get_pool()
+       await notifier.add_listener("action_log_changes", ...)
+       on success: watchlist.refresh() + auto-start market_agent
+       if AUTO_START_AGENT=1 (default)
+
+Layout (create_layout):
+  Top HUD Frame: [Portfolio Scorecard Placeholder]
+  WatchlistWidget (fill BOTH expand True)
+
+on_ticker_select(ticker):
+  ChartWindow (right lower quadrant) - reuse via update_ticker() else create
+  ResearchWindow (right upper quadrant, tabs below) - same reuse,
+    with on_data_change=watchlist.refresh
+
+on_action_log_notification: self.after(0, watchlist.refresh)
+on_closing: terminate market_agent_process, _cleanup_services()
+  (notifier.stop_listening + DBEngine.close, 10s timeout), loop.stop()
+
+Other entries:
+  gui/scripts/run_app_no_prices.py, run_deterministic_valuation.py,
+  generate_deepresearch_from_results.py,
+  generate_research_from_deepresearch.py, ingestion_status.py, etc.
+  Root: portfolio_disciplinarian.py (Tk app), find_sens.py,
+  available_models.py
+
+================================================================
+4. DIRECTORY MAP
+================================================================
+stock_analysis/
+  .env, requirements.txt, service_account_key.json
+  portfolio_disciplinarian.py, find_sens.py, available_models.py
+  valuation_workflow_handoff.txt, historical_tester_handoff.txt
+  gui/
+    scripts/main.py (entry) + 15 other scripts
+    core/config.py, core/db/engine.py, notifier.py, migrations/
+      core/utils/trading.py, dates.py, math.py, technical_utils.py, etc.
+    components/ (~38 widgets - see below)
+    modules/data/ (~21 files: watchlist, research, market, metrics,
+      fundamentals, forecast_plans, valuation_results,
+      historical_prices/backtests, ingestion_runs/evidence, etc.)
+    modules/analysis/ (~31 files + valuation/ subpkg 19 files)
+    modules/market_agent/agent.py, prices.py, sens.py, fundamentals.py
+    modules/portfolio/database.py, discipline.py, views.py
+    scripts_standalone/market_agent.py, news_scraper/,
+      results_scraper/, commodity_fx_scraper/, manual_addition.py, etc.
+    prompts/ (14 sector txt), architecture/architecture.md,
+      schema.sql (467 lines), view.sql, valuation_*.md, wireframes/
+    results/, results_history/, logs/, data/
+
+================================================================
+5. KEY COMPONENTS (gui/components/)
+================================================================
+- watchlist.py (491 lines): WatchlistWidget, fetch_watchlist_data,
+  row tags unread/holding/pretrade, launches chart/research/tech windows
+- chart_window.py (468 lines): ChartWindow, historical prices + metrics
+- research_window.py (215 lines): ResearchWindow with tabs:
+  DeepResearchTab, StrategyTab, ResearchTab, SensTab, ActionLogTab,
+  ValuationWorkbenchTab, LearningTab
+- analysis_*: control_panel, data_manager, drawer, keyhandler, service
+- technical_analysis_window.py, base_chart.py, zone_detector.py
+- portfolio_window.py, holdings_widget.py, portfolio_service.py, scorecard.py
+- notification_widget.py, todo_widget.py, latest_dr_widget.py, billing_tab.py
+
+================================================================
+6. DATA & BACKGROUND SERVICES
+================================================================
+PostgreSQL: action_log (NOTIFY trigger), ai_cost_log,
+  daily_stock_data, SENS, research/strategy/deep_research,
+  forecast_plans, valuation_results, historical_backtests,
+  ingestion_runs/evidence, report_versions, commodity_prices, fx_rates, etc.
+Flow: market_agent writes action_log -> trigger NOTIFY
+  -> DBNotifier -> watchlist.refresh() -> fetch_watchlist_data()
+market_agent subprocess: Popen(scripts_standalone/market_agent.py)
+  -> modules/market_agent/agent.run_market_agent()
+  (prices.py, sens.py, fundamentals.py, commodity_fx.py)
+
+================================================================
+7. ANALYSIS & VALUATION
+================================================================
+- modules/analysis/engine.py: analyze_new_sens, price/research prompts
+- forecast_plan.py, dcf_mapping.py, dcf_execution.py,
+  valuation_preflight.py, valuation_audit.py
+- valuation/ subpkg: engine.py, dcf.py, sotp.py, wacc.py, revenue.py,
+  earnings.py, cashflow.py, bank.py, sector_methods.py, sensitivity.py, etc.
+- historical_backtest.py + results_history/<SYMBOL>/<PERIOD>/
+- Governance: Deep Research append-only, approved ForecastPlans immutable,
+  valuation requires approved plan + preflight, no overwrite of legacy targets
+
+================================================================
+8. SCRAPERS / INGESTION (gui/scripts_standalone/)
+================================================================
+- market_agent.py: daemon entry
+- news_scraper/: Playwright news (cli.py, runner.py, db.py)
+- results_scraper/: Results PDFs (navigation.py, db.py sha256, watchlist.py,
+  paths.py, populate_results_downloads.py)
+- commodity_fx_scraper/: tradingeconomics.py + _fx.py, runner.py
+- manual_addition.py (StockEditorApp), query_watchlist_db.py, test_llm_speed.py
+- Data consumers: modules/data/scraper.py, loader.py, ingestion_runs.py, etc.
+  Live: gui/results/<SYMBOL>, history: gui/results_history/ (keep separate)

@@ -1,4 +1,4 @@
-﻿"""Typed facts and deterministic unit conversions; no target-price model."""
+"""Typed facts and deterministic unit conversions; no target-price model."""
 from __future__ import annotations
 
 from datetime import date, datetime
@@ -62,6 +62,8 @@ class ShareCountType(str, Enum):
     ISSUED_SHARES_CURRENT = "issued_shares_current"
     TREASURY_SHARES = "treasury_shares"
     EXTERNAL_SHARES_EX_TREASURY = "external_shares_ex_treasury"
+    PERIOD_END_EXTERNAL_SHARES = "period_end_external_shares"
+    ANNOUNCEMENT_DATE_EXTERNAL_SHARES = "announcement_date_external_shares"
     WEIGHTED_AVERAGE_BASIC_SHARES = "weighted_average_basic_shares"
     WEIGHTED_AVERAGE_DILUTED_SHARES = "weighted_average_diluted_shares"
     FORECAST_DILUTED_SHARES = "forecast_diluted_shares"
@@ -237,6 +239,10 @@ def normalize_metric(metric: FinancialMetric) -> FinancialMetric:
         return metric.model_copy(update={"normalized_value": monthly_to_annualised(metric.value),
                                          "normalized_unit": Unit.TONNES_ROM_PER_YEAR,
                                          "conversion": "monthly_ROM_to_annual_ROM * 12"})
+    if metric.name in {"depreciation", "depreciation_and_amortisation"} and metric.value is not None and metric.value < 0:
+        return metric.model_copy(update={"normalized_value": abs(metric.value),
+                                         "normalized_unit": metric.unit,
+                                         "conversion": "income_statement_expense_to_economic_magnitude (abs)"})
     return metric.model_copy(update={"normalized_value": metric.value, "normalized_unit": metric.unit})
 
 

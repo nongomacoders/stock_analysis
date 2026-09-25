@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "ticker": "TRU.JO",
+  "symbol": "TRU",
+  "period_label": "FY2026",
+  "period_type": "fiscal_year",
+  "period_start": null,
+  "period_end": "2026-06-28",
+  "sources": [
+    {
+      "type": "SENS",
+      "file": "TRU_FY2026_SENS.txt",
+      "published_at": "2026-08-27",
+      "revision": 1,
+      "active": true,
+      "_detection": {
+        "reporting_period_end": "2026-06-28",
+        "detected_publication_date": "2026-08-27",
+        "detection_source": "SENS footer timestamp"
+      }
+    },
+    {
+      "type": "AFS",
+      "file": "TRU_FY2026_AFS.pdf",
+      "published_at": "2026-08-27",
+      "revision": 1,
+      "active": true,
+      "_detection": {
+        "reporting_period_end": "2026-06-28",
+        "detected_publication_date": "2026-08-27",
+        "detection_source": "linked to SENS publication date (SENS footer timestamp)"
+      }
+    }
+  ]
+}

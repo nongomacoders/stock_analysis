@@ -63,7 +63,7 @@ from core.db.notifier import DBNotifier
 from components.watchlist import WatchlistWidget
 
 
-from components.chart_window import ChartWindow
+# from components.chart_window import ChartWindow  # Disabled per user request
 from components.research_window import ResearchWindow
 
 
@@ -237,24 +237,20 @@ class CommandCenter(ttk.Window):
         taskbar_height = 80
         usable_height = screen_height - taskbar_height
 
-        # Chart Window - Right Lower Quadrant
+        # Historical price charts window disabled; close if open
         if self.chart_window and self.chart_window.winfo_exists():
-            self.chart_window.update_ticker(ticker)
-            self.chart_window.lift()
-        else:
-            # Pass async_run_bg so the chart window can fetch data without blocking the UI
-            self.chart_window = ChartWindow(
-                self, ticker, self.async_run, self.async_run_bg
-            )
-            c_w = screen_width // 2
-            c_h = usable_height // 2
-            c_x = screen_width // 2
-            c_y = usable_height // 2 + 20  # Add 10px gap
-            self.chart_window.geometry(f"{c_w}x{c_h}+{c_x}+{c_y}")
+            self.chart_window.destroy()
+            self.chart_window = None
 
-        # Research Window - Right Upper Quadrant
+        # Research Window - Right Half of Screen
+        r_w = screen_width - (screen_width // 2)
+        r_h = usable_height
+        r_x = screen_width // 2
+        r_y = 0
+
         if self.research_window and self.research_window.winfo_exists():
             self.research_window.update_ticker(ticker)
+            self.research_window.geometry(f"{r_w}x{r_h}+{r_x}+{r_y}")
             self.research_window.lift()
         else:
             self.research_window = ResearchWindow(
@@ -265,10 +261,6 @@ class CommandCenter(ttk.Window):
                 self.notifier,
                 on_data_change=self.watchlist.refresh,
             )
-            r_w = screen_width // 2
-            r_h = usable_height // 2
-            r_x = screen_width // 2
-            r_y = 0
             self.research_window.geometry(f"{r_w}x{r_h}+{r_x}+{r_y}")
 
     def on_action_log_notification(self, payload: str):

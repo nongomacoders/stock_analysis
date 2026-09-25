@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "ticker": "TRU.JO",
+  "symbol": "TRU",
+  "period_label": "FY2025",
+  "period_type": "fiscal_year",
+  "period_start": null,
+  "period_end": "2025-06-29",
+  "sources": [
+    {
+      "type": "SENS",
+      "file": "TRU_FY2025_SENS.txt",
+      "published_at": "2025-08-28",
+      "revision": 1,
+      "active": true
+    },
+    {
+      "type": "AFS",
+      "file": "TRU_FY2025_AFS.pdf",
+      "published_at": "2025-08-28",
+      "revision": 1,
+      "active": true
+    }
+  ]
+}

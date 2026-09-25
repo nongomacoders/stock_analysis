@@ -148,8 +148,8 @@ def async_run(self, coro):
 
 ### Window Positioning
 - **Watchlist**: Left half of screen
-- **Chart Window**: Right upper quadrant
-- **Research Window**: Right lower quadrant
+- **Research Window**: Right half of screen
+- **Chart Window**: Disabled
 
 ### Window Reuse
 Windows are reused rather than recreated:

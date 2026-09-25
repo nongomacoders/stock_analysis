@@ -173,7 +173,7 @@ async def reveal_actuals(backtest_id:UUID,historical_result_id:UUID,actual_perio
     oid=uuid4()
     await db.execute("""INSERT INTO historical_backtest_outcomes
       (outcome_id,backtest_id,historical_result_id,transition_key,actual_period_end,actual_evidence_ids,forecast_accuracy,valuation_performance)
-      VALUES($1,$2,$3,$4,$5,$6,$7::jsonb,'{}'::jsonb) ON CONFLICT(backtest_id,transition_key) DO NOTHING""",oid,backtest_id,historical_result_id,key,actual_period_end,[str(x.get('metric_id')) for x in actual if x.get('metric_id')],json_text(accuracy))
+      VALUES($1,$2,$3,$4,$5,$6,$7::jsonb,'{}'::jsonb) ON CONFLICT(backtest_id,transition_key,revision) DO NOTHING""",oid,backtest_id,historical_result_id,key,actual_period_end,[str(x.get('metric_id')) for x in actual if x.get('metric_id')],json_text(accuracy))
     await db.execute("UPDATE historical_backtests SET status='completed' WHERE backtest_id=$1 AND status='locked'",backtest_id)
     return accuracy
 

@@ -63,8 +63,8 @@ class HistoricalBacktest(BaseModel):
             raise ValueError('Locked historical backtest requires locked_at')
         return self
 
-SHARE_PRIORITY=('forecast_diluted_shares','weighted_average_diluted_shares',
-                'external_shares_ex_treasury','issued_shares_current',
+SHARE_PRIORITY=('forecast_diluted_shares','external_shares_ex_treasury',
+                'weighted_average_diluted_shares','issued_shares_current',
                 'weighted_average_basic_shares')
 
 def _iso(value):
@@ -86,7 +86,7 @@ def resolve_evidence_as_of(items:list[dict],as_of_date:date):
         state,reason=evidence_availability(raw,as_of_date)
         item=HistoricalEvidence(
             evidence_id=str(raw.get('metric_id') or raw.get('source_document_id') or raw.get('source_id') or raw.get('id')),
-            kind=str(raw.get('kind') or raw.get('document_role') or raw.get('name') or 'evidence'),
+            kind=str(raw.get('name') or raw.get('kind') or raw.get('document_role') or 'evidence'),
             available_date=_iso(raw.get('available_date') or raw.get('source_date') or raw.get('published_at')),
             period_end=_iso(raw.get('period_end')),source_id=raw.get('source_id'),
             report_id=raw.get('report_id'),payload=dict(raw),availability=state,reason=reason)
@@ -110,9 +110,9 @@ def resolve_latest_market_as_of(items:list[dict],as_of_date:date):
     return out
 
 def select_historical_share_count(evidence:list[HistoricalEvidence]):
-    eligible=[x for x in evidence if x.availability==Availability.AVAILABLE and x.kind in SHARE_PRIORITY]
+    eligible=[x for x in evidence if x.availability==Availability.AVAILABLE and ((x.payload or {}).get('name') in SHARE_PRIORITY or x.kind in SHARE_PRIORITY)]
     for name in SHARE_PRIORITY:
-        matches=[x for x in eligible if x.kind==name]
+        matches=[x for x in eligible if (x.payload or {}).get('name')==name or x.kind==name]
         if matches:return max(matches,key=lambda x:(x.available_date or date.min,x.period_end or date.min))
     return None
 
@@ -122,17 +122,18 @@ def canonical_hash(value):
         raise TypeError(type(x).__name__)
     return sha256(json.dumps(value,sort_keys=True,separators=(',',':'),default=default).encode()).hexdigest()
 
-def backtest_input_hash(backtest:HistoricalBacktest,forecast_plan=None,engine_version=None,mapped_input_ids=()):
+def backtest_input_hash(backtest:HistoricalBacktest,forecast_plan=None,engine_version=None,mapped_input_ids=(),market_input_tokens=()):
     return canonical_hash({'ticker':backtest.ticker,'as_of_date':backtest.as_of_date,
       'evidence_ids':sorted(x.evidence_id for x in backtest.evidence_snapshot if x.availability==Availability.AVAILABLE),
       'market_ids':sorted(x.snapshot_id for x in backtest.market_snapshot),
+      'market_input_tokens':sorted(map(str,market_input_tokens)),
       'forecast_plan':forecast_plan.model_dump(mode='json') if hasattr(forecast_plan,'model_dump') else forecast_plan,
       'engine_version':engine_version,'mapped_input_ids':sorted(map(str,mapped_input_ids))})
 
-def lock_backtest(backtest:HistoricalBacktest,forecast_plan,engine_version,mapped_input_ids=()):
+def lock_backtest(backtest:HistoricalBacktest,forecast_plan,engine_version,mapped_input_ids=(),market_input_tokens=()):
     if backtest.status!=BacktestStatus.DRAFT:raise ValueError('Only a draft backtest can be locked')
-    if getattr(forecast_plan,'status',None).value!='approved':raise ValueError('Historical ForecastPlan must be approved before lock')
-    digest=backtest_input_hash(backtest,forecast_plan,engine_version,mapped_input_ids)
+    if getattr(forecast_plan,'status',None).value not in ('approved','locked'):raise ValueError('Historical ForecastPlan must be approved or locked before lock')
+    digest=backtest_input_hash(backtest,forecast_plan,engine_version,mapped_input_ids,market_input_tokens)
     return backtest.model_copy(update={'status':BacktestStatus.LOCKED,'locked_at':datetime.now(timezone.utc),'input_hash':digest})
 
 def require_reveal_allowed(backtest:HistoricalBacktest):
