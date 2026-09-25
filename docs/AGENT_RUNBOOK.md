@@ -507,3 +507,72 @@ Never let an AI-generated target overwrite a deterministic valuation result.
 Only rediscover environment details after confirming the documented fix genuinely no longer works.
 
 If a documented fix changes, update this runbook so future conversations inherit the correction.
+
+---
+
+# 20. PowerShell quoting and "SyntaxError: unterminated string literal"
+
+## Symptom
+
+Executing inline Python commands via PowerShell like:
+
+```powershell
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "..."
+```
+
+fails with:
+
+```text
+SyntaxError: unterminated string literal (detected at line 1)
+```
+
+or PowerShell parser errors such as:
+
+```text
+The string is missing the terminator: '
+```
+
+## Root cause
+
+PowerShell parses arguments before passing them to the executable. When double quotes (`"`) are used both around the `-c` argument and inside Python code, PowerShell strips or mishandles the inner quotes. Windows paths with unescaped backslashes (`\`) or multi-line strings further corrupt quoting.
+
+## Failing patterns (avoid)
+
+```powershell
+# FAILS: Inner double quotes collide with outer double quotes
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "import os; print("hello")"
+
+# FAILS: Backslashes interpreted as escape characters or raw unescaped quotes
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "path = 'C:\Users\Dion'; print(path)"
+```
+
+## Correct inline patterns
+
+1. **Outer single quotes, inner double quotes**:
+   ```powershell
+   & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c 'import os; print("hello")'
+   ```
+
+2. **Escaped internal double quotes (`\"` or ``` `"` )**:
+   ```powershell
+   & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "import os; print(\"hello\")"
+   ```
+
+3. **Raw string or forward slashes for Windows paths**:
+   ```powershell
+   & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c 'from pathlib import Path; print(Path(r"C:\Users\Dion"))'
+   ```
+
+## Preferred robust alternative: Scratch scripts
+
+For any script longer than a single simple expression, **do not pass multi-line or complex strings via `-c`**.
+
+Instead, write a temporary scratch script and execute it directly:
+
+```powershell
+# Save to a temporary file (e.g. scratch/temp_task.py), then run:
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" path\to\scratch\temp_task.py
+```
+
+This bypasses shell quoting and tokenizer mismatches entirely.
