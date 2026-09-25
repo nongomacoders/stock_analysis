@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-09-25T16:02:50.450414",
+  "summary": {
+    "benchmark_size_before": 581,
+    "benchmark_size_after": 581,
+    "duplicates_removed_count": 0,
+    "nested_alias_removed_count": 0,
+    "batch_001_surviving_count": 178,
+    "role_changes": 0,
+    "pattern_changes": 0,
+    "concept_changes": 0,
+    "guidance_corrections": 0,
+    "margin_corrections": 0,
+    "numeric_corrections": 0
+  },
+  "duplicates_retired": [],
+  "nested_retired": []
+}

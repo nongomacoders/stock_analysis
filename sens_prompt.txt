@@ -2,116 +2,147 @@
 You are a professional JSE financial analyst.
 
 --- MARKET CONTEXT ---
-Current Share Price: 3101.00c
+Current Share Price: 12248.00c
 
 --- END CONTEXT ---
 
 --- MY RESEARCH ---
 PRICE LEVELS & TARGETS
-Report Date Share Price: 32.50 ZAR
-Report 12-Month Target: 4,450c
-Consensus Target: Not provided
-Valuation Floor (NAV): Not provided
+Report Date Share Price: ZAR 123.16
+Report 12-Month Target: ZAR 134.50
+Consensus Target: Not stated
+Valuation Floor (NAV): Not stated
 
 CATALYSTS & RISKS
 Positive:
-- Accelerated inflows into low-cost passive structures
-- Significant operating leverage from AUM scaling
-- Higher than expected retention of assets under the Two-Pot retirement system
-- Transition to a rate-cutting cycle lowering discount rates and boosting asset valuations
+- Competing superior proposal from a rival global explosives major at a minimum 2.5 percent premium (above R137.86)
+- Accelerated clearance from South African and cross-border African competition authorities enabling early closing
+- RMB bank guarantee eliminating buyer financing risk and securing a hard cash exit floor
 
 Negative:
-- Sharp global equity market correction reducing AUM-linked fee income
-- Persistent key person risk associated with leadership concentration
-- Regulatory changes impacting the fee structures of umbrella funds
-- Sovereign risk leading to potential cost of equity increases
-- Potential digital infrastructure or IT outage disruptions
+- Failure of competition or regulatory approvals across eight African regional jurisdictions or burdensome public interest conditions
+- Material Adverse Change clause triggered if group EBITDA falls below R2.357 billion during the offer period
+- Dissenting shareholders exceeding the 3 percent threshold invoking section 164 appraisal rights
 
 KEY DATES
 Debt / Facilities Maturing:
-- None provided
+- Not stated
 
 Project Timelines / Milestones:
-- None provided
+- 14 September 2026: Solar SA Investments entered into implementation agreement to acquire 100 percent of Omnia shares
+- Mid-2027: Targeted full regulatory clearance and Scheme Meeting approval
+- 9 September 2027: Validity deadline for Rand Merchant Bank cash confirmation guarantee
 --- END RESEARCH ---
 
 --- MY STRATEGY ---
-accumulate <3700c
+
 --- END STRATEGY ---
 
 --- NEW SENS ANNOUNCEMENT ---
-Distribution of Circular and Notice of General Meeting of Sygnia Shareholders
-SYGNIA LIMITED
-(Incorporated in the Republic of South Africa)
-(Registration number 2007/025416/06)
-Share code on the JSE and A2X: SYG
-ISIN: ZAE000208815
-(“Sygnia” or “the Company”)
-General segment
-DISTRIBUTION OF CIRCULAR AND NOTICE OF GENERAL MEETING OF SYGNIA
-SHAREHOLDERS
-Shareholders of Sygnia (“Shareholders”) are advised that a circular (“Circular”) will be distributed to
-Shareholders today relating to the approval by Shareholders of amendments to the rules of the Sygnia
-Limited Employee Share Option Scheme B (the “Scheme”) adopted by the Board of Thursday, 17
-September 2026 (“Third Deed of Amendment”).
-The salient terms of the Scheme will be set out in the Circular.
-Additional copies of the Circular, in its printed format, may be obtained from the registered office of the
-Company situated at 7th Floor, The Foundry, Cardiff Street, Green Point, Cape Town, 8001, or can be
-made available through a secure electronic manner at the election of the person requesting inspection
-by emailing the Company Secretary at rholwill@sygnia.co.za, in each case during normal business
-hours from Friday, 25 September 2026 to and including Friday, 23 October 2026. The Circular has also
-been made available on the Company’s website at www.sygnia.co.za/governance/.
-Notice of General Meeting
-Notice is hereby given that a general meeting of Shareholders (“the General Meeting”) convened in
-terms of the notice of General Meeting incorporated in the Circular, will be held at Sygnia’s head office,
-7th Floor, The Foundry, Cardiff Street, Green Point, Cape Town, 8001 at 10:00 on Friday, 23 October
-2026.
-Shareholders will be requested to consider and, if deemed fit, to pass, with or without modification, the
-relevant resolutions required to authorise and implement the Third Deed of Amendment.
-Salient Dates and Times
-The salient dates and times in relation to the General Meeting are set out below.
-2026
-Notice record date, being the date on which a Shareholder must be registered            Friday, 18
-in the register in order to be eligible to receive the Circular and Notice of General   September
-Meeting, on
-Circular (including Notice of General Meeting) distributed to Shareholders on           Friday, 25
-September
-Written notice to participate electronically in the General Meeting to be delivered     Thursday, 8
-to Sygnia’s offices (marked for the attention of the company secretary of the           October
-Company) by
-Last day to trade Sygnia Shares in order to be eligible to vote at the General          Tuesday, 13
-Meeting (see note 2 below)                                                              October
-General Meeting record date, being the date on which a Shareholder must be              Friday, 16
-registered in the register in order to be eligible to attend, participate in and vote   October
-at the General Meeting, on
-Proxy Forms to be lodged with the Transfer Secretaries as soon as possible for          Wednesday, 21
-administrative purposes only, (preferably by 10:00 on Wednesday, 21 October             October
-2026), but in any event before the proxy exercises any rights of the Sygnia
-Shareholder appointing the proxy at the General Meeting, on
-General Meeting held at Sygnia in the auditorium, at the head office of the             Friday, 23
-Company at 7th Floor, The Foundry, Cardiff Street, Green Point, Cape Town,              October
-8001 at 10:00 on
-Results of the General Meeting published on SENS, on                                    Friday, 23
-October
-Notes:
-1. The above dates and times are subject to amendment at the discretion of Sygnia. Any such
-amendment will be released on SENS and published in the South African press.
-2. Sygnia Shareholders should note that as transactions in Sygnia Shares are settled in the electronic
-settlement system used by Strate, settlement of trades takes place three Business Days after such
-trade. Therefore, Sygnia Shareholders who acquire Sygnia Shares after close of trade on Tuesday,
-13 October 2026, will not be eligible to vote on the Resolutions.
-3. All dates and times indicated above are South African Standard Times.
-4. If the General Meeting is adjourned or postponed, Proxy Forms submitted in respect of the General
-Meeting will remain valid in respect of any adjournment or postponement thereof.
-5. Dematerialised Shareholders, other than Dematerialised Own-name Shareholders, must provide
-their CSDP or Broker with their instructions for voting at the General Meeting by the cut-off time
-and date stipulated by their CSDP or Broker in terms of their respective custody agreements
-between them and their CSDP or Broker.
-Cape Town
+Dealings in securities by directors, prescribed officers, the company secretary of the Company and a director of a major subsidiary
+OMNIA HOLDINGS LIMITED
+Incorporated in the Republic of South Africa
+(Registration number 1967/003680/06)
+JSE code: OMN
+LEI NUMBER: 529900T6L5CEOP1PNP91
+ISIN: ZAE000005153
+(“Omnia” or the “Company”)
+DEALINGS IN SECURITIES BY DIRECTORS, PRESCRIBED OFFICERS, THE COMPANY SECRETARY OF THE COMPANY AND A
+DIRECTOR OF A MAJOR SUBSIDIARY
+The annual awards under the Omnia 2020 Share Plan (the “Plan”) have been concluded, as detailed below. The
+granting of these awards had been deferred while the Company was in a prohibited period, which lifted on
+publication of the firm intention announcement on 14 September 2026.
+Shareholders are advised that Omnia has awarded Performance Forfeitable Shares, as defined in the Plan, to
+directors, prescribed officers, the company secretary of the Company and a director of a major subsidiary of the
+Company. The awards were approved by the Remuneration and Nominations Committee and are subject to
+performance conditions measured over a three-year period, together with continued employment. The awards were
+granted on 15 September 2026 and accepted on 21 September 2026. The price used for purposes of the calculation
+of the number of Performance Forfeitable Shares awarded, was R99.97 per share, which was calculated as the 20-
+day volume weighted average price of an Omnia share as at 5 June 2026 (“20-day VWAP”), in terms of the rules
+of the Plan.
+Name of director and designation:                  T Gobalsamy (Chief Executive Officer)
+Number and class of securities:                    261 079 ordinary shares
+Transaction date:                                  21 September 2026
+Total value:                                       R26 100 067.63, being the total deemed value based on the
+20-day VWAP
+Nature of transaction:                             Off-market acceptance of awards offered in terms of the
+Plan
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
+Name of director and designation:                  SP Serfontein (Finance Director)
+Number and class of securities:                    75 023 ordinary shares
+Transaction date:                                  21 September 2026
+Total value:                                       R7 500 049.31, being the total deemed value based on the
+20-day VWAP
+Nature of transaction:                             Off-market acceptance of awards offered in terms of the
+Plan
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
+Name of prescribed officer:                        CM Kotzé
+Number and class of securities:                    30 010 ordinary shares
+Transaction date:                                  21 September 2026
+Total value:                                       R3 000 099.70, being the total deemed value based on the
+20-day VWAP
+Nature of transaction:                             Off-market acceptance of awards offered in terms of the
+Plan
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
+Name of prescribed officer:                        RC Hennecke
+Number and class of securities:                    55 017 ordinary shares
+Transaction date:                                  21 September 2026
+Total value:                                       R5 500 049.49, being the total deemed value based on the
+20-day VWAP
+Nature of transaction:                             Off-market acceptance of awards offered in terms of the
+Plan
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
+Name of company secretary:                         D Dickson
+Number and class of securities:                    15 005 ordinary shares
+Transaction date:                                  21 September 2026
+Total value:                                       R1 500 049.85, being the total deemed value based on the
+20-day VWAP
+Nature of transaction:                             Off-market acceptance of awards offered in terms of the
+Plan
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
+Name of director of major subsidiary:              SM Mdluli
+Number and class of securities:                    2 501 ordinary shares
+Transaction date:                                  21 September 2026
+Total value:                                       R250 024.97, being the total deemed value based on the 20-
+day VWAP
+Nature of transaction:                             Off-market acceptance of awards offered in terms of the
+Plan
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
+Shareholders are further referred to the award of Performance Forfeitable Shares on 3 July 2023 in terms of the
+provisions of the Plan. The Performance Forfeitable Shares were due to vest, subject to certain performance
+conditions, on the soonest practicable date after 30 June 2026. The performance conditions have been met and the
+Performance Forfeitable Shares have now vested.
+Name of director of major subsidiary:              SM Mdluli
+Number and class of securities:                    43 906 ordinary shares
+Transaction date:                                  15 September 2026
+Price per share:                                   R56.94
+Total value:                                       R2 500 007.64
+Nature of transaction:                             Off-market vesting in terms of the Plan
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
+Shareholders are further advised of the following dealings in securities by a director of a major subsidiary of the
+Company, in order to settle any tax liabilities incurred as a result of the vesting of the Performance Forfeitable
+Shares.
+Name of director of major subsidiary:              SM Mdluli
+Number and class of securities:                    17 432 ordinary shares
+Transaction date:                                  18 September 2026
+Total value:                                       R2 145 436.43
+Weighted average price per security:               R123.0746
+Highest traded price on the market on the day:     R124.24
+Lowest traded price on the market on the day:      R122.59
+Nature of transaction:                             On-market disposal of shares
+Nature and extent of interest:                     Direct beneficial
+Clearance to deal obtained:                        Yes
 25 September 2026
 Sponsor
-The Standard Bank of South Africa
-Date: 25/09/2026 12:00:00
+Java Capital
+Date: 25/09/2026 03:30:00
 Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited (‘JSE’).
 The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
 the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,

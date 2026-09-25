@@ -38,6 +38,9 @@ Do not search for:
 
 unless the known interpreter actually fails.
 
+Note: Since this executable is located in `AppData\Local` (outside the workspace root), running terminal commands using this path requires `BypassSandbox: true` in agent tooling.
+
+
 ---
 
 # 2. Python imports fail from repository root
@@ -544,11 +547,8 @@ PowerShell parses arguments before passing them to the executable. When double q
 ## Failing patterns (avoid)
 
 ```powershell
-# FAILS: Inner double quotes collide with outer double quotes
-& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "import os; print("hello")"
-
-# FAILS: Backslashes interpreted as escape characters or raw unescaped quotes
-& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "path = 'C:\Users\Dion'; print(path)"
+# FAILS: Python f-strings with inner quotes inside PowerShell double quotes
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "print(f\"{c['key']}\")"
 ```
 
 ## Correct inline patterns
@@ -633,3 +633,126 @@ powershell -Command "Get-ChildItem | Where-Object { $_.Name -like '*doc*' }"
    ```powershell
    Get-ChildItem -File -Recurse | Where-Object { $_.Name -like '*doc*' }
    ```
+
+---
+
+# 22. Nested Quoting / Triple-Quotes in `powershell -Command "..."` with `python -c`
+
+## Symptom
+
+Executing an inline Python command wrapped in PowerShell, such as:
+
+```powershell
+powershell -Command "$env:PYTHONPATH='...'; & '...' -c 'cur.execute(\"\"\"SELECT ...\"\"\")'"
+```
+
+fails with:
+
+```text
+The string is missing the terminator: '.
+ParentContainsErrorRecordException
+CommandNotFoundException
+```
+
+## Root cause
+
+PowerShell parses `\"\"\"` inside `-Command "..."` by stripping the backslashes before Python is invoked, which truncates the string and leaves unclosed quotes, or misinterprets inner single quotes.
+
+## Failing pattern (avoid)
+
+```powershell
+powershell -Command "$env:PYTHONPATH='C:\...'; & 'C:\...\python.exe' -c '... cur.execute(\"\"\"SELECT ...\"\"\") ...'"
+```
+
+## Working fix
+
+1. **Avoid nested `powershell -Command`**: The terminal shell is already PowerShell. Run directly:
+   ```powershell
+   $env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
+   & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c "..."
+   ```
+
+2. **Or use a dedicated scratch script**:
+   Write the script to a `.py` file (e.g. in the artifact scratch directory or workspace scratch directory) and execute it with:
+   ```powershell
+   & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" scratch_script.py
+   ```
+
+---
+
+# 23. PowerShell Variable Expansion Inside Double-Quoted `-Command "..."`
+
+## Symptom
+
+Executing:
+
+```powershell
+powershell -Command "$env:PYTHONPATH='C:\Users\Dion\Desktop\Projects\stock_analysis\gui'; & 'C:\...\python.exe' -m pytest ..."
+```
+
+fails with:
+
+```text
+=C:\Users\Dion\Desktop\Projects\stock_analysis\gui : The term '=C:\Users\Dion\Desktop\Projects\stock_analysis\gui' is 
+not recognized as the name of a cmdlet, function, script file, or operable program.
+ModuleNotFoundError: No module named 'modules'
+```
+
+## Root cause
+
+When PowerShell runs `-Command "$env:PYTHONPATH=..."`, the outer PowerShell evaluates `$env:PYTHONPATH` *before* launching the subshell. Because `$env:PYTHONPATH` was empty in the parent environment, it expands to `""`, leaving `'=C:\...'` as the command string, which is an invalid cmdlet.
+
+## Failing pattern (avoid)
+
+```powershell
+powershell -Command "$env:PYTHONPATH='...'; & '...' -m pytest ..."
+```
+
+## Working fix
+
+Since the shell tool already runs in PowerShell, execute assignments and invocations directly without a nested `powershell` process:
+
+```powershell
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"; & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -m pytest ...
+```
+
+---
+
+# 24. PowerShell Pipeline Parser Error with Inline `python -c` Containing Pipe `|` Characters
+
+## Symptom
+
+Executing inline python statements in PowerShell such as:
+
+```powershell
+& "C:\...\python.exe" -c "print(f\"| {r['benchmark_id']} | {r['ticker']} |\")"
+```
+
+fails with:
+
+```text
+An empty pipe element is not allowed.
+Unexpected token '}' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+```
+
+## Root cause
+
+PowerShell parses unquoted or weakly quoted pipe characters `|` as shell pipeline operators instead of passing them as string literals to Python's `-c` argument.
+
+## Failing pattern (avoid)
+
+```powershell
+& "C:\...\python.exe" -c "print(f\"| {var} |\")"
+```
+
+## Working fix
+
+Do not pass markdown table formatting or complex multi-line strings via inline `-c`. Always write the code to a `.py` script file in `scratch/` and execute via:
+
+```powershell
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"; & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" scratch/script.py
+```
+
+
