@@ -502,11 +502,16 @@ Never let an AI-generated target overwrite a deterministic valuation result.
 
 ---
 
-# 19. When a known fix fails
+# 19. When a known fix fails or new error occurs
 
 Only rediscover environment details after confirming the documented fix genuinely no longer works.
 
-If a documented fix changes, update this runbook so future conversations inherit the correction.
+### Midstream recording rule (mandatory)
+Whenever any command, script, parser, or shell operation fails due to quoting, variable expansion, platform difference, or unexpected syntax:
+1. Identify the root cause and verified working alternative.
+2. **Log the error and fix in this runbook immediately midstream as a new section.**
+3. Never defer documentation until after task completion or wait for the user to ask for it.
+4. If a documented fix changes, update the existing section so future conversations inherit the correction.
 
 ---
 
@@ -576,3 +581,55 @@ $env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
 ```
 
 This bypasses shell quoting and tokenizer mismatches entirely.
+
+---
+
+# 21. PowerShell `$_` Variable Expansion in `-Command "..."`
+
+## Symptom
+
+Running nested PowerShell commands like:
+
+```powershell
+powershell -Command "Get-ChildItem -File -Recurse | Where-Object { $_.Name -like '*test*' }"
+```
+
+fails with repeated errors:
+
+```text
+.Name : The term '.Name' is not recognized as the name of a cmdlet, function, script file, or operable program.
+At line:1 char:67
++ ... ChildItem -File -Recurse | Where-Object { .Name -like '*test*' }
++                                               ~~~~~
+    + CategoryInfo          : ObjectNotFound: (.Name:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+```
+
+## Root cause
+
+When executing a PowerShell command string wrapped in double quotes (`"..."`), the calling shell expands variables *before* executing the string. Because `$_` is not defined in the parent scope, it expands to an empty string. The pipeline block `{ $_.Name ... }` becomes `{ .Name ... }`, which PowerShell attempts to execute as a cmdlet named `.Name`.
+
+## Failing pattern (avoid)
+
+```powershell
+# FAILS: Outer double quotes evaluate $_ to empty string
+powershell -Command "Get-ChildItem | Where-Object { $_.Name -like '*doc*' }"
+```
+
+## Correct patterns
+
+1. **Escape the `$` with a backtick (`` `$ ``)**:
+   ```powershell
+   powershell -Command "Get-ChildItem | Where-Object { `$_.Name -like '*doc*' }"
+   ```
+
+2. **Wrap `-Command` in single quotes**:
+   ```powershell
+   powershell -Command 'Get-ChildItem | Where-Object { $_.Name -like "*doc*" }'
+   ```
+
+3. **Run directly without nested `powershell -Command` wrapper**:
+   When already in PowerShell, avoid wrapping commands in `powershell -Command "..."`:
+   ```powershell
+   Get-ChildItem -File -Recurse | Where-Object { $_.Name -like '*doc*' }
+   ```

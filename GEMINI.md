@@ -218,3 +218,14 @@ Before spending time rediscovering:
 - pytest invocation
 
 read `docs/AGENT_RUNBOOK.md`.
+
+---
+
+## Midstream error recording rule (mandatory)
+
+Whenever a command, shell invocation, script, or environment tool fails due to a syntax, quoting, path, variable expansion, or platform quirk:
+
+1. Identify the root cause and the working fix.
+2. **Immediately record the error, root cause, failing pattern, and working command in `docs/AGENT_RUNBOOK.md` midstream.**
+3. Do not postpone documentation until after completing the task, and do not wait for the user to remind you.
+4. Then continue and finish the user's task.
