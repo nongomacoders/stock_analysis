@@ -4,7 +4,10 @@ from decimal import Decimal
 from pathlib import Path
 from uuid import uuid4
 import pytest
-from PyPDF2 import PdfReader
+try:
+    from pypdf import PdfReader
+except ImportError:
+    from PyPDF2 import PdfReader
 from modules.analysis.results_package import (
     build_results_package, observations_to_metrics, ANNUAL_FINANCIAL_STATEMENTS, RESULTS_SENS
 )

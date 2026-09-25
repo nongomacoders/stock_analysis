@@ -84,7 +84,10 @@ class EvidenceArchive:
                 text = data.decode("utf-8", errors="ignore")
             elif original.suffix.lower() == ".pdf":
                 try:
-                    from PyPDF2 import PdfReader
+                    try:
+                        from pypdf import PdfReader
+                    except ImportError:
+                        from PyPDF2 import PdfReader
                     text = "\n".join(p.extract_text() or "" for p in PdfReader(archived).pages)
                 except Exception as exc:
                     extraction_error = str(exc)

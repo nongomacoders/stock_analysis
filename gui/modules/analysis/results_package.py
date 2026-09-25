@@ -46,7 +46,10 @@ def read_document_text(path: Path) -> str:
     try:
         if path.suffix.lower() == '.txt': return path.read_text(encoding='utf-8', errors='ignore')
         if path.suffix.lower() == '.pdf':
-            from PyPDF2 import PdfReader
+            try:
+                from pypdf import PdfReader
+            except ImportError:
+                from PyPDF2 import PdfReader
             return '\n'.join((page.extract_text() or '') for page in PdfReader(str(path)).pages[:25])
     except Exception: return ''
     return ''

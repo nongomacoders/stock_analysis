@@ -19,7 +19,10 @@ PACKAGE_DIR = Path(__file__).resolve().parents[3] / "results_history" / "TRU" / 
 
 def _load_fy2025_sources():
     sens_p, afs_p = PACKAGE_DIR / "TRU_FY2025_SENS.txt", PACKAGE_DIR / "TRU_FY2025_AFS.pdf"
-    from PyPDF2 import PdfReader
+    try:
+        from pypdf import PdfReader
+    except ImportError:
+        from PyPDF2 import PdfReader
     afs_text = "\n".join(p.extract_text() or "" for p in PdfReader(afs_p).pages)
     return [
         {"source_id": "hist:sens", "name": sens_p.name, "text": sens_p.read_text(encoding="utf-8", errors="ignore"),

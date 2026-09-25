@@ -103,7 +103,10 @@ def parse_afs(source: dict) -> tuple[list[dict], list[str]]:
     warnings = []; observations = []
     if source.get("extraction_error"): warnings.append(f"PDF extraction warning: {source['extraction_error']}")
     try:
-        from PyPDF2 import PdfReader
+        try:
+            from pypdf import PdfReader
+        except ImportError:
+            from PyPDF2 import PdfReader
         reader = PdfReader(source["archive_path"])
     except Exception as exc: return [], [f"PDF open failed: {exc}"]
     from modules.analysis.results_package import _period

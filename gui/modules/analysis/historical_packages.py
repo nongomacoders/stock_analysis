@@ -400,7 +400,10 @@ def validate_period_folder(folder: Path, expected_ticker: str, as_of_date: date 
             text = data.decode('utf-8', errors='ignore')
         else:
             try:
-                from PyPDF2 import PdfReader
+                try:
+                    from pypdf import PdfReader
+                except ImportError:
+                    from PyPDF2 import PdfReader
                 text = '\n'.join(
                     page.extract_text() or ''
                     for page in PdfReader(path).pages
@@ -518,7 +521,10 @@ def suggest_manifest(
             pass
     if period_end is None and afs_path.is_file():
         try:
-            from PyPDF2 import PdfReader
+            try:
+                from pypdf import PdfReader
+            except ImportError:
+                from PyPDF2 import PdfReader
             afs_text = ''.join(
                 page.extract_text() or ''
                 for page in PdfReader(str(afs_path)).pages
