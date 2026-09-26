@@ -117,7 +117,10 @@ class NumericTokenType(str, Enum):
     PER_SHARE_LEVEL = "PER_SHARE_LEVEL"
     PLAIN_LEVEL = "PLAIN_LEVEL"
     RANGE_BOUND = "RANGE_BOUND"
+    SECTION_NUMBER = "SECTION_NUMBER"
+    LIST_MARKER = "LIST_MARKER"
     OTHER = "OTHER"
+    AMBIGUOUS_NUMBER_FORMAT = 'AMBIGUOUS_NUMBER_FORMAT'
 
 
 class DetectedNumericToken(BaseModel):
@@ -129,6 +132,8 @@ class DetectedNumericToken(BaseModel):
     scale: str | None = None
     is_percentage: bool = False
     is_per_share: bool = False
+    char_start: int | None = None
+    char_end: int | None = None
 
 
 # =============================================================================
@@ -155,6 +160,19 @@ class BenchmarkItem(BaseModel):
     nearby_heading: str | None = None
     detected_numeric_tokens: list[str] = Field(default_factory=list)
     detected_typed_numeric_tokens: list[DetectedNumericToken] = Field(default_factory=list)
+
+    # Source Spans and Occurrence Provenance
+    source_line_index: int | None = None
+    sentence_start_offset: int | None = None
+    sentence_end_offset: int | None = None
+    alias_start_offset: int | None = None
+    alias_end_offset: int | None = None
+
+    # Deterministic Numeric Association
+    candidate_metric_token: str | None = None
+    candidate_change_token: str | None = None
+    association_confidence: float = 1.0
+    association_reason: str = ""
 
     # Current Dictionary State
     current_dictionary_status: AliasStatus
@@ -187,9 +205,15 @@ class BenchmarkItem(BaseModel):
 
     @model_validator(mode="after")
     def validate_item_integrity(self) -> BenchmarkItem:
-        # Invariant A, B & E: Candidate metric numbers exclude YEAR_OR_DATE and OTHER
+        # Invariant A, B & E: Candidate metric numbers exclude YEAR_OR_DATE, OTHER, SECTION_NUMBER, LIST_MARKER
         has_metric_numbers = any(
-            t.token_type not in (NumericTokenType.YEAR_OR_DATE, NumericTokenType.OTHER)
+            t.token_type not in (
+                NumericTokenType.YEAR_OR_DATE,
+                NumericTokenType.OTHER,
+                NumericTokenType.SECTION_NUMBER,
+                NumericTokenType.LIST_MARKER,
+                NumericTokenType.AMBIGUOUS_NUMBER_FORMAT,
+            )
             for t in self.detected_typed_numeric_tokens
         ) if self.detected_typed_numeric_tokens else bool(self.detected_numeric_tokens)
 
@@ -786,14 +810,79 @@ DATE_EXPRESSION_REGEX = re.compile(
     re.IGNORECASE
 )
 
+SECTION_OR_LIST_START_REGEX = re.compile(
+    r"^\s*(?:[•\-*–—\s]*)(?:"
+    r"(?P<section>\d+(?:\.\d+)+\.?)"
+    r"|(?P<sec_dot>\d+\.)(?!\d)"
+    r"|(?P<paren_num>\(?\d+\))"
+    r"|(?P<paren_alpha>\(?[a-zA-Z]\))"
+    r")(?:\s+|$)"
+)
 
-def normalize_number_string(num_str: str) -> float | None:
-    """Normalizes string representation of number to float, respecting comma and dot decimals."""
+
+def _is_ambiguous_single_comma(num_str: str) -> bool:
+    cleaned = num_str.replace(' ', '').replace('\u00a0', '')
+    parts = cleaned.split(',')
+    return (
+        '.' not in cleaned
+        and len(parts) == 2
+        and all(part.isdigit() for part in parts)
+        and len(parts[1]) == 3
+    )
+
+
+def _infer_sentence_comma_convention(matches: Sequence[re.Match]) -> str | None:
+    decimal_evidence = False
+    thousands_evidence = False
+    for match in matches:
+        number = (match.group('num') or '').replace(' ', '').replace('\u00a0', '')
+        if ',' not in number or '.' in number:
+            continue
+        parts = number.split(',')
+        if len(parts) > 2 and all(len(part) == 3 for part in parts[1:]):
+            thousands_evidence = True
+        elif len(parts) == 2 and len(parts[1]) != 3:
+            decimal_evidence = True
+    if decimal_evidence == thousands_evidence:
+        return None
+    return 'decimal' if decimal_evidence else 'thousands'
+
+
+def normalize_number_string(
+    num_str: str,
+    *,
+    comma_convention: str | None = None,
+    decimal_evidence: bool = False,
+    thousands_evidence: bool = False,
+) -> float | None:
+    """Normalize a number without guessing an ambiguous single-comma format.
+
+    Repeated three-digit comma groups are thousands separators. A single comma
+    with a non-three-digit tail is decimal. A single three-digit tail requires
+    explicit suffix or surrounding-format evidence; otherwise None keeps the
+    raw token available while marking its interpretation as ambiguous.
+    """
     cleaned = num_str.replace(" ", "").replace("\u00a0", "")
-    if "," in cleaned and "." not in cleaned:
-        cleaned = cleaned.replace(",", ".")
-    elif "," in cleaned and "." in cleaned:
-        cleaned = cleaned.replace(",", "")
+    if "," in cleaned and "." in cleaned:
+        if cleaned.rfind(".") > cleaned.rfind(","):
+            cleaned = cleaned.replace(",", "")
+        else:
+            cleaned = cleaned.replace(".", "").replace(",", ".")
+    elif "," in cleaned:
+        parts = cleaned.split(",")
+        if len(parts) > 2 and all(len(p) == 3 for p in parts[1:]):
+            cleaned = "".join(parts)
+        elif _is_ambiguous_single_comma(cleaned):
+            if decimal_evidence or comma_convention == 'decimal':
+                cleaned = '.'.join(parts)
+            elif thousands_evidence or comma_convention == 'thousands':
+                cleaned = ''.join(parts)
+            else:
+                return None
+        elif len(parts) == 2 and len(parts[1]) != 3:
+            cleaned = f"{parts[0]}.{parts[1]}"
+        else:
+            cleaned = cleaned.replace(",", ".")
     try:
         return float(cleaned)
     except ValueError:
@@ -805,28 +894,62 @@ def parse_detected_numeric_tokens(sentence: str) -> list[DetectedNumericToken]:
     tokens: list[DetectedNumericToken] = []
     sent_lower = sentence.lower()
 
+    # Detect document section numbers or list markers at sentence start
+    sec_spans: list[tuple[int, int]] = []
+    sec_match = SECTION_OR_LIST_START_REGEX.match(sentence)
+    if sec_match:
+        sec_raw = sec_match.group(0).strip()
+        is_sec = bool(sec_match.group("section") or sec_match.group("sec_dot"))
+        tok_type = NumericTokenType.SECTION_NUMBER if is_sec else NumericTokenType.LIST_MARKER
+        sec_spans.append((sec_match.start(), sec_match.end()))
+        tokens.append(DetectedNumericToken(
+            raw_text=sec_raw,
+            normalized_numeric_value=None,
+            token_type=tok_type,
+            char_start=sec_match.start(),
+            char_end=sec_match.end(),
+        ))
+
     # Find date spans to accurately classify calendar days and years
     date_spans: set[tuple[int, int]] = set()
     for dm in DATE_EXPRESSION_REGEX.finditer(sentence):
         date_spans.add(dm.span("day"))
         date_spans.add(dm.span("year"))
 
-    for match in NUMERIC_TOKEN_REGEX.finditer(sentence):
+    numeric_matches = list(NUMERIC_TOKEN_REGEX.finditer(sentence))
+    comma_convention = _infer_sentence_comma_convention(numeric_matches)
+
+    for match in numeric_matches:
         raw_full = match.group(0).strip()
         if not raw_full:
             continue
 
         start_idx, end_idx = match.span()
+        # Exclude numeric tokens covered by document section numbers / list markers
+        if any(s <= start_idx and end_idx <= e for s, e in sec_spans):
+            continue
+
         prefix = (match.group("prefix") or "").strip()
         sign = (match.group("sign") or "").strip()
         num_part = (match.group("num") or "").strip()
         suffix = (match.group("suffix") or "").strip()
 
-        num_val = normalize_number_string(num_part)
-        if num_val is None:
+        suffix_lower = suffix.lower()
+        explicit_decimal_evidence = bool(
+            suffix_lower.startswith('%')
+            or suffix_lower.strip() in SCALE_MAP
+        )
+        num_val = normalize_number_string(
+            num_part,
+            comma_convention=comma_convention,
+            decimal_evidence=explicit_decimal_evidence,
+        )
+        ambiguous_number = num_val is None and _is_ambiguous_single_comma(num_part)
+        if num_val is None and not ambiguous_number:
             continue
         if sign in {"-", "–", "—"}:
-            num_val = -abs(num_val)
+            if num_val is not None:
+                num_val = -abs(num_val)
 
         # Detect currency
         currency = None
@@ -854,6 +977,9 @@ def parse_detected_numeric_tokens(sentence: str) -> list[DetectedNumericToken]:
             if re.match(r"^\s*cents?\b", lookahead) or re.match(r"^\s*(?:c\b|cps\b)", lookahead):
                 scale = "cents"
                 is_per_share = True
+                m_cents = re.search(r"^\s*(?:cents?|cps|c\b)", lookahead)
+                if m_cents:
+                    end_idx += m_cents.end()
                 raw_full = f"{raw_full} cents"
 
         # Check if year or part of date
@@ -879,7 +1005,9 @@ def parse_detected_numeric_tokens(sentence: str) -> list[DetectedNumericToken]:
             "between" in sent_lower or "range of" in sent_lower or "range" in sent_lower
         )
 
-        if is_date_or_year:
+        if ambiguous_number:
+            token_type = NumericTokenType.AMBIGUOUS_NUMBER_FORMAT
+        elif is_date_or_year:
             token_type = NumericTokenType.YEAR_OR_DATE
         elif is_percentage:
             token_type = NumericTokenType.PERCENTAGE
@@ -903,7 +1031,9 @@ def parse_detected_numeric_tokens(sentence: str) -> list[DetectedNumericToken]:
             currency=currency,
             scale=scale,
             is_percentage=is_percentage,
-            is_per_share=is_per_share
+            is_per_share=is_per_share,
+            char_start=start_idx,
+            char_end=end_idx,
         ))
 
     return tokens
@@ -931,6 +1061,203 @@ def resolve_nested_alias_spans(matches: list[tuple[int, int, str, Any]]) -> list
     return sorted(kept, key=lambda m: m[0])
 
 
+LEXICAL_CONNECTORS_AFTER = re.compile(
+    r"^\s*(?:of|at|to|from|between|was|is|were|amounted\s+to|increased\s+to|decreased\s+to|improved\s+to|fell\s+to|rose\s+to|reached|stood\s+at|by|:|=)\s*",
+    re.IGNORECASE
+)
+
+PER_SHARE_SUFFIX = re.compile(
+    r"^\s+per\s+(?:ordinary\s+|weighted\s+average\s+|diluted\s+|ordinary\s+issued\s+)?shares?\b",
+    re.IGNORECASE
+)
+
+CLAUSE_BOUNDARY_REGEX = re.compile(
+    r'[;)]|\b(?:as|while|whereas|but|and)\b',
+    re.IGNORECASE,
+)
+
+
+def _numeric_alias_affinity(
+    concept_id: str | None,
+    normalized_label: str,
+    token: DetectedNumericToken,
+) -> int:
+    label = normalized_label.lower()
+    is_percentage = token.is_percentage or token.token_type == NumericTokenType.PERCENTAGE
+    is_margin = concept_id in {'gross_margin', 'trading_margin', 'operating_margin', 'ebitda_margin'} or 'margin' in label
+    is_per_share = concept_id in {
+        'eps', 'heps', 'diluted_eps', 'diluted_heps', 'dividend_per_share',
+        'nav_per_share', 'cash_flow_per_share',
+    } or 'per share' in label
+    is_currency = concept_id in {
+        'accounting_revenue', 'trading_profit', 'operating_profit', 'ebit',
+        'pbit', 'ebitda', 'reported_net_debt', 'cash_and_cash_equivalents',
+        'total_capex',
+    } or any(word in label for word in ('revenue', 'profit', 'ebit', 'capex', 'debt', 'cash'))
+    is_share_count = concept_id in {
+        'issued_shares_current', 'treasury_shares', 'wanos', 'diluted_wanos',
+    } or 'shares in issue' in label or 'ordinary shares' in label
+
+    if is_margin:
+        return 5 if is_percentage else -5
+    if is_per_share:
+        if token.token_type == NumericTokenType.PER_SHARE_LEVEL or token.scale == 'cents':
+            return 5
+        if token.token_type == NumericTokenType.CURRENCY_LEVEL and token.scale in {'million', 'billion'}:
+            return -5
+        return 2 if not is_percentage else 1
+    if is_currency:
+        if is_percentage:
+            return 2
+        if token.token_type == NumericTokenType.CURRENCY_LEVEL or token.scale in {'million', 'billion', 'thousand'}:
+            return 5
+        return 3
+    if is_share_count:
+        return -5 if token.currency or is_percentage else 5
+    return 2
+
+
+def _numeric_owner_score(
+    sentence: str,
+    alias_span: tuple[int, int, str, str | None],
+    token: DetectedNumericToken,
+) -> tuple[int, int, int]:
+    start, end, label, concept_id = alias_span
+    token_start = token.char_start if token.char_start is not None else 0
+    token_end = token.char_end if token.char_end is not None else token_start + len(token.raw_text)
+    if token_start >= end:
+        between = sentence[end:token_start]
+        distance = token_start - end
+        connector = bool(LEXICAL_CONNECTORS_AFTER.search(between))
+    elif token_end <= start:
+        between = sentence[token_end:start]
+        distance = start - token_end
+        connector = bool(re.search(r'\b(?:of|was|is|were)\s*$', between, re.IGNORECASE))
+    else:
+        between = ''
+        distance = 0
+        connector = True
+    boundaries = len(CLAUSE_BOUNDARY_REGEX.findall(between))
+    affinity = _numeric_alias_affinity(concept_id, label, token)
+    score = affinity * 100 + (40 if connector else 0) - boundaries * 250 - distance
+    return score, -boundaries, -distance
+
+
+def associate_numeric_tokens(
+    alias_text: str,
+    alias_start_in_sent: int,
+    alias_end_in_sent: int,
+    sentence: str,
+    concept_id: str | None,
+    norm_label: str,
+    tokens: list[DetectedNumericToken],
+    competing_alias_spans: Sequence[tuple[int, int, str, str | None]] | None = None,
+) -> tuple[str | None, str | None, float, str]:
+    """Deterministically associates detected numeric tokens with matched alias based on distance, connectors, and unit compatibility."""
+    current_span = (alias_start_in_sent, alias_end_in_sent, norm_label, concept_id)
+    ownership_spans = [current_span]
+    for span in competing_alias_spans or ():
+        if span[:3] != current_span[:3]:
+            ownership_spans.append(span)
+
+    valid_candidates = []
+    for tok in tokens:
+        if tok.token_type in (
+            NumericTokenType.YEAR_OR_DATE,
+            NumericTokenType.SECTION_NUMBER,
+            NumericTokenType.LIST_MARKER,
+            NumericTokenType.OTHER,
+            NumericTokenType.AMBIGUOUS_NUMBER_FORMAT,
+        ):
+            continue
+        if len(ownership_spans) > 1:
+            owner = max(
+                ownership_spans,
+                key=lambda span: _numeric_owner_score(sentence, span, tok),
+            )
+            if owner[:3] != current_span[:3]:
+                continue
+        valid_candidates.append(tok)
+
+    if not valid_candidates:
+        return None, None, 1.0, "No valid numeric metric candidates found in sentence context"
+
+    norm_lower = norm_label.lower()
+    is_margin = (concept_id in {"gross_margin", "trading_margin", "operating_margin", "ebitda_margin"}) or ("margin" in norm_lower)
+    is_per_share = (concept_id in {"eps", "heps", "diluted_eps", "diluted_heps", "dividend_per_share", "nav_per_share", "cash_flow_per_share"}) or ("per share" in norm_lower)
+    is_currency = (concept_id in {"accounting_revenue", "trading_profit", "operating_profit", "ebit", "pbit", "ebitda", "reported_net_debt", "cash_and_cash_equivalents", "total_capex"}) or any(k in norm_lower for k in ["revenue", "profit", "ebit", "capex", "debt", "cash"])
+    is_share_count = (concept_id in {"issued_shares_current", "treasury_shares", "wanos", "diluted_wanos"}) or ("shares in issue" in norm_lower or "ordinary shares" in norm_lower)
+
+    scored = []
+    for tok in valid_candidates:
+        t_start = tok.char_start if tok.char_start is not None else sentence.find(tok.raw_text.replace(" cents", ""))
+        t_end = tok.char_end if tok.char_end is not None else (t_start + len(tok.raw_text) if t_start != -1 else 0)
+        if t_start == -1:
+            t_start = 0
+            t_end = len(tok.raw_text)
+
+        is_after = t_start >= alias_end_in_sent
+        dist = t_start - alias_end_in_sent if is_after else alias_start_in_sent - t_end
+
+        # Check connector
+        between_text = sentence[alias_end_in_sent:t_start] if is_after else sentence[t_end:alias_start_in_sent]
+        has_connector = bool(LEXICAL_CONNECTORS_AFTER.search(between_text)) if is_after else bool(re.search(r"\b(?:of|was|is|were)\s*$", between_text, re.I))
+
+        # Check unit compatibility
+        compatible = True
+        is_change_type = tok.is_percentage or tok.token_type == NumericTokenType.PERCENTAGE
+
+        if is_margin:
+            # Margins must be percentage
+            if not is_change_type:
+                compatible = False
+        elif is_per_share:
+            # Per-share metrics prefer cents / per-share; millions/billions currency are incompatible
+            if tok.token_type == NumericTokenType.CURRENCY_LEVEL and tok.scale in {"million", "billion"}:
+                compatible = False
+        elif is_currency:
+            # Aggregate currency metrics: percentage is rate/change, not metric level
+            if is_change_type:
+                compatible = False
+        elif is_share_count:
+            # Share counts: currency and percentages are incompatible
+            if tok.currency or is_change_type:
+                compatible = False
+
+        scored.append({
+            "token": tok,
+            "span": (t_start, t_end),
+            "is_after": is_after,
+            "dist": dist,
+            "has_connector": has_connector,
+            "compatible": compatible,
+            "is_change_type": is_change_type,
+        })
+
+    metric_cand = None
+    change_cand = None
+    reasons = []
+
+    # Find candidate metric token: prefer compatible, has_connector, is_after, lowest dist
+    metric_candidates = [c for c in scored if c["compatible"] and (not c["is_change_type"] or is_margin)]
+    if metric_candidates:
+        metric_candidates.sort(key=lambda c: (-int(c["has_connector"]), -int(c["is_after"]), c["dist"]))
+        best_m = metric_candidates[0]
+        metric_cand = best_m["token"].raw_text
+        reasons.append(f"Associated metric level '{metric_cand}' (dist={best_m['dist']}, connector={best_m['has_connector']}, compatible=True)")
+
+    # Find candidate change token
+    change_candidates = [c for c in scored if c["is_change_type"] and not is_margin]
+    if change_candidates:
+        change_candidates.sort(key=lambda c: (-int(c["has_connector"]), -int(c["is_after"]), c["dist"]))
+        best_c = change_candidates[0]
+        change_cand = best_c["token"].raw_text
+        reasons.append(f"Associated change rate '{change_cand}'")
+
+    conf = 0.95 if (metric_cand or change_cand) else 0.50
+    return metric_cand, change_cand, conf, "; ".join(reasons)
+
+
 def classify_benchmark_item_heuristics(
     norm: str,
     raw: str,
@@ -939,7 +1266,12 @@ def classify_benchmark_item_heuristics(
     dict_status: AliasStatus,
     qualifiers: SemanticQualifiers,
     nums: list[str] | None = None,
-    typed_nums: list[DetectedNumericToken] | None = None
+    typed_nums: list[DetectedNumericToken] | None = None,
+    previous_sentence: str | None = None,
+    next_sentence: str | None = None,
+    nearby_heading: str | None = None,
+    candidate_metric_token: str | None = None,
+    candidate_change_token: str | None = None,
 ) -> tuple[AliasRole, ValuePattern, ValuationEligibility, bool, ReviewStatus, BenchmarkDifficulty, str]:
     """Applies strict deterministic rules to seed benchmark items, maintaining REVIEW_REQUIRED for ambiguities."""
     sent_lower = sentence.lower()
@@ -951,27 +1283,65 @@ def classify_benchmark_item_heuristics(
     if nums is None:
         nums = [t.raw_text for t in typed_nums]
 
-    # Candidate metric numbers exclude YEAR_OR_DATE and OTHER
-    metric_tokens = [t for t in typed_nums if t.token_type not in (NumericTokenType.YEAR_OR_DATE, NumericTokenType.OTHER)]
+    # Auto-associate numeric tokens if not explicitly passed
+    if candidate_metric_token is None and typed_nums:
+        alias_start_in_sent = sentence.find(raw)
+        alias_end_in_sent = alias_start_in_sent + len(raw) if alias_start_in_sent != -1 else len(raw)
+        cand_m, cand_c, _, _ = associate_numeric_tokens(
+            alias_text=raw,
+            alias_start_in_sent=alias_start_in_sent if alias_start_in_sent != -1 else 0,
+            alias_end_in_sent=alias_end_in_sent,
+            sentence=sentence,
+            concept_id=concept_id,
+            norm_label=norm,
+            tokens=typed_nums,
+        )
+        candidate_metric_token = cand_m
+        if candidate_change_token is None:
+            candidate_change_token = cand_c
+
+    # Candidate metric numbers exclude YEAR_OR_DATE, OTHER, SECTION_NUMBER, LIST_MARKER
+    metric_tokens = [
+        t for t in typed_nums
+        if t.token_type not in (
+            NumericTokenType.YEAR_OR_DATE,
+            NumericTokenType.OTHER,
+            NumericTokenType.SECTION_NUMBER,
+            NumericTokenType.LIST_MARKER,
+            NumericTokenType.AMBIGUOUS_NUMBER_FORMAT,
+        )
+    ]
     has_metric_numbers = bool(metric_tokens)
 
-    # Concept Specificity (Requirement #8: separate per-share vs aggregate concepts)
-    if "headline earnings per share" in norm_lower or "headline earnings per share" in raw_lower:
+    # Concept Specificity (Requirement #4 & #8: separate per-share vs aggregate concepts, extend per-share variants)
+    PER_SHARE_PATTERN = r"per\s+(?:ordinary\s+|weighted\s+average\s+|diluted\s+|ordinary\s+issued\s+)?shares?"
+    if re.search(rf"\bheadline\s+(?:earnings|loss)\s+{PER_SHARE_PATTERN}\b", norm_lower) or re.search(rf"\bheadline\s+(?:earnings|loss)\s+{PER_SHARE_PATTERN}\b", raw_lower):
         concept_id = "diluted_heps" if ("diluted" in norm_lower or "diluted" in raw_lower) else "heps"
-    elif "earnings per share" in norm_lower or "earnings per share" in raw_lower:
+    elif re.search(rf"\b(?:basic\s+)?(?:earnings|loss)\s+{PER_SHARE_PATTERN}\b", norm_lower) or re.search(rf"\b(?:basic\s+)?(?:earnings|loss)\s+{PER_SHARE_PATTERN}\b", raw_lower):
         concept_id = "diluted_eps" if ("diluted" in norm_lower or "diluted" in raw_lower) else "eps"
-    elif "dividend per share" in norm_lower or "dividend per share" in raw_lower:
+    elif re.search(rf"\b(?:dividend|dividends)\s+{PER_SHARE_PATTERN}\b", norm_lower) or re.search(rf"\b(?:dividend|dividends)\s+{PER_SHARE_PATTERN}\b", raw_lower):
         concept_id = "dividend_per_share"
-    elif "nav per share" in norm_lower or "net asset value per share" in norm_lower:
+    elif re.search(rf"\b(?:nav|net\s+asset\s+value)\s+{PER_SHARE_PATTERN}\b", norm_lower) or re.search(rf"\b(?:nav|net\s+asset\s+value)\s+{PER_SHARE_PATTERN}\b", raw_lower):
         concept_id = "nav_per_share"
-    elif "cash flow per share" in norm_lower:
+    elif re.search(rf"\bcash\s+flow\s+{PER_SHARE_PATTERN}\b", norm_lower) or re.search(rf"\bcash\s+flow\s+{PER_SHARE_PATTERN}\b", raw_lower):
         concept_id = "cash_flow_per_share"
     elif norm_lower in {"headline earnings", "earnings", "profit", "operating profit", "trading profit", "nav", "net asset value", "cash flow", "cash generated from operations"}:
         if concept_id in {"eps", "heps", "diluted_eps", "diluted_heps", "dividend_per_share", "nav_per_share", "cash_flow_per_share"}:
             concept_id = None
 
-    # Guidance Detection (Requirement #5)
-    is_guidance = any(k in sent_lower for k in GUIDANCE_KEYWORDS) or any(k in norm_lower for k in ["guidance", "forecast", "expected", "projected", "outlook"])
+    # Guidance Detection using context window (Requirement #1)
+    context_to_check = [sentence]
+    if previous_sentence:
+        context_to_check.append(previous_sentence)
+    if next_sentence:
+        context_to_check.append(next_sentence)
+    if nearby_heading:
+        context_to_check.append(nearby_heading)
+
+    is_guidance = (
+        any(any(k in s.lower() for k in GUIDANCE_KEYWORDS) for s in context_to_check)
+        or any(k in norm_lower for k in ["guidance", "forecast", "expected", "projected", "outlook"])
+    )
 
     # Change Detection (Requirement #6)
     has_change_verb = any(re.search(rf"\b{re.escape(v)}\b", sent_lower) for v in CHANGE_VERBS) or any(k in norm_lower for k in CHANGE_KEYWORDS)
@@ -1010,15 +1380,31 @@ def classify_benchmark_item_heuristics(
         note = f"Narrative mention of '{norm}' without usable numeric level (only dates/years or non-metric tokens detected)"
         return role, pat, elig, abstain, status, diff, note
 
-    # 1. Guidance Statement (Requirement #5)
+    # 1. Guidance Statement (Requirement #1 & #5)
     if is_guidance:
         role = AliasRole.GUIDANCE_STATEMENT
-        has_range = ("between" in sent_lower or "range of" in sent_lower or any(t.token_type == NumericTokenType.RANGE_BOUND for t in typed_nums))
+        has_range = (
+            "between" in sent_lower
+            or "range of" in sent_lower
+            or any(t.token_type == NumericTokenType.RANGE_BOUND for t in typed_nums)
+            or (len(metric_tokens) >= 2 and any("between" in s.lower() for s in context_to_check))
+        )
         pat = ValuePattern.RANGE if has_range else ValuePattern.DIRECT_LEVEL
         elig = ValuationEligibility.INFORMATIONAL_ONLY
         abstain = True
         status = ReviewStatus.AUTO_SEEDED if dict_status == AliasStatus.APPROVED else ReviewStatus.REVIEW_REQUIRED
         note = "Guidance / forward-looking trading statement; ineligible for historical actual baseline"
+        return role, pat, elig, abstain, status, diff, note
+
+    # Incompatible numeric association check (Requirement #6):
+    # If candidate_metric_token is None and not a change statement, cannot be DIRECT_VALUE_LABEL
+    if candidate_metric_token is None and not (has_change_verb or (only_percentages and not is_margin)):
+        role = AliasRole.CONCEPT_MENTION_ONLY
+        pat = ValuePattern.UNKNOWN
+        elig = ValuationEligibility.REQUIRES_BASIS if is_margin else ValuationEligibility.INFORMATIONAL_ONLY
+        abstain = True
+        status = ReviewStatus.REVIEW_REQUIRED
+        note = f"Concept '{norm}' lacks compatible numeric level in sentence context"
         return role, pat, elig, abstain, status, diff, note
 
     # 2. Change Statement (Requirement #6)
@@ -1142,24 +1528,26 @@ def classify_benchmark_item_heuristics(
 def extract_sentence_context(
     content: str,
     raw_label: str,
-    target_line: str | None = None
+    target_line: str | None = None,
+    target_line_idx: int | None = None
 ) -> tuple[str, str | None, str | None, str | None, list[str], list[DetectedNumericToken]]:
     """Extracts the containing sentence, prior sentence, following sentence, and detected numeric tokens."""
     lines = content.splitlines()
-    target_line_idx = -1
 
-    if target_line:
-        clean_target = target_line.strip()
-        for idx, l in enumerate(lines):
-            if clean_target == l.strip():
-                target_line_idx = idx
-                break
+    if target_line_idx is None or target_line_idx < 0 or target_line_idx >= len(lines):
+        target_line_idx = -1
+        if target_line:
+            clean_target = target_line.strip()
+            for idx, l in enumerate(lines):
+                if clean_target == l.strip():
+                    target_line_idx = idx
+                    break
 
-    if target_line_idx == -1:
-        for idx, l in enumerate(lines):
-            if raw_label in l:
-                target_line_idx = idx
-                break
+        if target_line_idx == -1:
+            for idx, l in enumerate(lines):
+                if raw_label in l:
+                    target_line_idx = idx
+                    break
 
     if target_line_idx == -1:
         clean_content = content.replace("\r\n", "\n")
@@ -1178,11 +1566,21 @@ def extract_sentence_context(
     prev_s = lines[target_line_idx - 1].strip() if target_line_idx > 0 and lines[target_line_idx - 1].strip() else None
     next_s = lines[target_line_idx + 1].strip() if target_line_idx < len(lines) - 1 and lines[target_line_idx + 1].strip() else None
 
+    # Detect list grammatical dependency for bullet items / list markers
+    if re.match(r"^\s*(?:[•\-*–—]|\d+\.|\(?\d+\)|\(?[a-zA-Z]\))\s+", full_s):
+        for back_idx in range(target_line_idx - 1, max(-1, target_line_idx - 10), -1):
+            cand_line = lines[back_idx].strip()
+            if not cand_line:
+                continue
+            if cand_line.endswith(":") or any(k in cand_line.lower() for k in GUIDANCE_KEYWORDS):
+                prev_s = cand_line
+                break
+
     # Detect heading
     heading = None
-    for h_idx in range(target_line_idx - 1, max(-1, target_line_idx - 4), -1):
+    for h_idx in range(target_line_idx - 1, max(-1, target_line_idx - 6), -1):
         cand_h = lines[h_idx].strip()
-        if cand_h and (cand_h.isupper() or len(cand_h) < 40 or cand_h.endswith(":")):
+        if cand_h and (cand_h.isupper() or len(cand_h) < 40 or cand_h.endswith(":") or any(k in cand_h.lower() for k in ["trading statement", "results", "guidance"])):
             heading = cand_h
             break
 
@@ -1231,7 +1629,7 @@ def build_stratified_benchmark(
     label_counts: Counter[str] = Counter()
     ticker_counts: Counter[str] = Counter()
     sampled_items: list[BenchmarkItem] = []
-    seen_exact_occurrences: set[tuple[int, str, str]] = set()
+    seen_exact_occurrences: set[tuple[int, int, int, str]] = set()
 
     bench_idx = 1
     for sens_id, ticker, pub_dt, src_doc_id, content in rows:
@@ -1239,10 +1637,15 @@ def build_stratified_benchmark(
             continue
 
         dt_str = pub_dt.strftime("%Y-%m-%d %H:%M") if pub_dt else "2025-01-01 00:00"
-        lines = content.splitlines()
+        lines = content.splitlines(keepends=True)
+        line_offset = 0
 
-        for line in lines:
-            line_clean = line.strip()
+        for line_idx, line_raw in enumerate(lines):
+            line_len = len(line_raw)
+            line_clean = line_raw.strip()
+            current_line_start = line_offset
+            line_offset += line_len
+
             if not line_clean or len(line_clean) < 15 or len(line_clean) > 350:
                 continue
 
@@ -1257,35 +1660,100 @@ def build_stratified_benchmark(
                 if first_word not in line_lower:
                     continue
                 for m in pat.finditer(line_clean):
-                    line_matches.append((m.start(), m.end(), norm_label, m.group(0)))
+                    m_start, m_end = m.start(), m.end()
+                    matched_text = m.group(0)
+
+                    # Extended per-share recognition (Requirement #4)
+                    post_text = line_clean[m_end:]
+                    m_suff = PER_SHARE_SUFFIX.match(post_text)
+                    if m_suff and norm_label in {
+                        'headline earnings', 'earnings', 'profit', 'dividend', 'dividends',
+                        'nav', 'net asset value', 'loss', 'basic loss', 'headline loss'
+                    }:
+                        m_end = m_end + m_suff.end()
+                        matched_text = line_clean[m_start:m_end]
+                        norm_label = normalize_label(matched_text)
+
+                    line_matches.append((m_start, m_end, norm_label, matched_text))
 
             if not line_matches:
                 continue
 
             # Resolve overlapping/nested spans: longest span suppresses strictly contained shorter matches
             resolved_matches = resolve_nested_alias_spans(line_matches)
+            competing_alias_spans = [
+                (
+                    span_start,
+                    span_end,
+                    span_label,
+                    (alias_meta.get(span_label) or {}).get('canonical_concept'),
+                )
+                for span_start, span_end, span_label, _ in resolved_matches
+            ]
 
-            for _, _, norm_label, raw_found in resolved_matches:
+            for m_start, m_end, norm_label, raw_found in resolved_matches:
                 if label_counts[norm_label] >= max_per_label:
                     continue
                 if ticker_counts[ticker] >= max_per_ticker:
                     break
 
-                # Deduplicate exact occurrences by (sens_id, full_sentence, normalized_label)
-                occ_key = (sens_id, line_clean, norm_label)
+                # Source offset provenance (Requirement #5)
+                alias_start_offset = current_line_start + m_start
+                alias_end_offset = current_line_start + m_end
+                sentence_start_offset = current_line_start
+                sentence_end_offset = current_line_start + len(line_clean)
+                source_line_index = line_idx
+
+                # Deduplicate exact occurrences by stable span identity (sens_id, alias_start_offset, alias_end_offset, normalized_label)
+                occ_key = (sens_id, alias_start_offset, alias_end_offset, norm_label)
                 if occ_key in seen_exact_occurrences:
                     continue
                 seen_exact_occurrences.add(occ_key)
 
                 full_s, prev_s, next_s, heading, nums, typed_toks = extract_sentence_context(
-                    content, raw_found, target_line=line_clean
+                    content, raw_found, target_line=line_clean, target_line_idx=line_idx
                 )
 
-                am = alias_meta[norm_label]
-                dict_status = AliasStatus(am["status"])
-                concept_id = am["canonical_concept"]
-                q_dict = am.get("qualifiers", {})
-                qualifiers = SemanticQualifiers(**q_dict)
+                # Look up alias in dictionary
+                am = alias_meta.get(norm_label)
+                if am:
+                    dict_status = AliasStatus(am["status"])
+                    concept_id = am["canonical_concept"]
+                    q_dict = am.get("qualifiers", {})
+                    qualifiers = SemanticQualifiers(**q_dict)
+                else:
+                    # Dynamic per-share alias or extended phrase
+                    if "headline" in norm_label and "share" in norm_label:
+                        concept_id = "diluted_heps" if "diluted" in norm_label else "heps"
+                        dict_status = AliasStatus.APPROVED
+                    elif "share" in norm_label and ("eps" in norm_label or "earnings" in norm_label or "loss" in norm_label):
+                        concept_id = "diluted_eps" if "diluted" in norm_label else "eps"
+                        dict_status = AliasStatus.APPROVED
+                    elif "dividend" in norm_label and "share" in norm_label:
+                        concept_id = "dividend_per_share"
+                        dict_status = AliasStatus.APPROVED
+                    elif "nav" in norm_label or ("net asset value" in norm_label and "share" in norm_label):
+                        concept_id = "nav_per_share"
+                        dict_status = AliasStatus.APPROVED
+                    else:
+                        dict_status = AliasStatus.UNKNOWN
+                        concept_id = None
+                    qualifiers = SemanticQualifiers()
+
+                alias_start_in_sent = full_s.find(raw_found)
+                alias_end_in_sent = alias_start_in_sent + len(raw_found) if alias_start_in_sent != -1 else m_end
+
+                # Deterministic numeric token association (Requirement #6)
+                cand_metric, cand_change, assoc_conf, assoc_reason = associate_numeric_tokens(
+                    alias_text=raw_found,
+                    alias_start_in_sent=alias_start_in_sent if alias_start_in_sent != -1 else 0,
+                    alias_end_in_sent=alias_end_in_sent if alias_start_in_sent != -1 else len(raw_found),
+                    sentence=full_s,
+                    concept_id=concept_id,
+                    norm_label=norm_label,
+                    tokens=typed_toks,
+                    competing_alias_spans=competing_alias_spans,
+                )
 
                 role, val_pat, elig, abstain, rev_status, diff, note = classify_benchmark_item_heuristics(
                     norm=norm_label,
@@ -1295,7 +1763,12 @@ def build_stratified_benchmark(
                     dict_status=dict_status,
                     qualifiers=qualifiers,
                     nums=nums,
-                    typed_nums=typed_toks
+                    typed_nums=typed_toks,
+                    previous_sentence=prev_s,
+                    next_sentence=next_s,
+                    nearby_heading=heading,
+                    candidate_metric_token=cand_metric,
+                    candidate_change_token=cand_change,
                 )
 
                 item = BenchmarkItem(
@@ -1312,6 +1785,15 @@ def build_stratified_benchmark(
                     nearby_heading=heading,
                     detected_numeric_tokens=nums,
                     detected_typed_numeric_tokens=typed_toks,
+                    source_line_index=source_line_index,
+                    sentence_start_offset=sentence_start_offset,
+                    sentence_end_offset=sentence_end_offset,
+                    alias_start_offset=alias_start_offset,
+                    alias_end_offset=alias_end_offset,
+                    candidate_metric_token=cand_metric,
+                    candidate_change_token=cand_change,
+                    association_confidence=assoc_conf,
+                    association_reason=assoc_reason,
                     current_dictionary_status=dict_status,
                     current_proposed_canonical_concept=concept_id,
                     current_qualifiers=qualifiers,
@@ -2103,5 +2585,3 @@ def import_review_worksheet_csv(
     progress_report = get_review_progress_report(updated_items, batch_ids=batch_ids)
 
     return updated_items, progress_report
-
-

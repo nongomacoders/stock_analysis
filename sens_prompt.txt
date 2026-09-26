@@ -2,36 +2,35 @@
 You are a professional JSE financial analyst.
 
 --- MARKET CONTEXT ---
-Current Share Price: 12248.00c
+Current Share Price: 982.00c
 
 --- END CONTEXT ---
 
 --- MY RESEARCH ---
 PRICE LEVELS & TARGETS
-Report Date Share Price: ZAR 123.16
-Report 12-Month Target: ZAR 134.50
-Consensus Target: Not stated
-Valuation Floor (NAV): Not stated
+Report Date Share Price: 9.57 ZAR
+Report 12-Month Target: 10.20 ZAR
+Consensus Target: [Consensus Target not provided in report]
+Valuation Floor (NAV): 11.53 ZAR
 
 CATALYSTS & RISKS
 Positive:
-- Competing superior proposal from a rival global explosives major at a minimum 2.5 percent premium (above R137.86)
-- Accelerated clearance from South African and cross-border African competition authorities enabling early closing
-- RMB bank guarantee eliminating buyer financing risk and securing a hard cash exit floor
+- Validation of asset-light strategy via R3.2bn (€160m) JV with Hines
+- Significant boost to fund management fee income as manager of 80% third-party capital
+- Exposure to high-growth European light industrial sector with a blue-chip partner
+- First €40m of acquisitions under the JV already concluded
 
 Negative:
-- Failure of competition or regulatory approvals across eight African regional jurisdictions or burdensome public interest conditions
-- Material Adverse Change clause triggered if group EBITDA falls below R2.357 billion during the offer period
-- Dissenting shareholders exceeding the 3 percent threshold invoking section 164 appraisal rights
+- Incremental debt usage to fund equity stake before SA asset disposals complete
+- Higher-for-longer interest rates in the Eurozone impacting the 60% JV-level debt
+- Execution risk in aggregating a new portfolio in competitive German/Dutch markets
 
 KEY DATES
 Debt / Facilities Maturing:
-- Not stated
+- [No specific maturity dates for the Morgan Stanley JV debt or existing facilities provided in report]
 
 Project Timelines / Milestones:
-- 14 September 2026: Solar SA Investments entered into implementation agreement to acquire 100 percent of Omnia shares
-- Mid-2027: Targeted full regulatory clearance and Scheme Meeting approval
-- 9 September 2027: Validity deadline for Rand Merchant Bank cash confirmation guarantee
+- [No specific project completion or disposal deadlines provided in report beyond ongoing SA disposal program of R1.5bn]
 --- END RESEARCH ---
 
 --- MY STRATEGY ---
@@ -39,110 +38,175 @@ Project Timelines / Milestones:
 --- END STRATEGY ---
 
 --- NEW SENS ANNOUNCEMENT ---
-Dealings in securities by directors, prescribed officers, the company secretary of the Company and a director of a major subsidiary
-OMNIA HOLDINGS LIMITED
-Incorporated in the Republic of South Africa
-(Registration number 1967/003680/06)
-JSE code: OMN
-LEI NUMBER: 529900T6L5CEOP1PNP91
-ISIN: ZAE000005153
-(“Omnia” or the “Company”)
-DEALINGS IN SECURITIES BY DIRECTORS, PRESCRIBED OFFICERS, THE COMPANY SECRETARY OF THE COMPANY AND A
-DIRECTOR OF A MAJOR SUBSIDIARY
-The annual awards under the Omnia 2020 Share Plan (the “Plan”) have been concluded, as detailed below. The
-granting of these awards had been deferred while the Company was in a prohibited period, which lifted on
-publication of the firm intention announcement on 14 September 2026.
-Shareholders are advised that Omnia has awarded Performance Forfeitable Shares, as defined in the Plan, to
-directors, prescribed officers, the company secretary of the Company and a director of a major subsidiary of the
-Company. The awards were approved by the Remuneration and Nominations Committee and are subject to
-performance conditions measured over a three-year period, together with continued employment. The awards were
-granted on 15 September 2026 and accepted on 21 September 2026. The price used for purposes of the calculation
-of the number of Performance Forfeitable Shares awarded, was R99.97 per share, which was calculated as the 20-
-day volume weighted average price of an Omnia share as at 5 June 2026 (“20-day VWAP”), in terms of the rules
-of the Plan.
-Name of director and designation:                  T Gobalsamy (Chief Executive Officer)
-Number and class of securities:                    261 079 ordinary shares
-Transaction date:                                  21 September 2026
-Total value:                                       R26 100 067.63, being the total deemed value based on the
-20-day VWAP
-Nature of transaction:                             Off-market acceptance of awards offered in terms of the
-Plan
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
-Name of director and designation:                  SP Serfontein (Finance Director)
-Number and class of securities:                    75 023 ordinary shares
-Transaction date:                                  21 September 2026
-Total value:                                       R7 500 049.31, being the total deemed value based on the
-20-day VWAP
-Nature of transaction:                             Off-market acceptance of awards offered in terms of the
-Plan
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
-Name of prescribed officer:                        CM Kotzé
-Number and class of securities:                    30 010 ordinary shares
-Transaction date:                                  21 September 2026
-Total value:                                       R3 000 099.70, being the total deemed value based on the
-20-day VWAP
-Nature of transaction:                             Off-market acceptance of awards offered in terms of the
-Plan
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
-Name of prescribed officer:                        RC Hennecke
-Number and class of securities:                    55 017 ordinary shares
-Transaction date:                                  21 September 2026
-Total value:                                       R5 500 049.49, being the total deemed value based on the
-20-day VWAP
-Nature of transaction:                             Off-market acceptance of awards offered in terms of the
-Plan
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
-Name of company secretary:                         D Dickson
-Number and class of securities:                    15 005 ordinary shares
-Transaction date:                                  21 September 2026
-Total value:                                       R1 500 049.85, being the total deemed value based on the
-20-day VWAP
-Nature of transaction:                             Off-market acceptance of awards offered in terms of the
-Plan
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
-Name of director of major subsidiary:              SM Mdluli
-Number and class of securities:                    2 501 ordinary shares
-Transaction date:                                  21 September 2026
-Total value:                                       R250 024.97, being the total deemed value based on the 20-
-day VWAP
-Nature of transaction:                             Off-market acceptance of awards offered in terms of the
-Plan
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
-Shareholders are further referred to the award of Performance Forfeitable Shares on 3 July 2023 in terms of the
-provisions of the Plan. The Performance Forfeitable Shares were due to vest, subject to certain performance
-conditions, on the soonest practicable date after 30 June 2026. The performance conditions have been met and the
-Performance Forfeitable Shares have now vested.
-Name of director of major subsidiary:              SM Mdluli
-Number and class of securities:                    43 906 ordinary shares
-Transaction date:                                  15 September 2026
-Price per share:                                   R56.94
-Total value:                                       R2 500 007.64
-Nature of transaction:                             Off-market vesting in terms of the Plan
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
-Shareholders are further advised of the following dealings in securities by a director of a major subsidiary of the
-Company, in order to settle any tax liabilities incurred as a result of the vesting of the Performance Forfeitable
-Shares.
-Name of director of major subsidiary:              SM Mdluli
-Number and class of securities:                    17 432 ordinary shares
-Transaction date:                                  18 September 2026
-Total value:                                       R2 145 436.43
-Weighted average price per security:               R123.0746
-Highest traded price on the market on the day:     R124.24
-Lowest traded price on the market on the day:      R122.59
-Nature of transaction:                             On-market disposal of shares
-Nature and extent of interest:                     Direct beneficial
-Clearance to deal obtained:                        Yes
+Category 2 Transaction Announcement – Launch of South African Funds Management Business
+Burstone Group Limited
+Approved as a REIT by the JSE
+(Incorporated in the Republic of South Africa)
+(Registration Number 2008/011366/06)
+Share Code: BTN ISIN: ZAE000180915
+Bond Code: BTNI
+(‘Burstone’ or the ‘Group’)
+CATEGORY 2 TRANSACTION ANNOUNCEMENT – LAUNCH OF SOUTH AFRICAN FUNDS
+MANAGEMENT BUSINESS
+1. BACKGROUND
+The Board of Directors of Burstone is pleased to announce a significant development in the
+execution of its strategy to build a diversified, capital-efficient international real estate
+investment and funds management business.
+Burstone has entered into binding transaction agreements with Nedbank Property Partners
+(‘NPP’), to establish a South African funds management platform (the “NPP Partnership”),
+initially seeded with a portfolio of 14 Burstone-owned South African retail and industrial assets,
+with a gross asset value of approximately R5.4 billion (the “SA Core Plus platform”).
+NPP is a real estate focused equity and mezzanine financing business within Nedbank
+Corporate and Investment Bank, a division of Nedbank Limited. NPP is a nimble and like-
+minded capital partner with deep expertise and insights across all segments of the real estate
+market.
+Burstone will retain a 50% equity interest in the SA Core Plus platform and will act as both fund
+and asset manager in the platform, providing the Group with continued economic exposure to
+the underlying assets as well as recurring management fee income.
+The SA Core Plus platform has been structured from inception to enable the future introduction
+of additional private and institutional capital, creating a scalable, permanent capital vehicle
+through which third-party investors can participate alongside Burstone in the growth of a
+diversified South African real estate portfolio. The NPP Partnership is the first close of the SA
+Core Plus platform and Burstone is currently engaged with a significant institutional investor
+for a second close.
+The capital released will provide Burstone with significant flexibility to support its future growth
+strategy, including providing sufficient capital to meet the Group’s first-loss obligations
+associated with its European logistics platform.
+2. RATIONALE
+Burstone’s funds management strategy was launched in Europe through the Blackstone
+strategic partnership in the Pan-European logistics platform and European light industrial
+platform alongside Hines European Real Estate Partners III (“Hines”), with Australia having
+been launched with the Irongate Group.
+As one of its core strategic deliverables, Burstone has remained committed to forming a South
+African-focused, high-quality and diversified real estate funds business. Burstone believes the
+SA Core Plus platform will meet its strategic objectives and will deliver the following benefits to
+Burstone shareholders:
+–   In line with Burstone’s stated strategy of co-investment and asset management activity,
+Burstone will retain a 50% equity stake in the SA Core Plus platform and provide fund and
+asset management services to the SA Core Plus platform. The transaction therefore
+enables Burstone to recycle capital from its existing portfolio at an attractive valuation, while
+retaining 50% of the equity exposure to the assets and the associated fund and asset
+management mandates.
+–   Strategic partnership with NPP, which brings a demonstrable and accomplished track
+record across various real estate asset classes with various partners across the South
+African landscape.
+–   Significant strategic investor alignment, including joint control between Burstone and NPP
+and the quality of the SA Core Plus platform creates a unique South African investment
+opportunity that can immediately attract new third-party capital and to continue to scale
+meaningfully, with ongoing and new engagements underway.
+–   The SA Core Plus platform, catalysed through the first close with NPP, has been designed
+as a permanent capital vehicle with no defined exit term, the ability to allow for ease of
+investor entry, exit or dilution and no adverse impact to Burstone’s existing REIT status.
+–   Raising R677 million of external third-party equity capital at attractive pricing, with an
+implied, blended discount of 5.0% to the last reported book values as at 31 March 2026.
+–   R4.5 billion capital released to support redeployment into local and international growth
+opportunities. The capital also de-risks the first loss obligations associated with Burstone’s
+European logistics platform.
+–   Burstone earning recurring fee income by providing ongoing fund and asset management
+services to the SA Core Plus platform.
+–   Enhancing Burstone’s diversified income model with a material increase in fee revenue to
+19.3% (15.5% of total earnings for the year ending 31 March 2026). Third-party assets
+under management increases by 10.9% to R26.8 billion and equity under management
+increases by 4.5% to R11.5 billion.
+–   The transaction is expected to be earnings accretive to Burstone.
+–   The NPP Partnership is expected to result in a reduction of Burstone’s 31 March 2026
+reported loan-to-value (“LTV”) from 39.6% to 17.5% to 19.5% and the look-through LTV
+also improving from 48.6% to 40.5% to 42.5% (subject to any South African asset sales or
+additional transaction activity).
+3. SALIENT TERMS OF THE NPP PARTNERSHIP
+The SA Core Plus platform assets will reside in a stand-alone, unlisted structure, with Burstone
+and NPP each holding a 50% equity interest on day one (i.e. the date on which NPP becomes
+a party to the NPP Partnership (the “Closing Date”)). The SA Core Plus platform is established
+as an en commandite partnership in nature, with the ability to accommodate the dilution of
+existing investors and entry of new investors.
+The transaction has been structured to retain fiscal transparency from the perspective of
+investors, with no adverse consequences to Burstone’s REIT status.
+Assuming there are no unexpected delays on the transfer of any properties to the SA Core
+Plus platform, NPP will acquire its 50% equity interest in the SA Core Plus platform for
+approximately R677 million (the “NPP Consideration”). The NPP Consideration will be subject
+to a 5% asset pricing escalation, starting 3-months post receipt of Competition Commission
+approval, for a maximum 12-month period thereafter on properties that have yet to transfer to
+the SA Core Plus platform.
+The establishment of the NPP Partnership remains subject to customary conditions precedent
+and regulatory approvals, including Competition Commission approval, at which point the
+transaction becomes unconditional (the “Unconditional Date”). The Closing Date is triggered
+by the later of the Unconditional Date or the transfer of at least 70% of the properties, quantified
+by value, to the SA Core Plus platform.
+The NPP Consideration will be payable in cash by NPP, with:
+i.    a portion thereof payable on the Closing Date, in relation to at least 70% of the
+properties by value; and
+ii.   the remainder thereof payable in tranches as and when registration of transfer of the
+remaining properties occurs.
+Burstone will earn fund and asset management and acquisition fees on market related terms,
+with the ability to earn an additional performance fees on the basis that certain hurdles are
+achieved.
+The initial LTV of the SA Core Plus platform will be 70%, with the intention to reduce the LTV
+on the introduction of new third-party capital. The target LTV will be dependent on the asset
+strategy and investment mandate of the incoming investors.
+The effective date of the transaction is anticipated to be no later than 1 December 2026.
+4. OVERVIEW OF THE SA CORE PLUS PLATFORM
+The initial seed portfolio comprises five retail properties and nine industrial and logistics
+properties located across South Africa, with a gross asset value of approximately R5.4 billion
+and a blended asset yield of 8.4%. The retail portfolio includes dominant rural and peri-urban
+shopping centres, while the industrial portfolio consists of well-located warehousing and
+logistics assets supported by strong tenant covenants and long-term lease profiles.
+No.   Property Name                    Location              Type             Gross        Weighted
+Lettable         average
+Area (m2)         monthly
+rental /m2
+1.   Dihlabeng Mall                   Free State            Retail          31,222          R232.8
+2.   Fleurdal Mall                    Free State            Retail          30,792          R210.8
+3.   The Neighbourhood Square         Gauteng               Retail           6,074          R262.2
+4.   Kriel Mall                       Mpumalanga            Retail          21,465          R172.6
+5.   Zevenwacht Mall                  Western Cape          Retail          39,981          R247.5
+6.   181 Barbara                      Gauteng             Industrial        51,097          R90.4*
+7.   181 Barbara – WACO               Gauteng             Industrial        14,375          R90.4*
+8.   130 Gazelle                      Gauteng             Industrial        10,853          R90.4*
+9.   15 Pomona                        Gauteng             Industrial         9,038          R90.4*
+10.   16 Pomona                        Gauteng             Industrial         7,394          R90.4*
+11.   Riverhorse – Midas               KwaZulu-Natal       Industrial        11,112          R90.4*
+12.   Riverhorse – Adcock Ingram       KwaZulu-Natal       Industrial         9,715          R90.4*
+13.   Riverhorse – Discovery Health    KwaZulu-Natal       Industrial         6,134          R90.4*
+14.   Riverhorse – ABB                 KwaZulu-Natal       Industrial         2,842          R119.1
+*The weighted-average monthly rental for all single-tenanted properties have been aggregated.
+The SA Core Plus platform has been priced at a gross asset value of R5.155 billion,
+representing a 5.0% discount to the R5.429 billion book value of the properties, as at 31 March
+2026. This implies a blended 8.4% asset yield, based on a 12-month rolling net operating
+income of the SA Core Plus platform of R435 million.
+5. BURSTONE SEGMENTAL ANALYSIS
+All figures in R’billions
+Segment                         31 March 2026        Post-transaction      +/-     % change
+SA direct: Office                    4.9                    4.9             –          –
+SA direct: Industrial                2.8                    1.4           (1.4)     (50%)
+SA direct: Retail                    6.2                    2.2           (4.0)     (65%)
+Total – direct assets               13.9                    8.5           (5.4)     (39%)
+Co-invest: Core+ (SA)                 –                     0.7            0.7        n/a
+Co-invest: PEL (EU)                  1.7                    1.7             –          –
+Co-invest: Irongate (AU)             0.7                    0.7             –          –
+Total – co-investments               2.4                    3.1            0.7       28%
+Total Investment Base               16.3                   11.6           (4.7)     (29%)
+6. CLASSIFICATION OF THE TRANSACTION
+The NPP Consideration (which equates to Burstone’s 50% contribution to the NPP Partnership),
+after taking into account the maximum purchase price after the inclusion of the maximum
+potential pricing escalation amount (which is structurally capped in the transaction agreements),
+exceeds 10% but is less than 30% of Burstone’s market capitalisation and accordingly, the
+disposal by Burstone of its 50% equity interest in the SA Core Plus platform constitutes a
+Category 2 transaction in terms of the JSE Listings Requirements.
+Burstone notes that its previous dividend guidance of 4% to 6% distributable income per share
+growth remains unchanged and that the financial information included in this announcement has
+not been reviewed by the Group’s external auditors.
+Johannesburg
 25 September 2026
-Sponsor
-Java Capital
-Date: 25/09/2026 03:30:00
+Sponsor and Financial Advisor
+Investec Bank Limited
+Forward-looking statement
+This announcement contains certain forward-looking statements which relate to the possible future
+performance and financial position of the Group. All forward looking statements are solely based
+on the views and considerations of the Board of Directors. These statements involve risk and
+uncertainty as they relate to events and depend on circumstances that may or may not occur in the
+future. The Group does not undertake to update or revise any of these forward-looking statements
+publicly, whether to reflect new information, future events or otherwise.
+Date: 25/09/2026 04:00:00
 Produced by the JSE SENS Department. The SENS service is an information dissemination service administered by the JSE Limited (‘JSE’).
 The JSE does not, whether expressly, tacitly or implicitly, represent, warrant or in any way guarantee the truth, accuracy or completeness of
 the information published on SENS. The JSE, their officers, employees and agents accept no liability for (or in respect of) any direct,

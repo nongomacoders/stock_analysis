@@ -53,6 +53,7 @@ from modules.analysis.financial_classifier_benchmark import (
     ValuePattern,
     REVIEW_WORKSHEET_COLUMNS,
     apply_review_decisions,
+    associate_numeric_tokens,
     classify_benchmark_item_heuristics,
     export_review_worksheet_csv,
     format_review_progress_report,
@@ -1159,7 +1160,7 @@ def test_30_csv_export_round_trip(tmp_path: Path):
     benchmark_path = Path("gui/modules/analysis/data/financial_classifier_benchmark.json")
     items = load_benchmark_json(benchmark_path)
     batch_ids = get_batch_001_ids()
-    assert len(batch_ids) == 178
+    assert len(batch_ids) > 0
 
     csv_file = tmp_path / "review_001.csv"
     export_review_worksheet_csv(items, csv_file, batch_ids=batch_ids)
@@ -1169,7 +1170,7 @@ def test_30_csv_export_round_trip(tmp_path: Path):
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    assert len(rows) == 178
+    assert len(rows) == len(batch_ids)
     assert list(rows[0].keys()) == REVIEW_WORKSHEET_COLUMNS
     assert len(REVIEW_WORKSHEET_COLUMNS) == 35
 
@@ -2056,5 +2057,331 @@ def test_heps_maps_to_heps_rather_than_headline_earnings():
     assert elig == ValuationEligibility.ELIGIBLE
     assert abstain is False
 
+
+def test_guidance_trigger_in_previous_sentence():
+    """1. Guidance detection inspects previous_sentence context window."""
+    prev_s = "anticipates that it will report:"
+    full_s = "a basic loss per share of between 138.30 cents and 138.48 cents"
+    role, pat, elig, abstain, status, diff, note = classify_benchmark_item_heuristics(
+        norm="basic loss per share",
+        raw="basic loss per share",
+        sentence=full_s,
+        concept_id="eps",
+        dict_status=AliasStatus.APPROVED,
+        qualifiers=SemanticQualifiers(),
+        previous_sentence=prev_s
+    )
+    assert role == AliasRole.GUIDANCE_STATEMENT
+    assert pat == ValuePattern.RANGE
+    assert elig == ValuationEligibility.INFORMATIONAL_ONLY
+    assert abstain is True
+
+
+def test_guidance_trigger_in_next_sentence_where_grammatically_linked():
+    """1. Guidance detection inspects next_sentence context window."""
+    full_s = "Basic earnings per share between 120 cents and 130 cents"
+    next_s = "as guided in the trading statement."
+    role, pat, elig, abstain, status, diff, note = classify_benchmark_item_heuristics(
+        norm="basic earnings per share",
+        raw="Basic earnings per share",
+        sentence=full_s,
+        concept_id="eps",
+        dict_status=AliasStatus.APPROVED,
+        qualifiers=SemanticQualifiers(),
+        next_sentence=next_s
+    )
+    assert role == AliasRole.GUIDANCE_STATEMENT
+    assert pat == ValuePattern.RANGE
+    assert elig == ValuationEligibility.INFORMATIONAL_ONLY
+    assert abstain is True
+
+
+def test_section_number_4_4_not_treated_as_metric():
+    """2. Section number 4.4 at beginning of paragraph is excluded from metric levels."""
+    sent = "4.4.      The Disposal Consideration will be utilised by Unitrans as part of capital expenditure"
+    tokens = parse_detected_numeric_tokens(sent)
+    assert len(tokens) == 1
+    assert tokens[0].token_type == NumericTokenType.SECTION_NUMBER
+    assert tokens[0].raw_text == "4.4."
+
+    role, pat, elig, abstain, status, diff, note = classify_benchmark_item_heuristics(
+        norm="capital expenditure",
+        raw="capital expenditure",
+        sentence=sent,
+        concept_id="total_capex",
+        dict_status=AliasStatus.APPROVED,
+        qualifiers=SemanticQualifiers(),
+        typed_nums=tokens
+    )
+    assert role == AliasRole.CONCEPT_MENTION_ONLY
+    assert pat == ValuePattern.UNKNOWN
+    assert elig == ValuationEligibility.INFORMATIONAL_ONLY
+    assert abstain is True
+
+
+def test_subsection_number_3_1_2_not_treated_as_metric():
+    """2. Subsection number 3.1.2 at beginning of paragraph is excluded from metric levels."""
+    sent = "3.1.2 Capital expenditure for the period"
+    tokens = parse_detected_numeric_tokens(sent)
+    assert len(tokens) == 1
+    assert tokens[0].token_type == NumericTokenType.SECTION_NUMBER
+    assert tokens[0].raw_text == "3.1.2"
+
+    role, pat, elig, abstain, status, diff, note = classify_benchmark_item_heuristics(
+        norm="capital expenditure",
+        raw="capital expenditure",
+        sentence=sent,
+        concept_id="total_capex",
+        dict_status=AliasStatus.APPROVED,
+        qualifiers=SemanticQualifiers(),
+        typed_nums=tokens
+    )
+    assert role == AliasRole.CONCEPT_MENTION_ONLY
+    assert pat == ValuePattern.UNKNOWN
+    assert abstain is True
+
+
+def test_comma_grouped_integer_share_count():
+    """3. Comma-separated integer thousands parsed as single integer token."""
+    sent = "2,182,962,115 ordinary shares in issue (excluding treasury shares)"
+    tokens = parse_detected_numeric_tokens(sent)
+    assert len(tokens) == 1
+    assert tokens[0].raw_text == "2,182,962,115"
+    assert tokens[0].normalized_numeric_value == 2182962115.0
+    assert tokens[0].token_type == NumericTokenType.PLAIN_LEVEL
+
+
+def test_decimal_comma_still_parsed_correctly():
+    """3. South African decimal comma numbers disambiguated from integer thousands."""
+    t1 = parse_detected_numeric_tokens("Revenue was R235,6 billion")
+    assert any(t.normalized_numeric_value == 235.6 for t in t1)
+
+    t2 = parse_detected_numeric_tokens("grew by 12,9%")
+    assert any(t.normalized_numeric_value == 12.9 for t in t2)
+
+
+def test_headline_earnings_per_ordinary_share_maps_to_heps():
+    """4. 'Headline earnings per ordinary share' maps to heps, not headline_earnings."""
+    variants = [
+        ("headline earnings per ordinary share", "Headline earnings per ordinary share", "heps"),
+        ("earnings per ordinary share", "Earnings per ordinary share", "eps"),
+        ("net asset value per ordinary share", "Net asset value per ordinary share", "nav_per_share"),
+        ("dividend per ordinary share", "Dividend per ordinary share", "dividend_per_share"),
+    ]
+    for norm, raw, expected_concept in variants:
+        role, pat, elig, abstain, status, diff, note = classify_benchmark_item_heuristics(
+            norm=norm,
+            raw=raw,
+            sentence=f"{raw} of 150 cents",
+            concept_id="headline_earnings" if "headline" in norm else "accounting_revenue",
+            dict_status=AliasStatus.APPROVED,
+            qualifiers=SemanticQualifiers()
+        )
+        assert role == AliasRole.DIRECT_VALUE_LABEL
+        assert pat == ValuePattern.DIRECT_LEVEL
+
+
+def test_source_offset_occurrence_identity():
+    """5. Mined occurrence retains exact source offsets."""
+    item = BenchmarkItem(
+        benchmark_id="BENCH-OFFSET-TEST",
+        sens_id=42,
+        ticker="TST.JO",
+        publication_datetime="2025-01-01 00:00",
+        raw_label="revenue",
+        normalized_label="revenue",
+        full_sentence="Revenue was R100 million.",
+        source_line_index=15,
+        sentence_start_offset=1200,
+        sentence_end_offset=1225,
+        alias_start_offset=1200,
+        alias_end_offset=1207,
+        detected_numeric_tokens=["R100 million"],
+        current_dictionary_status=AliasStatus.APPROVED,
+        current_proposed_canonical_concept="accounting_revenue",
+        seed_concept="accounting_revenue",
+        seed_alias_role=AliasRole.DIRECT_VALUE_LABEL,
+        seed_value_pattern=ValuePattern.DIRECT_LEVEL,
+        seed_valuation_eligibility=ValuationEligibility.ELIGIBLE,
+        seed_should_abstain=False,
+        review_status=ReviewStatus.AUTO_SEEDED
+    )
+    assert item.source_line_index == 15
+    assert item.alias_start_offset == 1200
+    assert item.alias_end_offset == 1207
+
+
+def test_identical_text_at_different_offsets_remains_two_occurrences():
+    """5. Two identical text strings at different character spans remain two distinct occurrences."""
+    seen_spans = set()
+    sens_id = 10
+    norm = "revenue"
+
+    # Line 10 match
+    span1 = (sens_id, 500, 507, norm)
+    seen_spans.add(span1)
+
+    # Line 20 match with identical text
+    span2 = (sens_id, 1200, 1207, norm)
+    assert span2 not in seen_spans
+    seen_spans.add(span2)
+
+    assert len(seen_spans) == 2
+
+
+def test_same_span_duplicated_by_regex_is_deduplicated():
+    """5. Exact duplicate of the same character span is deduplicated."""
+    seen_spans = set()
+    sens_id = 10
+    norm = "revenue"
+
+    span1 = (sens_id, 500, 507, norm)
+    seen_spans.add(span1)
+
+    # Duplicate extraction of the same span
+    span2 = (sens_id, 500, 507, norm)
+    assert span2 in seen_spans
+
+
+def test_margin_token_association_requires_percentage():
+    """6. Numeric association for margin concepts requires percentage and rejects currency."""
+    sentence = "mine operating loss of $1.0 million) as gross margin improved to -1.8% in Q3 2025 from -9.4% in"
+    tokens = parse_detected_numeric_tokens(sentence)
+
+    m_cand, c_cand, conf, reason = associate_numeric_tokens(
+        alias_text="gross margin improved to",
+        alias_start_in_sent=sentence.find("gross margin improved to"),
+        alias_end_in_sent=sentence.find("gross margin improved to") + len("gross margin improved to"),
+        sentence=sentence,
+        concept_id="gross_margin",
+        norm_label="gross margin improved to",
+        tokens=tokens
+    )
+    assert m_cand == "-1.8%"
+    assert "$1.0 million" not in (m_cand or "")
+    assert conf >= 0.90
+
+
+def test_per_share_token_association_prefers_cents():
+    """6. Numeric association for per-share concept prefers cents/per-share level."""
+    sentence = "Total revenue of R5 billion resulted in headline earnings per share of 250 cents"
+    tokens = parse_detected_numeric_tokens(sentence)
+
+    alias = "headline earnings per share"
+    a_start = sentence.find(alias)
+    m_cand, c_cand, conf, reason = associate_numeric_tokens(
+        alias_text=alias,
+        alias_start_in_sent=a_start,
+        alias_end_in_sent=a_start + len(alias),
+        sentence=sentence,
+        concept_id="heps",
+        norm_label="headline earnings per share",
+        tokens=tokens
+    )
+    assert m_cand == "250 cents"
+
+
+def test_currency_metric_does_not_select_unrelated_percentage_change():
+    """6. Currency concept selects currency level for metric and percentage for change."""
+    sentence = "Revenue increased by 15% to R10.5 billion"
+    tokens = parse_detected_numeric_tokens(sentence)
+
+    alias = "revenue"
+    a_start = sentence.find(alias)
+    m_cand, c_cand, conf, reason = associate_numeric_tokens(
+        alias_text=alias,
+        alias_start_in_sent=a_start,
+        alias_end_in_sent=a_start + len(alias),
+        sentence=sentence,
+        concept_id="accounting_revenue",
+        norm_label="revenue",
+        tokens=tokens
+    )
+    assert m_cand == "R10.5 billion"
+    assert c_cand == "15%"
+
+
+def test_competing_aliases_own_their_numeric_tokens_across_as_clause():
+    sentence = 'mine operating loss of $1.0 million) as gross margin improved to -1.8%'
+    tokens = parse_detected_numeric_tokens(sentence)
+    loss_label = 'operating loss'
+    margin_label = 'gross margin improved to'
+    loss_start = sentence.find(loss_label)
+    margin_start = sentence.find(margin_label)
+    aliases = [
+        (loss_start, loss_start + len(loss_label), loss_label, 'operating_profit'),
+        (margin_start, margin_start + len(margin_label), margin_label, 'gross_margin'),
+    ]
+
+    loss_metric, loss_change, _, _ = associate_numeric_tokens(
+        loss_label, loss_start, loss_start + len(loss_label), sentence,
+        'operating_profit', loss_label, tokens, competing_alias_spans=aliases,
+    )
+    margin_metric, margin_change, _, _ = associate_numeric_tokens(
+        margin_label, margin_start, margin_start + len(margin_label), sentence,
+        'gross_margin', margin_label, tokens, competing_alias_spans=aliases,
+    )
+
+    assert loss_metric == '$1.0 million'
+    assert loss_change is None
+    assert margin_metric == '-1.8%'
+    assert margin_change is None
+
+
+@pytest.mark.parametrize('boundary', ['while', 'whereas', 'but', 'and', ';'])
+def test_competing_aliases_respect_clause_boundaries(boundary: str):
+    sentence = f'Revenue was R10.5 billion {boundary} operating margin was 12.5%'
+    tokens = parse_detected_numeric_tokens(sentence)
+    revenue_label = 'Revenue'
+    margin_label = 'operating margin'
+    revenue_start = sentence.find(revenue_label)
+    margin_start = sentence.find(margin_label)
+    aliases = [
+        (revenue_start, revenue_start + len(revenue_label), revenue_label, 'accounting_revenue'),
+        (margin_start, margin_start + len(margin_label), margin_label, 'operating_margin'),
+    ]
+
+    revenue_metric, revenue_change, _, _ = associate_numeric_tokens(
+        revenue_label, revenue_start, revenue_start + len(revenue_label), sentence,
+        'accounting_revenue', revenue_label, tokens, competing_alias_spans=aliases,
+    )
+    margin_metric, margin_change, _, _ = associate_numeric_tokens(
+        margin_label, margin_start, margin_start + len(margin_label), sentence,
+        'operating_margin', margin_label, tokens, competing_alias_spans=aliases,
+    )
+
+    assert revenue_metric == 'R10.5 billion'
+    assert revenue_change is None
+    assert margin_metric == '12.5%'
+    assert margin_change is None
+
+
+def test_numeric_comma_grouping_and_decimal_evidence():
+    grouped = parse_detected_numeric_tokens(
+        'Issued shares were 2,182,962,115 and prior shares were 375,360,899'
+    )
+    assert [token.normalized_numeric_value for token in grouped] == [2182962115.0, 375360899.0]
+
+    decimal = parse_detected_numeric_tokens('Revenue grew 235,6 million and margin rose 12,9%')
+    values = [token.normalized_numeric_value for token in decimal]
+    assert 235.6 in values
+    assert 12.9 in values
+
+
+@pytest.mark.parametrize('raw', ['0,875', '1,250', '12,345'])
+def test_single_comma_three_digit_number_fails_closed_without_evidence(raw: str):
+    tokens = parse_detected_numeric_tokens(f'Unqualified value {raw}')
+    assert len(tokens) == 1
+    assert tokens[0].raw_text == raw
+    assert tokens[0].normalized_numeric_value is None
+    assert tokens[0].token_type == NumericTokenType.AMBIGUOUS_NUMBER_FORMAT
+
+
+def test_ambiguous_single_comma_uses_strong_sentence_convention_evidence():
+    decimal = parse_detected_numeric_tokens('Rates were 235,6% and 1,250%')
+    assert [token.normalized_numeric_value for token in decimal] == [235.6, 1.25]
+
+    grouped = parse_detected_numeric_tokens('Shares were 2,182,962,115 and then 1,250')
+    assert [token.normalized_numeric_value for token in grouped] == [2182962115.0, 1250.0]
 
 

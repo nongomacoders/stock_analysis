@@ -755,4 +755,563 @@ Do not pass markdown table formatting or complex multi-line strings via inline `
 $env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"; & "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" scratch/script.py
 ```
 
+---
+
+# 25. Windows PowerShell `Select-String` Does Not Support `-First`
+
+## Symptom
+
+Using `Select-String ... -First 1` fails with:
+
+```text
+A parameter cannot be found that matches parameter name 'First'.
+```
+
+## Root cause
+
+The installed Windows PowerShell `Select-String` cmdlet does not expose a `-First` parameter.
+
+## Working fix
+
+Pipe matches through `Select-Object`:
+
+```powershell
+Select-String -Pattern needle | Select-Object -First 1
+```
+
+---
+
+# 26. PowerShell Cannot Pipe Directly from a Statement-Form `foreach`
+
+## Symptom
+
+Appending `| ConvertTo-Json` directly after `foreach (...) { ... }` can fail with:
+
+```text
+An empty pipe element is not allowed.
+```
+
+## Root cause
+
+Windows PowerShell parses statement-form `foreach` differently from a pipeline expression.
+
+## Working fix
+
+Assign the loop output, then pipe the variable:
+
+```powershell
+$results = foreach ($item in $items) { [pscustomobject]@{ value = $item } }
+$results | ConvertTo-Json
+```
+
+---
+
+# 27. Financial Classifier Benchmark Population Lineage (581 -> 700 -> 820)
+
+These values describe three different persisted or sampled populations. They
+are not a before/after duplicate-removal equation.
+
+- **581 - previous persisted benchmark size.** This was the last committed
+  benchmark artifact, created while occurrence identity still collapsed rows
+  by `(sens_id, full_sentence, normalized_label)`.
+- **700 - intermediate rebuild candidate size.** This was a bounded validation
+  run of the rebuilt sampler with `target_count=700`. It was reported during
+  validation but was not the final persisted population and is not a count of
+  rows remaining after duplicate removal.
+- **820 - final stratified benchmark size.** This is the final deterministic
+  sampler target (`target_count=820`) and the size of the synchronized JSON
+  artifact. Batch 001 contains the first 300 items.
+
+The pre-stratification corpus audit is separate from those sampler caps:
+
+- Span-based identity restored **545 distinct source occurrences** that the
+  former text-key identity would have collapsed.
+- Span-based identity removed **570 true duplicate regex emissions** referring
+  to an already-seen `(sens_id, alias_start_offset, alias_end_offset,
+  normalized_label)` span.
+- Within the final sampled artifact, **18 of 820** rows are retained distinct
+  occurrences that share the former text key; within the 700-item intermediate
+  prefix, the corresponding count is **16 of 700**.
+
+Therefore `581 + 545 - 570` is not expected to equal either 700 or 820: the
+545/570 figures describe the full candidate scan before stratification, while
+700/820 are explicit sampler caps after ticker/label balancing. Reconstruct the
+lineage with `scratch/audit_span_duplicates.py` and regenerate the final
+artifacts with `scratch/regenerate_benchmark_artifacts.py`.
+
+---
+
+# 28. PowerShell `Set-Content -Encoding UTF8` Adds a BOM to Text Files
+
+## Symptom
+
+Writing SQL (or any text) with PowerShell:
+
+```powershell
+Set-Content -Path file.sql -Encoding UTF8 -Value $content
+```
+
+then executing the file via `psycopg2` or `asyncpg` fails with:
+
+```text
+psycopg2.errors.SyntaxError: syntax error at or near "\ufeff"
+asyncpg.exceptions.PostgresSyntaxError: syntax error at or near "\ufeff"
+```
+
+## Root cause
+
+On Windows, PowerShell 5.x `Set-Content -Encoding UTF8` emits a UTF-8 BOM
+(`\xEF\xBB\xBF` / `\ufeff`) at the start of the file. PostgreSQL does not
+accept SQL files that begin with a BOM.
+
+## Working fix
+
+Use `[System.IO.File]::WriteAllText` with an explicit BOM-free encoder:
+
+```powershell
+$enc = New-Object System.Text.UTF8Encoding $false   # $false = no BOM
+[System.IO.File]::WriteAllText("path\to\file.sql", $content, $enc)
+```
+
+Alternatively, read the file in Python with `encoding="utf-8-sig"` to strip
+the BOM before passing to psycopg2:
+
+```python
+sql = Path("file.sql").read_text(encoding="utf-8-sig")
+```
+
+## Applied locations
+
+- `scratch/run_gold_review_migration.py` uses `read_text(encoding="utf-8-sig")`.
+- `gui/core/db/migrations/add_financial_classifier_gold_review.sql` was
+  rewritten with `[System.IO.File]::WriteAllText(..., $enc)` to be BOM-free.
+
+---
+
+# 29. Financial Classifier Gold-Review Import Infrastructure
+
+## Summary
+
+The gold-review benchmark table and import pipeline are documented here for
+future agents that need to maintain or extend the review workflow.
+
+## Migration
+
+```text
+gui/core/db/migrations/add_financial_classifier_gold_review.sql
+```
+
+Apply with:
+
+```powershell
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" scratch/run_gold_review_migration.py
+```
+
+The migration is safe to re-run (`CREATE TABLE IF NOT EXISTS`,
+`CREATE INDEX IF NOT EXISTS`).
+
+## Import command
+
+```powershell
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" gui/scripts/import_gold_review.py --csv gui/modules/analysis/data/financial_classifier_gold_review_001.csv
+```
+
+Add `--force-overwrite-reviewed` only when you explicitly want to replace
+existing non-blank review fields with blank CSV values.
+
+## Table name
+
+`financial_classifier_gold_review`
+
+## Key design decisions
+
+- `detected_numeric_tokens` is stored as `text` (not JSONB) because the CSV
+  value is a Python-style list literal, not always strict JSON.
+- `publication_datetime` is `timestamp` (no timezone) to faithfully represent
+  the source value which carries no timezone information.
+- `seed_should_abstain` is `boolean NOT NULL`; `gold_should_abstain` is
+  `boolean` (nullable).
+- All `gold_*` and `review_decision` fields are nullable.
+- `review_decision` is constrained to `CONFIRM_SEED | OVERRIDE | ABSTAIN | SKIP`.
+- The upsert guard: a blank CSV value never overwrites a non-blank DB
+  review field unless `--force-overwrite-reviewed` is passed.
+
+## Next-five-unreviewed query
+
+```sql
+SELECT benchmark_id, ticker, publication_datetime, normalized_label,
+       seed_concept, seed_scope, seed_dilution, seed_tax_basis,
+       seed_capex_basis, seed_lease_inclusion, seed_margin_denominator,
+       seed_attribution, seed_alias_role, seed_value_pattern,
+       seed_valuation_eligibility, seed_should_abstain,
+       previous_sentence, full_sentence, next_sentence,
+       detected_numeric_tokens
+FROM financial_classifier_gold_review
+WHERE review_decision IS NULL
+ORDER BY benchmark_id
+LIMIT 5;
+```
+
+## Applying a review batch (parameterised pattern)
+
+```sql
+BEGIN;
+
+-- Verify all requested IDs exist and are not yet reviewed
+DO $$
+DECLARE
+    missing_count integer;
+    already_reviewed_count integer;
+BEGIN
+    SELECT COUNT(*) INTO missing_count
+    FROM (VALUES ('BENCH-0001'),('BENCH-0002')) AS v(bid)
+    WHERE NOT EXISTS (
+        SELECT 1 FROM financial_classifier_gold_review WHERE benchmark_id = v.bid
+    );
+    IF missing_count > 0 THEN
+        RAISE EXCEPTION 'Some benchmark_ids not found: %', missing_count;
+    END IF;
+
+    SELECT COUNT(*) INTO already_reviewed_count
+    FROM financial_classifier_gold_review
+    WHERE benchmark_id IN ('BENCH-0001','BENCH-0002')
+      AND review_decision IS NOT NULL;
+    IF already_reviewed_count > 0 THEN
+        RAISE EXCEPTION 'Some rows already have a review_decision: %', already_reviewed_count;
+    END IF;
+END $$;
+
+-- Apply the review
+UPDATE financial_classifier_gold_review
+SET review_decision = 'CONFIRM_SEED',
+    reviewer_notes  = 'Seed label is correct',
+    last_updated_at = NOW()
+WHERE benchmark_id = 'BENCH-0001';
+
+UPDATE financial_classifier_gold_review
+SET review_decision = 'OVERRIDE',
+    gold_concept    = 'operating_profit',
+    reviewer_notes  = 'Seed concept wrong; correct is operating_profit',
+    last_updated_at = NOW()
+WHERE benchmark_id = 'BENCH-0002';
+
+COMMIT;
+```
+
+## Tests
+
+```powershell
+# Pure-logic tests (no DB):
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -m pytest gui/modules/analysis/tests/test_gold_review_import.py -v -k "not DbImport"
+
+# All tests including DB integration:
+$env:RUN_GOLD_REVIEW_DB_TESTS = "1"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -m pytest gui/modules/analysis/tests/test_gold_review_import.py -v
+```
+
+---
+
+# 30. GOLD-001 Override-Presence Flags, Effective View, and Baseline Evaluation
+
+## Summary
+
+Schema upgrade from v1.0.0 → v1.1.0 applied 2026-09-26 to
+`financial_classifier_gold_review`. No historic review labels were changed.
+
+## What was added
+
+### Override-presence columns (13 new booleans, all NOT NULL DEFAULT FALSE)
+
+```text
+gold_concept_is_override
+gold_scope_is_override
+gold_dilution_is_override
+gold_tax_basis_is_override
+gold_capex_basis_is_override
+gold_lease_inclusion_is_override
+gold_basis_evidence_is_override
+gold_margin_denominator_is_override
+gold_attribution_is_override
+gold_alias_role_is_override
+gold_value_pattern_is_override
+gold_valuation_eligibility_is_override
+gold_should_abstain_is_override
+```
+
+### Effective-label rule
+
+Do NOT use COALESCE. Use:
+
+```sql
+CASE WHEN <gold_field>_is_override THEN <gold_field> ELSE <seed_field> END
+```
+
+A flag = TRUE + gold_field = NULL means intentional override-to-unknown (valid).
+
+### Back-fill inference (safe — all existing data was clean)
+
+- CONFIRM_SEED: all flags remain FALSE
+- SKIP: all flags remain FALSE
+- OVERRIDE: flag = TRUE iff corresponding gold field IS NOT NULL
+- ABSTAIN: gold_should_abstain_is_override = TRUE always; other flags = non-null presence
+
+No ambiguous "explicit null" cases existed in the migration data. Zero rows
+required manual inspection.
+
+### Constraints added
+
+- `chk_confirm_seed_no_overrides`
+- `chk_skip_no_overrides`
+- `chk_override_has_at_least_one_flag`
+- `chk_abstain_should_abstain_flag`
+- `chk_gold_null_when_no_flag`
+
+### New objects
+
+- View: `financial_classifier_gold_effective` (excludes SKIP, exposes effective fields)
+- Table: `financial_classifier_gold_releases` (release registry)
+- Table: `financial_classifier_evaluation_runs` (append-only)
+- Table: `financial_classifier_evaluation_predictions` (append-only)
+
+## Migration file
+
+```text
+gui/core/db/migrations/add_gold_override_flags_and_evaluation.sql
+```
+
+## Runner
+
+```text
+scratch/run_gold_override_migration_and_baseline.py
+```
+
+```powershell
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" scratch/run_gold_override_migration_and_baseline.py
+```
+
+The script is idempotent: re-running skips already-created release/run records.
+
+## GOLD-001 Release
+
+```
+release_id            : GOLD-001
+schema_version        : 1.1.0
+review_row_count      : 300
+evaluation_row_count  : 281
+confirm_seed_count    : 102
+override_count        : 106
+abstain_count         : 73
+skip_count            : 19
+dataset_hash          : 3c5e1ce829eac535a4c7263b3caed47266f67ed7fd16b8f61586164992efbc24
+```
+
+Hash column manifest: benchmark_id, ticker, normalized_label, review_decision,
+all seed_* fields, all gold_* fields, all gold_*_is_override flags, reviewer_notes.
+Excludes: imported_at, last_updated_at (volatile timestamps).
+
+## Baseline evaluation (BASELINE-SEED-GOLD-001)
+
+```
+Evaluation population : 281
+Coverage              : 0.3416  (seed attempted / total)
+Full-label exact match: 0.4093
+
+Dimension accuracy
+  Concept               : 0.7794
+  Scope                 : 0.9146
+  Dilution              : 0.9146
+  Tax Basis             : 0.9573
+  Capex Basis           : 1.0000
+  Lease Inclusion       : 1.0000
+  Margin Denominator    : 0.9929
+  Attribution           : 0.9822
+  Alias Role            : 0.8719
+  Value Pattern         : 0.8648
+  Valuation Eligibility : 0.8292
+
+Abstention
+  TP=181  FP=4  FN=60  TN=36
+  Precision : 0.9784
+  Recall    : 0.7510
+  F1        : 0.8498
+
+Unsafe False Acceptance
+  Definition: seed_should_abstain=False AND
+              (effective_should_abstain=True OR any dim mismatches gold)
+  Count : 65 / 96
+  Rate  : 0.6771
+```
+
+## Freeze protocol
+
+GOLD-001 is a released snapshot. To protect it:
+- `financial_classifier_gold_releases` row is insert-only; never UPDATE it.
+- Any post-release correction to underlying data must produce a new release (e.g. GOLD-002).
+- Evaluation tables are append-only; never overwrite GOLD-001 run rows.
+- The underlying review table is NOT physically locked but any change must be
+  documented and produce a new release_id to preserve GOLD-001 for reproducibility.
+
+---
+
+# 31. BATCH-002 / BATCH-003 Review Preparation (2026-09-26)
+
+## Batch structure
+
+```
+BENCH-0001 .. BENCH-0300  =>  BATCH-001  DEVELOPMENT  (GOLD-001, frozen)
+BENCH-0301 .. BENCH-0560  =>  BATCH-002  VALIDATION   (not yet gold)
+BENCH-0561 .. BENCH-0820  =>  BATCH-003  HOLDOUT      (not yet gold)
+```
+
+Split rule: deterministic in-order slice of benchmark_id.
+
+## Dataset roles
+
+- GOLD-001 (BATCH-001) -> DEVELOPMENT: may be used for threshold / format tuning
+- GOLD-002 (BATCH-002) -> VALIDATION: use after tuning, before final evaluation
+- GOLD-003 (BATCH-003) -> HOLDOUT: never expose to classifier tuning; evaluate only after config is locked
+
+## New DB columns
+
+```text
+review_batch  text  CHECK IN ('BATCH-001','BATCH-002','BATCH-003')
+dataset_role  text  CHECK IN ('DEVELOPMENT','VALIDATION','HOLDOUT')
+```
+
+## New DB views
+
+```text
+financial_classifier_review_batch_002            -- reviewer interface for BATCH-002
+financial_classifier_review_batch_003            -- reviewer interface for BATCH-003
+financial_classifier_batch_progress              -- overall progress per batch
+financial_classifier_batch_progress_by_ticker
+financial_classifier_batch_progress_by_concept
+financial_classifier_batch_progress_by_alias_role
+financial_classifier_batch_progress_by_valuation_eligibility
+```
+
+## New DB indexes
+
+```text
+financial_classifier_gold_review_batch_idx
+financial_classifier_gold_review_role_idx
+financial_classifier_gold_review_batch_decision_idx
+```
+
+## Runner
+
+```text
+scratch/prepare_review_batches_002_003.py
+```
+
+```powershell
+$env:PYTHONPATH = "C:\Users\Dion\Desktop\Projects\stock_analysis\gui"
+$env:PYTHONIOENCODING = "utf-8"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" scratch/prepare_review_batches_002_003.py
+```
+
+Idempotent: ON CONFLICT DO NOTHING for inserts; DROP+RECREATE for views.
+
+## Tests
+
+```text
+gui/modules/analysis/tests/test_gold_review_batches.py
+```
+
+```powershell
+# Pure-logic (no DB):
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -m pytest gui/modules/analysis/tests/test_gold_review_batches.py -v -k "not DbImport"
+
+# All 29 tests including DB:
+$env:RUN_GOLD_BATCH_DB_TESTS = "1"
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -m pytest gui/modules/analysis/tests/test_gold_review_batches.py -v
+```
+
+## GOLD-001 hash re-confirmed
+
+```
+7f95fc104c59dfcdc42a7ced35ea102884c95b9829f15d1c1960895dcd7b1d43
+```
+*(Note: Initial hash prior to reviewer_notes finalization was 3c5e1ce829eac535a4c7263b3caed47266f67ed7fd16b8f61586164992efbc24. Gold labels, decisions, and override flags remain unchanged).*
+
+## Release process (future)
+
+A batch becomes a gold release ONLY after all rows in that batch are human reviewed.
+Never create GOLD-002 or GOLD-003 until the corresponding batch is fully reviewed.
+Never mutate prior releases.
+
+---
+
+# 32. Benchmark Release Identity Hierarchy & Population Isolation
+
+## Release Identity Hierarchy
+
+Every gold benchmark release maintains deterministic SHA-256 hashes forming a rigorous identity hierarchy:
+
+### 1. `source_hash` (Benchmark Input Corpus)
+- Uniquely identifies the input text and source context presented to the classifier.
+- Ordered deterministically by `benchmark_id`.
+- Columns (8): `benchmark_id`, `ticker`, `publication_datetime`, `previous_sentence`, `full_sentence`, `next_sentence`, `detected_numeric_tokens` (canonicalized JSON), `normalized_label`.
+- Excludes volatile timestamps and all annotations.
+- **GOLD-001**: `4b8594e5b34d7d05273fecda2dd4b817b9dc2e055d77cf0bc6de31cf79ff7610`
+
+### 2. `label_hash` (Effective Annotations & Inclusion)
+- Represents human gold labels and evaluation inclusion.
+- Ordered deterministically by `benchmark_id`.
+- **Included rows** (`review_decision <> 'SKIP'`): hashes `benchmark_id`, `is_included=TRUE`, and all 13 effective dimensions.
+- **SKIP rows** (`review_decision = 'SKIP'`): hashes ONLY `benchmark_id` and `is_included=FALSE`.
+  Unused effective labels on SKIP rows do NOT alter `label_hash`. Changing SKIP to included or vice versa alters `label_hash`.
+- **GOLD-001**: `f9139858b89ea102d30c22e1007b1e807c5aecc684048ffb31df1dcb73e9ef75`
+
+### 3. `release_hash` (Authoritative Release Identity)
+- The composite identifier binding the input text, effective labels, and release metadata into a single authoritative identity.
+- Canonical manifest template:
+  `release_id={release_id}|schema_version={schema_version}|source_hash={source_hash}|label_hash={label_hash}\n`
+- For GOLD-001:
+  - `release_id`: `GOLD-001`
+  - `schema_version`: `1.1.0` (authoritative release schema version recorded in `financial_classifier_gold_releases.schema_version`)
+  - `source_hash`: `4b8594e5b34d7d05273fecda2dd4b817b9dc2e055d77cf0bc6de31cf79ff7610`
+  - `label_hash`: `f9139858b89ea102d30c22e1007b1e807c5aecc684048ffb31df1dcb73e9ef75`
+- **Schema version semantics**:
+  - `annotation_schema_version = 1.1.0`: Database review schema incorporating sparse override presence flags (`gold_*_is_override`).
+  - `release_schema_version = 1.1.0`: Authoritative benchmark release schema bound in the manifest and release table.
+  - `release_identity_schema_version = 1.0`: Format specification version for the key-value manifest template.
+- Future evaluation runs and benchmark consumers must reference this `release_hash`.
+- **GOLD-001**: `f0b3138d32a033b66cd0823cfd83ae89461433209a0552bece6722d2ca98f179`
+
+### 4. `audit_hash` (Complete Provenance State)
+- Hashes the complete annotation state across all reviewed rows.
+- Ordered deterministically by `benchmark_id`.
+- Columns (43): `benchmark_id`, `ticker`, `normalized_label`, `review_decision`, 12 `seed_*` fields, 13 `gold_*` fields, 13 `gold_*_is_override` flags, `reviewer_notes`.
+- **GOLD-001**: `7f95fc104c59dfcdc42a7ced35ea102884c95b9829f15d1c1960895dcd7b1d43`
+- Pre-release candidate audit snapshot: `3c5e1ce829eac535a4c7263b3caed47266f67ed7fd16b8f61586164992efbc24`
+
+### 5. Backward Compatibility
+- `semantic_hash`: `d759e827f4c9469db407edfc08d7ab73fd21ff3767bb3e44d8255d896f467976` (legacy evaluation hash prior to SKIP-row dimension exclusion).
+- `dataset_hash`: `7f95fc104c59dfcdc42a7ced35ea102884c95b9829f15d1c1960895dcd7b1d43` (points to `audit_hash`).
+
+## Population Selection & Leakage Prevention
+
+To prevent ongoing or future BATCH-002 / BATCH-003 reviews from leaking into GOLD-001 evaluations:
+
+1. **Explicit Batch Filter**: Every evaluator query MUST explicitly specify:
+   `WHERE review_batch = 'BATCH-001' AND review_decision <> 'SKIP'`
+   Never query `review_decision <> 'SKIP'` alone.
+2. **Dedicated Release Views**:
+   - `financial_classifier_gold_001_effective`: strictly selects `WHERE review_batch = 'BATCH-001'` (281 rows).
+   - Even when BATCH-002 rows receive human decisions, `financial_classifier_gold_001_effective` remains strictly invariant at 281 rows.
+
+## Release Immutability Rules
+
+1. **Authoritative Identity**: The `release_hash` is immutable for any published release. Any modification to source text or effective labels requires a new release version.
+2. **Audit Independence**: Corrections to `reviewer_notes` alter `audit_hash` but do NOT alter `source_hash`, `label_hash`, or `release_hash`.
+3. **Skip Row Independence**: Edits to unused annotation columns on a `SKIP` row do NOT alter `label_hash` or `release_hash`.
+4. **No Premature Releases**: `GOLD-002` and `GOLD-003` do not exist and must not be created until review is 100% complete for the respective batch.
+
+
+
 
