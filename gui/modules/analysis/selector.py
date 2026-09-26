@@ -30,6 +30,8 @@ TASK_MAP = {
     "research_extraction": {"p": "gemini",     "m": MODELS["gemini"][0]},
     "deep_research":       {"p": "gemini",     "m": MODELS["gemini"][0]},
     "research_comparison": {"p": "gemini",     "m": MODELS["gemini"][1]},
+    "afs_adjudication":    {"p": "gemini",     "m": MODELS["gemini"][1]},
+    "afs_challenge":       {"p": "gemini",     "m": MODELS["gemini"][0]},
 }
 
 DEFAULT_TASK = {"p": "gemini", "m": MODELS["gemini"][1]}

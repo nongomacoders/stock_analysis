@@ -1312,6 +1312,115 @@ To prevent ongoing or future BATCH-002 / BATCH-003 reviews from leaking into GOL
 3. **Skip Row Independence**: Edits to unused annotation columns on a `SKIP` row do NOT alter `label_hash` or `release_hash`.
 4. **No Premature Releases**: `GOLD-002` and `GOLD-003` do not exist and must not be created until review is 100% complete for the respective batch.
 
+---
 
+# 33. PowerShell `Select-String` Switch Parameter Syntax (`-CaseSensitive`)
+
+## Symptom
+
+Executing PowerShell `Select-String` with a string value for switch parameters:
+
+```powershell
+Select-String -Pattern 'Kev' -CaseSensitive:$false
+```
+
+fails with:
+
+```text
+Select-String : Cannot convert 'System.String' to the type 'System.Management.Automation.SwitchParameter' required by parameter 'CaseSensitive'.
+```
+
+## Root cause
+
+In Windows PowerShell CLI argument parsing, passing `:$false` inside a command string can be interpreted as a string literal rather than a boolean switch value, or PowerShell switch parameters reject string conversion. Furthermore, `Select-String` is case-insensitive by default, making `-CaseSensitive:$false` completely redundant.
+
+## Failing pattern (avoid)
+
+```powershell
+Select-String -Pattern 'text' -CaseSensitive:$false
+```
+
+## Working fix
+
+Omit the parameter entirely for case-insensitive search (default behavior), or use git grep / ripgrep:
+
+```powershell
+Select-String -Pattern 'text'
+```
+
+---
+
+# 34. PowerShell Multiline `python.exe -c` with Nested Quotes
+
+## Symptom
+
+Executing Python code inline in PowerShell via:
+
+```powershell
+& "path/to/python.exe" -c "
+... multiline script with escaped quotes \" ...
+"
+```
+
+fails with:
+
+```text
+python.exe : ScriptBlock should only be specified as a value of the Command parameter.
+    + CategoryInfo          : InvalidArgument: (:) [], ParameterBindingException
+    + FullyQualifiedErrorId : IncorrectValueForCommandParameter
+```
+
+## Root cause
+
+PowerShell parses double quotes and escaped quotes across multiple lines inconsistently when invoking native executables with the `&` call operator, misinterpreting parts of the argument block as a PowerShell `ScriptBlock`.
+
+## Failing pattern (avoid)
+
+```powershell
+& "C:\...\python.exe" -c "
+import psycopg2
+cur.execute('''SELECT * FROM table WHERE col = 'val';''')
+print(r[\"col\"])
+"
+```
+
+## Working fix
+
+Write the logic to a script file (e.g., in the artifact `scratch/` directory) and invoke the file directly:
+
+```powershell
+& "C:\...\python.exe" "C:\path\to\scratch\inspect_script.py"
+```
+
+---
+
+# 35. Kev Model Provenance and Evaluation Standardization
+
+## 1. Kev-0.8B Authoritative Base Model Resolution
+
+When running `jaredpalmer/kev-0.8b`, the base model is:
+- **Base model**: `Qwen/Qwen3.5-0.8B-Base` (HF revision: `dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68`)
+- **Model run**: `jaredpalmer/kev-0.8b` (HF revision: `9a45d25eb2ab761841196625383fa1dff0e56c1e`)
+- **LoRA rank**: `16`
+- **Temperature**: `2.3510958125672174`
+- **Kev git commit**: `f1535963cea021439370c23127bc970b6788e730` (package `0.1.0`)
+
+Never confuse `Qwen3.5-0.8B-Base` with `Qwen3.5-4B-Base` (`1001bb4d826a52d1f399e183466143f4da7b741b`).
+
+## 2. Canonical Basis Evidence Normalization
+
+In evaluation semantics:
+- `NULL` or empty `effective_basis_evidence` in gold records canonicalizes strictly to `'unspecified'`.
+- Gold database rows must NEVER be mutated.
+- Use `modules.analysis.kev_gold_evaluator.normalize_basis_evidence`.
+
+## 3. Unsafe False Acceptance Metrics Definitions
+
+To prevent terminology confusion between population rates and intake admission rates:
+- `accepted_count = tn + fn` (all rows admitted by model/policy)
+- `safe_accept_count = tn` (rows admitted that are genuinely safe)
+- `unsafe_accept_count = fn` (rows admitted that are unsafe for valuation)
+- `unsafe_accept_rate_of_accepted = unsafe_accept_count / accepted_count`
+- `unsafe_accept_rate_of_population = unsafe_accept_count / evaluation_population`
 
 
