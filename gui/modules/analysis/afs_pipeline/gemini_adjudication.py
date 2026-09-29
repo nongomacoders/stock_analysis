@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Tuple
 
-from modules.analysis.selector import managed_query_ai
+from modules.analysis.selector import managed_query_ai, TASK_MAP
 from .evidence_package import ContextEvidencePackage
 from .kev_classifier import KevSemanticResult
 from .safety_policy import SafetyPolicyEvaluation
@@ -272,7 +272,7 @@ async def adjudicate_with_gemini(
             raw_prompt=prompt,
             raw_response=res_text,
             prompt_version=ADJUDICATION_PROMPT_VERSION,
-            model_name="gemini-3.6-flash",
+            model_name=TASK_MAP.get("afs_adjudication", {}).get("m", "gemini-3.8-flash"),
             timestamp=ts,
         )
 
@@ -298,6 +298,6 @@ async def adjudicate_with_gemini(
             raw_prompt=prompt,
             raw_response=str(exc),
             prompt_version=ADJUDICATION_PROMPT_VERSION,
-            model_name="gemini-3.6-flash",
+            model_name=TASK_MAP.get("afs_adjudication", {}).get("m", "gemini-3.8-flash"),
             timestamp=ts,
         )

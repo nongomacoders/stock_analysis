@@ -51,10 +51,19 @@ class ChallengeReport:
     page_coverage: List[int] = field(default_factory=list)
     failed_chunks: int = 0
     retry_count: int = 0
+    model_version: str = "gemini-3.8-flash"
+    temperature: float = 0.2
+    prompt_tokens: int = 0
+    output_tokens: int = 0
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "findings": [f.to_dict() for f in self.findings],
+            "requested_model": self.model_name,
+            "returned_model_version": self.model_version,
+            "temperature": self.temperature,
+            "prompt_tokens": self.prompt_tokens,
+            "output_tokens": self.output_tokens,
             "model_name": self.model_name,
             "prompt_version": self.prompt_version,
             "chunk_count": self.chunk_count,
@@ -240,13 +249,26 @@ async def run_whole_document_challenge(
 
         chunk_success = False
         res_text = ""
+        chunk_p_tok = 0
+        chunk_c_tok = 0
+        returned_model_ver = "gemini-3.8-flash"
 
         for attempt in range(max_retries_per_chunk + 1):
             if attempt > 0:
                 total_retries += 1
+            trace = {}
             try:
-                raw_res = await managed_query_ai("afs_challenge", prompt)
+                raw_res = await managed_query_ai("afs_challenge", prompt, request_trace=trace)
                 res_text = raw_res.strip() if isinstance(raw_res, str) else getattr(raw_res, "text", str(raw_res)).strip()
+
+                usage = getattr(raw_res, "usage_metadata", None)
+                if usage:
+                    chunk_p_tok = getattr(usage, "prompt_token_count", len(prompt) // 4)
+                    chunk_c_tok = getattr(usage, "candidates_token_count", len(res_text) // 4)
+                else:
+                    chunk_p_tok = len(prompt) // 4
+                    chunk_c_tok = len(res_text) // 4
+                returned_model_ver = trace.get("response_model_version") or getattr(raw_res, "model_version", "gemini-3.8-flash")
 
                 clean_json = re.sub(r"^```(?:json)?\s*", "", res_text, flags=re.I)
                 clean_json = re.sub(r"\s*```$", "", clean_json).strip()
@@ -292,4 +314,8 @@ async def run_whole_document_challenge(
         page_coverage=covered_pages,
         failed_chunks=failed_chunks,
         retry_count=total_retries,
+        model_version=returned_model_ver,
+        temperature=0.2,
+        prompt_tokens=chunk_p_tok,
+        output_tokens=chunk_c_tok,
     )

@@ -1,4 +1,4 @@
-﻿import asyncio
+import asyncio
 import json
 import sys
 from pathlib import Path
@@ -89,21 +89,57 @@ def test_generation_retains_exact_inputs_before_query_and_raw_response(monkeypat
         assert "Deterministic target price: NOT_CALCULABLE" in options["report_content"]
 
 
-def test_gemini_fallback_trace_keeps_actual_model_and_temperature(monkeypatch):
+def test_gemini_never_silently_falls_back_to_alternate_model(monkeypatch):
     from modules.analysis import gemini_vertex_llm as llm
+    llm._cached_client = None  # Ensure fresh client
     attempts = []
     async def generate(**kwargs):
         attempts.append(kwargs)
-        if len(attempts) == 1:
-            raise RuntimeError("404 model not found")
-        return SimpleNamespace(text="report", model_version="resolved-version")
-    monkeypatch.setattr(llm.genai, "Client", lambda **kw: SimpleNamespace(aio=SimpleNamespace(models=SimpleNamespace(generate_content=generate))))
+        raise RuntimeError("404 model not found")
+
+    mock_client = SimpleNamespace(aio=SimpleNamespace(models=SimpleNamespace(generate_content=generate)))
+    monkeypatch.setattr(llm, "get_vertex_client", lambda: mock_client)
+    monkeypatch.setattr(asyncio, "sleep", AsyncMock())
     trace = {}
-    asyncio.run(llm.query_ai("exact prompt", model="requested-model", request_trace=trace))
-    assert trace["model"] == "gemini-3.1-pro-preview"
-    assert trace["response_model_version"] == "resolved-version"
-    assert [a["status"] for a in trace["attempts"]] == ["failed", "succeeded"]
-    assert all(a["config"].temperature == 0.7 for a in attempts)
+
+    with pytest.raises(RuntimeError, match="Vertex AI Error: 404 model not found"):
+        asyncio.run(llm.query_ai("exact prompt", model="requested-model", temperature=0.0, request_trace=trace))
+
+    # Must preserve the exact requested model without silent substitution
+    assert trace["model"] == "requested-model"
+    assert len(trace["attempts"]) == 4
+    assert all(a["model"] == "requested-model" for a in trace["attempts"])
+    assert all(a["status"] == "failed" for a in trace["attempts"])
+    assert all(a["config"].temperature == 0.0 for a in attempts)
+
+
+def test_managed_query_ai_routes_task_temperature(monkeypatch):
+    from modules.analysis import selector
+    calls = []
+
+    async def mock_query_ai(prompt, model, system_prompt=None, temperature=0.0, request_trace=None, trace_callback=None):
+        calls.append({"model": model, "temperature": temperature, "trace": request_trace})
+        return "mock response"
+
+    monkeypatch.setattr(selector.gemini_vertex_llm, "query_ai", mock_query_ai)
+
+    # 1. Extraction / adjudication tasks route to 0.0
+    trace_a = {}
+    asyncio.run(selector.managed_query_ai("afs_gemini_mode_a", "prompt A", request_trace=trace_a))
+    assert calls[-1]["temperature"] == 0.0
+    assert trace_a["temperature"] == 0.0
+
+    # 2. Challenge / synthesis tasks route to 0.2
+    trace_b = {}
+    asyncio.run(selector.managed_query_ai("afs_challenge", "prompt B", request_trace=trace_b))
+    assert calls[-1]["temperature"] == 0.2
+    assert trace_b["temperature"] == 0.2
+
+    # 3. Explicit override in kwargs takes precedence
+    trace_c = {}
+    asyncio.run(selector.managed_query_ai("sens", "prompt C", temperature=0.35, request_trace=trace_c))
+    assert calls[-1]["temperature"] == 0.35
+    assert trace_c["temperature"] == 0.35
 
 
 def test_pdf_inline_bytes_and_raw_response(monkeypatch, tmp_path):

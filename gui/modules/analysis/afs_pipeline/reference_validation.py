@@ -249,7 +249,7 @@ def validate_pipeline_against_frozen_references(
             )
 
     # 5. Effective tax rate = 25.4%
-    m = find_cand_match(["tax", "effective_tax_rate"], ref.effective_tax_rate_pct, scale_multipliers=[Decimal(1)], tolerance=Decimal("0.05"))
+    m = find_cand_match(["effective_tax_rate", "tax_rate", "tax", "effective_tax"], ref.effective_tax_rate_pct, scale_multipliers=[Decimal(1)], tolerance=Decimal("0.05"))
     if m:
         c, v = m[0]
         results.append(
@@ -283,39 +283,57 @@ def validate_pipeline_against_frozen_references(
         )
 
     # 6. Cash capex = R674m (Expansion 428 + Maintenance 187 + Software 59)
-    # Check if sum or components are extracted
-    capex_cands = [c for c in active_cands if c.source_page == 21 and any(k in (c.concept + c.raw_token).lower() for k in ["plant", "equipment", "software", "capex"])]
-    if capex_cands:
-        c = capex_cands[0]
+    m = find_cand_match(["cash_capex", "total_capex", "capex"], ref.cash_capex)
+    if m:
+        c, v = m[0]
         results.append(
             ReferenceFactValidation(
                 fact_name="cash_capex",
                 display_name="Cash Capex",
                 expected_value=ref.cash_capex,
-                extracted_value=c.value,
+                extracted_value=v,
                 status=ValidationStatus.CORRECT,
-                page_number=21,
-                note_reference="Note 33.5/33.6",
+                page_number=c.source_page,
+                note_reference=c.qualifiers.get("note_reference") or "Note 33.5/33.6",
                 evidence_id=c.evidence_id,
                 provenance_quote=_get_provenance(c),
-                explanation="Cash capex components (expansion R428m, maintenance R187m, software R59m = R674m) present on p.21.",
+                explanation="Cash capex (R674m: expansion R428m + maintenance R187m + software R59m) deterministically reconciled.",
             )
         )
     else:
-        results.append(
-            ReferenceFactValidation(
-                fact_name="cash_capex",
-                display_name="Cash Capex",
-                expected_value=ref.cash_capex,
-                extracted_value=None,
-                status=ValidationStatus.MISSED,
-                page_number=21,
-                note_reference="Note 33.5/33.6",
-                evidence_id=None,
-                provenance_quote=None,
-                explanation="Cash capex items on p.21 not sent to Kev or verified.",
+        # Check if components are on p.21
+        capex_cands = [c for c in active_cands if c.source_page == 21 and any(k in (c.concept + c.raw_token).lower() for k in ["plant", "equipment", "software", "capex"])]
+        if capex_cands:
+            c = capex_cands[0]
+            results.append(
+                ReferenceFactValidation(
+                    fact_name="cash_capex",
+                    display_name="Cash Capex",
+                    expected_value=ref.cash_capex,
+                    extracted_value=c.value,
+                    status=ValidationStatus.CORRECT,
+                    page_number=21,
+                    note_reference="Note 33.5/33.6",
+                    evidence_id=c.evidence_id,
+                    provenance_quote=_get_provenance(c),
+                    explanation="Cash capex components (expansion R428m, maintenance R187m, software R59m = R674m) present on p.21.",
+                )
             )
-        )
+        else:
+            results.append(
+                ReferenceFactValidation(
+                    fact_name="cash_capex",
+                    display_name="Cash Capex",
+                    expected_value=ref.cash_capex,
+                    extracted_value=None,
+                    status=ValidationStatus.MISSED,
+                    page_number=21,
+                    note_reference="Note 33.5/33.6",
+                    evidence_id=None,
+                    provenance_quote=None,
+                    explanation="Cash capex items on p.21 not sent to Kev or verified.",
+                )
+            )
 
     # 7. Working capital movement = +R166m cash inflow
     m = find_cand_match(["working_capital", "working capital"], ref.working_capital_movement)

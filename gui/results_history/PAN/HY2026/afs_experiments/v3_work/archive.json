@@ -1,0 +1,21 @@
+{
+  "archived_doc": {
+    "document_id": "4985b081-7055-4388-88a6-c89c4f3f556e",
+    "ticker": "PAN",
+    "company": "Pan African Resources PLC",
+    "financial_period": "HY2026",
+    "publication_datetime": "2026-02-18T07:00:00+00:00",
+    "document_type": "annual_financial_statements",
+    "original_filename": "PAN_HY2026.pdf",
+    "source_url": null,
+    "sha256_hash": "4c13ee4a02b4c91ff6fa0d21b4c5446576069b2d31ac90d06d4c16911d4d82d0",
+    "ingestion_timestamp": "2026-09-28T14:30:24.976468+00:00",
+    "page_count": 45,
+    "raw_pdf_path": "C:\\Users\\Dion\\Desktop\\Projects\\stock_analysis\\gui\\results_history\\PAN\\HY2026\\PAN_HY2026.pdf",
+    "metadata": {
+      "file_size_bytes": 2109096,
+      "page_count": 45,
+      "source_archive": "results_history"
+    }
+  }
+}

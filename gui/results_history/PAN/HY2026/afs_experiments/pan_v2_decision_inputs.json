@@ -1,0 +1,991 @@
+{
+  "experiment_identity": "PAN-HY2026-MODEA-V2",
+  "recon_old": {
+    "verified_count": 46,
+    "review_count": 7,
+    "conflicting_count": 102,
+    "rejected_count": 77
+  },
+  "recon_new": {
+    "verified_count": 114,
+    "review_count": 57,
+    "conflicting_count": 4,
+    "rejected_count": 98
+  },
+  "mandatory_old": {
+    "resolved_mandatory_categories": [
+      "revenue",
+      "profit",
+      "tax",
+      "capex",
+      "working_capital",
+      "debt",
+      "leases",
+      "shares",
+      "depreciation_amortisation",
+      "production",
+      "commodity_price",
+      "unit_cost",
+      "grade",
+      "throughput"
+    ],
+    "unresolved_mandatory_categories": [
+      "sales",
+      "margins",
+      "cash",
+      "sales_volumes",
+      "recovery",
+      "guidance",
+      "hedging"
+    ],
+    "automatic_review_queue_count": 7,
+    "missed_reference_facts": 13,
+    "manual_review_required_count": 27
+  },
+  "mandatory_new": {
+    "resolved_mandatory_categories": [
+      "revenue",
+      "sales",
+      "profit",
+      "margins",
+      "capex",
+      "working_capital",
+      "debt",
+      "leases",
+      "shares",
+      "depreciation_amortisation",
+      "production",
+      "sales_volumes",
+      "commodity_price",
+      "unit_cost",
+      "grade",
+      "recovery",
+      "throughput"
+    ],
+    "unresolved_mandatory_categories": [
+      "tax",
+      "cash",
+      "guidance",
+      "hedging"
+    ],
+    "automatic_review_queue_count": 57,
+    "conflicting_evidence_count": 4,
+    "manual_review_required_count": 70
+  },
+  "v1_conflicting_identities": 98,
+  "v2_conflicting_identities": 4,
+  "preserved": [
+    [
+      "capex_expansion",
+      "54.2",
+      "36"
+    ],
+    [
+      "capex_expansion",
+      "55300000.0",
+      "9"
+    ],
+    [
+      "lease_liabilities_current",
+      "1050",
+      "12"
+    ]
+  ],
+  "reclassified_to_review": [
+    [
+      "accounting_revenue",
+      "157.3",
+      "2"
+    ],
+    [
+      "accounting_revenue",
+      "157.3",
+      "4"
+    ],
+    [
+      "accounting_revenue",
+      "157.3",
+      "8"
+    ],
+    [
+      "accounting_revenue",
+      "487.1",
+      "4"
+    ],
+    [
+      "accounting_revenue",
+      "487100000.0",
+      "2"
+    ],
+    [
+      "accounting_revenue",
+      "487100000.0",
+      "8"
+    ],
+    [
+      "capex_expansion",
+      "135.6",
+      "7"
+    ],
+    [
+      "gold_price",
+      "2800",
+      "6"
+    ],
+    [
+      "gold_price",
+      "3500",
+      "6"
+    ],
+    [
+      "gold_price",
+      "5000",
+      "2"
+    ],
+    [
+      "gold_price",
+      "61.6",
+      "4"
+    ],
+    [
+      "gold_produced",
+      "275000",
+      "3"
+    ],
+    [
+      "gold_produced",
+      "292000",
+      "3"
+    ],
+    [
+      "gold_produced",
+      "35",
+      "3"
+    ],
+    [
+      "gold_produced",
+      "35",
+      "6"
+    ],
+    [
+      "gold_produced",
+      "51.5",
+      "2"
+    ],
+    [
+      "gold_sold",
+      "59.3",
+      "4"
+    ],
+    [
+      "net_debt",
+      "-79.8",
+      "4"
+    ],
+    [
+      "net_debt",
+      "46200000.0",
+      "2"
+    ],
+    [
+      "net_debt",
+      "69.3",
+      "2"
+    ],
+    [
+      "sustaining_capex",
+      "51.5",
+      "7"
+    ],
+    [
+      "sustaining_capex",
+      "60.0",
+      "4"
+    ],
+    [
+      "unknown",
+      "-996",
+      "21"
+    ],
+    [
+      "unknown",
+      "121",
+      "29"
+    ],
+    [
+      "unknown",
+      "122",
+      "29"
+    ],
+    [
+      "unknown",
+      "727",
+      "30"
+    ],
+    [
+      "weighted_average_basic_shares",
+      "2027.3",
+      "4"
+    ],
+    [
+      "weighted_average_basic_shares",
+      "2027300000.0",
+      "9"
+    ]
+  ],
+  "fully_resolved": [
+    [
+      "accounting_revenue",
+      "189.3",
+      "4"
+    ],
+    [
+      "aisc_unit_cost",
+      "1209",
+      "5"
+    ],
+    [
+      "aisc_unit_cost",
+      "1484",
+      "5"
+    ],
+    [
+      "aisc_unit_cost",
+      "1700",
+      "2"
+    ],
+    [
+      "aisc_unit_cost",
+      "2590",
+      "4"
+    ],
+    [
+      "capex_expansion",
+      "77.0",
+      "36"
+    ],
+    [
+      "cash_costs",
+      "1574",
+      "4"
+    ],
+    [
+      "cash_costs",
+      "200.4",
+      "36"
+    ],
+    [
+      "gold_price",
+      "2359",
+      "4"
+    ],
+    [
+      "gold_price",
+      "3812",
+      "4"
+    ],
+    [
+      "gold_produced",
+      "128296",
+      "2"
+    ],
+    [
+      "gold_produced",
+      "128296",
+      "4"
+    ],
+    [
+      "gold_produced",
+      "15560",
+      "2"
+    ],
+    [
+      "gold_produced",
+      "7143",
+      "2"
+    ],
+    [
+      "gold_sold",
+      "127296",
+      "4"
+    ],
+    [
+      "gold_sold",
+      "79926",
+      "4"
+    ],
+    [
+      "gross_margin",
+      "28.5",
+      "8"
+    ],
+    [
+      "gross_margin",
+      "54.3",
+      "8"
+    ],
+    [
+      "lease_liabilities_current",
+      "1452",
+      "12"
+    ],
+    [
+      "lease_liabilities_current",
+      "1491",
+      "30"
+    ],
+    [
+      "lease_liabilities_current",
+      "616",
+      "12"
+    ],
+    [
+      "lease_liabilities_noncurrent",
+      "2039",
+      "12"
+    ],
+    [
+      "lease_liabilities_noncurrent",
+      "2607",
+      "12"
+    ],
+    [
+      "lease_liabilities_noncurrent",
+      "4365",
+      "12"
+    ],
+    [
+      "net_debt",
+      "228.5",
+      "37"
+    ],
+    [
+      "net_debt",
+      "228.5",
+      "4"
+    ],
+    [
+      "profit_for_period",
+      "-125",
+      "13"
+    ],
+    [
+      "profit_for_period",
+      "147842",
+      "13"
+    ],
+    [
+      "recovery",
+      "39.1",
+      "5"
+    ],
+    [
+      "recovery",
+      "51.6",
+      "5"
+    ],
+    [
+      "trade_and_other_receivables",
+      "15386",
+      "12"
+    ],
+    [
+      "trade_and_other_receivables",
+      "15496",
+      "12"
+    ],
+    [
+      "trade_and_other_receivables",
+      "15888",
+      "12"
+    ],
+    [
+      "trade_and_other_receivables",
+      "3176",
+      "30"
+    ],
+    [
+      "unknown",
+      "-1025",
+      "14"
+    ],
+    [
+      "unknown",
+      "-11565",
+      "20"
+    ],
+    [
+      "unknown",
+      "-1334",
+      "20"
+    ],
+    [
+      "unknown",
+      "-1873",
+      "31"
+    ],
+    [
+      "unknown",
+      "-222609",
+      "13"
+    ],
+    [
+      "unknown",
+      "-285",
+      "13"
+    ],
+    [
+      "unknown",
+      "-3",
+      "20"
+    ],
+    [
+      "unknown",
+      "-389",
+      "21"
+    ],
+    [
+      "unknown",
+      "-39728",
+      "13"
+    ],
+    [
+      "unknown",
+      "-5834",
+      "21"
+    ],
+    [
+      "unknown",
+      "-8166",
+      "13"
+    ],
+    [
+      "unknown",
+      "-9755",
+      "20"
+    ],
+    [
+      "unknown",
+      "-9927",
+      "20"
+    ],
+    [
+      "unknown",
+      "0.7",
+      "3"
+    ],
+    [
+      "unknown",
+      "10.43",
+      "27"
+    ],
+    [
+      "unknown",
+      "1326",
+      "20"
+    ],
+    [
+      "unknown",
+      "1649",
+      "20"
+    ],
+    [
+      "unknown",
+      "1810",
+      "13"
+    ],
+    [
+      "unknown",
+      "185851",
+      "13"
+    ],
+    [
+      "unknown",
+      "186136",
+      "13"
+    ],
+    [
+      "unknown",
+      "189111",
+      "21"
+    ],
+    [
+      "unknown",
+      "20",
+      "4"
+    ],
+    [
+      "unknown",
+      "2130",
+      "12"
+    ],
+    [
+      "unknown",
+      "21585",
+      "21"
+    ],
+    [
+      "unknown",
+      "235400000.0",
+      "6"
+    ],
+    [
+      "unknown",
+      "278676",
+      "31"
+    ],
+    [
+      "unknown",
+      "3.85",
+      "27"
+    ],
+    [
+      "unknown",
+      "3464",
+      "13"
+    ],
+    [
+      "unknown",
+      "38115",
+      "21"
+    ],
+    [
+      "unknown",
+      "4.88",
+      "27"
+    ],
+    [
+      "unknown",
+      "70000000.0",
+      "9"
+    ],
+    [
+      "unknown",
+      "9217",
+      "21"
+    ],
+    [
+      "weighted_average_basic_shares",
+      "1929.4",
+      "4"
+    ]
+  ],
+  "new_conflicts": [
+    [
+      "lease_liabilities_current",
+      "616",
+      "30"
+    ]
+  ],
+  "counts": {
+    "false_conflicts_eliminated_or_routed": 95,
+    "new_conflicts_introduced": 1,
+    "old_conflicts_preserved": 3,
+    "old_conflicts_reclassified_to_review": 28,
+    "old_conflicts_fully_resolved": 67
+  },
+  "thirteen_group_audit": {
+    "G1_capex_54.2_vs_55.3m": {
+      "concept": "capex_expansion",
+      "values": [
+        "54.2",
+        "55300000.0"
+      ],
+      "still_conflicting": [
+        "54.2",
+        "55300000.0"
+      ],
+      "in_review": [],
+      "status": "GENUINE_CONFLICT"
+    },
+    "G2_cash_costs_group_vs_operation": {
+      "concept": "cash_costs",
+      "values": [
+        "1574",
+        "200.4"
+      ],
+      "still_conflicting": [],
+      "in_review": [],
+      "status": "RESOLVED_BY_SEMANTIC_QUALIFIER"
+    },
+    "G3_leases_current_restatement": {
+      "concept": "lease_liabilities_current",
+      "values": [
+        "1050",
+        "1491",
+        "616"
+      ],
+      "still_conflicting": [
+        "1050",
+        "616"
+      ],
+      "in_review": [],
+      "status": "GENUINE_CONFLICT"
+    },
+    "G4_leases_noncurrent_restatement": {
+      "concept": "lease_liabilities_noncurrent",
+      "values": [
+        "2039",
+        "2607"
+      ],
+      "still_conflicting": [],
+      "in_review": [],
+      "status": "RESOLVED_BY_SEMANTIC_QUALIFIER"
+    },
+    "G5_trade_comparative_restatement": {
+      "concept": "trade_and_other_receivables",
+      "values": [
+        "15386",
+        "15496"
+      ],
+      "still_conflicting": [],
+      "in_review": [],
+      "status": "RESOLVED_BY_SEMANTIC_QUALIFIER"
+    },
+    "G6_trade_statement_vs_note": {
+      "concept": "trade_and_other_receivables",
+      "values": [
+        "15888",
+        "3176"
+      ],
+      "still_conflicting": [],
+      "in_review": [],
+      "status": "RESOLVED_BY_SEMANTIC_QUALIFIER"
+    }
+  },
+  "challenge_rediscovery": {
+    "australian_covenant_breach": {
+      "rediscovered": true,
+      "match": {
+        "title": "Breach of Australian Borrowing Covenants (Realside and NT Facilities)",
+        "page": 25,
+        "severity": "MATERIAL",
+        "type": "COVENANT_RISK"
+      }
+    },
+    "mtr_grade_recovery": {
+      "rediscovered": true,
+      "match": {
+        "title": "MTR Operation Calcine Lens Grade and Recovery Dilution",
+        "page": 5,
+        "severity": "WATCH",
+        "type": "OPERATIONAL_RISK"
+      }
+    },
+    "gold_loan_reclassification": {
+      "rediscovered": true,
+      "match": {
+        "title": "Restatement of Operating Cash Flow for Short-Term Gold Loan",
+        "page": 4,
+        "severity": "WATCH",
+        "type": "POLICY_CHANGE"
+      }
+    },
+    "corporate_ga_increase": {
+      "rediscovered": true,
+      "match": {
+        "title": "Severe Corporate G&A Inflation Diluting Operational Leverage",
+        "page": 36,
+        "severity": "MATERIAL",
+        "type": "ADVERSE_TREND"
+      }
+    },
+    "share_based_payment_drain": {
+      "rediscovered": true,
+      "match": {
+        "title": "Surge in Share-Based Payment Obligations Impacting AISC and Cash Flows",
+        "page": 9,
+        "severity": "MATERIAL",
+        "type": "ADVERSE_TREND"
+      }
+    },
+    "evander_contractor_arbitration": {
+      "rediscovered": false,
+      "match": null
+    },
+    "tennant_high_cost": {
+      "rediscovered": true,
+      "match": {
+        "title": "Severe Corporate G&A Inflation Diluting Operational Leverage",
+        "page": 36,
+        "severity": "MATERIAL",
+        "type": "ADVERSE_TREND"
+      }
+    },
+    "covenant_ring_fencing": {
+      "rediscovered": true,
+      "match": {
+        "title": "Breach of Australian Borrowing Covenants (Realside and NT Facilities)",
+        "page": 25,
+        "severity": "MATERIAL",
+        "type": "COVENANT_RISK"
+      }
+    }
+  },
+  "challenge_counts": {
+    "v1_total": 11,
+    "v2_total": 10
+  },
+  "mining_coverage": {
+    "revenue": "RESOLVED",
+    "sales": "RESOLVED",
+    "profit": "RESOLVED",
+    "margins": "RESOLVED",
+    "tax": "REQUIRES_REVIEW",
+    "capex": "RESOLVED",
+    "working_capital": "RESOLVED",
+    "cash": "NOT_DISCLOSED",
+    "debt": "RESOLVED",
+    "leases": "RESOLVED",
+    "shares": "RESOLVED",
+    "depreciation_amortisation": "RESOLVED",
+    "production": "RESOLVED",
+    "sales_volumes": "RESOLVED",
+    "commodity_price": "RESOLVED",
+    "unit_cost": "RESOLVED",
+    "grade": "RESOLVED",
+    "recovery": "RESOLVED",
+    "throughput": "RESOLVED",
+    "guidance": "REQUIRES_REVIEW",
+    "hedging": "REQUIRES_REVIEW"
+  },
+  "scoring": {
+    "total": 19,
+    "correct": 11,
+    "incorrect": 3,
+    "missed": 2,
+    "ambiguous": 3,
+    "accuracy_pct": 57.89,
+    "equation_ok": true,
+    "validations": [
+      {
+        "fact_name": "gold_production",
+        "display_name": "Gold Produced (oz)",
+        "expected_value": "128296",
+        "extracted_value": "128296",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s4_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified gold_production from page 4."
+      },
+      {
+        "fact_name": "gold_sold",
+        "display_name": "Gold Sold (oz)",
+        "expected_value": "127296",
+        "extracted_value": "127296",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s5_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified gold_sold from page 4."
+      },
+      {
+        "fact_name": "realised_gold_price",
+        "display_name": "Average Realised Gold Price (US$/oz)",
+        "expected_value": "3812",
+        "extracted_value": "3812",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s7_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified realised_gold_price from page 4."
+      },
+      {
+        "fact_name": "aisc_unit_cost",
+        "display_name": "All-in Sustaining Costs (US$/oz)",
+        "expected_value": "1874",
+        "extracted_value": "1874",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s9_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified aisc_unit_cost from page 4."
+      },
+      {
+        "fact_name": "cash_costs",
+        "display_name": "Cash Costs (US$/oz)",
+        "expected_value": "1574",
+        "extracted_value": "1574",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s8_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified cash_costs from page 4."
+      },
+      {
+        "fact_name": "revenue",
+        "display_name": "Revenue (US$m)",
+        "expected_value": "487.1",
+        "extracted_value": "487062",
+        "status": "AMBIGUOUS",
+        "page_number": 13,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p13_0_s15_c0_curr",
+        "provenance_quote": null,
+        "explanation": "revenue present but not cleanly verified (status REQUIRES_REVIEW); analyst resolution required."
+      },
+      {
+        "fact_name": "adjusted_ebitda",
+        "display_name": "Adjusted EBITDA (US$m)",
+        "expected_value": "245.2",
+        "extracted_value": "245.2",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s11_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified adjusted_ebitda from page 4."
+      },
+      {
+        "fact_name": "attributable_earnings",
+        "display_name": "Attributable Earnings (US$m)",
+        "expected_value": "148.0",
+        "extracted_value": "147842",
+        "status": "CORRECT",
+        "page_number": 13,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p13_0_s28_c0_curr",
+        "provenance_quote": "CONDENSED CONSOLIDATED STATEMENT   OF CHANGES IN EQUITY for the period ended 31 December US$ thousand Notes Unaudited six months ended 31 De",
+        "explanation": "Verified attributable_earnings from page 13."
+      },
+      {
+        "fact_name": "headline_earnings",
+        "display_name": "Headline Earnings (US$m)",
+        "expected_value": "148.8",
+        "extracted_value": "148.8",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s13_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified headline_earnings from page 4."
+      },
+      {
+        "fact_name": "operating_cash_flow",
+        "display_name": "Operating Cash Flow (US$m)",
+        "expected_value": "259.5",
+        "extracted_value": "259.5",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s16_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified operating_cash_flow from page 4."
+      },
+      {
+        "fact_name": "net_debt",
+        "display_name": "Net Debt (US$m)",
+        "expected_value": "46.2",
+        "extracted_value": "46.2",
+        "status": "AMBIGUOUS",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s17_c0_curr",
+        "provenance_quote": null,
+        "explanation": "net_debt present but not cleanly verified (status REQUIRES_REVIEW); analyst resolution required."
+      },
+      {
+        "fact_name": "total_capex",
+        "display_name": "Total Capital Expenditure (US$m)",
+        "expected_value": "66.1",
+        "extracted_value": "66.1",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s19_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified total_capex from page 4."
+      },
+      {
+        "fact_name": "sustaining_capex",
+        "display_name": "Sustaining Capital Expenditure (US$m)",
+        "expected_value": "9.6",
+        "extracted_value": "9.6",
+        "status": "CORRECT",
+        "page_number": 4,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p4_0_s18_c0_curr",
+        "provenance_quote": "SUMMARY OF SALIENT FEATURES Salient features Unit FY26H1 FY25H1 Movement change % Gold produced oz 128,296 84,705 51.5 Gold sold oz 127,296",
+        "explanation": "Verified sustaining_capex from page 4."
+      },
+      {
+        "fact_name": "wans_shares",
+        "display_name": "WANOS Shares in Issue (million)",
+        "expected_value": "2027.3",
+        "extracted_value": "2027345",
+        "status": "AMBIGUOUS",
+        "page_number": 13,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p13_0_s45_c0_curr",
+        "provenance_quote": null,
+        "explanation": "wans_shares present but not cleanly verified (status REQUIRES_REVIEW); analyst resolution required."
+      },
+      {
+        "fact_name": "underground_recovered_grade",
+        "display_name": "Underground Recovered Grade (g/t)",
+        "expected_value": "6.90",
+        "extracted_value": "0.29",
+        "status": "INCORRECT",
+        "page_number": 40,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p40_0_s58_c13",
+        "provenance_quote": null,
+        "explanation": "Concept adjudicated for underground_recovered_grade but no value match."
+      },
+      {
+        "fact_name": "underground_recovery",
+        "display_name": "Underground Recovery (%)",
+        "expected_value": "97",
+        "extracted_value": "51.6",
+        "status": "INCORRECT",
+        "page_number": 5,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p5_0_s99_c1",
+        "provenance_quote": null,
+        "explanation": "Concept adjudicated for underground_recovery but no value match."
+      },
+      {
+        "fact_name": "tonnes_processed_milled",
+        "display_name": "Total Tonnes Milled & Processed (tonnes)",
+        "expected_value": "13591354",
+        "extracted_value": "1060",
+        "status": "INCORRECT",
+        "page_number": 5,
+        "evidence_id": "ev_doc_d04f255c-cff5-4607-b8de-1f7cf1ae3445_p5_0_s32_c1",
+        "provenance_quote": null,
+        "explanation": "Concept adjudicated for tonnes_processed_milled but no value match."
+      },
+      {
+        "fact_name": "production_guidance",
+        "display_name": "FY26 Production Guidance Range (oz)",
+        "expected_value": "275000",
+        "extracted_value": null,
+        "status": "MISSED",
+        "page_number": 2,
+        "evidence_id": null,
+        "provenance_quote": null,
+        "explanation": "Fact production_guidance not matched in extracted candidates."
+      },
+      {
+        "fact_name": "effective_tax_rate",
+        "display_name": "Effective Tax Rate (%)",
+        "expected_value": "29.6",
+        "extracted_value": null,
+        "status": "MISSED",
+        "page_number": 9,
+        "evidence_id": null,
+        "provenance_quote": null,
+        "explanation": "Fact effective_tax_rate not matched in extracted candidates."
+      }
+    ]
+  },
+  "cost": {
+    "mode_a_calls": 267,
+    "mode_a_prompt_tokens": 1492654,
+    "mode_a_output_tokens": 64796,
+    "mode_a_total_tokens": 1557450,
+    "mode_a_cost_usd": 0.131387,
+    "mode_a_model": "gemini-3.8-flash",
+    "mode_a_returned": "gemini-3.8-flash",
+    "mode_a_temp": 0.0,
+    "challenge_chunks": 2,
+    "challenge_prompt_tokens": 10884,
+    "challenge_output_tokens": 1603,
+    "challenge_model": "gemini-3.8-flash",
+    "challenge_returned": "gemini-3.8-flash",
+    "challenge_temp": 0.2,
+    "challenge_failed": 0,
+    "mode_a_latency_ms": 4184627.88,
+    "wall_seconds_manifest_to_artifact": 1648.14
+  }
+}

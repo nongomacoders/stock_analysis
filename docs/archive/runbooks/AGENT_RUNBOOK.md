@@ -1423,4 +1423,59 @@ To prevent terminology confusion between population rates and intake admission r
 - `unsafe_accept_rate_of_accepted = unsafe_accept_count / accepted_count`
 - `unsafe_accept_rate_of_population = unsafe_accept_count / evaluation_population`
 
+---
+
+# 36. Decimal Serialization in JSON Pipeline Artifacts
+
+## Symptom
+
+```text
+TypeError: Object of type Decimal is not JSON serializable
+```
+
+when dumping pipeline results, candidate objects, or reference validations to JSON.
+
+## Root cause
+
+Financial calculations preserve exact `Decimal` precision throughout Python. The standard library `json.dump` does not natively serialize `Decimal`.
+
+## Working fix
+
+Always pass `default=str` to `json.dump` / `json.dumps`:
+
+```python
+with open(artifact_path, "w", encoding="utf-8") as f:
+    json.dump(artifact_payload, f, indent=2, default=str)
+```
+
+---
+
+# 37. Nested Quote Escapes in PowerShell Python -c Invocations
+
+## Symptom
+
+```text
+SyntaxError: unterminated string literal
+```
+
+when executing Python inline one-liners via PowerShell `python.exe -c "..."`.
+
+## Root cause
+
+PowerShell strips or alters backslash-escaped inner quotes (`\"`) inside `-c "..."` arguments before passing them to Python.
+
+## Working fix
+
+Use triple quotes `'''` or single quotes `'` for inner string literals, or write temporary scratch scripts rather than complex inline one-liners with escaped quotes:
+
+```powershell
+& "C:\Users\Dion\AppData\Local\Programs\Python\Python311\python.exe" -c '
+import json
+with open("file.json") as f:
+    d = json.load(f)
+'
+```
+
+
+
 

@@ -1,0 +1,21 @@
+{
+  "archived_doc": {
+    "document_id": "4991999a-d7d3-4fb4-9709-27d0d928b021",
+    "ticker": "TRU",
+    "company": "Truworths International Ltd",
+    "financial_period": "FY2025",
+    "publication_datetime": "2025-08-28T07:00:00+00:00",
+    "document_type": "annual_financial_statements",
+    "original_filename": "TRU_FY2025_AFS.pdf",
+    "source_url": null,
+    "sha256_hash": "7e2389d735bba8bebec4f967ac2ae2ad58f0d1c87f5d9f35e98a52bc88cffa01",
+    "ingestion_timestamp": "2026-09-28T13:43:26.086424+00:00",
+    "page_count": 156,
+    "raw_pdf_path": "C:\\Users\\Dion\\Desktop\\Projects\\stock_analysis\\gui\\results_history\\TRU\\FY2025\\TRU_FY2025_AFS.pdf",
+    "metadata": {
+      "file_size_bytes": 3652832,
+      "page_count": 156,
+      "source_archive": "results_history"
+    }
+  }
+}

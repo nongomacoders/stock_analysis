@@ -21,37 +21,49 @@ MODELS = {
 }
 
 # 2. Task mapping using the new structure
-# This is much cleaner and shows exactly which "tier" of a provider you are using.
+# Maps tasks to provider ('p'), model ('m'), and appropriate temperature ('t')
 TASK_MAP = {
-    "sens":                {"p": "gemini",     "m": MODELS["gemini"][1]},
-    "price_change":        {"p": "gemini",     "m": MODELS["gemini"][1]},
-    "research_summary":    {"p": "gemini",     "m": MODELS["gemini"][1]},
-    "spot_price":          {"p": "gemini",     "m": MODELS["gemini"][1]},
-    "research_extraction": {"p": "gemini",     "m": MODELS["gemini"][0]},
-    "deep_research":       {"p": "gemini",     "m": MODELS["gemini"][0]},
-    "research_comparison": {"p": "gemini",     "m": MODELS["gemini"][1]},
-    "afs_adjudication":    {"p": "gemini",     "m": MODELS["gemini"][1]},
-    "afs_challenge":       {"p": "gemini",     "m": MODELS["gemini"][0]},
+    # Deterministic financial extraction & adjudication: 0.0
+    "sens":                {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.0},
+    "price_change":        {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.0},
+    "spot_price":          {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.0},
+    "research_extraction": {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.0},
+    "afs_adjudication":    {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.0},
+    "afs_gemini_candidate": {"p": "gemini",    "m": MODELS["gemini"][0], "t": 0.0},
+    "afs_gemini_paragraph": {"p": "gemini",    "m": MODELS["gemini"][0], "t": 0.0},
+    "afs_gemini_mode_a":   {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.0},
+    "afs_gemini_mode_b":   {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.0},
+
+    # Analytical synthesis, comparison, & challenge passes: 0.2
+    "research_summary":    {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.2},
+    "deep_research":       {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.2},
+    "research_comparison": {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.2},
+    "afs_challenge":       {"p": "gemini",     "m": MODELS["gemini"][0], "t": 0.2},
 }
 
-DEFAULT_TASK = {"p": "gemini", "m": MODELS["gemini"][1]}
+DEFAULT_TASK = {"p": "gemini", "m": MODELS["gemini"][0], "t": 0.0}
 
 async def managed_query_ai(task_name: str, prompt: str, **kwargs) -> str:
     config = TASK_MAP.get(task_name, DEFAULT_TASK)
     provider = config["p"]
     model = config["m"]
+    temperature = kwargs.pop("temperature", config.get("t", 0.0))
     trace = kwargs.get("request_trace")
     if trace is not None:
-        trace.update(provider=provider, model=model, temperature=None)
+        trace.update(provider=provider, model=model, temperature=temperature)
 
-    logger.info(f"Routing task '{task_name}' to {provider} using {model}")
+    logger.info(f"Routing task '{task_name}' to {provider} using {model} (temp={temperature})")
 
     # Routing logic remains clean
     if provider == "openrouter":
         return await openrouter_llm.query_ai(prompt, model=model)
     elif provider == "gemini":
         return await gemini_vertex_llm.query_ai(
-            prompt, model=model, request_trace=trace,
+            prompt,
+            model=model,
+            system_prompt=kwargs.get("system_prompt"),
+            temperature=temperature,
+            request_trace=trace,
             trace_callback=kwargs.get("trace_callback"),
         )
     elif provider == "ollama":

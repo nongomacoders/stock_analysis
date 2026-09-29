@@ -31,7 +31,7 @@ class NumericCandidate:
     numeric_role: str  # DIRECT_LEVEL, ENDING_VALUE, CHANGE_AMOUNT, CHANGE_RATE, STARTING_VALUE, UNKNOWN
     value_pattern: str  # direct_level, change_rate_only, change_rate_to_level, from_to_level, range, unknown
     note_reference: Optional[str] = None
-    temporal_role: str = "STANDALONE"  # CURRENT_PERIOD, COMPARATIVE_PERIOD, STANDALONE
+    temporal_role: str = "STANDALONE"  # CURRENT_PERIOD, COMPARATIVE_PERIOD, CHANGE_RATE, STANDALONE
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -212,6 +212,16 @@ ROLE_PATTERNS = [
 ]
 
 
+# A percentage that is itself the metric (tax rate, margin, recovery) rather
+# than a period-on-period change is phrased as "<level noun> of/is/was/at %".
+# Change-rates use different objects ("production of 51.5%", "debt of 69.3%")
+# or change verbs. Verified absent from TRU/PAN corpora in change-rate form;
+# documented heuristic, covered by regression tests.
+_LEVEL_PERCENT_CONTEXT_REGEX = re.compile(
+    r"(?i)\b(rate|margin|recovery|ratio|yield)\s+(of|is|was|at)\s*$"
+)
+
+
 def determine_candidate_role_in_sentence(
     sentence_text: str, token_start: int, token_end: int, is_percentage: bool
 ) -> Tuple[str, str]:
@@ -239,6 +249,10 @@ def determine_candidate_role_in_sentence(
 
     # Standalone percentage without matching level
     if is_percentage:
+        # A percentage that is itself the metric (not a change rate).
+        preceding = sentence_text[:token_start]
+        if _LEVEL_PERCENT_CONTEXT_REGEX.search(preceding):
+            return "DIRECT_LEVEL", "direct_level"
         return "CHANGE_RATE", "change_rate_only"
 
     # Default standalone level
@@ -263,6 +277,158 @@ TABLE_ROW_REGEX = re.compile(
 
 NOTE_REF_REGEX = re.compile(r"^\d{1,2}(?:\.\d{1,2})?$")
 
+# Narrative guard: sentences carrying explicit change language, percentage signs, or
+# comparative markers (e.g. "increased by 51.5% to 128,296oz (FY25H1: ...)") are NOT
+# salient-table rows and must keep narrative role parsing.
+TABLE_3COL_NARRATIVE_GUARD_REGEX = re.compile(
+    r"%|\(FY\d|FY\d+H\d|increased|decreased|rose|fell|grew|declined|improved|"
+    r"\bby\b\s+[^\n]*?\bto\b",
+    re.IGNORECASE,
+)
+
+# Split-decimal repair for pypdf artefacts where "1.50" is extracted as "1.5 0".
+# Only merges when the orphan digit is followed by another number (i.e. it cannot be
+# a genuine standalone column value).
+_SPLIT_DECIMAL_REGEX = re.compile(r"(?P<head>\d+\.\d(?!\d))\s+(?P<tail>\d)(?=\s+\(?[\d,])")
+
+# Trailing dash marking an absent Movement/change% value (e.g. "1.52 1.52 –").
+TRAILING_DASH_REGEX = re.compile(r"\s[-–—]+\s*$")
+
+# Bare footnote integers permitted inside a salient-table label (e.g. "EBITDA 1").
+_BARE_FOOTNOTE_REGEX = re.compile(r"^\d{1,2}$")
+
+
+def _note_leader_bail_reason(matches: List[re.Match]) -> Optional[str]:
+    """Decide whether a three-match row led by a bare note-like token must
+    skip three-column parsing, and why.
+
+    - ``"note_two_levels"``: ``Lease liabilities 20.1 2,697 2,927`` or
+      ``Working capital movements 33.2 166 38`` carry a bare note marker
+      followed by two integer levels; the two-column path binds the note.
+    - ``"mashed_row"``: level tokens with internal spaces (``21,323 100``)
+      are merged thousands/footnote artefacts of mashed multi-column tables;
+      the narrative path preserves prior behaviour.
+    - ``None``: genuine salient triple (decimals/commas/units on the levels,
+      e.g. ``HEPS US cents 7.34 1.2 511.7``); three-column parsing proceeds.
+
+    Salient Movement/change% triples always carry decimals, commas, units,
+    or parentheses on at least one level value (verified on PAN salient
+    table); a bare note-like leader otherwise signals note + levels.
+    """
+    if len(matches) != 3:
+        return None
+    first_raw = matches[0].group(0).strip()
+    if matches[0].group("prefix") or matches[0].group("suffix"):
+        return None
+    if not NOTE_REF_REGEX.match(first_raw):
+        return None
+    rest = [matches[1].group(0).strip(), matches[2].group(0).strip()]
+    if all(re.fullmatch(r"\(?[\d,]+\)?", tok) is not None for tok in rest):
+        return "note_two_levels"
+    if any(re.search(r"\s", tok) for tok in rest):
+        return "mashed_row"
+    return None
+
+
+def _try_parse_salient_three_column_row(
+    sentence_id: str,
+    paragraph_id: str,
+    page_number: int,
+    sentence_text: str,
+) -> Optional[List[NumericCandidate]]:
+    """Parse multi-column salient-features table rows: <label> <current> <comparative> <movement change%>.
+
+    The trailing Movement/change% column carries a period-on-period percentage change
+    (per the table header, e.g. PAN HY2026 Summary of Salient Features p.4) and is tagged
+    ``numeric_role="CHANGE_RATE"`` / ``value_pattern="change_rate_only"`` /
+    ``temporal_role="CHANGE_RATE"`` so Python's reconciliation policy never flags it as
+    a contradictory current-period level. Returns None when the sentence is not a
+    salient-table row, letting the two-column / narrative paths handle it.
+    """
+    if TABLE_3COL_NARRATIVE_GUARD_REGEX.search(sentence_text):
+        return None
+
+    text = _SPLIT_DECIMAL_REGEX.sub(
+        lambda m: m.group("head") + m.group("tail"), sentence_text.strip()
+    )
+    has_trailing_dash = bool(TRAILING_DASH_REGEX.search(text))
+    matches = list(NUMERIC_TOKEN_REGEX.finditer(text))
+
+    if not has_trailing_dash and _note_leader_bail_reason(matches) is not None:
+        return None
+
+    if has_trailing_dash:
+        # Absent change value: expect exactly <current> <comparative> before the dash.
+        if len(matches) != 2:
+            return None
+        curr_m, prior_m = matches
+        change_m = None
+    else:
+        if len(matches) < 3:
+            return None
+        extras = matches[:-3]
+        for extra in extras:
+            # Only bare footnote integers may precede the three data columns.
+            if not _BARE_FOOTNOTE_REGEX.match(extra.group(0).strip()):
+                return None
+        curr_m, prior_m, change_m = matches[-3:]
+
+    label = text[: curr_m.start()].strip(" :;,.–-")
+    if len(label) < 2:
+        return None
+
+    note_ref: Optional[str] = None
+    if has_trailing_dash:
+        label_note_search = re.findall(r"(?<!\S)\d{1,2}(?!\S)", label)
+        if label_note_search:
+            note_ref = label_note_search[-1]
+    else:
+        for extra in matches[:-3]:
+            note_ref = extra.group(0).strip()
+
+    candidates: List[NumericCandidate] = []
+    column_specs = [
+        (curr_m, "c0_curr", "ENDING_VALUE", "direct_level", "CURRENT_PERIOD"),
+        (prior_m, "c1_prior", "STARTING_VALUE", "direct_level", "COMPARATIVE_PERIOD"),
+    ]
+    if change_m is not None:
+        column_specs.append(
+            (change_m, "c2_change", "CHANGE_RATE", "change_rate_only", "CHANGE_RATE")
+        )
+
+    for match, suffix, role, val_pattern, temporal in column_specs:
+        raw_token = match.group(0).strip()
+        norm_val, currency, unit, scale, sign = parse_raw_numeric_token(match)
+        # The Movement/change% column is a header-declared percentage change; its
+        # currency/scale context (if any leaked from parsing) does not apply.
+        if temporal == "CHANGE_RATE":
+            currency = None
+            scale = None
+        candidates.append(
+            NumericCandidate(
+                candidate_id=f"{sentence_id}_{suffix}",
+                raw_token=raw_token,
+                normalized_value=norm_val,
+                currency=currency,
+                unit=unit,
+                scale=scale,
+                sign=sign,
+                span_start=match.start(),
+                span_end=match.end(),
+                page_number=page_number,
+                paragraph_id=paragraph_id,
+                sentence_id=sentence_id,
+                sentence_text=text,
+                nearby_label=label,
+                numeric_role=role,
+                value_pattern=val_pattern,
+                note_reference=note_ref,
+                temporal_role=temporal,
+            )
+        )
+
+    return candidates
+
 
 def extract_numeric_candidates_from_sentence(
     sentence_id: str,
@@ -272,6 +438,15 @@ def extract_numeric_candidates_from_sentence(
 ) -> List[NumericCandidate]:
     """Locate all numeric candidates within a sentence, tagging note references and binding periods."""
     candidates: List[NumericCandidate] = []
+
+    # Check for three-column salient-features table rows first (current /
+    # comparative / Movement change%), before the two-column matcher can
+    # misbind a third column value as a note reference or level.
+    salient_row = _try_parse_salient_three_column_row(
+        sentence_id, paragraph_id, page_number, sentence_text
+    )
+    if salient_row:
+        return salient_row
 
     # Check for two-column table row structure first
     table_match = TABLE_ROW_REGEX.match(sentence_text.strip())
